@@ -1,124 +1,221 @@
+>>>>>CM:GREEN
 Annex E (informative) Additions and Changes in the 5th Edition that Introduce Incompatibilities with the 3rd Edition
+>>>>>CM:GREEN
 ====================================================================================================================
 
+>>>>>CM:GREEN
 7.1: Unicode format control characters are no longer stripped from ECMAScript source text before
+>>>>>CM:GREEN
 processing. In Edition 5, if such a character appears in a StringLiteral or RegularExpressionLiteral
+>>>>>CM:GREEN
 the character will be incorporated into the literal where in Edition 3 the character would not be
+>>>>>CM:GREEN
 incorporated into the literal.
 
+>>>>>CM:GREEN
 7.2: Unicode character <BOM> is now treated as whitespace and its presence in the middle of what
+>>>>>CM:GREEN
 appears to be an identifier could result in a syntax error which would not have occurred in Edition
+>>>>>CM:GREEN
 3
 
+>>>>>CM:GREEN
 7.3: Line terminator characters that are preceded by an escape sequence are now allowed within a
+>>>>>CM:GREEN
 string literal token. In Edition 3 a syntax error would have been produced.
 
+>>>>>CM:GREEN
 7.8.5: Regular expression literals now return a unique object each time the literal is evaluated.
+>>>>>CM:GREEN
 This change is detectable by any programs that test the object identity of such literal values or
+>>>>>CM:GREEN
 that are sensitive to the shared side effects.
 
+>>>>>CM:GREEN
 7.8.5: Edition 5 requires early reporting of any possible RegExp constructor errors that would be
+>>>>>CM:GREEN
 produced when converting a RegularExpressionLiteral to a RegExp object. Prior to Edition 5
+>>>>>CM:GREEN
 implementations were permitted to defer the reporting of such errors until the actual execution time
+>>>>>CM:GREEN
 creation of the object.
 
-7.8.5: In Edition 5 unescaped “/” characters may appear as a CharacterClass in a regular expression
+>>>>>CM:GREEN
+7.8.5: In Edition 5 unescaped ï¿½/ï¿½ characters may appear as a CharacterClass in a regular expression
+>>>>>CM:GREEN
 literal. In Edition 3 such a character would have been interpreted as the final character of the
+>>>>>CM:GREEN
 literal.
 
+>>>>>CM:GREEN
 10.4.2: In Edition 5, indirect calls to the eval function use the global environment as both the
+>>>>>CM:GREEN
 variable environment and lexical environment for the eval code. In Edition 3, the variable and
+>>>>>CM:GREEN
 lexical environments of the caller of an indirect eval was used as the environments for the eval
+>>>>>CM:GREEN
 code.
 
+>>>>>CM:GREEN
 15.4.4: In Edition 5 all methods of Array.prototype are intentionally generic. In Edition 3 toString
+>>>>>CM:GREEN
 and toLocaleString were not generic and would throw a TypeError exception if applied to objects that
+>>>>>CM:GREEN
 were not instances of Array.
 
+>>>>>CM:GREEN
 10.6: In Edition 5 the array indexed properties of argument objects that correspond to actual formal
+>>>>>CM:GREEN
 parameters are enumerable. In Edition 3, such properties were not enumerable.
 
+>>>>>CM:GREEN
 10.6: In Edition 5 the value of the [[Class]] internal property of an arguments object is
+>>>>>CM:GREEN
 "Arguments". In Edition 3, it was "Object". This is observable if toString is called as a method of
+>>>>>CM:GREEN
 an arguments object.
 
+>>>>>CM:GREEN
 12.6.4: for-in statements no longer throw a TypeError if the in expression evaluates to null or
+>>>>>CM:GREEN
 undefined. Instead, the statement behaves as if the value of the expression was an object with no
+>>>>>CM:GREEN
 enumerable properties.
 
+>>>>>CM:GREEN
 15: In Edition 5, the following new properties are defined on built-in objects that exist in Edition
+>>>>>CM:GREEN
 3: Object.getPrototypeOf, Object.getOwnPropertyDescriptor, Object.getOwnPropertyNames,
+>>>>>CM:GREEN
 Object.create, Object.defineProperty, Object.defineProperties, Object.seal, Object.freeze,
+>>>>>CM:GREEN
 Object.preventExtensions, Object.isSealed, Object.isFrozen, Object.isExtensible, Object.keys,
+>>>>>CM:GREEN
 Function.prototype.bind, Array.prototype.indexOf, Array.prototype.lastIndexOf,
+>>>>>CM:GREEN
 Array.prototype.every, Array.prototype.some, Array.prototype.forEach, Array.prototype.map,
+>>>>>CM:GREEN
 Array.prototype.filter, Array.prototype.reduce, Array.prototype.reduceRight, String.prototype.trim,
+>>>>>CM:GREEN
 Date.now, Date.prototype.toISOString, Date.prototype.toJSON.
 
+>>>>>CM:GREEN
 15: Implementations are now required to ignore extra arguments to standard built-in methods unless
+>>>>>CM:GREEN
 otherwise explicitly specified. In Edition 3 the handling of extra arguments was unspecified and
+>>>>>CM:GREEN
 implementations were explicitly allowed to throw a TypeError exception.
 
+>>>>>CM:GREEN
 15.1.1: The value properties NaN, Infinity, and undefined of the Global Object have been changed to
+>>>>>CM:GREEN
 be read-only properties.
 
+>>>>>CM:GREEN
 15.1.2.1. Implementations are no longer permitted to restrict the use of eval in ways that are not a
+>>>>>CM:GREEN
 direct call. In addition, any invocation of eval that is not a direct call uses the global
-environment as its variable environment rather than the caller’s variable environment.
+>>>>>CM:GREEN
+environment as its variable environment rather than the callerï¿½s variable environment.
 
+>>>>>CM:GREEN
 15.1.2.2: The specification of the function parseInt no longer allows implementations to treat
+>>>>>CM:GREEN
 Strings beginning with a 0 character as octal values.
 
+>>>>>CM:GREEN
 15.3.4.3: In Edition 3, a TypeError is thrown if the second argument passed to
+>>>>>CM:GREEN
 Function.prototype.apply is neither an array object nor an arguments object. In Edition 5, the
+>>>>>CM:GREEN
 second argument may be any kind of generic array-like object that has a valid length property.
 
-15.3.4.3, 15.3.4.4: In Edition 3 passing undefined or null as the first argument to either
+>>>>>CM:GREEN
+15.3.4.3,ï¿½15.3.4.4: In Edition 3 passing undefined or null as the first argument to either
+>>>>>CM:GREEN
 Function.prototype.apply or Function.prototype.call causes the global object to be passed to the
+>>>>>CM:GREEN
 indirectly invoked target function as the this value. If the first argument is a primitive value the
+>>>>>CM:GREEN
 result of calling ToObject on the primitive value is passed as the this value. In Edition 5, these
+>>>>>CM:GREEN
 transformations are not performed and the actual first argument value is passed as the this value.
+>>>>>CM:GREEN
 This difference will normally be unobservable to existing ECMAScript Edition 3 code because a
+>>>>>CM:GREEN
 corresponding transformation takes place upon activation of the target function. However, depending
+>>>>>CM:GREEN
 upon the implementation, this difference may be observable by host object functions called using
+>>>>>CM:GREEN
 apply or call. In addition, invoking a standard built-in function in this manner with null or
+>>>>>CM:GREEN
 undefined passed as the this value will in many cases cause behaviour in Edition 5 implementations
+>>>>>CM:GREEN
 that differ from Edition 3 behaviour. In particular, in Edition 5 built-in functions that are
+>>>>>CM:GREEN
 specified to actually use the passed this value as an object typically throw a TypeError exception
+>>>>>CM:GREEN
 if passed null or undefined as the this value.
 
+>>>>>CM:GREEN
 15.3.5.2: In Edition 5, the prototype property of Function instances is not enumerable. In Edition
+>>>>>CM:GREEN
 3, this property was enumerable.
 
-15.5.5.2: In Edition 5, the individual characters of a String object’s [[PrimitiveValue] may be
+>>>>>CM:GREEN
+15.5.5.2: In Edition 5, the individual characters of a String objectï¿½s [[PrimitiveValue] may be
+>>>>>CM:GREEN
 accessed as array indexed properties of the String object. These properties are non-writable and
+>>>>>CM:GREEN
 non-configurable and shadow any inherited properties with the same names. In Edition 3, these
+>>>>>CM:GREEN
 properties did not exist and ECMAScript code could dynamically add and remove writable properties
+>>>>>CM:GREEN
 with such names and could access inherited properties with such names.
 
+>>>>>CM:GREEN
 15.9.4.2: Date.parse is now required to first attempt to parse its argument as an ISO format string.
+>>>>>CM:GREEN
 Programs that use this format but depended upon implementation specific behaviour (including
+>>>>>CM:GREEN
 failure) may behave differently.
 
+>>>>>CM:GREEN
 15.10.2.12: In Edition 5, \s now additionally matches <BOM>.
 
+>>>>>CM:GREEN
 15.10.4.1: In Edition 3, the exact form of the String value of the source property of an object
+>>>>>CM:GREEN
 created by the RegExp constructor is implementation defined. In Edition 5, the String must conform
+>>>>>CM:GREEN
 to certain specified requirements and hence may be different from that produced by an Edition 3
+>>>>>CM:GREEN
 implementation.
 
+>>>>>CM:GREEN
 15.10.6.4: In Edition 3, the result of RegExp.prototype.toString need not be derived from the value
-of the RegExp object’s source property. In Edition 5 the result must be derived from the source
+>>>>>CM:GREEN
+of the RegExp objectï¿½s source property. In Edition 5 the result must be derived from the source
+>>>>>CM:GREEN
 property in a specified manner and hence may be different from the result produced by an Edition 3
+>>>>>CM:GREEN
 implementation.
 
+>>>>>CM:GREEN
 15.11.2.1, 15.11.4.3: In Edition 5, if an initial value for the message property of an Error object
+>>>>>CM:GREEN
 is not specified via the Error constructor the initial value of the property is the empty String. In
+>>>>>CM:GREEN
 Edition 3, such an initial value is implementation defined.
 
+>>>>>CM:GREEN
 15.11.4.4: In Edition 3, the result of Error.prototype.toString is implementation defined. In
+>>>>>CM:GREEN
 Edition 5, the result is fully specified and hence may differ from some Edition 3 implementations.
 
+>>>>>CM:GREEN
 15.12: In Edition 5, the name JSON is defined in the global environment. In Edition 3, testing for
+>>>>>CM:GREEN
 the presence of that name will show it to be undefined unless it is defined by the program or
+>>>>>CM:GREEN
 implementation.

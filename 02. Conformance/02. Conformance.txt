@@ -1,21 +1,38 @@
+>>>>>CM:GREEN
 2 Conformance
+>>>>>CM:GREEN
 =============
 
+>>>>>CM:GREEN
 A conforming implementation of ECMAScript must provide and support all the types, values, objects,
+>>>>>CM:GREEN
 properties, functions, and program syntax and semantics described in this specification.
 
+>>>>>CM:GREEN
 A conforming implementation of this Standard shall interpret characters in conformance with the
+>>>>>CM:GREEN
 Unicode Standard, Version 3.0 or later and ISO/IEC 10646-1 with either UCS-2 or UTF-16 as the
+>>>>>CM:GREEN
 adopted encoding form, implementation level 3. If the adopted ISO/IEC 10646-1 subset is not
+>>>>>CM:GREEN
 otherwise specified, it is presumed to be the BMP subset, collection 300. If the adopted encoding
+>>>>>CM:GREEN
 form is not otherwise specified, it presumed to be the UTF-16 encoding form.
 
+>>>>>CM:GREEN
 A conforming implementation of ECMAScript is permitted to provide additional types, values, objects,
+>>>>>CM:GREEN
 properties, and functions beyond those described in this specification. In particular, a conforming
+>>>>>CM:GREEN
 implementation of ECMAScript is permitted to provide properties not described in this specification,
+>>>>>CM:GREEN
 and values for those properties, for objects that are described in this specification.
 
+>>>>>CM:GREEN
 A conforming implementation of ECMAScript is permitted to support program and regular expression
+>>>>>CM:GREEN
 syntax not described in this specification. In particular, a conforming implementation of ECMAScript
+>>>>>CM:GREEN
 is permitted to support program syntax that makes use of the “future reserved words” listed in
+>>>>>CM:GREEN
 7.6.1.2 of this specification.

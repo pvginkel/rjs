@@ -1,49 +1,90 @@
+>>>>>CM:GREEN
 Annex D (informative) Corrections and Clarifications in the 5th Edition with Possible 3rd Edition Compatibility Impact
+>>>>>CM:GREEN
 ======================================================================================================================
 
-Throughout: In the Edition 3 specification the meaning of phrases such as “as if by the expression
-new   Array()” are subject to misinterpretation. In the Edition 5 specification text for all
+>>>>>CM:GREEN
+Throughout: In the Edition 3 specification the meaning of phrases such as ï¿½as if by the expression
+>>>>>CM:GREEN
+new   Array()ï¿½ are subject to misinterpretation. In the Edition 5 specification text for all
+>>>>>CM:GREEN
 internal references and invocations of standard built-in objects and methods has been clarified by
+>>>>>CM:GREEN
 making it explicit that the intent is that the actual built-in object is to be used rather than the
+>>>>>CM:GREEN
 current dynamic value of the correspondingly named property.
 
+>>>>>CM:GREEN
 11.8.2, 11.8.3, 11.8.5: ECMAScript generally uses a left to right evaluation order, however the
+>>>>>CM:GREEN
 Edition 3 specification language for the > and <= operators resulted in a partial right to left
+>>>>>CM:GREEN
 order. The specification has been corrected for these operators such that it now specifies a full
+>>>>>CM:GREEN
 left to right evaluation order. However, this change of order is potentially observable if
+>>>>>CM:GREEN
 side-effects occur during the evaluation process.
 
+>>>>>CM:GREEN
 11.1.4: Edition 5 clarifies the fact that a trailing comma at the end of an ArrayInitialiser does
+>>>>>CM:GREEN
 not add to the length of the array. This is not a semantic change from Edition 3 but some
+>>>>>CM:GREEN
 implementations may have previously misinterpreted this.
 
+>>>>>CM:GREEN
 11.2.3: Edition 5 reverses the order of steps 2 and 3 of the algorithm. The original order as
+>>>>>CM:GREEN
 specified in Editions 1 through 3 was incorrectly specified such that side-effects of evaluating
+>>>>>CM:GREEN
 Arguments could affect the result of evaluating MemberExpression.
 
+>>>>>CM:GREEN
 12.4: In Edition 3, an object is created, as if by new Object()to serve as the scope for resolving
+>>>>>CM:GREEN
 the name of the exception parameter passed to a catch clause of a try statement. If the actual
+>>>>>CM:GREEN
 exception object is a function and it is called from within the catch clause, the scope object will
+>>>>>CM:GREEN
 be passed as the this value of the call. The body of the function can then define new properties on
+>>>>>CM:GREEN
 its this value and those property names become visible identifiers bindings within the scope of the
+>>>>>CM:GREEN
 catch clause after the function returns. In Edition 5, when an exception parameter is called as a
+>>>>>CM:GREEN
 function, undefined is passed as the this value.
 
+>>>>>CM:GREEN
 13: In Edition 3, the algorithm for the production FunctionExpression with an Identifier adds an
+>>>>>CM:GREEN
 object created as if by new Object() to the scope chain to serve as a scope for looking up the name
+>>>>>CM:GREEN
 of the function. The identifier resolution rules (10.1.4 in Edition 3) when applied to such an
-object will, if necessary, follow the object’s prototype chain when attempting to resolve an
+>>>>>CM:GREEN
+object will, if necessary, follow the objectï¿½s prototype chain when attempting to resolve an
+>>>>>CM:GREEN
 identifier. This means all the properties of Object.prototype are visible as identifiers within that
+>>>>>CM:GREEN
 scope. In practice most implementations of Edition 3 have not implemented this semantics. Edition 5
+>>>>>CM:GREEN
 changes the specified semantics by using a Declarative Environment Record to bind the name of the
+>>>>>CM:GREEN
 function.
 
+>>>>>CM:GREEN
 14: In Edition 3, the algorithm for the production SourceElements : SourceElements SourceElement did
+>>>>>CM:GREEN
 not correctly propagate statement result values in the same manner as Block. This could result in
+>>>>>CM:GREEN
 the eval function producing an incorrect result when evaluating a Program text. In practice most
+>>>>>CM:GREEN
 implementations of Edition 3 have implemented the correct propagation rather than what was specified
+>>>>>CM:GREEN
 in Edition 5.
 
+>>>>>CM:GREEN
 15.10.6: RegExp.prototype is now a RegExp object rather than an instance of Object. The value of its
-[[Class]] internal property which is observable using Object.prototype.toString is now “RegExp”
-rather than “Object”.
+>>>>>CM:GREEN
+[[Class]] internal property which is observable using Object.prototype.toString is now ï¿½RegExpï¿½
+>>>>>CM:GREEN
+rather than ï¿½Objectï¿½.

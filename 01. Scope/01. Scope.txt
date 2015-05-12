@@ -1,4 +1,7 @@
+>>>>>CM:GREEN
 1 Scope
+>>>>>CM:GREEN
 =======
 
+>>>>>CM:GREEN
 This Standard defines the ECMAScript scripting language.

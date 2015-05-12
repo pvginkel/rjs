@@ -1,17 +1,33 @@
+>>>>>CM:GREEN
 Bibliography
+>>>>>CM:GREEN
 ============
 
+>>>>>CM:GREEN
 1.  IEEE Std 754-2008: IEEE Standard for Floating-Point Arithmetic. Institute of Electrical and
+>>>>>CM:GREEN
     Electronic Engineers, New York (2008)
+>>>>>CM:GREEN
 2.  The Unicode Consortium. The Unicode Standard, Version 3.0, defined by: The Unicode Standard,
+>>>>>CM:GREEN
     Version 3.0 (Reading, MA, Addison-Wesley, 2000. ISBN 0-201-61633-5)
+>>>>>CM:GREEN
 3.  Unicode Inc. (2010), Unicode Technical Report #15: Unicode Normalization Forms
-4.  ISO 8601:2004(E) Data elements and interchange formats – Information interchange –
+>>>>>CM:GREEN
+4.  ISO 8601:2004(E) Data elements and interchange formats ï¿½ Information interchange ï¿½
+>>>>>CM:GREEN
     Representation of dates and times
-5.  RFC 1738 “Uniform Resource Locators (URL)”, available at <http://tools.ietf.org/html/rfc1738>
-6.  RFC 2396 “Uniform Resource Identifiers (URI): Generic Syntax”, available at
+>>>>>CM:GREEN
+5.  RFC 1738 ï¿½Uniform Resource Locators (URL)ï¿½, available at <http://tools.ietf.org/html/rfc1738>
+>>>>>CM:GREEN
+6.  RFC 2396 ï¿½Uniform Resource Identifiers (URI): Generic Syntaxï¿½, available at
+>>>>>CM:GREEN
     <http://tools.ietf.org/html/rfc2396>
-7.  RFC 3629 “UTF-8, a transformation format of ISO 10646”, available at
+>>>>>CM:GREEN
+7.  RFC 3629 ï¿½UTF-8, a transformation format of ISO 10646ï¿½, available at
+>>>>>CM:GREEN
     <http://tools.ietf.org/html/rfc3629>
-8.  RFC 4627 “The application/json Media Type for JavaScript Object Notation (JSON)” , available at
+>>>>>CM:GREEN
+8.  RFC 4627 ï¿½The application/json Media Type for JavaScript Object Notation (JSON)ï¿½ , available at
+>>>>>CM:GREEN
     <http://tools.ietf.org/html/rfc4627>

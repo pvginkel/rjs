@@ -1,507 +1,930 @@
+>>>>>CM:GREEN
 ECMAScript Language Specification - ECMA-262 Edition 5.1
 
+>>>>>CM:GREEN
 [Ecma International Logo.]
 
+>>>>>CM:GREEN
 Standard ECMA-262
+>>>>>CM:GREEN
 =================
 
+>>>>>CM:GREEN
 5.1 Edition / June 2011
+>>>>>CM:GREEN
 =======================
 
+>>>>>CM:GREEN
 ECMAScript® Language Specification
+>>>>>CM:GREEN
 ==================================
 
+>>>>>CM:GREEN
 This is the HTML rendering of Ecma-262 Edition 5.1, The ECMAScript Language Specification.
 
+>>>>>CM:GREEN
 The PDF rendering of this document is located at
+>>>>>CM:GREEN
 http://www.ecma-international.org/ecma-262/5.1/ECMA-262.pdf.
 
+>>>>>CM:GREEN
 The PDF version is the definitive specification. Any discrepancies between this HTML version and the
+>>>>>CM:GREEN
 PDF version are unintentional.
 
+>>>>>CM:GREEN
 Copyright notice
+>>>>>CM:GREEN
 ================
 
+>>>>>CM:GREEN
 Copyright © 2011 Ecma International
 
+>>>>>CM:GREEN
 -   Ecma International
+>>>>>CM:GREEN
 -   Rue du Rhone 114
+>>>>>CM:GREEN
 -   CH-1204 Geneva
+>>>>>CM:GREEN
 -   Tel: +41 22 849 6000
+>>>>>CM:GREEN
 -   Fax: +41 22 849 6001
+>>>>>CM:GREEN
 -   Web: http://www.ecma-international.org
 
+>>>>>CM:GREEN
 This document and possible translations of it may be copied and furnished to others, and derivative
+>>>>>CM:GREEN
 works that comment on or otherwise explain it or assist in its implementation may be prepared,
+>>>>>CM:GREEN
 copied, published, and distributed, in whole or in part, without restriction of any kind, provided
+>>>>>CM:GREEN
 that the above copyright notice and this section are included on all such copies and derivative
+>>>>>CM:GREEN
 works. However, this document itself may not be modified in any way, including by removing the
+>>>>>CM:GREEN
 copyright notice or references to Ecma International, except as needed for the purpose of developing
+>>>>>CM:GREEN
 any document or deliverable produced by Ecma International (in which case the rules applied to
+>>>>>CM:GREEN
 copyrights must be followed) or as required to translate it into languages other than English.
 
+>>>>>CM:GREEN
 The limited permissions granted above are perpetual and will not be revoked by Ecma International or
+>>>>>CM:GREEN
 its successors or assigns.
 
+>>>>>CM:GREEN
 This document and the information contained herein is provided on an “AS IS” basis and ECMA
+>>>>>CM:GREEN
 INTERNATIONAL DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+>>>>>CM:GREEN
 WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY
+>>>>>CM:GREEN
 IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
 
+>>>>>CM:GREEN
 Software License
 
+>>>>>CM:GREEN
 All Software contained in this document (“Software)” is protected by copyright and is being made
+>>>>>CM:GREEN
 available under the “BSD License”, included below. This Software may be subject to third party
+>>>>>CM:GREEN
 rights (rights from parties other than Ecma International), including patent rights, and no licenses
+>>>>>CM:GREEN
 under such third party rights are granted under this license even if the third party concerned is a
+>>>>>CM:GREEN
 member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT
+>>>>>CM:GREEN
 http://www.ecma-international.org/memento/codeofconduct.htm FOR INFORMATION REGARDING THE LICENSING
+>>>>>CM:GREEN
 OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS*.
 
+>>>>>CM:GREEN
 Redistribution and use in source and binary forms, with or without modification, are permitted
+>>>>>CM:GREEN
 provided that the following conditions are met:
 
+>>>>>CM:GREEN
 1. Redistributions of source code must retain the above copyright notice, this list of conditions
+>>>>>CM:GREEN
 and the following disclaimer.
 
+>>>>>CM:GREEN
 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+>>>>>CM:GREEN
 and the following disclaimer in the documentation and/or other materials provided with the
+>>>>>CM:GREEN
 distribution.
 
+>>>>>CM:GREEN
 3. Neither the name of the authors nor Ecma International may be used to endorse or promote products
+>>>>>CM:GREEN
 derived from this software without specific prior written permission.
 
+>>>>>CM:GREEN
 THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+>>>>>CM:GREEN
 INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+>>>>>CM:GREEN
 PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT,
+>>>>>CM:GREEN
 INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+>>>>>CM:GREEN
 PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+>>>>>CM:GREEN
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+>>>>>CM:GREEN
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+>>>>>CM:GREEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+>>>>>CM:GREEN
 Contents
+>>>>>CM:GREEN
 ========
 
+>>>>>CM:GREEN
 1.  Copyright notice
+>>>>>CM:GREEN
 2.  Introduction
+>>>>>CM:GREEN
 3.  1 Scope
+>>>>>CM:GREEN
 4.  2 Conformance
+>>>>>CM:GREEN
 5.  3 Normative references
+>>>>>CM:GREEN
 6.  4 Overview
+>>>>>CM:GREEN
     1.  4.1 Web Scripting
+>>>>>CM:GREEN
     2.  4.2 Language Overview
+>>>>>CM:GREEN
         1.  4.2.1 Objects
+>>>>>CM:GREEN
         2.  4.2.2 The Strict Variant of ECMAScript
 
+>>>>>CM:GREEN
     3.  4.3 Terms and definitions
+>>>>>CM:GREEN
         1.  4.3.1 type
+>>>>>CM:GREEN
         2.  4.3.2 primitive value
+>>>>>CM:GREEN
         3.  4.3.3 object
+>>>>>CM:GREEN
         4.  4.3.4 constructor
+>>>>>CM:GREEN
         5.  4.3.5 prototype
+>>>>>CM:GREEN
         6.  4.3.6 native object
+>>>>>CM:GREEN
         7.  4.3.7 built-in object
+>>>>>CM:GREEN
         8.  4.3.8 host object
+>>>>>CM:GREEN
         9.  4.3.9 undefined value
+>>>>>CM:GREEN
         10. 4.3.10 Undefined type
+>>>>>CM:GREEN
         11. 4.3.11 null value
+>>>>>CM:GREEN
         12. 4.3.12 Null type
+>>>>>CM:GREEN
         13. 4.3.13 Boolean value
+>>>>>CM:GREEN
         14. 4.3.14 Boolean type
+>>>>>CM:GREEN
         15. 4.3.15 Boolean object
+>>>>>CM:GREEN
         16. 4.3.16 String value
+>>>>>CM:GREEN
         17. 4.3.17 String type
+>>>>>CM:GREEN
         18. 4.3.18 String object
+>>>>>CM:GREEN
         19. 4.3.19 Number value
+>>>>>CM:GREEN
         20. 4.3.20 Number type
+>>>>>CM:GREEN
         21. 4.3.21 Number object
+>>>>>CM:GREEN
         22. 4.3.22 Infinity
+>>>>>CM:GREEN
         23. 4.3.23 NaN
+>>>>>CM:GREEN
         24. 4.3.24 function
+>>>>>CM:GREEN
         25. 4.3.25 built-in function
+>>>>>CM:GREEN
         26. 4.3.26 property
+>>>>>CM:GREEN
         27. 4.3.27 method
+>>>>>CM:GREEN
         28. 4.3.28 built-in method
+>>>>>CM:GREEN
         29. 4.3.29 attribute
+>>>>>CM:GREEN
         30. 4.3.30 own property
+>>>>>CM:GREEN
         31. 4.3.31 inherited property
 
+>>>>>CM:GREEN
 7.  5 Notational Conventions
+>>>>>CM:GREEN
     1.  5.1 Syntactic and Lexical Grammars
+>>>>>CM:GREEN
         1.  5.1.1 Context-Free Grammars
+>>>>>CM:GREEN
         2.  5.1.2 The Lexical and RegExp Grammars
+>>>>>CM:GREEN
         3.  5.1.3 The Numeric String Grammar
+>>>>>CM:GREEN
         4.  5.1.4 The Syntactic Grammar
+>>>>>CM:GREEN
         5.  5.1.5 The JSON Grammar
+>>>>>CM:GREEN
         6.  5.1.6 Grammar Notation
 
+>>>>>CM:GREEN
     2.  5.2 Algorithm Conventions
 
+>>>>>CM:GREEN
 8.  6 Source Text
+>>>>>CM:GREEN
 9.  7 Lexical Conventions
+>>>>>CM:GREEN
     1.  7.1 Unicode Format-Control Characters
+>>>>>CM:GREEN
     2.  7.2 White Space
+>>>>>CM:GREEN
     3.  7.3 Line Terminators
+>>>>>CM:GREEN
     4.  7.4 Comments
+>>>>>CM:GREEN
     5.  7.5 Tokens
+>>>>>CM:GREEN
     6.  7.6 Identifier Names and Identifiers
+>>>>>CM:GREEN
         1.  7.6.1 Reserved Words
 
+>>>>>CM:GREEN
     7.  7.7 Punctuators
+>>>>>CM:GREEN
     8.  7.8 Literals
+>>>>>CM:GREEN
         1.  7.8.1 Null Literals
+>>>>>CM:GREEN
         2.  7.8.2 Boolean Literals
+>>>>>CM:GREEN
         3.  7.8.3 Numeric Literals
+>>>>>CM:GREEN
         4.  7.8.4 String Literals
+>>>>>CM:GREEN
         5.  7.8.5 Regular Expression Literals
 
+>>>>>CM:GREEN
     9.  7.9 Automatic Semicolon Insertion
+>>>>>CM:GREEN
         1.  7.9.1 Rules of Automatic Semicolon Insertion
+>>>>>CM:GREEN
         2.  7.9.2 Examples of Automatic Semicolon Insertion
 
+>>>>>CM:GREEN
 10. 8 Types
+>>>>>CM:GREEN
     1.  8.1 The Undefined Type
+>>>>>CM:GREEN
     2.  8.2 The Null Type
+>>>>>CM:GREEN
     3.  8.3 The Boolean Type
+>>>>>CM:GREEN
     4.  8.4 The String Type
+>>>>>CM:GREEN
     5.  8.5 The Number Type
+>>>>>CM:GREEN
     6.  8.6 The Object Type
+>>>>>CM:GREEN
         1.  8.6.1 Property Attributes
+>>>>>CM:GREEN
         2.  8.6.2 Object Internal Properties and Methods
 
+>>>>>CM:GREEN
     7.  8.7 The Reference Specification Type
+>>>>>CM:GREEN
         1.  8.7.1 GetValue (V)
+>>>>>CM:GREEN
         2.  8.7.2 PutValue (V, W)
 
+>>>>>CM:GREEN
     8.  8.8 The List Specification Type
+>>>>>CM:GREEN
     9.  8.9 The Completion Specification Type
+>>>>>CM:GREEN
     10. 8.10 The Property Descriptor and Property Identifier Specification Types
+>>>>>CM:GREEN
         1.  8.10.1 IsAccessorDescriptor ( Desc )
+>>>>>CM:GREEN
         2.  8.10.2 IsDataDescriptor ( Desc )
+>>>>>CM:GREEN
         3.  8.10.3 IsGenericDescriptor ( Desc )
+>>>>>CM:GREEN
         4.  8.10.4 FromPropertyDescriptor ( Desc )
+>>>>>CM:GREEN
         5.  8.10.5 ToPropertyDescriptor ( Obj )
 
+>>>>>CM:GREEN
     11. 8.11 The Lexical Environment and Environment Record Specification Types
+>>>>>CM:GREEN
     12. 8.12 Algorithms for Object Internal Methods
+>>>>>CM:GREEN
         1.  8.12.1 [[GetOwnProperty]] (P)
+>>>>>CM:GREEN
         2.  8.12.2 [[GetProperty]] (P)
+>>>>>CM:GREEN
         3.  8.12.3 [[Get]] (P)
+>>>>>CM:GREEN
         4.  8.12.4 [[CanPut]] (P)
+>>>>>CM:GREEN
         5.  8.12.5 [[Put]] ( P, V, Throw )
+>>>>>CM:GREEN
         6.  8.12.6 [[HasProperty]] (P)
+>>>>>CM:GREEN
         7.  8.12.7 [[Delete]] (P, Throw)
+>>>>>CM:GREEN
         8.  8.12.8 [[DefaultValue]] (hint)
+>>>>>CM:GREEN
         9.  8.12.9 [[DefineOwnProperty]] (P, Desc, Throw)
 
+>>>>>CM:GREEN
 11. 9 Type Conversion and Testing
+>>>>>CM:GREEN
     1.  9.1 ToPrimitive
+>>>>>CM:GREEN
     2.  9.2 ToBoolean
+>>>>>CM:GREEN
     3.  9.3 ToNumber
+>>>>>CM:GREEN
         1.  9.3.1 ToNumber Applied to the String Type
 
+>>>>>CM:GREEN
     4.  9.4 ToInteger
+>>>>>CM:GREEN
     5.  9.5 ToInt32: (Signed 32 Bit Integer)
+>>>>>CM:GREEN
     6.  9.6 ToUint32: (Unsigned 32 Bit Integer)
+>>>>>CM:GREEN
     7.  9.7 ToUint16: (Unsigned 16 Bit Integer)
+>>>>>CM:GREEN
     8.  9.8 ToString
+>>>>>CM:GREEN
         1.  9.8.1 ToString Applied to the Number Type
 
+>>>>>CM:GREEN
     9.  9.9 ToObject
+>>>>>CM:GREEN
     10. 9.10 CheckObjectCoercible
+>>>>>CM:GREEN
     11. 9.11 IsCallable
+>>>>>CM:GREEN
     12. 9.12 The SameValue Algorithm
 
+>>>>>CM:GREEN
 12. 10 Executable Code and Execution Contexts
+>>>>>CM:GREEN
     1.  10.1 Types of Executable Code
+>>>>>CM:GREEN
         1.  10.1.1 Strict Mode Code
 
+>>>>>CM:GREEN
     2.  10.2 Lexical Environments
+>>>>>CM:GREEN
         1.  10.2.1 Environment Records
+>>>>>CM:GREEN
         2.  10.2.2 Lexical Environment Operations
+>>>>>CM:GREEN
         3.  10.2.3 The Global Environment
 
+>>>>>CM:GREEN
     3.  10.3 Execution Contexts
+>>>>>CM:GREEN
         1.  10.3.1 Identifier Resolution
 
+>>>>>CM:GREEN
     4.  10.4 Establishing an Execution Context
+>>>>>CM:GREEN
         1.  10.4.1 Entering Global Code
+>>>>>CM:GREEN
         2.  10.4.2 Entering Eval Code
+>>>>>CM:GREEN
         3.  10.4.3 Entering Function Code
 
+>>>>>CM:GREEN
     5.  10.5 Declaration Binding Instantiation
+>>>>>CM:GREEN
     6.  10.6 Arguments Object
 
+>>>>>CM:GREEN
 13. 11 Expressions
+>>>>>CM:GREEN
     1.  11.1 Primary Expressions
+>>>>>CM:GREEN
         1.  11.1.1 The this Keyword
+>>>>>CM:GREEN
         2.  11.1.2 Identifier Reference
+>>>>>CM:GREEN
         3.  11.1.3 Literal Reference
+>>>>>CM:GREEN
         4.  11.1.4 Array Initialiser
+>>>>>CM:GREEN
         5.  11.1.5 Object Initialiser
+>>>>>CM:GREEN
         6.  11.1.6 The Grouping Operator
 
+>>>>>CM:GREEN
     2.  11.2 Left-Hand-Side Expressions
+>>>>>CM:GREEN
         1.  11.2.1 Property Accessors
+>>>>>CM:GREEN
         2.  11.2.2 The new Operator
+>>>>>CM:GREEN
         3.  11.2.3 Function Calls
+>>>>>CM:GREEN
         4.  11.2.4 Argument Lists
+>>>>>CM:GREEN
         5.  11.2.5 Function Expressions
 
+>>>>>CM:GREEN
     3.  11.3 Postfix Expressions
+>>>>>CM:GREEN
         1.  11.3.1 Postfix Increment Operator
+>>>>>CM:GREEN
         2.  11.3.2 Postfix Decrement Operator
 
+>>>>>CM:GREEN
     4.  11.4 Unary Operators
+>>>>>CM:GREEN
         1.  11.4.1 The delete Operator
+>>>>>CM:GREEN
         2.  11.4.2 The void Operator
+>>>>>CM:GREEN
         3.  11.4.3 The typeof Operator
+>>>>>CM:GREEN
         4.  11.4.4 Prefix Increment Operator
+>>>>>CM:GREEN
         5.  11.4.5 Prefix Decrement Operator
+>>>>>CM:GREEN
         6.  11.4.6 Unary + Operator
+>>>>>CM:GREEN
         7.  11.4.7 Unary - Operator
+>>>>>CM:GREEN
         8.  11.4.8 Bitwise NOT Operator ( ~ )
+>>>>>CM:GREEN
         9.  11.4.9 Logical NOT Operator ( ! )
 
+>>>>>CM:GREEN
     5.  11.5 Multiplicative Operators
+>>>>>CM:GREEN
         1.  11.5.1 Applying the * Operator
+>>>>>CM:GREEN
         2.  11.5.2 Applying the / Operator
+>>>>>CM:GREEN
         3.  11.5.3 Applying the % Operator
 
+>>>>>CM:GREEN
     6.  11.6 Additive Operators
+>>>>>CM:GREEN
         1.  11.6.1 The Addition operator ( + )
+>>>>>CM:GREEN
         2.  11.6.2 The Subtraction Operator ( - )
+>>>>>CM:GREEN
         3.  11.6.3 Applying the Additive Operators to Numbers
 
+>>>>>CM:GREEN
     7.  11.7 Bitwise Shift Operators
+>>>>>CM:GREEN
         1.  11.7.1 The Left Shift Operator ( << )
+>>>>>CM:GREEN
         2.  11.7.2 The Signed Right Shift Operator ( >> )
+>>>>>CM:GREEN
         3.  11.7.3 The Unsigned Right Shift Operator ( >>> )
 
+>>>>>CM:GREEN
     8.  11.8 Relational Operators
+>>>>>CM:GREEN
         1.  11.8.1 The Less-than Operator ( < )
+>>>>>CM:GREEN
         2.  11.8.2 The Greater-than Operator ( > )
+>>>>>CM:GREEN
         3.  11.8.3 The Less-than-or-equal Operator ( <= )
+>>>>>CM:GREEN
         4.  11.8.4 The Greater-than-or-equal Operator ( >= )
+>>>>>CM:GREEN
         5.  11.8.5 The Abstract Relational Comparison Algorithm
+>>>>>CM:GREEN
         6.  11.8.6 The instanceof operator
+>>>>>CM:GREEN
         7.  11.8.7 The in operator
 
+>>>>>CM:GREEN
     9.  11.9 Equality Operators
+>>>>>CM:GREEN
         1.  11.9.1 The Equals Operator ( == )
+>>>>>CM:GREEN
         2.  11.9.2 The Does-not-equals Operator ( != )
+>>>>>CM:GREEN
         3.  11.9.3 The Abstract Equality Comparison Algorithm
+>>>>>CM:GREEN
         4.  11.9.4 The Strict Equals Operator ( === )
+>>>>>CM:GREEN
         5.  11.9.5 The Strict Does-not-equal Operator ( !== )
+>>>>>CM:GREEN
         6.  11.9.6 The Strict Equality Comparison Algorithm
 
+>>>>>CM:GREEN
     10. 11.10 Binary Bitwise Operators
+>>>>>CM:GREEN
     11. 11.11 Binary Logical Operators
+>>>>>CM:GREEN
     12. 11.12 Conditional Operator ( ? : )
+>>>>>CM:GREEN
     13. 11.13 Assignment Operators
+>>>>>CM:GREEN
         1.  11.13.1 Simple Assignment ( = )
+>>>>>CM:GREEN
         2.  11.13.2 Compound Assignment ( op= )
 
+>>>>>CM:GREEN
     14. 11.14 Comma Operator ( , )
 
+>>>>>CM:GREEN
 14. 12 Statements
+>>>>>CM:GREEN
     1.  12.1 Block
+>>>>>CM:GREEN
     2.  12.2 Variable Statement
+>>>>>CM:GREEN
         1.  12.2.1 Strict Mode Restrictions
 
+>>>>>CM:GREEN
     3.  12.3 Empty Statement
+>>>>>CM:GREEN
     4.  12.4 Expression Statement
+>>>>>CM:GREEN
     5.  12.5 The if Statement
+>>>>>CM:GREEN
     6.  12.6 Iteration Statements
+>>>>>CM:GREEN
         1.  12.6.1 The do-while Statement
+>>>>>CM:GREEN
         2.  12.6.2 The while Statement
+>>>>>CM:GREEN
         3.  12.6.3 The for Statement
+>>>>>CM:GREEN
         4.  12.6.4 The for-in Statement
 
+>>>>>CM:GREEN
     7.  12.7 The continue Statement
+>>>>>CM:GREEN
     8.  12.8 The break Statement
+>>>>>CM:GREEN
     9.  12.9 The return Statement
+>>>>>CM:GREEN
     10. 12.10 The with Statement
+>>>>>CM:GREEN
         1.  12.10.1 Strict Mode Restrictions
 
+>>>>>CM:GREEN
     11. 12.11 The switch Statement
+>>>>>CM:GREEN
     12. 12.12 Labelled Statements
+>>>>>CM:GREEN
     13. 12.13 The throw Statement
+>>>>>CM:GREEN
     14. 12.14 The try Statement
+>>>>>CM:GREEN
         1.  12.14.1 Strict Mode Restrictions
 
+>>>>>CM:GREEN
     15. 12.15 The debugger statement
 
+>>>>>CM:GREEN
 15. 13 Function Definition
+>>>>>CM:GREEN
     1.  13.1 Strict Mode Restrictions
+>>>>>CM:GREEN
     2.  13.2 Creating Function Objects
+>>>>>CM:GREEN
         1.  13.2.1 [[Call]]
+>>>>>CM:GREEN
         2.  13.2.2 [[Construct]]
+>>>>>CM:GREEN
         3.  13.2.3 The [[ThrowTypeError]] Function Object
 
+>>>>>CM:GREEN
 16. 14 Program
+>>>>>CM:GREEN
     1.  14.1 Directive Prologues and the Use Strict Directive
 
+>>>>>CM:GREEN
 17. 15 Standard Built-in ECMAScript Objects
+>>>>>CM:GREEN
     1.  15.1 The Global Object
+>>>>>CM:GREEN
         1.  15.1.1 Value Properties of the Global Object
+>>>>>CM:GREEN
         2.  15.1.2 Function Properties of the Global Object
+>>>>>CM:GREEN
         3.  15.1.3 URI Handling Function Properties
+>>>>>CM:GREEN
         4.  15.1.4 Constructor Properties of the Global Object
+>>>>>CM:GREEN
         5.  15.1.5 Other Properties of the Global Object
 
+>>>>>CM:GREEN
     2.  15.2 Object Objects
+>>>>>CM:GREEN
         1.  15.2.1 The Object Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.2.2 The Object Constructor
+>>>>>CM:GREEN
         3.  15.2.3 Properties of the Object Constructor
+>>>>>CM:GREEN
         4.  15.2.4 Properties of the Object Prototype Object
+>>>>>CM:GREEN
         5.  15.2.5 Properties of Object Instances
 
+>>>>>CM:GREEN
     3.  15.3 Function Objects
+>>>>>CM:GREEN
         1.  15.3.1 The Function Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.3.2 The Function Constructor
+>>>>>CM:GREEN
         3.  15.3.3 Properties of the Function Constructor
+>>>>>CM:GREEN
         4.  15.3.4 Properties of the Function Prototype Object
+>>>>>CM:GREEN
         5.  15.3.5 Properties of Function Instances
 
+>>>>>CM:GREEN
     4.  15.4 Array Objects
+>>>>>CM:GREEN
         1.  15.4.1 The Array Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.4.2 The Array Constructor
+>>>>>CM:GREEN
         3.  15.4.3 Properties of the Array Constructor
+>>>>>CM:GREEN
         4.  15.4.4 Properties of the Array Prototype Object
+>>>>>CM:GREEN
         5.  15.4.5 Properties of Array Instances
 
+>>>>>CM:GREEN
     5.  15.5 String Objects
+>>>>>CM:GREEN
         1.  15.5.1 The String Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.5.2 The String Constructor
+>>>>>CM:GREEN
         3.  15.5.3 Properties of the String Constructor
+>>>>>CM:GREEN
         4.  15.5.4 Properties of the String Prototype Object
+>>>>>CM:GREEN
         5.  15.5.5 Properties of String Instances
 
+>>>>>CM:GREEN
     6.  15.6 Boolean Objects
+>>>>>CM:GREEN
         1.  15.6.1 The Boolean Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.6.2 The Boolean Constructor
+>>>>>CM:GREEN
         3.  15.6.3 Properties of the Boolean Constructor
+>>>>>CM:GREEN
         4.  15.6.4 Properties of the Boolean Prototype Object
+>>>>>CM:GREEN
         5.  15.6.5 Properties of Boolean Instances
 
+>>>>>CM:GREEN
     7.  15.7 Number Objects
+>>>>>CM:GREEN
         1.  15.7.1 The Number Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.7.2 The Number Constructor
+>>>>>CM:GREEN
         3.  15.7.3 Properties of the Number Constructor
+>>>>>CM:GREEN
         4.  15.7.4 Properties of the Number Prototype Object
+>>>>>CM:GREEN
         5.  15.7.5 Properties of Number Instances
 
+>>>>>CM:GREEN
     8.  15.8 The Math Object
+>>>>>CM:GREEN
         1.  15.8.1 Value Properties of the Math Object
+>>>>>CM:GREEN
         2.  15.8.2 Function Properties of the Math Object
 
+>>>>>CM:GREEN
     9.  15.9 Date Objects
+>>>>>CM:GREEN
         1.  15.9.1 Overview of Date Objects and Definitions of Abstract Operators
+>>>>>CM:GREEN
         2.  15.9.2 The Date Constructor Called as a Function
+>>>>>CM:GREEN
         3.  15.9.3 The Date Constructor
+>>>>>CM:GREEN
         4.  15.9.4 Properties of the Date Constructor
+>>>>>CM:GREEN
         5.  15.9.5 Properties of the Date Prototype Object
+>>>>>CM:GREEN
         6.  15.9.6 Properties of Date Instances
 
+>>>>>CM:GREEN
     10. 15.10 RegExp (Regular Expression) Objects
+>>>>>CM:GREEN
         1.  15.10.1 Patterns
+>>>>>CM:GREEN
         2.  15.10.2 Pattern Semantics
+>>>>>CM:GREEN
         3.  15.10.3 The RegExp Constructor Called as a Function
+>>>>>CM:GREEN
         4.  15.10.4 The RegExp Constructor
+>>>>>CM:GREEN
         5.  15.10.5 Properties of the RegExp Constructor
+>>>>>CM:GREEN
         6.  15.10.6 Properties of the RegExp Prototype Object
+>>>>>CM:GREEN
         7.  15.10.7 Properties of RegExp Instances
 
+>>>>>CM:GREEN
     11. 15.11 Error Objects
+>>>>>CM:GREEN
         1.  15.11.1 The Error Constructor Called as a Function
+>>>>>CM:GREEN
         2.  15.11.2 The Error Constructor
+>>>>>CM:GREEN
         3.  15.11.3 Properties of the Error Constructor
+>>>>>CM:GREEN
         4.  15.11.4 Properties of the Error Prototype Object
+>>>>>CM:GREEN
         5.  15.11.5 Properties of Error Instances
+>>>>>CM:GREEN
         6.  15.11.6 Native Error Types Used in This Standard
+>>>>>CM:GREEN
         7.  15.11.7 NativeError Object Structure
 
+>>>>>CM:GREEN
     12. 15.12 The JSON Object
+>>>>>CM:GREEN
         1.  15.12.1 The JSON Grammar
+>>>>>CM:GREEN
         2.  15.12.2 parse ( text [ , reviver ] )
+>>>>>CM:GREEN
         3.  15.12.3 stringify ( value [ , replacer [ , space ] ] )
 
+>>>>>CM:GREEN
 18. 16 Errors
+>>>>>CM:GREEN
 19. Annex A (informative) Grammar Summary
+>>>>>CM:GREEN
     1.  A.1 Lexical Grammar
+>>>>>CM:GREEN
     2.  A.2 Number Conversions
+>>>>>CM:GREEN
     3.  A.3 Expressions
+>>>>>CM:GREEN
     4.  A.4 Statements
+>>>>>CM:GREEN
     5.  A.5 Functions and Programs
+>>>>>CM:GREEN
     6.  A.6 Universal Resource Identifier Character Classes
+>>>>>CM:GREEN
     7.  A.7 Regular Expressions
+>>>>>CM:GREEN
     8.  A.8 JSON
+>>>>>CM:GREEN
         1.  A.8.1 JSON Lexical Grammar
+>>>>>CM:GREEN
         2.  A.8.2 JSON Syntactic Grammar
 
+>>>>>CM:GREEN
 20. Annex B (informative) Compatibility
+>>>>>CM:GREEN
     1.  B.1 Additional Syntax
+>>>>>CM:GREEN
         1.  B.1.1 Numeric Literals
+>>>>>CM:GREEN
         2.  B.1.2 String Literals
 
+>>>>>CM:GREEN
     2.  B.2 Additional Properties
+>>>>>CM:GREEN
         1.  B.2.1 escape (string)
+>>>>>CM:GREEN
         2.  B.2.2 unescape (string)
+>>>>>CM:GREEN
         3.  B.2.3 String.prototype.substr (start, length)
+>>>>>CM:GREEN
         4.  B.2.4 Date.prototype.getYear ( )
+>>>>>CM:GREEN
         5.  B.2.5 Date.prototype.setYear (year)
+>>>>>CM:GREEN
         6.  B.2.6 Date.prototype.toGMTString ( )
 
+>>>>>CM:GREEN
 21. Annex C (informative) The Strict Mode of ECMAScript
+>>>>>CM:GREEN
 22. Annex D (informative) Corrections and Clarifications in the 5th Edition with Possible 3rd
+>>>>>CM:GREEN
     Edition Compatibility Impact
+>>>>>CM:GREEN
 23. Annex E (informative) Additions and Changes in the 5th Edition that Introduce Incompatibilities
+>>>>>CM:GREEN
     with the 3rd Edition
+>>>>>CM:GREEN
 24. Annex F (informative) Technically Significant Corrections and Clarifications in the 5.1 Edition
+>>>>>CM:GREEN
 25. Bibliography
 
+>>>>>CM:GREEN
 Introduction
+>>>>>CM:GREEN
 ============
 
+>>>>>CM:GREEN
 This Ecma Standard is based on several originating technologies, the most well known being
+>>>>>CM:GREEN
 JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape
+>>>>>CM:GREEN
 and first appeared in that company’s Navigator 2.0 browser. It has appeared in all subsequent
+>>>>>CM:GREEN
 browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0.
 
+>>>>>CM:GREEN
 The development of this Standard started in November 1996. The first edition of this Ecma Standard
+>>>>>CM:GREEN
 was adopted by the Ecma General Assembly of June 1997.
 
+>>>>>CM:GREEN
 That Ecma Standard was submitted to ISO/IEC JTC 1 for adoption under the fast-track procedure, and
+>>>>>CM:GREEN
 approved as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June
+>>>>>CM:GREEN
 1998 approved the second edition of ECMA-262 to keep it fully aligned with ISO/IEC 16262. Changes
+>>>>>CM:GREEN
 between the first and the second edition are editorial in nature.
 
+>>>>>CM:GREEN
 The third edition of the Standard introduced powerful regular expressions, better string handling,
+>>>>>CM:GREEN
 new control statements, try/catch exception handling, tighter definition of errors, formatting for
+>>>>>CM:GREEN
 numeric output and minor changes in anticipation of forthcoming internationalisation facilities and
+>>>>>CM:GREEN
 future language growth. The third edition of the ECMAScript standard was adopted by the Ecma General
+>>>>>CM:GREEN
 Assembly of December 1999 and published as ISO/IEC 16262:2002 in June 2002.
 
+>>>>>CM:GREEN
 Since publication of the third edition, ECMAScript has achieved massive adoption in conjunction with
+>>>>>CM:GREEN
 the World Wide Web where it has become the programming language that is supported by essentially all
+>>>>>CM:GREEN
 web browsers. Significant work was done to develop a fourth edition of ECMAScript. Although that
+>>>>>CM:GREEN
 work was not completed and not published as the fourth edition of ECMAScript, it informs continuing
+>>>>>CM:GREEN
 evolution of the language. The fifth edition of ECMAScript (published as ECMA-262 5th edition)
+>>>>>CM:GREEN
 codifies de facto interpretations of the language specification that have become common among
+>>>>>CM:GREEN
 browser implementations and adds support for new features that have emerged since the publication of
+>>>>>CM:GREEN
 the third edition. Such features include accessor properties, reflective creation and inspection of
+>>>>>CM:GREEN
 objects, program control of property attributes, additional array manipulation functions, support
+>>>>>CM:GREEN
 for the JSON object encoding format, and a strict mode that provides enhanced error checking and
+>>>>>CM:GREEN
 program security.
 
+>>>>>CM:GREEN
 This present edition 5.1 of the ECMAScript Standard is fully aligned with third edition of the
+>>>>>CM:GREEN
 international standard ISO/IEC 16262:2011.
 
+>>>>>CM:GREEN
 ECMAScript is a vibrant language and the evolution of the language is not complete. Significant
+>>>>>CM:GREEN
 technical enhancement will continue with future editions of this specification.
 
+>>>>>CM:GREEN
 This Ecma Standard has been adopted by the General Assembly of June 2011.
 
+>>>>>CM:GREEN
 ECMAScript Language Specification

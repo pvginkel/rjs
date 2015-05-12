@@ -1,1822 +1,2753 @@
+>>>>>CM:GREEN
 Annex A (informative) Grammar Summary
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 A.1 Lexical Grammar
+>>>>>CM:GREEN
 ===================
 
+>>>>>CM:GREEN
 See clause 6
 
+>>>>>CM:GREEN
 SourceCharacter ::
 
+>>>>>CM:GREEN
 any Unicode code unit
 
+>>>>>CM:GREEN
 See clause 7
 
+>>>>>CM:GREEN
 InputElementDiv ::
 
+>>>>>CM:GREEN
 WhiteSpace
 
+>>>>>CM:GREEN
 LineTerminator
 
+>>>>>CM:GREEN
 Comment
 
+>>>>>CM:GREEN
 Token
 
+>>>>>CM:GREEN
 DivPunctuator
 
+>>>>>CM:GREEN
 See clause 7
 
+>>>>>CM:GREEN
 InputElementRegExp ::
 
+>>>>>CM:GREEN
 WhiteSpace
 
+>>>>>CM:GREEN
 LineTerminator
 
+>>>>>CM:GREEN
 Comment
 
+>>>>>CM:GREEN
 Token
 
+>>>>>CM:GREEN
 RegularExpressionLiteral
 
+>>>>>CM:GREEN
 See 7.2
 
+>>>>>CM:GREEN
 WhiteSpace ::
 
+>>>>>CM:GREEN
 <TAB>
 
+>>>>>CM:GREEN
 <VT>
 
+>>>>>CM:GREEN
 <FF>
 
+>>>>>CM:GREEN
 <SP>
 
+>>>>>CM:GREEN
 <NBSP>
 
+>>>>>CM:GREEN
 <BOM>
 
+>>>>>CM:GREEN
 <USP>
 
+>>>>>CM:GREEN
 See 7.3
 
+>>>>>CM:GREEN
 LineTerminator ::
 
+>>>>>CM:GREEN
 <LF>
 
+>>>>>CM:GREEN
 <CR>
 
+>>>>>CM:GREEN
 <LS>
 
+>>>>>CM:GREEN
 <PS>
 
+>>>>>CM:GREEN
 See 7.3
 
+>>>>>CM:GREEN
 LineTerminatorSequence ::
 
+>>>>>CM:GREEN
 <LF>
 
+>>>>>CM:GREEN
 <CR> [lookahead ? <LF> ]
 
+>>>>>CM:GREEN
 <LS>
 
+>>>>>CM:GREEN
 <PS>
 
+>>>>>CM:GREEN
 <CR> <LF>
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 Comment ::
 
+>>>>>CM:GREEN
 MultiLineComment
 
+>>>>>CM:GREEN
 SingleLineComment
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 MultiLineComment ::
 
+>>>>>CM:GREEN
 /* MultiLineCommentCharsopt */
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 MultiLineCommentChars ::
 
+>>>>>CM:GREEN
 MultiLineNotAsteriskChar MultiLineCommentCharsopt
 
+>>>>>CM:GREEN
 * PostAsteriskCommentCharsopt
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 PostAsteriskCommentChars ::
 
+>>>>>CM:GREEN
 MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentCharsopt
 
+>>>>>CM:GREEN
 * PostAsteriskCommentCharsopt
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 MultiLineNotAsteriskChar ::
 
+>>>>>CM:GREEN
 SourceCharacter but not *
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 MultiLineNotForwardSlashOrAsteriskChar ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of / or *
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 SingleLineComment ::
 
+>>>>>CM:GREEN
 // SingleLineCommentCharsopt
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 SingleLineCommentChars ::
 
+>>>>>CM:GREEN
 SingleLineCommentChar SingleLineCommentCharsopt
 
+>>>>>CM:GREEN
 See 7.4
 
+>>>>>CM:GREEN
 SingleLineCommentChar ::
 
+>>>>>CM:GREEN
 SourceCharacter but not LineTerminator
 
+>>>>>CM:GREEN
 See 7.5
 
+>>>>>CM:GREEN
 Token ::
 
+>>>>>CM:GREEN
 IdentifierName
 
+>>>>>CM:GREEN
 Punctuator
 
+>>>>>CM:GREEN
 NumericLiteral
 
+>>>>>CM:GREEN
 StringLiteral
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 Identifier ::
 
+>>>>>CM:GREEN
 IdentifierName but not ReservedWord
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 IdentifierName ::
 
+>>>>>CM:GREEN
 IdentifierStart
 
+>>>>>CM:GREEN
 IdentifierName IdentifierPart
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 IdentifierStart ::
 
+>>>>>CM:GREEN
 UnicodeLetter
 
+>>>>>CM:GREEN
 $
 
+>>>>>CM:GREEN
 _
 
+>>>>>CM:GREEN
 \ UnicodeEscapeSequence
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 IdentifierPart ::
 
+>>>>>CM:GREEN
 IdentifierStart
 
+>>>>>CM:GREEN
 UnicodeCombiningMark
 
+>>>>>CM:GREEN
 UnicodeDigit
 
+>>>>>CM:GREEN
 UnicodeConnectorPunctuation
 
+>>>>>CM:GREEN
 <ZWNJ>
 
+>>>>>CM:GREEN
 <ZWJ>
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 UnicodeLetter ::
 
-any character in the Unicode categories “Uppercase letter (Lu)”, “Lowercase letter (Ll)”, “Titlecase
-letter (Lt)”, “Modifier letter (Lm)”, “Other letter (Lo)”, or “Letter number (Nl)”.
+>>>>>CM:GREEN
+any character in the Unicode categories ï¿½Uppercase letter (Lu)ï¿½, ï¿½Lowercase letter (Ll)ï¿½, ï¿½Titlecase
+>>>>>CM:GREEN
+letter (Lt)ï¿½, ï¿½Modifier letter (Lm)ï¿½, ï¿½Other letter (Lo)ï¿½, or ï¿½Letter number (Nl)ï¿½.
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 UnicodeCombiningMark ::
 
-any character in the Unicode categories “Non-spacing mark (Mn)” or “Combining spacing mark (Mc)”
+>>>>>CM:GREEN
+any character in the Unicode categories ï¿½Non-spacing mark (Mn)ï¿½ or ï¿½Combining spacing mark (Mc)ï¿½
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 UnicodeDigit ::
 
-any character in the Unicode category “Decimal number (Nd)”
+>>>>>CM:GREEN
+any character in the Unicode category ï¿½Decimal number (Nd)ï¿½
 
+>>>>>CM:GREEN
 See 7.6
 
+>>>>>CM:GREEN
 UnicodeConnectorPunctuation ::
 
-any character in the Unicode category “Connector punctuation (Pc)”
+>>>>>CM:GREEN
+any character in the Unicode category ï¿½Connector punctuation (Pc)ï¿½
 
+>>>>>CM:GREEN
 See 7.6.1
 
+>>>>>CM:GREEN
 ReservedWord ::
 
+>>>>>CM:GREEN
 Keyword
 
+>>>>>CM:GREEN
 FutureReservedWord
 
+>>>>>CM:GREEN
 NullLiteral
 
+>>>>>CM:GREEN
 BooleanLiteral
 
+>>>>>CM:GREEN
 See 7.6.1.1
 
+>>>>>CM:GREEN
 Keyword :: one of
 
+>>>>>CM:GREEN
   ---------- ---------- ------------ --------
+>>>>>CM:GREEN
   break      do         instanceof   typeof
+>>>>>CM:GREEN
   case       else       new          var
+>>>>>CM:GREEN
   catch      finally    return       void
+>>>>>CM:GREEN
   continue   for        switch       while
+>>>>>CM:GREEN
   debugger   function   this         with
+>>>>>CM:GREEN
   default    if         throw        
+>>>>>CM:GREEN
   delete     in         try          
+>>>>>CM:GREEN
   ---------- ---------- ------------ --------
 
+>>>>>CM:GREEN
 See 7.6.1.2
 
+>>>>>CM:GREEN
 FutureReservedWord :: one of
 
+>>>>>CM:GREEN
   ------- -------- ---------- -------
+>>>>>CM:GREEN
   class   enum     extends    super
 
+>>>>>CM:GREEN
   const   export   import     
                               
+>>>>>CM:GREEN
   ------- -------- ---------- -------
 
+>>>>>CM:GREEN
 The following tokens are also considered to be FutureReservedWords when parsing strict mode code
+>>>>>CM:GREEN
 (see 10.1.1).
 
+>>>>>CM:GREEN
   ------------ --------- ----------- --------
+>>>>>CM:GREEN
   implements   let       private     public
+>>>>>CM:GREEN
   interface    package   protected   static
+>>>>>CM:GREEN
   yield                              
+>>>>>CM:GREEN
   ------------ --------- ----------- --------
 
+>>>>>CM:GREEN
 See 7.7
 
+>>>>>CM:GREEN
 Punctuator :: one of
 
+>>>>>CM:GREEN
   ----- ------ ----- ----- ----- -----
+>>>>>CM:GREEN
   {     }      (     )     [     ]
+>>>>>CM:GREEN
   .     ;      ,     <     >     <=
+>>>>>CM:GREEN
   >=    ==     !=    ===   !==   
-  +     -      *     %     ++    –
+>>>>>CM:GREEN
+  +     -      *     %     ++    ï¿½
+>>>>>CM:GREEN
   <<    >>     >>>   &     |     ^
+>>>>>CM:GREEN
   !     ~      &&    ||    ?     :
+>>>>>CM:GREEN
   =     +=     -=    *=    %=    <<=
+>>>>>CM:GREEN
   >>=   >>>=   &=    |=    ^=    
+>>>>>CM:GREEN
   ----- ------ ----- ----- ----- -----
 
+>>>>>CM:GREEN
 See 7.7
 
+>>>>>CM:GREEN
 DivPunctuator :: one of
 
+>>>>>CM:GREEN
   --- ---- -- -- -- --
+>>>>>CM:GREEN
   /   /=            
+>>>>>CM:GREEN
   --- ---- -- -- -- --
 
+>>>>>CM:GREEN
 See 7.8
 
+>>>>>CM:GREEN
 Literal ::
 
+>>>>>CM:GREEN
 NullLiteral
 
+>>>>>CM:GREEN
 BooleanLiteral
 
+>>>>>CM:GREEN
 NumericLiteral
 
+>>>>>CM:GREEN
 StringLiteral
 
+>>>>>CM:GREEN
 RegularExpressionLiteral
 
+>>>>>CM:GREEN
 See 7.8.1
 
+>>>>>CM:GREEN
 NullLiteral ::
 
+>>>>>CM:GREEN
 null
 
+>>>>>CM:GREEN
 See 7.8.2
 
+>>>>>CM:GREEN
 BooleanLiteral ::
 
+>>>>>CM:GREEN
 true
 
+>>>>>CM:GREEN
 false
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 NumericLiteral ::
 
+>>>>>CM:GREEN
 DecimalLiteral
 
+>>>>>CM:GREEN
 HexIntegerLiteral
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 DecimalLiteral ::
 
+>>>>>CM:GREEN
 DecimalIntegerLiteral . DecimalDigitsopt ExponentPartopt
 
+>>>>>CM:GREEN
 . DecimalDigits ExponentPartopt
 
+>>>>>CM:GREEN
 DecimalIntegerLiteral ExponentPartopt
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 DecimalIntegerLiteral ::
 
+>>>>>CM:GREEN
 0
 
+>>>>>CM:GREEN
 NonZeroDigit DecimalDigitsopt
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 DecimalDigits ::
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 DecimalDigits DecimalDigit
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 DecimalDigit :: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 NonZeroDigit :: one of
 
+>>>>>CM:GREEN
 1 2 3 4 5 6 7 8 9
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 ExponentPart ::
 
+>>>>>CM:GREEN
 ExponentIndicator SignedInteger
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 ExponentIndicator :: one of
 
+>>>>>CM:GREEN
 e E
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 SignedInteger ::
 
+>>>>>CM:GREEN
 DecimalDigits
 
+>>>>>CM:GREEN
 + DecimalDigits
 
+>>>>>CM:GREEN
 - DecimalDigits
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 HexIntegerLiteral ::
 
+>>>>>CM:GREEN
 0x HexDigit
 
+>>>>>CM:GREEN
 0X HexDigit
 
+>>>>>CM:GREEN
 HexIntegerLiteral HexDigit
 
+>>>>>CM:GREEN
 See 7.8.3
 
+>>>>>CM:GREEN
 HexDigit :: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 StringLiteral ::
 
+>>>>>CM:GREEN
 " DoubleStringCharactersopt "
 
+>>>>>CM:GREEN
 ' SingleStringCharactersopt '
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 DoubleStringCharacters ::
 
+>>>>>CM:GREEN
 DoubleStringCharacter DoubleStringCharactersopt
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 SingleStringCharacters ::
 
+>>>>>CM:GREEN
 SingleStringCharacter SingleStringCharactersopt
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 DoubleStringCharacter ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of " or \ or LineTerminator
 
+>>>>>CM:GREEN
 \ EscapeSequence
 
+>>>>>CM:GREEN
 LineContinuation
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 SingleStringCharacter ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of ' or \ or LineTerminator
 
+>>>>>CM:GREEN
 \ EscapeSequence
 
+>>>>>CM:GREEN
 LineContinuation
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 LineContinuation ::
 
+>>>>>CM:GREEN
 \ LineTerminatorSequence
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 EscapeSequence ::
 
+>>>>>CM:GREEN
 CharacterEscapeSequence
 
+>>>>>CM:GREEN
 0 [lookahead ? DecimalDigit]
 
+>>>>>CM:GREEN
 HexEscapeSequence
 
+>>>>>CM:GREEN
 UnicodeEscapeSequence
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 CharacterEscapeSequence ::
 
+>>>>>CM:GREEN
 SingleEscapeCharacter
 
+>>>>>CM:GREEN
 NonEscapeCharacter
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 SingleEscapeCharacter :: one of
 
+>>>>>CM:GREEN
 ' " \ b f n r t v
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 NonEscapeCharacter ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of EscapeCharacter or LineTerminator
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 EscapeCharacter ::
 
+>>>>>CM:GREEN
 SingleEscapeCharacter
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 x
 
+>>>>>CM:GREEN
 u
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 HexEscapeSequence ::
 
+>>>>>CM:GREEN
 x HexDigit HexDigit
 
+>>>>>CM:GREEN
 See 7.8.4
 
+>>>>>CM:GREEN
 UnicodeEscapeSequence ::
 
+>>>>>CM:GREEN
 u HexDigit HexDigit HexDigit HexDigit
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionLiteral ::
 
+>>>>>CM:GREEN
 / RegularExpressionBody / RegularExpressionFlags
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionBody ::
 
+>>>>>CM:GREEN
 RegularExpressionFirstChar RegularExpressionChars
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionChars ::
 
+>>>>>CM:GREEN
 [empty]
 
+>>>>>CM:GREEN
 RegularExpressionChars RegularExpressionChar
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionFirstChar ::
 
+>>>>>CM:GREEN
 RegularExpressionNonTerminator but not one of * or \ or / or [
 
+>>>>>CM:GREEN
 RegularExpressionBackslashSequence
 
+>>>>>CM:GREEN
 RegularExpressionClass
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionChar ::
 
+>>>>>CM:GREEN
 RegularExpressionNonTerminator but not \ or / or [
 
+>>>>>CM:GREEN
 RegularExpressionBackslashSequence
 
+>>>>>CM:GREEN
 RegularExpressionClass
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionBackslashSequence ::
 
+>>>>>CM:GREEN
 \ RegularExpressionNonTerminator
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionNonTerminator ::
 
+>>>>>CM:GREEN
 SourceCharacter but not LineTerminator
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionClass ::
 
+>>>>>CM:GREEN
 [ RegularExpressionClassChars ]
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionClassChars ::
 
+>>>>>CM:GREEN
 [empty]
 
+>>>>>CM:GREEN
 RegularExpressionClassChars RegularExpressionClassChar
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionClassChar ::
 
+>>>>>CM:GREEN
 RegularExpressionNonTerminator but not ] or \
 
+>>>>>CM:GREEN
 RegularExpressionBackslashSequence
 
+>>>>>CM:GREEN
 See 7.8.5
 
+>>>>>CM:GREEN
 RegularExpressionFlags ::
 
+>>>>>CM:GREEN
 [empty]
 
+>>>>>CM:GREEN
 RegularExpressionFlags IdentifierPart
 
+>>>>>CM:GREEN
 A.2 Number Conversions
+>>>>>CM:GREEN
 ======================
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StringNumericLiteral :::
 
+>>>>>CM:GREEN
 StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 StrWhiteSpaceopt StrNumericLiteral StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StrWhiteSpace :::
 
+>>>>>CM:GREEN
 StrWhiteSpaceChar StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StrWhiteSpaceChar :::
 
+>>>>>CM:GREEN
 WhiteSpace
 
+>>>>>CM:GREEN
 LineTerminator
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StrNumericLiteral :::
 
+>>>>>CM:GREEN
 StrDecimalLiteral
 
+>>>>>CM:GREEN
 HexIntegerLiteral
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StrDecimalLiteral :::
 
+>>>>>CM:GREEN
 StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 + StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 - StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 StrUnsignedDecimalLiteral :::
 
+>>>>>CM:GREEN
 Infinity
 
+>>>>>CM:GREEN
 DecimalDigits . DecimalDigitsopt ExponentPartopt
 
+>>>>>CM:GREEN
 . DecimalDigits ExponentPartopt
 
+>>>>>CM:GREEN
 DecimalDigits ExponentPartopt
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 DecimalDigits :::
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 DecimalDigits DecimalDigit
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 DecimalDigit ::: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 ExponentPart :::
 
+>>>>>CM:GREEN
 ExponentIndicator SignedInteger
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 ExponentIndicator ::: one of
 
+>>>>>CM:GREEN
 e E
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 SignedInteger :::
 
+>>>>>CM:GREEN
 DecimalDigits
 
+>>>>>CM:GREEN
 + DecimalDigits
 
+>>>>>CM:GREEN
 - DecimalDigits
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 HexIntegerLiteral :::
 
+>>>>>CM:GREEN
 0x HexDigit
 
+>>>>>CM:GREEN
 0X HexDigit
 
+>>>>>CM:GREEN
 HexIntegerLiteral HexDigit
 
+>>>>>CM:GREEN
 See 9.3.1
 
+>>>>>CM:GREEN
 HexDigit ::: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
 
+>>>>>CM:GREEN
 A.3 Expressions
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 See 11.1
 
+>>>>>CM:GREEN
 PrimaryExpression :
 
+>>>>>CM:GREEN
 this
 
+>>>>>CM:GREEN
 Identifier
 
+>>>>>CM:GREEN
 Literal
 
+>>>>>CM:GREEN
 ArrayLiteral
 
+>>>>>CM:GREEN
 ObjectLiteral
 
+>>>>>CM:GREEN
 ( Expression )
 
+>>>>>CM:GREEN
 See 11.1.4
 
+>>>>>CM:GREEN
 ArrayLiteral :
 
+>>>>>CM:GREEN
 [ Elisionopt ]
 
+>>>>>CM:GREEN
 [ ElementList ]
 
+>>>>>CM:GREEN
 [ ElementList , Elisionopt ]
 
+>>>>>CM:GREEN
 See 11.1.4
 
+>>>>>CM:GREEN
 ElementList :
 
+>>>>>CM:GREEN
 Elisionopt AssignmentExpression
 
+>>>>>CM:GREEN
 ElementList , Elisionopt AssignmentExpression
 
+>>>>>CM:GREEN
 See 11.1.4
 
+>>>>>CM:GREEN
 Elision :
 
+>>>>>CM:GREEN
 ,
 
+>>>>>CM:GREEN
 Elision ,
 
+>>>>>CM:GREEN
 See 11.1.5
 
+>>>>>CM:GREEN
 ObjectLiteral :
 
+>>>>>CM:GREEN
 { }
 
+>>>>>CM:GREEN
 { PropertyNameAndValueList }
 
+>>>>>CM:GREEN
 { PropertyNameAndValueList , }
 
+>>>>>CM:GREEN
 See 11.1.5
 
+>>>>>CM:GREEN
 PropertyNameAndValueList :
 
+>>>>>CM:GREEN
 PropertyAssignment
 
+>>>>>CM:GREEN
 PropertyNameAndValueList , PropertyAssignment
 
+>>>>>CM:GREEN
 See 11.1.5
 
+>>>>>CM:GREEN
 PropertyAssignment :
 
+>>>>>CM:GREEN
 PropertyName : AssignmentExpression
 
+>>>>>CM:GREEN
 get PropertyName ( ) { FunctionBody }
 
+>>>>>CM:GREEN
 set PropertyName ( PropertySetParameterList ) { FunctionBody }
 
+>>>>>CM:GREEN
 See 11.1.5
 
+>>>>>CM:GREEN
 PropertyName :
 
+>>>>>CM:GREEN
 IdentifierName
 
+>>>>>CM:GREEN
 StringLiteral
 
+>>>>>CM:GREEN
 NumericLiteral
 
+>>>>>CM:GREEN
 See 11.1.5
 
+>>>>>CM:GREEN
 PropertySetParameterList :
 
+>>>>>CM:GREEN
 Identifier
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 MemberExpression :
 
+>>>>>CM:GREEN
 PrimaryExpression
 
+>>>>>CM:GREEN
 FunctionExpression
 
+>>>>>CM:GREEN
 MemberExpression [ Expression ]
 
+>>>>>CM:GREEN
 MemberExpression . IdentifierName
 
+>>>>>CM:GREEN
 new MemberExpression Arguments
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 NewExpression :
 
+>>>>>CM:GREEN
 MemberExpression
 
+>>>>>CM:GREEN
 new NewExpression
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 CallExpression :
 
+>>>>>CM:GREEN
 MemberExpression Arguments
 
+>>>>>CM:GREEN
 CallExpression Arguments
 
+>>>>>CM:GREEN
 CallExpression [ Expression ]
 
+>>>>>CM:GREEN
 CallExpression . IdentifierName
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 Arguments :
 
+>>>>>CM:GREEN
 ( )
 
+>>>>>CM:GREEN
 ( ArgumentList )
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 ArgumentList :
 
+>>>>>CM:GREEN
 AssignmentExpression
 
+>>>>>CM:GREEN
 ArgumentList , AssignmentExpression
 
+>>>>>CM:GREEN
 See 11.2
 
+>>>>>CM:GREEN
 LeftHandSideExpression :
 
+>>>>>CM:GREEN
 NewExpression
 
+>>>>>CM:GREEN
 CallExpression
 
+>>>>>CM:GREEN
 See 11.3
 
+>>>>>CM:GREEN
 PostfixExpression :
 
+>>>>>CM:GREEN
 LeftHandSideExpression
 
+>>>>>CM:GREEN
 LeftHandSideExpression [no LineTerminator here] ++
 
+>>>>>CM:GREEN
 LeftHandSideExpression [no LineTerminator here] --
 
+>>>>>CM:GREEN
 See 11.4
 
+>>>>>CM:GREEN
 UnaryExpression :
 
+>>>>>CM:GREEN
 PostfixExpression
 
+>>>>>CM:GREEN
 delete UnaryExpression
 
+>>>>>CM:GREEN
 void UnaryExpression
 
+>>>>>CM:GREEN
 typeof UnaryExpression
 
+>>>>>CM:GREEN
 ++ UnaryExpression
 
+>>>>>CM:GREEN
 -- UnaryExpression
 
+>>>>>CM:GREEN
 + UnaryExpression
 
+>>>>>CM:GREEN
 - UnaryExpression
 
+>>>>>CM:GREEN
 ~ UnaryExpression
 
+>>>>>CM:GREEN
 ! UnaryExpression
 
+>>>>>CM:GREEN
 See 11.5
 
+>>>>>CM:GREEN
 MultiplicativeExpression :
 
+>>>>>CM:GREEN
 UnaryExpression
 
+>>>>>CM:GREEN
 MultiplicativeExpression * UnaryExpression
 
+>>>>>CM:GREEN
 MultiplicativeExpression / UnaryExpression
 
+>>>>>CM:GREEN
 MultiplicativeExpression % UnaryExpression
 
+>>>>>CM:GREEN
 See 11.6
 
+>>>>>CM:GREEN
 AdditiveExpression :
 
+>>>>>CM:GREEN
 MultiplicativeExpression
 
+>>>>>CM:GREEN
 AdditiveExpression + MultiplicativeExpression
 
+>>>>>CM:GREEN
 AdditiveExpression - MultiplicativeExpression
 
+>>>>>CM:GREEN
 See 11.7
 
+>>>>>CM:GREEN
 ShiftExpression :
 
+>>>>>CM:GREEN
 AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression << AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression >> AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression >>> AdditiveExpression
 
+>>>>>CM:GREEN
 See 11.8
 
+>>>>>CM:GREEN
 RelationalExpression :
 
+>>>>>CM:GREEN
 ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression < ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression > ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression <= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression >= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression instanceof ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression in ShiftExpression
 
+>>>>>CM:GREEN
 See 11.8
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn :
 
+>>>>>CM:GREEN
 ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn < ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn > ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn <= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn >= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn instanceof ShiftExpression
 
+>>>>>CM:GREEN
 See 11.9
 
+>>>>>CM:GREEN
 EqualityExpression :
 
+>>>>>CM:GREEN
 RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression == RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression != RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression === RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression !== RelationalExpression
 
+>>>>>CM:GREEN
 See 11.9
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn :
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn == RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn != RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn === RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn !== RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseANDExpression :
 
+>>>>>CM:GREEN
 EqualityExpression
 
+>>>>>CM:GREEN
 BitwiseANDExpression & EqualityExpression
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn :
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn & EqualityExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseXORExpression :
 
+>>>>>CM:GREEN
 BitwiseANDExpression
 
+>>>>>CM:GREEN
 BitwiseXORExpression ^ BitwiseANDExpression
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn :
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn ^ BitwiseANDExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseORExpression :
 
+>>>>>CM:GREEN
 BitwiseXORExpression
 
+>>>>>CM:GREEN
 BitwiseORExpression | BitwiseXORExpression
 
+>>>>>CM:GREEN
 See 11.10
 
+>>>>>CM:GREEN
 BitwiseORExpressionNoIn :
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseORExpressionNoIn | BitwiseXORExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.11
 
+>>>>>CM:GREEN
 LogicalANDExpression :
 
+>>>>>CM:GREEN
 BitwiseORExpression
 
+>>>>>CM:GREEN
 LogicalANDExpression && BitwiseORExpression
 
+>>>>>CM:GREEN
 See 11.11
 
+>>>>>CM:GREEN
 LogicalANDExpressionNoIn :
 
+>>>>>CM:GREEN
 BitwiseORExpressionNoIn
 
+>>>>>CM:GREEN
 LogicalANDExpressionNoIn && BitwiseORExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.11
 
+>>>>>CM:GREEN
 LogicalORExpression :
 
+>>>>>CM:GREEN
 LogicalANDExpression
 
+>>>>>CM:GREEN
 LogicalORExpression || LogicalANDExpression
 
+>>>>>CM:GREEN
 See 11.11
 
+>>>>>CM:GREEN
 LogicalORExpressionNoIn :
 
+>>>>>CM:GREEN
 LogicalANDExpressionNoIn
 
+>>>>>CM:GREEN
 LogicalORExpressionNoIn || LogicalANDExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.12
 
+>>>>>CM:GREEN
 ConditionalExpression :
 
+>>>>>CM:GREEN
 LogicalORExpression
 
+>>>>>CM:GREEN
 LogicalORExpression ? AssignmentExpression : AssignmentExpression
 
+>>>>>CM:GREEN
 See 11.12
 
+>>>>>CM:GREEN
 ConditionalExpressionNoIn :
 
+>>>>>CM:GREEN
 LogicalORExpressionNoIn
 
+>>>>>CM:GREEN
 LogicalORExpressionNoIn ? AssignmentExpression : AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.13
 
+>>>>>CM:GREEN
 AssignmentExpression :
 
+>>>>>CM:GREEN
 ConditionalExpression
 
+>>>>>CM:GREEN
 LeftHandSideExpression = AssignmentExpression
 
+>>>>>CM:GREEN
 LeftHandSideExpression AssignmentOperator AssignmentExpression
 
+>>>>>CM:GREEN
 See 11.13
 
+>>>>>CM:GREEN
 AssignmentExpressionNoIn :
 
+>>>>>CM:GREEN
 ConditionalExpressionNoIn
 
+>>>>>CM:GREEN
 LeftHandSideExpression = AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 LeftHandSideExpression AssignmentOperator AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 See 11.13
 
+>>>>>CM:GREEN
 AssignmentOperator : one of
 
+>>>>>CM:GREEN
   ---- ---- ---- ---- ---- ----- ----- ------ ---- ---- ----
+>>>>>CM:GREEN
   *=   /=   %=   +=   -=   <<=   >>=   >>>=   &=   ^=   |=
+>>>>>CM:GREEN
   ---- ---- ---- ---- ---- ----- ----- ------ ---- ---- ----
 
+>>>>>CM:GREEN
 See 11.14
 
+>>>>>CM:GREEN
 Expression :
 
+>>>>>CM:GREEN
 AssignmentExpression
 
+>>>>>CM:GREEN
 Expression , AssignmentExpression
 
+>>>>>CM:GREEN
 See 11.14
 
+>>>>>CM:GREEN
 ExpressionNoIn :
 
+>>>>>CM:GREEN
 AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 ExpressionNoIn , AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 A.4 Statements
+>>>>>CM:GREEN
 ==============
 
+>>>>>CM:GREEN
 See clause 12
 
+>>>>>CM:GREEN
 Statement :
 
+>>>>>CM:GREEN
 Block
 
+>>>>>CM:GREEN
 VariableStatement
 
+>>>>>CM:GREEN
 EmptyStatement
 
+>>>>>CM:GREEN
 ExpressionStatement
 
+>>>>>CM:GREEN
 IfStatement
 
+>>>>>CM:GREEN
 IterationStatement
 
+>>>>>CM:GREEN
 ContinueStatement
 
+>>>>>CM:GREEN
 BreakStatement
 
+>>>>>CM:GREEN
 ReturnStatement
 
+>>>>>CM:GREEN
 WithStatement
 
+>>>>>CM:GREEN
 LabelledStatement
 
+>>>>>CM:GREEN
 SwitchStatement
 
+>>>>>CM:GREEN
 ThrowStatement
 
+>>>>>CM:GREEN
 TryStatement
 
+>>>>>CM:GREEN
 DebuggerStatement
 
+>>>>>CM:GREEN
 See 12.1
 
+>>>>>CM:GREEN
 Block :
 
+>>>>>CM:GREEN
 { StatementListopt }
 
+>>>>>CM:GREEN
 See 12.1
 
+>>>>>CM:GREEN
 StatementList :
 
+>>>>>CM:GREEN
 Statement
 
+>>>>>CM:GREEN
 StatementList Statement
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 VariableStatement :
 
+>>>>>CM:GREEN
 var VariableDeclarationList ;
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 VariableDeclarationList :
 
+>>>>>CM:GREEN
 VariableDeclaration
 
+>>>>>CM:GREEN
 VariableDeclarationList , VariableDeclaration
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 VariableDeclarationListNoIn :
 
+>>>>>CM:GREEN
 VariableDeclarationNoIn
 
+>>>>>CM:GREEN
 VariableDeclarationListNoIn , VariableDeclarationNoIn
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 VariableDeclaration :
 
+>>>>>CM:GREEN
 Identifier Initialiseropt
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 VariableDeclarationNoIn :
 
+>>>>>CM:GREEN
 Identifier InitialiserNoInopt
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 Initialiser :
 
+>>>>>CM:GREEN
 = AssignmentExpression
 
+>>>>>CM:GREEN
 See 12.2
 
+>>>>>CM:GREEN
 InitialiserNoIn :
 
+>>>>>CM:GREEN
 = AssignmentExpressionNoIn
 
+>>>>>CM:GREEN
 See 12.3
 
+>>>>>CM:GREEN
 EmptyStatement :
 
+>>>>>CM:GREEN
 ;
 
+>>>>>CM:GREEN
 See 12.4
 
+>>>>>CM:GREEN
 ExpressionStatement :
 
+>>>>>CM:GREEN
 [lookahead ? {{, function}] Expression ;
 
+>>>>>CM:GREEN
 See 12.5
 
+>>>>>CM:GREEN
 IfStatement :
 
+>>>>>CM:GREEN
 if ( Expression ) Statement else Statement
 
+>>>>>CM:GREEN
 if ( Expression ) Statement
 
+>>>>>CM:GREEN
 See 12.6
 
+>>>>>CM:GREEN
 IterationStatement :
 
+>>>>>CM:GREEN
 do Statement while ( Expression );
 
+>>>>>CM:GREEN
 while ( Expression ) Statement
 
+>>>>>CM:GREEN
 for ( ExpressionNoInopt ; Expressionopt ; Expressionopt ) Statement
 
+>>>>>CM:GREEN
 for ( var VariableDeclarationListNoIn ; Expressionopt ; Expressionopt ) Statement
 
+>>>>>CM:GREEN
 for ( LeftHandSideExpression in Expression ) Statement
 
+>>>>>CM:GREEN
 for ( var VariableDeclarationNoIn in Expression ) Statement
 
+>>>>>CM:GREEN
 See 12.7
 
+>>>>>CM:GREEN
 ContinueStatement :
 
+>>>>>CM:GREEN
 continue ;
 
+>>>>>CM:GREEN
 continue [no LineTerminator here] Identifier ;
 
+>>>>>CM:GREEN
 See 12.8
 
+>>>>>CM:GREEN
 BreakStatement :
 
+>>>>>CM:GREEN
 break ;
 
+>>>>>CM:GREEN
 break [no LineTerminator here] Identifier ;
 
+>>>>>CM:GREEN
 See 12.9
 
+>>>>>CM:GREEN
 ReturnStatement :
 
+>>>>>CM:GREEN
 return ;
 
+>>>>>CM:GREEN
 return [no LineTerminator here] Expression ;
 
+>>>>>CM:GREEN
 See 12.10
 
+>>>>>CM:GREEN
 WithStatement :
 
+>>>>>CM:GREEN
 with ( Expression ) Statement
 
+>>>>>CM:GREEN
 See 12.11
 
+>>>>>CM:GREEN
 SwitchStatement :
 
+>>>>>CM:GREEN
 switch ( Expression ) CaseBlock
 
+>>>>>CM:GREEN
 See 12.11
 
+>>>>>CM:GREEN
 CaseBlock :
 
+>>>>>CM:GREEN
 { CaseClausesopt }
 
+>>>>>CM:GREEN
 { CaseClausesopt DefaultClause CaseClausesopt }
 
+>>>>>CM:GREEN
 See 12.11
 
+>>>>>CM:GREEN
 CaseClauses :
 
+>>>>>CM:GREEN
 CaseClause
 
+>>>>>CM:GREEN
 CaseClauses CaseClause
 
+>>>>>CM:GREEN
 See 12.11
 
+>>>>>CM:GREEN
 CaseClause :
 
+>>>>>CM:GREEN
 case Expression : StatementListopt
 
+>>>>>CM:GREEN
 See 12.11
 
+>>>>>CM:GREEN
 DefaultClause :
 
+>>>>>CM:GREEN
 default : StatementListopt
 
+>>>>>CM:GREEN
 See 12.12
 
+>>>>>CM:GREEN
 LabelledStatement :
 
+>>>>>CM:GREEN
 Identifier : Statement
 
+>>>>>CM:GREEN
 See 12.13
 
+>>>>>CM:GREEN
 ThrowStatement :
 
+>>>>>CM:GREEN
 throw [no LineTerminator here] Expression ;
 
+>>>>>CM:GREEN
 See 12.14
 
+>>>>>CM:GREEN
 TryStatement :
 
+>>>>>CM:GREEN
 try Block Catch
 
+>>>>>CM:GREEN
 try Block Finally
 
+>>>>>CM:GREEN
 try Block Catch Finally
 
+>>>>>CM:GREEN
 See 12.14
 
+>>>>>CM:GREEN
 Catch :
 
+>>>>>CM:GREEN
 catch ( Identifier ) Block
 
+>>>>>CM:GREEN
 See 12.14
 
+>>>>>CM:GREEN
 Finally :
 
+>>>>>CM:GREEN
 finally Block
 
+>>>>>CM:GREEN
 See 12.15
 
+>>>>>CM:GREEN
 DebuggerStatement :
 
+>>>>>CM:GREEN
 debugger ;
 
+>>>>>CM:GREEN
 A.5 Functions and Programs
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 See clause 13
 
+>>>>>CM:GREEN
 FunctionDeclaration :
 
+>>>>>CM:GREEN
 function Identifier ( FormalParameterListopt ) { FunctionBody }
 
+>>>>>CM:GREEN
 See clause 13
 
+>>>>>CM:GREEN
 FunctionExpression :
 
+>>>>>CM:GREEN
 function Identifieropt ( FormalParameterListopt ) { FunctionBody }
 
+>>>>>CM:GREEN
 See clause 13
 
+>>>>>CM:GREEN
 FormalParameterList :
 
+>>>>>CM:GREEN
 Identifier
 
+>>>>>CM:GREEN
 FormalParameterList , Identifier
 
+>>>>>CM:GREEN
 See clause 13
 
+>>>>>CM:GREEN
 FunctionBody :
 
+>>>>>CM:GREEN
 SourceElementsopt
 
+>>>>>CM:GREEN
 See clause 14
 
+>>>>>CM:GREEN
 Program :
 
+>>>>>CM:GREEN
 SourceElementsopt
 
+>>>>>CM:GREEN
 See clause 14
 
+>>>>>CM:GREEN
 SourceElements :
 
+>>>>>CM:GREEN
 SourceElement
 
+>>>>>CM:GREEN
 SourceElements SourceElement
 
+>>>>>CM:GREEN
 See clause 14
 
+>>>>>CM:GREEN
 SourceElement :
 
+>>>>>CM:GREEN
 Statement
 
+>>>>>CM:GREEN
 FunctionDeclaration
 
+>>>>>CM:GREEN
 A.6 Universal Resource Identifier Character Classes
+>>>>>CM:GREEN
 ===================================================
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uri :::
 
+>>>>>CM:GREEN
 uriCharactersopt
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriCharacters :::
 
+>>>>>CM:GREEN
 uriCharacter uriCharactersopt
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriCharacter :::
 
+>>>>>CM:GREEN
 uriReserved
 
+>>>>>CM:GREEN
 uriUnescaped
 
+>>>>>CM:GREEN
 uriEscaped
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriReserved ::: one of
 
+>>>>>CM:GREEN
 ; / ? : @ & = + $ ,
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriUnescaped :::
 
+>>>>>CM:GREEN
 uriAlpha
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 uriMark
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriEscaped :::
 
+>>>>>CM:GREEN
 % HexDigit HexDigit
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriAlpha ::: one of
 
+>>>>>CM:GREEN
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 
+>>>>>CM:GREEN
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
+>>>>>CM:GREEN
 See 15.1.3
 
+>>>>>CM:GREEN
 uriMark ::: one of
 
+>>>>>CM:GREEN
 - _ . ! ~ * ' ( )
 
+>>>>>CM:GREEN
 A.7 Regular Expressions
+>>>>>CM:GREEN
 =======================
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Pattern ::
 
+>>>>>CM:GREEN
 Disjunction
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Disjunction ::
 
+>>>>>CM:GREEN
 Alternative
 
+>>>>>CM:GREEN
 Alternative | Disjunction
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Alternative ::
 
+>>>>>CM:GREEN
 [empty]
 
+>>>>>CM:GREEN
 Alternative Term
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Term ::
 
+>>>>>CM:GREEN
 Assertion
 
+>>>>>CM:GREEN
 Atom
 
+>>>>>CM:GREEN
 Atom Quantifier
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Assertion ::
 
+>>>>>CM:GREEN
 ^
 
+>>>>>CM:GREEN
 $
 
+>>>>>CM:GREEN
 \ b
 
+>>>>>CM:GREEN
 \ B
 
+>>>>>CM:GREEN
 ( ? = Disjunction )
 
+>>>>>CM:GREEN
 ( ? ! Disjunction )
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Quantifier ::
 
+>>>>>CM:GREEN
 QuantifierPrefix
 
+>>>>>CM:GREEN
 QuantifierPrefix ?
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 QuantifierPrefix ::
 
+>>>>>CM:GREEN
 *
 
+>>>>>CM:GREEN
 +
 
+>>>>>CM:GREEN
 ?
 
+>>>>>CM:GREEN
 { DecimalDigits }
 
+>>>>>CM:GREEN
 { DecimalDigits , }
 
+>>>>>CM:GREEN
 { DecimalDigits , DecimalDigits }
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 Atom ::
 
+>>>>>CM:GREEN
 PatternCharacter
 
+>>>>>CM:GREEN
 .
 
+>>>>>CM:GREEN
 \ AtomEscape
 
+>>>>>CM:GREEN
 CharacterClass
 
+>>>>>CM:GREEN
 ( Disjunction )
 
+>>>>>CM:GREEN
 ( ? : Disjunction )
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 PatternCharacter ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of -
 
+>>>>>CM:GREEN
 ^ $ \ . * + ? ( ) [ ] { } |
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 AtomEscape ::
 
+>>>>>CM:GREEN
 DecimalEscape
 
+>>>>>CM:GREEN
 CharacterEscape
 
+>>>>>CM:GREEN
 CharacterClassEscape
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 CharacterEscape ::
 
+>>>>>CM:GREEN
 ControlEscape
 
+>>>>>CM:GREEN
 c ControlLetter
 
+>>>>>CM:GREEN
 HexEscapeSequence
 
+>>>>>CM:GREEN
 UnicodeEscapeSequence
 
+>>>>>CM:GREEN
 IdentityEscape
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ControlEscape :: one of
 
+>>>>>CM:GREEN
 f n r t v
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ControlLetter :: one of
 
+>>>>>CM:GREEN
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 
+>>>>>CM:GREEN
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 IdentityEscape ::
 
+>>>>>CM:GREEN
 SourceCharacter but not IdentifierPart
 
+>>>>>CM:GREEN
 <ZWJ>
 
+>>>>>CM:GREEN
 <ZWNJ>
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 DecimalEscape ::
 
+>>>>>CM:GREEN
 DecimalIntegerLiteral [lookahead ? DecimalDigit]
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 CharacterClassEscape :: one of
 
+>>>>>CM:GREEN
 d D s S w W
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 CharacterClass ::
 
+>>>>>CM:GREEN
 [ [lookahead ? {^}] ClassRanges ]
 
+>>>>>CM:GREEN
 [ ^ ClassRanges ]
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ClassRanges ::
 
+>>>>>CM:GREEN
 [empty]
 
+>>>>>CM:GREEN
 NonemptyClassRanges
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 NonemptyClassRanges ::
 
+>>>>>CM:GREEN
 ClassAtom
 
+>>>>>CM:GREEN
 ClassAtom NonemptyClassRangesNoDash
 
-ClassAtom – ClassAtom ClassRanges
+>>>>>CM:GREEN
+ClassAtom ï¿½ ClassAtom ClassRanges
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 NonemptyClassRangesNoDash ::
 
+>>>>>CM:GREEN
 ClassAtom
 
+>>>>>CM:GREEN
 ClassAtomNoDash NonemptyClassRangesNoDash
 
-ClassAtomNoDash – ClassAtom ClassRanges
+>>>>>CM:GREEN
+ClassAtomNoDash ï¿½ ClassAtom ClassRanges
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ClassAtom ::
 
+>>>>>CM:GREEN
 -
 
+>>>>>CM:GREEN
 ClassAtomNoDash
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ClassAtomNoDash ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of \ or ] or -
 
+>>>>>CM:GREEN
 \ ClassEscape
 
+>>>>>CM:GREEN
 See 15.10.1
 
+>>>>>CM:GREEN
 ClassEscape ::
 
+>>>>>CM:GREEN
 DecimalEscape
 
+>>>>>CM:GREEN
 b
 
+>>>>>CM:GREEN
 CharacterEscape
 
+>>>>>CM:GREEN
 CharacterClassEscape
 
+>>>>>CM:GREEN
 A.8 JSON
+>>>>>CM:GREEN
 ========
 
+>>>>>CM:GREEN
 A.8.1 JSON Lexical Grammar
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONWhiteSpace ::
 
+>>>>>CM:GREEN
 <TAB>
 
+>>>>>CM:GREEN
 <CR>
 
+>>>>>CM:GREEN
 <LF>
 
+>>>>>CM:GREEN
 <SP>
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONString ::
 
+>>>>>CM:GREEN
 " JSONStringCharactersopt "
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONStringCharacters ::
 
+>>>>>CM:GREEN
 JSONStringCharacter JSONStringCharactersopt
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONStringCharacter ::
 
+>>>>>CM:GREEN
 SourceCharacter but not one of " or \ or U+0000 through U+001F
 
+>>>>>CM:GREEN
 \ JSONEscapeSequence
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONEscapeSequence ::
 
+>>>>>CM:GREEN
 JSONEscapeCharacter
 
+>>>>>CM:GREEN
 UnicodeEscapeSequence
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONEscapeCharacter :: one of
 
+>>>>>CM:GREEN
 " / \ b f n r t
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONNumber ::
 
+>>>>>CM:GREEN
 -opt DecimalIntegerLiteral JSONFractionopt ExponentPartopt
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONFraction ::
 
+>>>>>CM:GREEN
 . DecimalDigits
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONNullLiteral ::
 
+>>>>>CM:GREEN
 NullLiteral
 
+>>>>>CM:GREEN
 See 15.12.1.1
 
+>>>>>CM:GREEN
 JSONBooleanLiteral ::
 
+>>>>>CM:GREEN
 BooleanLiteral
 
+>>>>>CM:GREEN
 A.8.2 JSON Syntactic Grammar
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONText :
 
+>>>>>CM:GREEN
 JSONValue
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONValue :
 
+>>>>>CM:GREEN
 JSONNullLiteral
 
+>>>>>CM:GREEN
 JSONBooleanLiteral
 
+>>>>>CM:GREEN
 JSONObject
 
+>>>>>CM:GREEN
 JSONArray
 
+>>>>>CM:GREEN
 JSONString
 
+>>>>>CM:GREEN
 JSONNumber
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONObject :
 
+>>>>>CM:GREEN
 { }
 
+>>>>>CM:GREEN
 { JSONMemberList }
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONMember :
 
+>>>>>CM:GREEN
 JSONString : JSONValue
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONMemberList :
 
+>>>>>CM:GREEN
 JSONMember
 
+>>>>>CM:GREEN
 JSONMemberList , JSONMember
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONArray :
 
+>>>>>CM:GREEN
 [ ]
 
+>>>>>CM:GREEN
 [ JSONElementList ]
 
+>>>>>CM:GREEN
 See 15.12.1.2
 
+>>>>>CM:GREEN
 JSONElementList :
 
+>>>>>CM:GREEN
 JSONValue
 
+>>>>>CM:GREEN
 JSONElementList , JSONValue

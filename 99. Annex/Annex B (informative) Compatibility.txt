@@ -149,12 +149,12 @@ When the escape function is called with one argument string, the following steps
 5.  If k equals Result(2), return R.
 6.  Get the character (represented as a 16-bit unsigned integer) at position k within Result(1).
 7.  If Result(6) is one of the 69 nonblank characters  
-    “ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@*_+-./”then go to step 13.
+    ï¿½ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@*_+-./ï¿½then go to step 13.
 8.  If Result(6), is less than 256, go to step 11.
-9.  Let S be a String containing six characters “%uwxyz” where wxyz are four hexadecimal digits
+9.  Let S be a String containing six characters ï¿½%uwxyzï¿½ where wxyz are four hexadecimal digits
     encoding the value of Result(6).
 10. Go to step 14.
-11. Let S be a String containing three characters “%xy” where xy are two hexadecimal digits encoding
+11. Let S be a String containing three characters ï¿½%xyï¿½ where xy are two hexadecimal digits encoding
     the value of Result(6).
 12. Go to step 14.
 13. Let S be a String containing the single character Result(6).
@@ -214,8 +214,8 @@ a String value, not a String object. The following steps are taken:
 3.  If length is undefined, use +8; otherwise call ToInteger(length).
 4.  Compute the number of characters in Result(1).
 5.  If Result(2) is positive or zero, use Result(2); else use max(Result(4)+Result(2),0).
-6.  Compute min(max(Result(3),0), Result(4)–Result(5)).
-7.  If Result(6) = 0, return the empty String “”.
+6.  Compute min(max(Result(3),0), Result(4)ï¿½Result(5)).
+7.  If Result(6) = 0, return the empty String ï¿½ï¿½.
 8.  Return a String containing Result(6) consecutive characters from Result(1) beginning with the
     character at position Result(5).
 
@@ -227,8 +227,8 @@ String object. Therefore it can be transferred to other kinds of objects for use
 B.2.4 Date.prototype.getYear ( )
 ================================
 
-NOTE The getFullYear method is preferred for nearly all purposes, because it avoids the “year 2000
-problem.”
+NOTE The getFullYear method is preferred for nearly all purposes, because it avoids the ï¿½year 2000
+problem.ï¿½
 
 When the getYear method is called with no arguments, the following steps are taken:
 
@@ -239,8 +239,8 @@ When the getYear method is called with no arguments, the following steps are tak
 B.2.5 Date.prototype.setYear (year)
 ===================================
 
-NOTE The setFullYear method is preferred for nearly all purposes, because it avoids the “year 2000
-problem.”
+NOTE The setFullYear method is preferred for nearly all purposes, because it avoids the ï¿½year 2000
+problem.ï¿½
 
 When the setYear method is called with one argument year, the following steps are taken:
 
@@ -249,7 +249,7 @@ When the setYear method is called with one argument year, the following steps ar
 3.  If Result(2) is NaN, set the [[PrimitiveValue]] internal property of the this value to NaN and
     return NaN.
 4.  If Result(2) is not NaN and 0 = ToInteger(Result(2)) = 99 then Result(4) is ToInteger(Result(2))
-    + 1900. Otherwise, Result(4) is Result(2).
+    +ï¿½1900. Otherwise, Result(4) is Result(2).
 5.  Compute MakeDay(Result(4), MonthFromTime(t), DateFromTime(t)).
 6.  Compute UTC(MakeDate(Result(5), TimeWithinDay(t))).
 7.  Set the [[PrimitiveValue]] internal property of the this value to TimeClip(Result(6)).
