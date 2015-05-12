@@ -1,0 +1,57 @@
+16 Errors
+=========
+
+An implementation must report most errors at the time the relevant ECMAScript language construct is
+evaluated. An early error is an error that can be detected and reported prior to the evaluation of
+any construct in the Program containing the error. An implementation must report early errors in a
+Program prior to the first evaluation of that Program. Early errors in eval code are reported at the
+time eval is called but prior to evaluation of any construct within the eval code. All errors that
+are not early errors are runtime errors.
+
+An implementation must treat any instance of the following kinds of errors as an early error:
+
+-   Any syntax error.
+
+-   Attempts to define an ObjectLiteral that has multiple get property assignments with the same
+    name or multiple set property assignments with the same name.
+
+-   Attempts to define an ObjectLiteral that has both a data property assignment and a get or set
+    property assignment with the same name.
+
+-   Errors in regular expression literals that are not implementation-defined syntax extensions.
+
+-   Attempts in strict mode code to define an ObjectLiteral that has multiple data property
+    assignments with the same name.
+
+-   The occurrence of a WithStatement in strict mode code.
+
+-   The occurrence of an Identifier value appearing more than once within a FormalParameterList of
+    an individual strict mode FunctionDeclaration or FunctionExpression.
+
+-   Improper uses of return, break, and continue.
+
+-   Attempts to call PutValue on any value for which an early determination can be made that the
+    value is not a Reference (for example, executing the assignment statement 3=4).
+
+An implementation shall not treat other kinds of errors as early errors even if the compiler can
+prove that a construct cannot execute without error under any circumstances. An implementation may
+issue an early warning in such a case, but it should not report the error until the relevant
+construct is actually executed.
+
+An implementation shall report all errors as specified, except for the following:
+
+-   An implementation may extend program syntax and regular expression pattern or flag syntax. To
+    permit this, all operations (such as calling eval, using a regular expression literal, or using
+    the Function or RegExp constructor) that are allowed to throw SyntaxError are permitted to
+    exhibit implementation-defined behaviour instead of throwing SyntaxError when they encounter an
+    implementation-defined extension to the program syntax or regular expression pattern or flag
+    syntax.
+
+-   An implementation may provide additional types, values, objects, properties, and functions
+    beyond those described in this specification. This may cause constructs (such as looking up a
+    variable in the global scope) to have implementation-defined behaviour instead of throwing an
+    error (such as ReferenceError).
+
+-   An implementation may define behaviour other than throwing RangeError for toFixed,
+    toExponential, and toPrecision when the fractionDigits or precision argument is outside the
+    specified range.

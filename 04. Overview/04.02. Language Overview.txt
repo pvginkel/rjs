@@ -1,0 +1,103 @@
+4.2 Language Overview
+=====================
+
+The following is an informal overview of ECMAScript—not all parts of the language are described.
+This overview is not part of the standard proper.
+
+ECMAScript is object-based: basic language and host facilities are provided by objects, and an
+ECMAScript program is a cluster of communicating objects. An ECMAScript object is a collection of
+properties each with zero or more attributes that determine how each property can be used—for
+example, when the Writable attribute for a property is set to false, any attempt by executed
+ECMAScript code to change the value of the property fails. Properties are containers that hold other
+objects, primitive values, or functions. A primitive value is a member of one of the following
+built-in types: Undefined, Null, Boolean, Number, and String; an object is a member of the remaining
+built-in type Object; and a function is a callable object. A function that is associated with an
+object via a property is a method.
+
+ECMAScript defines a collection of built-in objects that round out the definition of ECMAScript
+entities. These built-in objects include the global object, the Object object, the Function object,
+the Array object, the String object, the Boolean object, the Number object, the Math object, the
+Date object, the RegExp object, the JSON object, and the Error objects Error, EvalError, RangeError,
+ReferenceError, SyntaxError, TypeError and URIError.
+
+ECMAScript also defines a set of built-in operators. ECMAScript operators include various unary
+operations, multiplicative operators, additive operators, bitwise shift operators, relational
+operators, equality operators, binary bitwise operators, binary logical operators, assignment
+operators, and the comma operator.
+
+ECMAScript syntax intentionally resembles Java syntax. ECMAScript syntax is relaxed to enable it to
+serve as an easy-to-use scripting language. For example, a variable is not required to have its type
+declared nor are types associated with properties, and defined functions are not required to have
+their declarations appear textually before calls to them.
+
+4.2.1 Objects
+=============
+
+ECMAScript does not use classes such as those in C++, Smalltalk, or Java. Instead objects may be
+created in various ways including via a literal notation or via constructors which create objects
+and then execute code that initialises all or part of them by assigning initial values to their
+properties. Each constructor is a function that has a property named “prototype” that is used to
+implement prototype-based inheritance and shared properties. Objects are created by using
+constructors in new expressions; for example, new       Date(2009,11) creates a new Date object.
+Invoking a constructor without using new has consequences that depend on the constructor. For
+example, Date() produces a string representation of the current date and time rather than an object.
+
+Every object created by a constructor has an implicit reference (called the object’s prototype) to
+the value of its constructor’s “prototype” property. Furthermore, a prototype may have a non-null
+implicit reference to its prototype, and so on; this is called the prototype chain. When a reference
+is made to a property in an object, that reference is to the property of that name in the first
+object in the prototype chain that contains a property of that name. In other words, first the
+object mentioned directly is examined for such a property; if that object contains the named
+property, that is the property to which the reference refers; if that object does not contain the
+named property, the prototype for that object is examined next; and so on.
+
+[An image of lots of boxes and arrows.]
+
+Figure 1 — Object/Prototype Relationships
+
+In a class-based object-oriented language, in general, state is carried by instances, methods are
+carried by classes, and inheritance is only of structure and behaviour. In ECMAScript, the state and
+methods are carried by objects, and structure, behaviour, and state are all inherited.
+
+All objects that do not directly contain a particular property that their prototype contains share
+that property and its value. Figure 1 illustrates this:
+
+CF is a constructor (and also an object). Five objects have been created by using new expressions:
+cf1, cf2, cf3, cf4, and cf5. Each of these objects contains properties named q1 and q2. The dashed
+lines represent the implicit prototype relationship; so, for example, cf3’s prototype is CFp. The
+constructor, CF, has two properties itself, named P1 and P2, which are not visible to CFp, cf1, cf2,
+cf3, cf4, or cf5. The property named CFP1 in CFp is shared by cf1, cf2, cf3, cf4, and cf5 (but not
+by CF), as are any properties found in CFp’s implicit prototype chain that are not named q1, q2, or
+CFP1. Notice that there is no implicit prototype link between CF and CFp.
+
+Unlike class-based object languages, properties can be added to objects dynamically by assigning
+values to them. That is, constructors are not required to name or assign values to all or any of the
+constructed object’s properties. In the above diagram, one could add a new shared property for cf1,
+cf2, cf3, cf4, and cf5by assigning a new value to the property in CFp.
+
+4.2.2 The Strict Variant of ECMAScript
+======================================
+
+The ECMAScript Language recognises the possibility that some users of the language may wish to
+restrict their usage of some features available in the language. They might do so in the interests
+of security, to avoid what they consider to be error-prone features, to get enhanced error checking,
+or for other reasons of their choosing. In support of this possibility, ECMAScript defines a strict
+variant of the language. The strict variant of the language excludes some specific syntactic and
+semantic features of the regular ECMAScript language and modifies the detailed semantics of some
+features. The strict variant also specifies additional error conditions that must be reported by
+throwing error exceptions in situations that are not specified as errors by the non-strict form of
+the language.
+
+The strict variant of ECMAScript is commonly referred to as the strict mode of the language. Strict
+mode selection and use of the strict mode syntax and semantics of ECMAScript is explicitly made at
+the level of individual ECMAScript code units. Because strict mode is selected at the level of a
+syntactic code unit, strict mode only imposes restrictions that have local effect within such a code
+unit. Strict mode does not restrict or modify any aspect of the ECMAScript semantics that must
+operate consistently across multiple code units. A complete ECMAScript program may be composed for
+both strict mode and non-strict mode ECMAScript code units. In this case, strict mode only applies
+when actually executing code that is defined within a strict mode code unit.
+
+In order to conform to this specification, an ECMAScript implementation must implement both the full
+unrestricted ECMAScript language and the strict mode variant of the ECMAScript language as defined
+by this specification. In addition, an implementation must support the combination of unrestricted
+and strict mode code units into a single composite program.

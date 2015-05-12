@@ -1,0 +1,30 @@
+12.12 Labelled Statements
+=========================
+
+Syntax
+------
+
+LabelledStatement :
+
+Identifier : Statement
+
+Semantics
+---------
+
+A Statement may be prefixed by a label. Labelled statements are only used in conjunction with
+labelled break and continue statements. ECMAScript has no goto statement.
+
+An ECMAScript program is considered syntactically incorrect if it contains a LabelledStatement that
+is enclosed by a LabelledStatement with the same Identifier as label. This does not apply to labels
+appearing within the body of a FunctionDeclaration that is nested, directly or indirectly, within a
+labelled statement.
+
+The production Identifier : Statement is evaluated by adding Identifier to the label set of
+Statement and then evaluating Statement. If the LabelledStatement itself has a non-empty label set,
+these labels are also added to the label set of Statement before evaluating it. If the result of
+evaluating Statement is (break, V, L) where L is equal to Identifier, the production results in
+(normal, V, empty).
+
+Prior to the evaluation of a LabelledStatement, the contained Statement is regarded as possessing an
+empty label set, unless it is an IterationStatement or a SwitchStatement, in which case it is
+regarded as possessing a label set consisting of the single element, empty.

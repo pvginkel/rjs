@@ -1,0 +1,83 @@
+11.13 Assignment Operators
+==========================
+
+Syntax
+------
+
+AssignmentExpression :
+
+ConditionalExpression
+
+LeftHandSideExpression = AssignmentExpression
+
+LeftHandSideExpression AssignmentOperator AssignmentExpression
+
+AssignmentExpressionNoIn :
+
+ConditionalExpressionNoIn
+
+LeftHandSideExpression = AssignmentExpressionNoIn
+
+LeftHandSideExpression AssignmentOperator AssignmentExpressionNoIn
+
+AssignmentOperator : one of
+
+  ---- ---- ---- ---- ---- ----- ----- ------ ---- ---- ----
+  *=   /=   %=   +=   -=   <<=   >>=   >>>=   &=   ^=   |=
+  ---- ---- ---- ---- ---- ----- ----- ------ ---- ---- ----
+
+Semantics
+---------
+
+The AssignmentExpressionNoIn productions are evaluated in the same manner as the
+AssignmentExpression productions except that the contained ConditionalExpressionNoIn and
+AssignmentExpressionNoIn are evaluated instead of the contained ConditionalExpression and
+AssignmentExpression, respectively.
+
+11.13.1 Simple Assignment ( = )
+===============================
+
+The production AssignmentExpression : LeftHandSideExpression = AssignmentExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating LeftHandSideExpression.
+2.  Let rref be the result of evaluating AssignmentExpression.
+3.  Let rval be GetValue(rref).
+4.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(lref) is Reference is true
+    -   IsStrictReference(lref) is true
+    -   Type(GetBase(lref)) is Environment Record
+    -   GetReferencedName(lref) is either "eval" or "arguments"
+
+5.  Call PutValue(lref, rval).
+6.  Return rval.
+
+NOTE When an assignment occurs within strict mode code, its LeftHandSide must not evaluate to an
+unresolvable reference. If it does a ReferenceError exception is thrown upon assignment. The
+LeftHandSide also may not be a reference to a data property with the attribute value
+{[[Writable]]:false}, to an accessor property with the attribute value {[[Set]]:undefined}, nor to a
+non-existent property of an object whose [[Extensible]] internal property has the value false. In
+these cases a TypeError exception is thrown.
+
+11.13.2 Compound Assignment ( op= )
+===================================
+
+The production AssignmentExpression : LeftHandSideExpression AssignmentOperator AssignmentExpression
+, where AssignmentOperator is @= and @ represents one of the operators indicated above, is evaluated
+as follows:
+
+1.  Let lref be the result of evaluating LeftHandSideExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating AssignmentExpression.
+4.  Let rval be GetValue(rref).
+5.  Let r be the result of applying operator @ to lval and rval.
+6.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(lref) is Reference is true
+    -   IsStrictReference(lref) is true
+    -   Type(GetBase(lref)) is Environment Record
+    -   GetReferencedName(lref) is either "eval" or "arguments"
+
+7.  Call PutValue(lref, r).
+8.  Return r.
+
+NOTE See NOTE 11.13.1.

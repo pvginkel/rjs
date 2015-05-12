@@ -1,0 +1,8 @@
+9 Type Conversion and Testing
+=============================
+
+The ECMAScript runtime system performs automatic type conversion as needed. To clarify the semantics
+of certain constructs it is useful to define a set of conversion abstract operations. These abstract
+operations are not a part of the language; they are defined here to aid the specification of the
+semantics of the language. The conversion abstract operations are polymorphic; that is, they can
+accept a value of any ECMAScript language type, but not of specification types.

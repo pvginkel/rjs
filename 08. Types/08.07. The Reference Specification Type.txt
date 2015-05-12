@@ -1,0 +1,129 @@
+8.7 The Reference Specification Type
+====================================
+
+The Reference type is used to explain the behaviour of such operators as delete, typeof, and the
+assignment operators. For example, the left-hand operand of an assignment is expected to produce a
+reference. The behaviour of assignment could, instead, be explained entirely in terms of a case
+analysis on the syntactic form of the left-hand operand of an assignment operator, but for one
+difficulty: function calls are permitted to return references. This possibility is admitted purely
+for the sake of host objects. No built-in ECMAScript function defined by this specification returns
+a reference and there is no provision for a user-defined function to return a reference. (Another
+reason not to use a syntactic case analysis is that it would be lengthy and awkward, affecting many
+parts of the specification.)
+
+A Reference is a resolved name binding. A Reference consists of three components, the base value,
+the referenced name and the Boolean valued strict reference flag. The base value is either
+undefined, an Object, a Boolean, a String, a Number, or an environment record (10.2.1). A base value
+of undefined indicates that the reference could not be resolved to a binding. The referenced name is
+a String.
+
+The following abstract operations are used in this specification to access the components of
+references:
+
+-   GetBase(V). Returns the base value component of the reference V.
+
+-   GetReferencedName(V). Returns the referenced name component of the reference V.
+
+-   IsStrictReference(V). Returns the strict reference component of the reference V.
+
+-   HasPrimitiveBase(V). Returns true if the base value is a Boolean, String, or Number.
+
+-   IsPropertyReference(V). Returns true if either the base value is an object or
+    HasPrimitiveBase(V) is true; otherwise returns false.
+
+-   IsUnresolvableReference(V). Returns true if the base value is undefined and false otherwise.
+
+The following abstract operations are used in this specification to operate on references:
+
+8.7.1 GetValue (V)
+==================
+
+1.  If Type(V) is not Reference, return V.
+2.  Let base be the result of calling GetBase(V).
+3.  If IsUnresolvableReference(V), throw a ReferenceError exception.
+4.  If IsPropertyReference(V), then
+    1.  If HasPrimitiveBase(V) is false, then let get be the [[Get]] internal method of base,
+        otherwise let get be the special [[Get]] internal method defined below.
+    2.  Return the result of calling the get internal method using base as its this value, and
+        passing GetReferencedName(V) for the argument.
+
+5.  Else, base must be an environment record.
+    1.  Return the result of calling the GetBindingValue (see 10.2.1) concrete method of base
+        passing GetReferencedName(V) and IsStrictReference(V) as arguments.
+
+The following [[Get]] internal method is used by GetValue when V is a property reference with a
+primitive base value. It is called using base as its this value and with property P as its argument.
+The following steps are taken:
+
+1.  Let O be ToObject(base).
+2.  Let desc be the result of calling the [[GetProperty]] internal method of O with property name P.
+3.  If desc is undefined, return undefined.
+4.  If IsDataDescriptor(desc) is true, return desc.[[Value]].
+5.  Otherwise, IsAccessorDescriptor(desc) must be true so, let getter be desc.[[Get]] (see 8.10).
+6.  If getter is undefined, return undefined.
+7.  Return the result calling the [[Call]] internal method of getter providing base as the this
+    value and providing no arguments.
+
+NOTE The object that may be created in step 1 is not accessible outside of the above method. An
+implementation might choose to avoid the actual creation of the object. The only situation where
+such an actual property access that uses this internal method can have visible effect is when it
+invokes an accessor function.
+
+8.7.2 PutValue (V, W)
+=====================
+
+1.  If Type(V) is not Reference, throw a ReferenceError exception.
+2.  Let base be the result of calling GetBase(V).
+3.  If IsUnresolvableReference(V), then
+    1.  If IsStrictReference(V) is true, then
+        1.  Throw ReferenceError exception.
+
+    2.  Call the [[Put]] internal method of the global object, passing GetReferencedName(V) for the
+        property name, W for the value, and false for the Throw flag.
+
+4.  Else if IsPropertyReference(V), then
+    1.  If HasPrimitiveBase(V) is false, then let put be the [[Put]] internal method of base,
+        otherwise let put be the special [[Put]] internal method defined below.
+    2.  Call the put internal method using base as its this value, and passing GetReferencedName(V)
+        for the property name, W for the value, and IsStrictReference(V) for the Throw flag.
+
+5.  Else base must be a reference whose base is an environment record. So,
+    1.  Call the SetMutableBinding (10.2.1) concrete method of base, passing GetReferencedName(V),
+        W, and IsStrictReference(V) as arguments.
+
+6.  Return.
+
+The following [[Put]] internal method is used by PutValue when V is a property reference with a
+primitive base value. It is called using base as its this value and with property P, value W, and
+Boolean flag Throw as arguments. The following steps are taken:
+
+1.  Let O be ToObject(base).
+2.  If the result of calling the [[CanPut]] internal method of O with argument P is false, then
+    1.  If Throw is true, then throw a TypeError exception.
+    2.  Else return.
+
+3.  Let ownDesc be the result of calling the [[GetOwnProperty]] internal method of O with argument
+    P.
+4.  If IsDataDescriptor(ownDesc) is true, then
+    1.  If Throw is true, then throw a TypeError exception.
+    2.  Else return.
+
+5.  Let desc be the result of calling the [[GetProperty]] internal method of O with argument P. This
+    may be either an own or inherited accessor property descriptor or an inherited data property
+    descriptor.
+6.  If IsAccessorDescriptor(desc) is true, then
+    1.  Let setter be desc.[[Set]] (see 8.10) which cannot be undefined.
+    2.  Call the [[Call]] internal method of setter providing base as the this value and an argument
+        list containing only W.
+
+7.  Else, this is a request to create an own property on the transient object O
+    1.  If Throw is true, then throw a TypeError exception.
+
+8.  Return.
+
+NOTE The object that may be created in step 1 is not accessible outside of the above method. An
+implementation might choose to avoid the actual creation of that transient object. The only
+situations where such an actual property assignment that uses this internal method can have visible
+effect are when it either invokes an accessor function or is in violation of a Throw predicated
+error check. When Throw is true any property assignment that would create a new property on the
+transient object throws an error.

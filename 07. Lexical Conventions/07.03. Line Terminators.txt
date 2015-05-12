@@ -1,0 +1,57 @@
+7.3 Line Terminators
+====================
+
+Like white space characters, line terminator characters are used to improve source text readability
+and to separate tokens (indivisible lexical units) from each other. However, unlike white space
+characters, line terminators have some influence over the behaviour of the syntactic grammar. In
+general, line terminators may occur between any two tokens, but there are a few places where they
+are forbidden by the syntactic grammar. Line terminators also affect the process of automatic
+semicolon insertion (7.9). A line terminator cannot occur within any token except a StringLiteral.
+Line terminators may only occur within a StringLiteral token as part of a LineContinuation.
+
+A line terminator can occur within a MultiLineComment (7.4) but cannot occur within a
+SingleLineComment.
+
+Line terminators are included in the set of white space characters that are matched by the \s class
+in regular expressions.
+
+The ECMAScript line terminator characters are listed in Table 3.
+
+Table 3 — Line Terminator Characters
+
+  Code Unit Value   Name                  Formal Name
+  ----------------- --------------------- -------------
+  \u000A            Line Feed             <LF>
+  \u000D            Carriage Return       <CR>
+  \u2028            Line separator        <LS>
+  \u2029            Paragraph separator   <PS>
+
+Only the characters in Table 3 are treated as line terminators. Other new line or line breaking
+characters are treated as white space but not as line terminators. The character sequence <CR><LF>
+is commonly used as a line terminator. It should be considered a single character for the purpose of
+reporting line numbers.
+
+Syntax
+------
+
+LineTerminator ::
+
+<LF>
+
+<CR>
+
+<LS>
+
+<PS>
+
+LineTerminatorSequence ::
+
+<LF>
+
+<CR> [lookahead ∉ <LF> ]
+
+<LS>
+
+<PS>
+
+<CR> <LF>

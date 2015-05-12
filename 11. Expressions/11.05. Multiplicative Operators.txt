@@ -1,0 +1,132 @@
+11.5 Multiplicative Operators
+=============================
+
+Syntax
+------
+
+MultiplicativeExpression :
+
+UnaryExpression
+
+MultiplicativeExpression * UnaryExpression
+
+MultiplicativeExpression / UnaryExpression
+
+MultiplicativeExpression % UnaryExpression
+
+Semantics
+---------
+
+The production MultiplicativeExpression : MultiplicativeExpression @ UnaryExpression , where @
+stands for one of the operators in the above definitions, is evaluated as follows:
+
+1.  Let left be the result of evaluating MultiplicativeExpression.
+2.  Let leftValue be GetValue(left).
+3.  Let right be the result of evaluating UnaryExpression.
+4.  Let rightValue be GetValue(right).
+5.  Let leftNum be ToNumber(leftValue).
+6.  Let rightNum be ToNumber(rightValue).
+7.  Return the result of applying the specified operation (*, /, or %) to leftNum and rightNum. See
+    the Notes below 11.5.1, 11.5.2, 11.5.3.
+
+11.5.1 Applying the * Operator
+==============================
+
+The * operator performs multiplication, producing the product of its operands. Multiplication is
+commutative. Multiplication is not always associative in ECMAScript, because of finite precision.
+
+The result of a floating-point multiplication is governed by the rules of IEEE 754 binary
+double-precision arithmetic:
+
+-   If either operand is NaN, the result is NaN.
+
+-   The sign of the result is positive if both operands have the same sign, negative if the operands
+    have different signs.
+
+-   Multiplication of an infinity by a zero results in NaN.
+
+-   Multiplication of an infinity by an infinity results in an infinity. The sign is determined by
+    the rule already stated above.
+
+-   Multiplication of an infinity by a finite nonzero value results in a signed infinity. The sign
+    is determined by the rule already stated above.
+
+-   In the remaining cases, where neither an infinity or NaN is involved, the product is computed
+    and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the
+    magnitude is too large to represent, the result is then an infinity of appropriate sign. If the
+    magnitude is too small to represent, the result is then a zero of appropriate sign. The
+    ECMAScript language requires support of gradual underflow as defined by IEEE 754.
+
+11.5.2 Applying the / Operator
+==============================
+
+The / operator performs division, producing the quotient of its operands. The left operand is the
+dividend and the right operand is the divisor. ECMAScript does not perform integer division. The
+operands and result of all division operations are double-precision floating-point numbers. The
+result of division is determined by the specification of IEEE 754 arithmetic:
+
+-   If either operand is NaN, the result is NaN.
+
+-   The sign of the result is positive if both operands have the same sign, negative if the operands
+    have different signs.
+
+-   Division of an infinity by an infinity results in NaN.
+
+-   Division of an infinity by a zero results in an infinity. The sign is determined by the rule
+    already stated above.
+
+-   Division of an infinity by a nonzero finite value results in a signed infinity. The sign is
+    determined by the rule already stated above.
+
+-   Division of a finite value by an infinity results in zero. The sign is determined by the rule
+    already stated above.
+
+-   Division of a zero by a zero results in NaN; division of zero by any other finite value results
+    in zero, with the sign determined by the rule already stated above.
+
+-   Division of a nonzero finite value by a zero results in a signed infinity. The sign is
+    determined by the rule already stated above.
+
+-   In the remaining cases, where neither an infinity, nor a zero, nor NaN is involved, the quotient
+    is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode.
+    If the magnitude is too large to represent, the operation overflows; the result is then an
+    infinity of appropriate sign. If the magnitude is too small to represent, the operation
+    underflows and the result is a zero of the appropriate sign. The ECMAScript language requires
+    support of gradual underflow as defined by IEEE 754.
+
+11.5.3 Applying the % Operator
+==============================
+
+The % operator yields the remainder of its operands from an implied division; the left operand is
+the dividend and the right operand is the divisor.
+
+NOTE In C and C++, the remainder operator accepts only integral operands; in ECMAScript, it also
+accepts floating-point operands.
+
+The result of a floating-point remainder operation as computed by the % operator is not the same as
+the “remainder” operation defined by IEEE 754. The IEEE 754 “remainder” operation computes the
+remainder from a rounding division, not a truncating division, and so its behaviour is not analogous
+to that of the usual integer remainder operator. Instead the ECMAScript language defines % on
+floating-point operations to behave in a manner analogous to that of the Java integer remainder
+operator; this may be compared with the C library function fmod.
+
+The result of an ECMAScript floating-point remainder operation is determined by the rules of IEEE
+arithmetic:
+
+-   If either operand is NaN, the result is NaN.
+
+    -   The sign of the result equals the sign of the dividend.
+
+    -   If the dividend is an infinity, or the divisor is a zero, or both, the result is NaN.
+
+    -   If the dividend is finite and the divisor is an infinity, the result equals the dividend.
+
+    -   If the dividend is a zero and the divisor is nonzero and finite, the result is the same as
+        the dividend.
+
+    -   In the remaining cases, where neither an infinity, nor a zero, nor NaN is involved, the
+        floating-point remainder r from a dividend n and a divisor d is defined by the mathematical
+        relation r = n − (d × q) where q is an integer that is negative only if n/d is negative and
+        positive only if n/d is positive, and whose magnitude is as large as possible without
+        exceeding the magnitude of the true mathematical quotient of n and d. r is computed and
+        rounded to the nearest representable value using IEEE 754 round-to-nearest mode.

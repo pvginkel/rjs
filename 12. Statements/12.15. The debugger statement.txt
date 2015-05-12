@@ -1,0 +1,27 @@
+12.15 The debugger statement
+============================
+
+Syntax
+------
+
+DebuggerStatement :
+
+debugger ;
+
+Semantics
+---------
+
+Evaluating the DebuggerStatement production may allow an implementation to cause a breakpoint when
+run under a debugger. If a debugger is not present or active this statement has no observable
+effect.
+
+The production DebuggerStatement : debugger ; is evaluated as follows:
+
+1.  If an implementation defined debugging facility is available and enabled, then
+    1.  Perform an implementation defined debugging action.
+    2.  Let result be an implementation defined Completion value.
+
+2.  Else
+    1.  Let result be (normal, empty, empty).
+
+3.  Return result.

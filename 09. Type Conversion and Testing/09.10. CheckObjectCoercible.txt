@@ -1,0 +1,16 @@
+9.10 CheckObjectCoercible
+=========================
+
+The abstract operation CheckObjectCoercible throws an error if its argument is a value that cannot
+be converted to an Object using ToObject. It is defined by Table 15:
+
+Table 15 — CheckObjectCoercible Results
+
+  Argument Type   Result
+  --------------- ------------------------------
+  Undefined       Throw a TypeError exception.
+  Null            Throw a TypeError exception.
+  Boolean         Return
+  Number          Return
+  String          Return
+  Object          Return

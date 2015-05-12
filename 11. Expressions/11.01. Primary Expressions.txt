@@ -1,0 +1,285 @@
+11.1 Primary Expressions
+========================
+
+Syntax
+------
+
+PrimaryExpression :
+
+this
+
+Identifier
+
+Literal
+
+ArrayLiteral
+
+ObjectLiteral
+
+( Expression )
+
+11.1.1 The this Keyword
+=======================
+
+The this keyword evaluates to the value of the ThisBinding of the current execution context.
+
+11.1.2 Identifier Reference
+===========================
+
+An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of
+evaluating an Identifier is always a value of type Reference.
+
+11.1.3 Literal Reference
+========================
+
+A Literal is evaluated as described in 7.8.
+
+11.1.4 Array Initialiser
+========================
+
+An array initialiser is an expression describing the initialisation of an Array object, written in a
+form of a literal. It is a list of zero or more expressions, each of which represents an array
+element, enclosed in square brackets. The elements need not be literals; they are evaluated each
+time the array initialiser is evaluated.
+
+Array elements may be elided at the beginning, middle or end of the element list. Whenever a comma
+in the element list is not preceded by an AssignmentExpression (i.e., a comma at the beginning or
+after another comma), the missing array element contributes to the length of the Array and increases
+the index of subsequent elements. Elided array elements are not defined. If an element is elided at
+the end of an array, that element does not contribute to the length of the Array.
+
+Syntax
+------
+
+ArrayLiteral :
+
+[ Elisionopt ]
+
+[ ElementList ]
+
+[ ElementList , Elisionopt ]
+
+ElementList :
+
+Elisionopt AssignmentExpression
+
+ElementList , Elisionopt AssignmentExpression
+
+Elision :
+
+,
+
+Elision ,
+
+Semantics
+---------
+
+The production ArrayLiteral : [ Elisionopt ] is evaluated as follows:
+
+1.  Let array be the result of creating a new object as if by the expression new Array() where Array
+    is the standard built-in constructor with that name.
+2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+3.  Call the [[Put]] internal method of array with arguments "length", pad, and false.
+4.  Return array.
+
+The production ArrayLiteral : [ ElementList ] is evaluated as follows:
+
+1.  Return the result of evaluating ElementList.
+
+The production ArrayLiteral : [ ElementList , Elisionopt ] is evaluated as follows:
+
+1.  Let array be the result of evaluating ElementList.
+2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+3.  Let len be the result of calling the [[Get]] internal method of array with argument "length".
+4.  Call the [[Put]] internal method of array with arguments "length", ToUint32(pad+len), and false.
+5.  Return array.
+
+The production ElementList : Elisionopt AssignmentExpression is evaluated as follows:
+
+1.  Let array be the result of creating a new object as if by the expression new Array() where Array
+    is the standard built-in constructor with that name.
+2.  Let firstIndex be the result of evaluating Elision; if not present, use the numeric value zero.
+3.  Let initResult be the result of evaluating AssignmentExpression.
+4.  Let initValue be GetValue(initResult).
+5.  Call the [[DefineOwnProperty]] internal method of array with arguments ToString(firstIndex), the
+    Property Descriptor { [[Value]]: initValue, [[Writable]]: true, [[Enumerable]]: true,
+    [[Configurable]]: true}, and false.
+6.  Return array.
+
+The production ElementList : ElementList , Elisionopt AssignmentExpression is evaluated as follows:
+
+1.  Let array be the result of evaluating ElementList.
+2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+3.  Let initResult be the result of evaluating AssignmentExpression.
+4.  Let initValue be GetValue(initResult).
+5.  Let len be the result of calling the [[Get]] internal method of array with argument "length".
+6.  Call the [[DefineOwnProperty]] internal method of array with arguments
+    ToString(ToUint32((pad+len)) and the Property Descriptor { [[Value]]: initValue, [[Writable]]:
+    true, [[Enumerable]]: true, [[Configurable]]: true}, and false.
+7.  Return array.
+
+The production Elision : , is evaluated as follows:
+
+1.  Return the numeric value 1.
+
+The production Elision : Elision , is evaluated as follows:
+
+1.  Let preceding be the result of evaluating Elision.
+2.  Return preceding+1.
+
+NOTE [[DefineOwnProperty]] is used to ensure that own properties are defined for the array even if
+the standard built-in Array prototype object has been modified in a manner that would preclude the
+creation of new own properties using [[Put]].
+
+11.1.5 Object Initialiser
+=========================
+
+An object initialiser is an expression describing the initialisation of an Object, written in a form
+resembling a literal. It is a list of zero or more pairs of property names and associated values,
+enclosed in curly braces. The values need not be literals; they are evaluated each time the object
+initialiser is evaluated.
+
+Syntax
+------
+
+ObjectLiteral :
+
+{ }
+
+{ PropertyNameAndValueList }
+
+{ PropertyNameAndValueList , }
+
+PropertyNameAndValueList :
+
+PropertyAssignment
+
+PropertyNameAndValueList , PropertyAssignment
+
+PropertyAssignment :
+
+PropertyName : AssignmentExpression
+
+get PropertyName ( ) { FunctionBody }
+
+set PropertyName ( PropertySetParameterList ) { FunctionBody }
+
+PropertyName :
+
+IdentifierName
+
+StringLiteral
+
+NumericLiteral
+
+PropertySetParameterList :
+
+Identifier
+
+Semantics
+---------
+
+The production ObjectLiteral : { } is evaluated as follows:
+
+1.  Return a new object created as if by the expression new Object() where Object is the standard
+    built-in constructor with that name.
+
+The productions ObjectLiteral : { PropertyNameAndValueList } and  
+ObjectLiteral : { PropertyNameAndValueList ,} are evaluated as follows:
+
+1.  Return the result of evaluating PropertyNameAndValueList.
+
+The production PropertyNameAndValueList : PropertyAssignment is evaluated as follows:
+
+1.  Let obj be the result of creating a new object as if by the expression new Object() where Object
+    is the standard built-in constructor with that name.
+2.  Let propId be the result of evaluating PropertyAssignment.
+3.  Call the [[DefineOwnProperty]] internal method of obj with arguments propId.name,
+    propId.descriptor, and false.
+4.  Return obj.
+
+The production  
+ PropertyNameAndValueList : PropertyNameAndValueList , PropertyAssignment  
+is evaluated as follows:
+
+1.  Let obj be the result of evaluating PropertyNameAndValueList.
+2.  Let propId be the result of evaluating PropertyAssignment.
+3.  Let previous be the result of calling the [[GetOwnProperty]] internal method of obj with
+    argument propId.name.
+4.  If previous is not undefined then throw a SyntaxError exception if any of the following
+    conditions are true
+    1.  This production is contained in strict code and IsDataDescriptor(previous) is true and
+        IsDataDescriptor(propId.descriptor) is true.
+    2.  IsDataDescriptor(previous) is true and IsAccessorDescriptor(propId.descriptor) is true.
+    3.  IsAccessorDescriptor(previous) is true and IsDataDescriptor(propId.descriptor) is true.
+    4.  IsAccessorDescriptor(previous) is true and IsAccessorDescriptor(propId.descriptor) is true
+        and either both previous and propId.descriptor have [[Get]] fields or both previous and
+        propId.descriptor have [[Set]] fields
+
+5.  Call the [[DefineOwnProperty]] internal method of obj with arguments propId.name,
+    propId.descriptor, and false.
+6.  Return obj.
+
+If the above steps would throw a SyntaxError then an implementation must treat the error as an early
+error (Clause 16).
+
+The production PropertyAssignment : PropertyName : AssignmentExpression is evaluated as follows:
+
+1.  Let propName be the result of evaluating PropertyName.
+2.  Let exprValue be the result of evaluating AssignmentExpression.
+3.  Let propValue be GetValue(exprValue).
+4.  Let desc be the Property Descriptor{[[Value]]: propValue, [[Writable]]: true, [[Enumerable]]:
+    true, [[Configurable]]: true}
+5.  Return Property Identifier (propName, desc).
+
+The production PropertyAssignment : get PropertyName ( ) { FunctionBody } is evaluated as follows:
+
+1.  Let propName be the result of evaluating PropertyName.
+2.  Let closure be the result of creating a new Function object as specified in 13.2 with an empty
+    parameter list and body specified by FunctionBody. Pass in the LexicalEnvironment of the running
+    execution context as the Scope. Pass in true as the Strict flag if the PropertyAssignment is
+    contained in strict code or if its FunctionBody is strict code.
+3.  Let desc be the Property Descriptor{[[Get]]: closure, [[Enumerable]]: true, [[Configurable]]:
+    true}
+4.  Return Property Identifier (propName, desc).
+
+The production PropertyAssignment : set PropertyName ( PropertySetParameterList ) { FunctionBody }
+is evaluated as follows:
+
+1.  Let propName be the result of evaluating PropertyName.
+2.  Let closure be the result of creating a new Function object as specified in 13.2 with parameters
+    specified by PropertySetParameterList and body specified by FunctionBody. Pass in the
+    LexicalEnvironment of the running execution context as the Scope. Pass in true as the Strict
+    flag if the PropertyAssignment is contained in strict code or if its FunctionBody is strict
+    code.
+3.  Let desc be the Property Descriptor{[[Set]]: closure, [[Enumerable]]: true, [[Configurable]]:
+    true}
+4.  Return Property Identifier (propName, desc).
+
+It is a SyntaxError if the Identifier "eval" or the Identifier "arguments" occurs as the Identifier
+in a PropertySetParameterList of a PropertyAssignment that is contained in strict code or if its
+FunctionBody is strict code.
+
+The production PropertyName : IdentifierName is evaluated as follows:
+
+1.  Return the String value containing the same sequence of characters as the IdentifierName.
+
+The production PropertyName : StringLiteral is evaluated as follows:
+
+1.  Return the SV of the StringLiteral.
+
+The production PropertyName : NumericLiteral is evaluated as follows:
+
+1.  Let nbr be the result of forming the value of the NumericLiteral.
+2.  Return ToString(nbr).
+
+11.1.6 The Grouping Operator
+============================
+
+The production PrimaryExpression : ( Expression ) is evaluated as follows:
+
+1.  Return the result of evaluating Expression. This may be of type Reference.
+
+NOTE This algorithm does not apply GetValue to the result of evaluating Expression. The principal
+motivation for this is so that operators such as delete and typeof may be applied to parenthesised
+expressions.

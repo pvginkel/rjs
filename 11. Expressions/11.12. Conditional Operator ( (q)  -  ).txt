@@ -1,0 +1,43 @@
+11.12 Conditional Operator ( ? : )
+==================================
+
+Syntax
+------
+
+ConditionalExpression :
+
+LogicalORExpression
+
+LogicalORExpression ? AssignmentExpression : AssignmentExpression
+
+ConditionalExpressionNoIn :
+
+LogicalORExpressionNoIn
+
+LogicalORExpressionNoIn ? AssignmentExpression : AssignmentExpressionNoIn
+
+Semantics
+---------
+
+The production ConditionalExpression : LogicalORExpression ? AssignmentExpression :
+AssignmentExpression is evaluated as follows:
+
+1.  Let lref be the result of evaluating LogicalORExpression.
+2.  If ToBoolean(GetValue(lref)) is true, then
+    1.  Let trueRef be the result of evaluating the first AssignmentExpression.
+    2.  Return GetValue(trueRef).
+
+3.  Else
+    1.  Let falseRef be the result of evaluating the second AssignmentExpression.
+    2.  Return GetValue(falseRef).
+
+The ConditionalExpressionNoIn production is evaluated in the same manner as the
+ConditionalExpression production except that the contained LogicalORExpressionNoIn,
+AssignmentExpression and AssignmentExpressionNoIn are evaluated instead of the contained
+LogicalORExpression, first AssignmentExpression and second AssignmentExpression, respectively.
+
+NOTE The grammar for a ConditionalExpression in ECMAScript is a little bit different from that in C
+and Java, which each allow the second subexpression to be an Expression but restrict the third
+expression to be a ConditionalExpression. The motivation for this difference in ECMAScript is to
+allow an assignment expression to be governed by either arm of a conditional and to eliminate the
+confusing and fairly useless case of a comma expression as the centre expression.

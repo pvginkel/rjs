@@ -1,0 +1,118 @@
+12.11 The switch Statement
+==========================
+
+Syntax
+------
+
+SwitchStatement :
+
+switch ( Expression ) CaseBlock
+
+CaseBlock :
+
+{ CaseClausesopt }
+
+{ CaseClausesopt DefaultClause CaseClausesopt }
+
+CaseClauses :
+
+CaseClause
+
+CaseClauses CaseClause
+
+CaseClause :
+
+case Expression : StatementListopt
+
+DefaultClause :
+
+default : StatementListopt
+
+Semantics
+---------
+
+The production SwitchStatement : switch ( Expression ) CaseBlock is evaluated as follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  Let R be the result of evaluating CaseBlock, passing it GetValue(exprRef) as a parameter.
+3.  If R.type is break and R.target is in the current label set, return (normal, R.value, empty).
+4.  Return R.
+
+The production CaseBlock : { CaseClausesopt } is given an input parameter, input, and is evaluated
+as follows:
+
+1.  Let V = empty.
+2.  Let A be the list of CaseClause items in source text order.
+3.  Let searching be true.
+4.  Repeat, while searching is true
+    1.  Let C be the next CaseClause in A. If there is no such CaseClause, return (normal, V,
+        empty).
+    2.  Let clauseSelector be the result of evaluating C.
+    3.  If input is equal to clauseSelector as defined by the === operator, then
+        1.  Set searching to false.
+        2.  If C has a StatementList, then
+            1.  Evaluate C’s StatementList and let R be the result.
+            2.  If R is an abrupt completion, then return R.
+            3.  Let V = R.value.
+
+5.  Repeat
+    1.  Let C be the next CaseClause in A. If there is no such CaseClause, return (normal, V,
+        empty).
+    2.  If C has a StatementList, then
+        1.  Evaluate C’s StatementList and let R be the result.
+        2.  If R.value is not empty, then let V = R.value.
+        3.  If R is an abrupt completion, then return (R.type, V, R.target).
+
+The production CaseBlock : { CaseClausesopt DefaultClause CaseClausesopt } is given an input
+parameter, input, and is evaluated as follows:
+
+1.  Let V = empty.
+2.  Let A be the list of CaseClause items in the first CaseClauses, in source text order.
+3.  Let B be the list of CaseClause items in the second CaseClauses, in source text order.
+4.  Let found be false.
+5.  Repeat letting C be in order each CaseClause in A
+    1.  If found is false, then
+        1.  Let clauseSelector be the result of evaluating C.
+        2.  If input is equal to clauseSelector as defined by the === operator, then set found to
+            true.
+
+    2.  If found is true, then
+        1.  If C has a StatementList, then
+            1.  Evaluate C’s StatementList and let R be the result.
+            2.  If R.value is not empty, then let V = R.value.
+            3.  R is an abrupt completion, then return (R.type, V, R.target).
+
+6.  Let foundInB be false.
+7.  If found is false, then
+    1.  Repeat, while foundInB is false and all elements of B have not been processed
+        1.  Let C be the next CaseClause in B.
+        2.  Let clauseSelector be the result of evaluating C.
+        3.  If input is equal to clauseSelector as defined by the === operator, then
+            1.  Set foundInB to true.
+            2.  If C has a StatementList, then
+                1.  Evaluate C’s StatementList and let R be the result.
+                2.  If R.value is not empty, then let V = R.value.
+                3.  R is an abrupt completion, then return (R.type, V, R.target).
+
+8.  If foundInB is false and the DefaultClause has a StatementList, then
+    1.  Evaluate the DefaultClause’s StatementList and let R be the result.
+    2.  If R.value is not empty, then let V = R.value.
+    3.  If R is an abrupt completion, then return (R.type, V, R.target).
+
+9.  Repeat (Note that if step 7.a.i has been performed this loop does not start at the beginning of
+    B)
+    1.  Let C be the next CaseClause in B. If there is no such CaseClause, return (normal, V,
+        empty).
+    2.  If C has a StatementList, then
+        1.  Evaluate C’s StatementList and let R be the result.
+        2.  If R.value is not empty, then let V = R.value.
+        3.  If R is an abrupt completion, then return (R.type, V, R.target).
+
+The production CaseClause : case Expression : StatementListopt is evaluated as follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  Return GetValue(exprRef).
+
+NOTE Evaluating CaseClause does not execute the associated StatementList. It simply evaluates the
+Expression and returns the value, which the CaseBlock algorithm uses to determine which
+StatementList to start executing.

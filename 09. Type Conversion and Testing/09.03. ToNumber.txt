@@ -1,0 +1,250 @@
+9.3 ToNumber
+============
+
+The abstract operation ToNumber converts its argument to a value of type Number according to Table
+12:
+
+Table 12 — To Number Conversions
+
++----------------------------------------------------+----------------------------------------------------+
+| Argument Type                                      | Result                                             |
++====================================================+====================================================+
+| Undefined                                          | NaN                                                |
++----------------------------------------------------+----------------------------------------------------+
+| Null                                               | +0                                                 |
++----------------------------------------------------+----------------------------------------------------+
+| Boolean                                            | The result is 1 if the argument is true. The       |
+|                                                    | result is +0 if the argument is false.             |
++----------------------------------------------------+----------------------------------------------------+
+| Number                                             | The result equals the input argument (no           |
+|                                                    | conversion).                                       |
++----------------------------------------------------+----------------------------------------------------+
+| String                                             | See grammar and note below.                        |
++----------------------------------------------------+----------------------------------------------------+
+| Object                                             | Apply the following steps:                         |
+|                                                    |                                                    |
+|                                                    | 1.  Let primValue be ToPrimitive(input argument,   |
+|                                                    |     hint Number).                                  |
+|                                                    | 2.  Return ToNumber(primValue).                    |
++----------------------------------------------------+----------------------------------------------------+
+
+9.3.1 ToNumber Applied to the String Type
+=========================================
+
+ToNumber applied to Strings applies the following grammar to the input String. If the grammar cannot
+interpret the String as an expansion of StringNumericLiteral, then the result of ToNumber is NaN.
+
+Syntax
+------
+
+StringNumericLiteral :::
+
+StrWhiteSpaceopt
+
+StrWhiteSpaceopt StrNumericLiteral StrWhiteSpaceopt
+
+StrWhiteSpace :::
+
+StrWhiteSpaceChar StrWhiteSpaceopt
+
+StrWhiteSpaceChar :::
+
+WhiteSpace
+
+LineTerminator
+
+StrNumericLiteral :::
+
+StrDecimalLiteral
+
+HexIntegerLiteral
+
+StrDecimalLiteral :::
+
+StrUnsignedDecimalLiteral
+
++ StrUnsignedDecimalLiteral
+
+- StrUnsignedDecimalLiteral
+
+StrUnsignedDecimalLiteral :::
+
+Infinity
+
+DecimalDigits . DecimalDigitsopt ExponentPartopt
+
+. DecimalDigits ExponentPartopt
+
+DecimalDigits ExponentPartopt
+
+DecimalDigits :::
+
+DecimalDigit
+
+DecimalDigits DecimalDigit
+
+DecimalDigit ::: one of
+
+0 1 2 3 4 5 6 7 8 9
+
+ExponentPart :::
+
+ExponentIndicator SignedInteger
+
+ExponentIndicator ::: one of
+
+e E
+
+SignedInteger :::
+
+DecimalDigits
+
++ DecimalDigits
+
+- DecimalDigits
+
+HexIntegerLiteral :::
+
+0x HexDigit
+
+0X HexDigit
+
+HexIntegerLiteral HexDigit
+
+HexDigit ::: one of
+
+0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
+
+Some differences should be noted between the syntax of a StringNumericLiteral and a NumericLiteral
+(see 7.8.3):
+
+-   A StringNumericLiteral may be preceded and/or followed by white space and/or line terminators.
+
+-   A StringNumericLiteral that is decimal may have any number of leading 0 digits.
+
+-   A StringNumericLiteral that is decimal may be preceded by + or - to indicate its sign.
+
+-   A StringNumericLiteral that is empty or contains only white space is converted to +0.
+
+The conversion of a String to a Number value is similar overall to the determination of the Number
+value for a numeric literal (see 7.8.3), but some of the details are different, so the process for
+converting a String numeric literal to a value of Number type is given here in full. This value is
+determined in two steps: first, a mathematical value (MV) is derived from the String numeric
+literal; second, this mathematical value is rounded as described below.
+
+-   The MV of StringNumericLiteral ::: [empty] is 0.
+
+-   The MV of StringNumericLiteral ::: StrWhiteSpace is 0.
+
+-   The MV of StringNumericLiteral ::: StrWhiteSpaceopt StrNumericLiteral StrWhiteSpaceopt is the MV
+    of StrNumericLiteral, no matter whether white space is present or not.
+
+-   The MV of StrNumericLiteral ::: StrDecimalLiteral is the MV of StrDecimalLiteral.
+
+-   The MV of StrNumericLiteral ::: HexIntegerLiteral is the MV of HexIntegerLiteral.
+
+-   The MV of StrDecimalLiteral ::: StrUnsignedDecimalLiteral is the MV of
+    StrUnsignedDecimalLiteral.
+
+-   The MV of StrDecimalLiteral ::: + StrUnsignedDecimalLiteral is the MV of
+    StrUnsignedDecimalLiteral.
+
+-   The MV of StrDecimalLiteral ::: - StrUnsignedDecimalLiteral is the negative of the MV of
+    StrUnsignedDecimalLiteral. (Note that if the MV of StrUnsignedDecimalLiteral is 0, the negative
+    of this MV is also 0. The rounding rule described below handles the conversion of this signless
+    mathematical zero to a floating-point +0 or −0 as appropriate.)
+
+-   The MV of StrUnsignedDecimalLiteral ::: Infinity is 10^10000 (a value so large that it will
+    round to +∞).
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . is the MV of DecimalDigits.
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . DecimalDigits is the MV of the first
+    DecimalDigits plus (the MV of the second DecimalDigits times 10−n), where n is the number of
+    characters in the second DecimalDigits.
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . ExponentPart is the MV of DecimalDigits
+    times 10e, where e is the MV of ExponentPart.
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . DecimalDigits ExponentPart is (the MV of
+    the first DecimalDigits plus (the MV of the second DecimalDigits times 10−n)) times 10e, where n
+    is the number of characters in the second DecimalDigits and e is the MV of ExponentPart.
+
+-   The MV of StrUnsignedDecimalLiteral ::: . DecimalDigits is the MV of DecimalDigits times 10−n,
+    where n is the number of characters in DecimalDigits.
+
+-   The MV of StrUnsignedDecimalLiteral ::: . DecimalDigits ExponentPart is the MV of DecimalDigits
+    times 10e−n, where n is the number of characters in DecimalDigits and e is the MV of
+    ExponentPart.
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits is the MV of DecimalDigits.
+
+-   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits ExponentPart is the MV of DecimalDigits
+    times 10e, where e is the MV of ExponentPart.
+
+-   The MV of DecimalDigits ::: DecimalDigit is the MV of DecimalDigit.
+
+-   The MV of DecimalDigits ::: DecimalDigits DecimalDigit is (the MV of DecimalDigits times 10)
+    plus the MV of DecimalDigit.
+
+-   The MV of ExponentPart ::: ExponentIndicator SignedInteger is the MV of SignedInteger.
+
+-   The MV of SignedInteger ::: DecimalDigits is the MV of DecimalDigits.
+
+-   The MV of SignedInteger ::: + DecimalDigits is the MV of DecimalDigits.
+
+-   The MV of SignedInteger ::: - DecimalDigits is the negative of the MV of DecimalDigits.
+
+-   The MV of DecimalDigit ::: 0 or of HexDigit ::: 0 is 0.
+
+-   The MV of DecimalDigit ::: 1 or of HexDigit ::: 1 is 1.
+
+-   The MV of DecimalDigit ::: 2 or of HexDigit ::: 2 is 2.
+
+-   The MV of DecimalDigit ::: 3 or of HexDigit ::: 3 is 3.
+
+-   The MV of DecimalDigit ::: 4 or of HexDigit ::: 4 is 4.
+
+-   The MV of DecimalDigit ::: 5 or of HexDigit ::: 5 is 5.
+
+-   The MV of DecimalDigit ::: 6 or of HexDigit ::: 6 is 6.
+
+-   The MV of DecimalDigit ::: 7 or of HexDigit ::: 7 is 7.
+
+-   The MV of DecimalDigit ::: 8 or of HexDigit ::: 8 is 8.
+
+-   The MV of DecimalDigit ::: 9 or of HexDigit ::: 9 is 9.
+
+-   The MV of HexDigit ::: a or of HexDigit ::: A is 10.
+
+-   The MV of HexDigit ::: b or of HexDigit ::: B is 11.
+
+-   The MV of HexDigit ::: c or of HexDigit ::: C is 12.
+
+-   The MV of HexDigit ::: d or of HexDigit ::: D is 13.
+
+-   The MV of HexDigit ::: e or of HexDigit ::: E is 14.
+
+-   The MV of HexDigit ::: f or of HexDigit ::: F is 15.
+
+-   The MV of HexIntegerLiteral ::: 0x HexDigit is the MV of HexDigit.
+
+-   The MV of HexIntegerLiteral ::: 0X HexDigit is the MV of HexDigit.
+
+-   The MV of HexIntegerLiteral ::: HexIntegerLiteral HexDigit is (the MV of HexIntegerLiteral times
+    16) plus the MV of HexDigit.
+
+Once the exact MV for a String numeric literal has been determined, it is then rounded to a value of
+the Number type. If the MV is 0, then the rounded value is +0 unless the first non white space
+character in the String numeric literal is ‘-’, in which case the rounded value is −0. Otherwise,
+the rounded value must be the Number value for the MV (in the sense defined in 8.5), unless the
+literal includes a StrUnsignedDecimalLiteral and the literal has more than 20 significant digits, in
+which case the Number value may be either the Number value for the MV of a literal produced by
+replacing each significant digit after the 20th with a 0 digit or the Number value for the MV of a
+literal produced by replacing each significant digit after the 20th with a 0 digit and then
+incrementing the literal at the 20th digit position. A digit is significant if it is not part of an
+ExponentPart and
+
+-   it is not 0; or
+-   there is a nonzero digit to its left and there is a nonzero digit, not in the ExponentPart, to
+    its right.

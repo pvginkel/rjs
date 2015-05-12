@@ -1,0 +1,49 @@
+7 Lexical Conventions
+=====================
+
+The source text of an ECMAScript program is first converted into a sequence of input elements, which
+are tokens, line terminators, comments, or white space. The source text is scanned from left to
+right, repeatedly taking the longest possible sequence of characters as the next input element.
+
+There are two goal symbols for the lexical grammar. The InputElementDiv symbol is used in those
+syntactic grammar contexts where a leading division (/) or division-assignment (/=) operator is
+permitted. The InputElementRegExp symbol is used in other syntactic grammar contexts.
+
+NOTE There are no syntactic grammar contexts where both a leading division or division-assignment,
+and a leading RegularExpressionLiteral are permitted. This is not affected by semicolon insertion
+(see 7.9); in examples such as the following:
+
+    a = b/hi/g.exec(c).map(d);
+
+where the first non-whitespace, non-comment character after a LineTerminator is slash (/) and the
+syntactic context allows division or division-assignment, no semicolon is inserted at the
+LineTerminator. That is, the above example is interpreted in the same way as:
+
+    a = b / hi / g.exec(c).map(d);
+
+Syntax
+------
+
+InputElementDiv ::
+
+WhiteSpace
+
+LineTerminator
+
+Comment
+
+Token
+
+DivPunctuator
+
+InputElementRegExp ::
+
+WhiteSpace
+
+LineTerminator
+
+Comment
+
+Token
+
+RegularExpressionLiteral

@@ -1,0 +1,104 @@
+13.2 Creating Function Objects
+==============================
+
+Given an optional parameter list specified by FormalParameterList, a body specified by FunctionBody,
+a Lexical Environment specified by Scope, and a Boolean flag Strict, a Function object is
+constructed as follows:
+
+1.  Create a new native ECMAScript object and let F be that object.
+2.  Set all the internal methods, except for [[Get]], of F as described in 8.12.
+3.  Set the [[Class]] internal property of F to "Function".
+4.  Set the [[Prototype]] internal property of F to the standard built-in Function prototype object
+    as specified in 15.3.3.1.
+5.  Set the [[Get]] internal property of F as described in 15.3.5.4.
+6.  Set the [[Call]] internal property of F as described in 13.2.1.
+7.  Set the [[Construct]] internal property of F as described in 13.2.2.
+8.  Set the [[HasInstance]] internal property of F as described in 15.3.5.3.
+9.  Set the [[Scope]] internal property of F to the value of Scope.
+10. Let names be a List containing, in left to right textual order, the Strings corresponding to the
+    identifiers of FormalParameterList. If no parameters are specified, let names be the empty list.
+11. Set the [[FormalParameters]] internal property of F to names.
+12. Set the [[Code]] internal property of F to FunctionBody.
+13. Set the [[Extensible]] internal property of F to true.
+14. Let len be the number of formal parameters specified in FormalParameterList. If no parameters
+    are specified, let len be 0.
+15. Call the [[DefineOwnProperty]] internal method of F with arguments "length", Property Descriptor
+    {[[Value]]: len, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, and
+    false.
+16. Let proto be the result of creating a new object as would be constructed by the expression
+    new           Object()where Object is the standard built-in constructor with that name.
+17. Call the [[DefineOwnProperty]] internal method of proto with arguments "constructor", Property
+    Descriptor {[[Value]]: F, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true},
+    and false.
+18. Call the [[DefineOwnProperty]] internal method of F with arguments "prototype", Property
+    Descriptor {[[Value]]: proto, { [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]:
+    false}, and false.
+19. If Strict is true, then
+    1.  Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
+    2.  Call the [[DefineOwnProperty]] internal method of F with arguments "caller",
+        PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+        [[Configurable]]: false}, and false.
+    3.  Call the [[DefineOwnProperty]] internal method of F with arguments "arguments",
+        PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+        [[Configurable]]: false}, and false.
+
+20. Return F.
+
+NOTE A prototype property is automatically created for every function, to allow for the possibility
+that the function will be used as a constructor.
+
+13.2.1 [[Call]]
+===============
+
+When the [[Call]] internal method for a Function object F is called with a this value and a list of
+arguments, the following steps are taken:
+
+1.  Let funcCtx be the result of establishing a new execution context for function code using the
+    value of F’s [[FormalParameters]] internal property, the passed arguments List args, and the
+    this value as described in 10.4.3.
+2.  Let result be the result of evaluating the FunctionBody that is the value of F’s [[Code]]
+    internal property. If F does not have a [[Code]] internal property or if its value is an empty
+    FunctionBody, then result is (normal, undefined, empty).
+3.  Exit the execution context funcCtx, restoring the previous execution context.
+4.  If result.type is throw then throw result.value.
+5.  If result.type is return then return result.value.
+6.  Otherwise result.type must be normal. Return undefined.
+
+13.2.2 [[Construct]]
+====================
+
+When the [[Construct]] internal method for a Function object F is called with a possibly empty list
+of arguments, the following steps are taken:
+
+1.  Let obj be a newly created native ECMAScript object.
+2.  Set all the internal methods of obj as specified in 8.12.
+3.  Set the [[Class]] internal property of obj to "Object".
+4.  Set the [[Extensible]] internal property of obj to true.
+5.  Let proto be the value of calling the [[Get]] internal property of F with argument "prototype".
+6.  If Type(proto) is Object, set the [[Prototype]] internal property of obj to proto.
+7.  If Type(proto) is not Object, set the [[Prototype]] internal property of obj to the standard
+    built-in Object prototype object as described in 15.2.4.
+8.  Let result be the result of calling the [[Call]] internal property of F, providing obj as the
+    this value and providing the argument list passed into [[Construct]] as args.
+9.  If Type(result) is Object then return result.
+10. Return obj.
+
+13.2.3 The [[ThrowTypeError]] Function Object
+=============================================
+
+The [[ThrowTypeError]] object is a unique function object that is defined once as follows:
+
+1.  Create a new native ECMAScript object and let F be that object.
+2.  Set all the internal methods of F as described in 8.12.
+3.  Set the [[Class]] internal property of F to "Function".
+4.  Set the [[Prototype]] internal property of F to the standard built-in Function prototype object
+    as specified in 15.3.3.1.
+5.  Set the [[Call]] internal property of F as described in 13.2.1.
+6.  Set the [[Scope]] internal property of F to the Global Environment.
+7.  Set the [[FormalParameters]] internal property of F to an empty List.
+8.  Set the [[Code]] internal property of F to be a FunctionBody that unconditionally throws a
+    TypeError exception and performs no other action.
+9.  Call the [[DefineOwnProperty]] internal method of F with arguments "length", Property Descriptor
+    {[[Value]]: 0, [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false}, and false.
+10. Set the [[Extensible]] internal property of F to false.
+11. Let [[ThrowTypeError]] be F.

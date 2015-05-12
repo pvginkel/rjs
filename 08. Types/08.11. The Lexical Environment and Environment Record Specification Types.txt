@@ -1,0 +1,6 @@
+8.11 The Lexical Environment and Environment Record Specification Types
+=======================================================================
+
+The Lexical Environment and Environment Record types are used to explain the behaviour of name
+resolution in nested functions and blocks. These types and the operations upon them are defined in
+Clause 10.

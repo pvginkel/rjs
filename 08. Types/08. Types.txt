@@ -1,0 +1,21 @@
+8 Types
+=======
+
+Algorithms within this specification manipulate values each of which has an associated type. The
+possible value types are exactly those defined in this clause. Types are further subclassified into
+ECMAScript language types and specification types.
+
+An ECMAScript language type corresponds to values that are directly manipulated by an ECMAScript
+programmer using the ECMAScript language. The ECMAScript language types are Undefined, Null,
+Boolean, String, Number, and Object.
+
+A specification type corresponds to meta-values that are used within algorithms to describe the
+semantics of ECMAScript language constructs and ECMAScript language types. The specification types
+are Reference, List, Completion, Property Descriptor, Property Identifier, Lexical Environment, and
+Environment Record. Specification type values are specification artefacts that do not necessarily
+correspond to any specific entity within an ECMAScript implementation. Specification type values may
+be used to describe intermediate results of ECMAScript expression evaluation but such values cannot
+be stored as properties of objects or values of ECMAScript language variables.
+
+Within this specification, the notation “Type(x)” is used as shorthand for “the type of x” where
+“type” refers to the ECMAScript language and specification types defined in this clause.

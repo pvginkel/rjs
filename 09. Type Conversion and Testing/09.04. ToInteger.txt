@@ -1,0 +1,10 @@
+9.4 ToInteger
+=============
+
+The abstract operation ToInteger converts its argument to an integral numeric value. This abstract
+operation functions as follows:
+
+1.  Let number be the result of calling ToNumber on the input argument.
+2.  If number is NaN, return +0.
+3.  If number is +0, −0, +∞, or −∞, return number.
+4.  Return the result of computing sign(number) × floor(abs(number)).

@@ -1,0 +1,79 @@
+13 Function Definition
+======================
+
+Syntax
+------
+
+FunctionDeclaration :
+
+function Identifier ( FormalParameterListopt ) { FunctionBody }
+
+FunctionExpression :
+
+function Identifieropt ( FormalParameterListopt ) { FunctionBody }
+
+FormalParameterList :
+
+Identifier
+
+FormalParameterList , Identifier
+
+FunctionBody :
+
+SourceElementsopt
+
+Semantics
+---------
+
+The production  
+ FunctionDeclaration : function Identifier ( FormalParameterListopt ) { FunctionBody }  
+is instantiated as follows during Declaration Binding instantiation (10.5):
+
+1.  Return the result of creating a new Function object as specified in 13.2 with parameters
+    specified by FormalParameterListopt, and body specified by FunctionBody. Pass in the
+    VariableEnvironment of the running execution context as the Scope. Pass in true as the Strict
+    flag if the FunctionDeclaration is contained in strict code or if its FunctionBody is strict
+    code.
+
+The production  
+ FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }  
+is evaluated as follows:
+
+1.  Return the result of creating a new Function object as specified in 13.2 with parameters
+    specified by FormalParameterListopt and body specified by FunctionBody. Pass in the
+    LexicalEnvironment of the running execution context as the Scope. Pass in true as the Strict
+    flag if the FunctionExpression is contained in strict code or if its FunctionBody is strict
+    code.
+
+The production  
+ FunctionExpression : function Identifier ( FormalParameterListopt ) { FunctionBody }  
+is evaluated as follows:
+
+1.  Let funcEnv be the result of calling NewDeclarativeEnvironment passing the running execution
+    context’s Lexical Environment as the argument
+2.  Let envRec be funcEnv’s environment record.
+3.  Call the CreateImmutableBinding concrete method of envRec passing the String value of Identifier
+    as the argument.
+4.  Let closure be the result of creating a new Function object as specified in 13.2 with parameters
+    specified by FormalParameterListopt and body specified by FunctionBody. Pass in funcEnv as the
+    Scope. Pass in true as the Strict flag if the FunctionExpression is contained in strict code or
+    if its FunctionBody is strict code.
+5.  Call the InitializeImmutableBinding concrete method of envRec passing the String value of
+    Identifier and closure as the arguments.
+6.  Return closure.
+
+NOTE The Identifier in a FunctionExpression can be referenced from inside the FunctionExpression’s
+FunctionBody to allow the function to call itself recursively. However, unlike in a
+FunctionDeclaration, the Identifier in a FunctionExpression cannot be referenced from and does not
+affect the scope enclosing the FunctionExpression.
+
+The production FunctionBody : SourceElementsopt is evaluated as follows:
+
+1.  The code of this FunctionBody is strict mode code if it is part of a FunctionDeclaration or
+    FunctionExpression that is contained in strict mode code or if the Directive Prologue (14.1) of
+    its SourceElements contains a Use Strict Directive or if any of the conditions in 10.1.1 apply.
+    If the code of this FunctionBody is strict mode code, SourceElements is evaluated in the
+    following steps as strict mode code. Otherwise, SourceElements is evaluated in the following
+    steps as non-strict mode code.
+2.  If SourceElements is present return the result of evaluating SourceElements.
+3.  Else return (normal, undefined, empty).

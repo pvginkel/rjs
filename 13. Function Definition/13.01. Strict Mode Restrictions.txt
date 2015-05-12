@@ -1,0 +1,11 @@
+13.1 Strict Mode Restrictions
+=============================
+
+It is a SyntaxError if any Identifier value occurs more than once within a FormalParameterList of a
+strict mode FunctionDeclaration or FunctionExpression.
+
+It is a SyntaxError if the Identifier "eval" or the Identifier "arguments" occurs within a
+FormalParameterList of a strict mode FunctionDeclaration or FunctionExpression.
+
+It is a SyntaxError if the Identifier "eval" or the Identifier "arguments" occurs as the Identifier
+of a strict mode FunctionDeclaration or FunctionExpression.

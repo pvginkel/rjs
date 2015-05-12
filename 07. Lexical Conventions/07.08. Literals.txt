@@ -1,0 +1,517 @@
+7.8 Literals
+============
+
+Syntax
+------
+
+Literal ::
+
+NullLiteral
+
+BooleanLiteral
+
+NumericLiteral
+
+StringLiteral
+
+RegularExpressionLiteral
+
+7.8.1 Null Literals
+===================
+
+Syntax
+------
+
+NullLiteral ::
+
+null
+
+Semantics
+---------
+
+The value of the null literal null is the sole value of the Null type, namely null.
+
+7.8.2 Boolean Literals
+======================
+
+Syntax
+------
+
+BooleanLiteral ::
+
+true
+
+false
+
+Semantics
+---------
+
+The value of the Boolean literal true is a value of the Boolean type, namely true.
+
+The value of the Boolean literal false is a value of the Boolean type, namely false.
+
+7.8.3 Numeric Literals
+======================
+
+Syntax
+------
+
+NumericLiteral ::
+
+DecimalLiteral
+
+HexIntegerLiteral
+
+DecimalLiteral ::
+
+DecimalIntegerLiteral . DecimalDigitsopt ExponentPartopt
+
+. DecimalDigits ExponentPartopt
+
+DecimalIntegerLiteral ExponentPartopt
+
+DecimalIntegerLiteral ::
+
+0
+
+NonZeroDigit DecimalDigitsopt
+
+DecimalDigits ::
+
+DecimalDigit
+
+DecimalDigits DecimalDigit
+
+DecimalDigit :: one of
+
+0 1 2 3 4 5 6 7 8 9
+
+NonZeroDigit :: one of
+
+1 2 3 4 5 6 7 8 9
+
+ExponentPart ::
+
+ExponentIndicator SignedInteger
+
+ExponentIndicator :: one of
+
+e E
+
+SignedInteger ::
+
+DecimalDigits
+
++ DecimalDigits
+
+- DecimalDigits
+
+HexIntegerLiteral ::
+
+0x HexDigit
+
+0X HexDigit
+
+HexIntegerLiteral HexDigit
+
+HexDigit :: one of
+
+0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
+
+The source character immediately following a NumericLiteral must not be an IdentifierStart or
+DecimalDigit.
+
+NOTE For example:
+
+    3in
+
+is an error and not the two input elements 3 and in.
+
+Semantics
+---------
+
+A numeric literal stands for a value of the Number type. This value is determined in two steps:
+first, a mathematical value (MV) is derived from the literal; second, this mathematical value is
+rounded as described below.
+
+-   The MV of NumericLiteral :: DecimalLiteral is the MV of DecimalLiteral.
+
+-   The MV of NumericLiteral :: HexIntegerLiteral is the MV of HexIntegerLiteral.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral . is the MV of DecimalIntegerLiteral.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral . DecimalDigits is the MV of
+    DecimalIntegerLiteral plus (the MV of DecimalDigits times 10–n), where n is the number of
+    characters in DecimalDigits.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral . ExponentPart is the MV of
+    DecimalIntegerLiteral times 10e, where e is the MV of ExponentPart.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral . DecimalDigits ExponentPart is (the MV of
+    DecimalIntegerLiteral plus (the MV of DecimalDigits times 10–n)) times 10e, where n is the
+    number of characters in DecimalDigits and e is the MV of ExponentPart.
+
+-   The MV of DecimalLiteral :: . DecimalDigits is the MV of DecimalDigits times 10–n, where n is
+    the number of characters in DecimalDigits.
+
+-   The MV of DecimalLiteral :: . DecimalDigits ExponentPart is the MV of DecimalDigits times 10e–n,
+    where n is the number of characters in DecimalDigits and e is the MV of ExponentPart.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral is the MV of DecimalIntegerLiteral.
+
+-   The MV of DecimalLiteral :: DecimalIntegerLiteral ExponentPart is the MV of
+    DecimalIntegerLiteral times 10e, where e is the MV of ExponentPart.
+
+-   The MV of DecimalIntegerLiteral :: 0 is 0.
+
+-   The MV of DecimalIntegerLiteral :: NonZeroDigit is the MV of NonZeroDigit.
+
+-   The MV of DecimalIntegerLiteral :: NonZeroDigit DecimalDigits is (the MV of NonZeroDigit times
+    10n) plus the MV of DecimalDigits, where n is the number of characters in DecimalDigits.
+
+-   The MV of DecimalDigits :: DecimalDigit is the MV of DecimalDigit.
+
+-   The MV of DecimalDigits :: DecimalDigits DecimalDigit is (the MV of DecimalDigits times 10) plus
+    the MV of DecimalDigit.
+
+-   The MV of ExponentPart :: ExponentIndicator SignedInteger is the MV of SignedInteger.
+
+-   The MV of SignedInteger :: DecimalDigits is the MV of DecimalDigits.
+
+-   The MV of SignedInteger :: + DecimalDigits is the MV of DecimalDigits.
+
+-   The MV of SignedInteger :: - DecimalDigits is the negative of the MV of DecimalDigits.
+
+-   The MV of DecimalDigit :: 0 or of HexDigit :: 0 is 0.
+
+-   The MV of DecimalDigit :: 1 or of NonZeroDigit :: 1 or of HexDigit :: 1 is 1.
+
+-   The MV of DecimalDigit :: 2 or of NonZeroDigit :: 2 or of HexDigit :: 2 is 2.
+
+-   The MV of DecimalDigit :: 3 or of NonZeroDigit :: 3 or of HexDigit :: 3 is 3.
+
+-   The MV of DecimalDigit :: 4 or of NonZeroDigit :: 4 or of HexDigit :: 4 is 4.
+
+-   The MV of DecimalDigit :: 5 or of NonZeroDigit :: 5 or of HexDigit :: 5 is 5.
+
+-   The MV of DecimalDigit :: 6 or of NonZeroDigit :: 6 or of HexDigit :: 6 is 6.
+
+-   The MV of DecimalDigit :: 7 or of NonZeroDigit :: 7 or of HexDigit :: 7 is 7.
+
+-   The MV of DecimalDigit :: 8 or of NonZeroDigit :: 8 or of HexDigit :: 8 is 8.
+
+-   The MV of DecimalDigit :: 9 or of NonZeroDigit :: 9 or of HexDigit :: 9 is 9.
+
+-   The MV of HexDigit :: a or of HexDigit :: A is 10.
+
+-   The MV of HexDigit :: b or of HexDigit :: B is 11.
+
+-   The MV of HexDigit :: c or of HexDigit :: C is 12.
+
+-   The MV of HexDigit :: d or of HexDigit :: D is 13.
+
+-   The MV of HexDigit :: e or of HexDigit :: E is 14.
+
+-   The MV of HexDigit :: f or of HexDigit :: F is 15.
+
+-   The MV of HexIntegerLiteral :: 0x HexDigit is the MV of HexDigit.
+
+-   The MV of HexIntegerLiteral :: 0X HexDigit is the MV of HexDigit.
+
+-   The MV of HexIntegerLiteral :: HexIntegerLiteral HexDigit is (the MV of HexIntegerLiteral times
+    16) plus the MV of HexDigit.
+
+Once the exact MV for a numeric literal has been determined, it is then rounded to a value of the
+Number type. If the MV is 0, then the rounded value is +0; otherwise, the rounded value must be the
+Number value for the MV (as specified in 8.5), unless the literal is a DecimalLiteral and the
+literal has more than 20 significant digits, in which case the Number value may be either the Number
+value for the MV of a literal produced by replacing each significant digit after the 20th with a 0
+digit or the Number value for the MV of a literal produced by replacing each significant digit after
+the 20th with a 0 digit and then incrementing the literal at the 20th significant digit position. A
+digit is significant if it is not part of an ExponentPart and
+
+-   it is not 0; or
+-   there is a nonzero digit to its left and there is a nonzero digit, not in the ExponentPart, to
+    its right.
+
+A conforming implementation, when processing strict mode code (see 10.1.1), must not extend the
+syntax of NumericLiteral to include OctalIntegerLiteral as described in B.1.1.
+
+7.8.4 String Literals
+=====================
+
+A string literal is zero or more characters enclosed in single or double quotes. Each character may
+be represented by an escape sequence. All characters may appear literally in a string literal except
+for the closing quote character, backslash, carriage return, line separator, paragraph separator,
+and line feed. Any character may appear in the form of an escape sequence.
+
+Syntax
+------
+
+StringLiteral ::
+
+" DoubleStringCharactersopt "
+
+' SingleStringCharactersopt '
+
+DoubleStringCharacters ::
+
+DoubleStringCharacter DoubleStringCharactersopt
+
+SingleStringCharacters ::
+
+SingleStringCharacter SingleStringCharactersopt
+
+DoubleStringCharacter ::
+
+SourceCharacter but not one of " or \ or LineTerminator
+
+\ EscapeSequence
+
+LineContinuation
+
+SingleStringCharacter ::
+
+SourceCharacter but not one of ' or \ or LineTerminator
+
+\ EscapeSequence
+
+LineContinuation
+
+LineContinuation ::
+
+\ LineTerminatorSequence
+
+EscapeSequence ::
+
+CharacterEscapeSequence
+
+0 [lookahead ∉ DecimalDigit]
+
+HexEscapeSequence
+
+UnicodeEscapeSequence
+
+CharacterEscapeSequence ::
+
+SingleEscapeCharacter
+
+NonEscapeCharacter
+
+SingleEscapeCharacter :: one of
+
+' " \ b f n r t v
+
+NonEscapeCharacter ::
+
+SourceCharacter but not one of EscapeCharacter or LineTerminator
+
+EscapeCharacter ::
+
+SingleEscapeCharacter
+
+DecimalDigit
+
+x
+
+u
+
+HexEscapeSequence ::
+
+x HexDigit HexDigit
+
+UnicodeEscapeSequence ::
+
+u HexDigit HexDigit HexDigit HexDigit
+
+The definition of the nonterminal HexDigit is given in 7.8.3. SourceCharacter is defined in clause
+6.
+
+Semantics
+---------
+
+A string literal stands for a value of the String type. The String value (SV) of the literal is
+described in terms of character values (CV) contributed by the various parts of the string literal.
+As part of this process, some characters within the string literal are interpreted as having a
+mathematical value (MV), as described below or in 7.8.3.
+
+-   The SV of StringLiteral :: "" is the empty character sequence.
+
+-   The SV of StringLiteral :: '' is the empty character sequence.
+
+-   The SV of StringLiteral :: " DoubleStringCharacters " is the SV of DoubleStringCharacters.
+
+-   The SV of StringLiteral :: ' SingleStringCharacters ' is the SV of SingleStringCharacters.
+
+-   The SV of DoubleStringCharacters :: DoubleStringCharacter is a sequence of one character, the CV
+    of DoubleStringCharacter.
+
+-   The SV of DoubleStringCharacters :: DoubleStringCharacter DoubleStringCharacters is a sequence
+    of the CV of DoubleStringCharacter followed by all the characters in the SV of
+    DoubleStringCharacters in order.
+
+-   The SV of SingleStringCharacters :: SingleStringCharacter is a sequence of one character, the CV
+    of SingleStringCharacter.
+
+-   The SV of SingleStringCharacters :: SingleStringCharacter SingleStringCharacters is a sequence
+    of the CV of SingleStringCharacter followed by all the characters in the SV of
+    SingleStringCharacters in order.
+
+-   The SV of LineContinuation :: \ LineTerminatorSequence is the empty character sequence.
+
+-   The CV of DoubleStringCharacter :: SourceCharacter but not one of " or \ or LineTerminator is
+    the SourceCharacter character itself.
+
+-   The CV of DoubleStringCharacter :: \ EscapeSequence is the CV of the EscapeSequence.
+
+-   The CV of DoubleStringCharacter :: LineContinuation is the empty character sequence.
+
+-   The CV of SingleStringCharacter :: SourceCharacter but not one of ' or \ or LineTerminator is
+    the SourceCharacter character itself.
+
+-   The CV of SingleStringCharacter :: \ EscapeSequence is the CV of the EscapeSequence.
+
+-   The CV of SingleStringCharacter :: LineContinuation is the empty character sequence.
+
+-   The CV of EscapeSequence :: CharacterEscapeSequence is the CV of the CharacterEscapeSequence.
+
+-   The CV of EscapeSequence :: 0 [lookahead ∉ DecimalDigit] is a <NUL> character (Unicode value
+    0000).
+
+-   The CV of EscapeSequence :: HexEscapeSequence is the CV of the HexEscapeSequence.
+
+-   The CV of EscapeSequence :: UnicodeEscapeSequence is the CV of the UnicodeEscapeSequence.
+
+-   The CV of CharacterEscapeSequence :: SingleEscapeCharacter is the character whose code unit
+    value is determined by the SingleEscapeCharacter according to Table 4:
+
+Table 4 — String Single Character Escape Sequences
+
+  Escape Sequence   Code Unit Value   Name                   Symbol
+  ----------------- ----------------- ---------------------- --------
+  \b                \u0008            backspace              <BS>
+  \t                \u0009            horizontal tab         <HT>
+  \n                \u000A            line feed (new line)   <LF>
+  \v                \u000B            vertical tab           <VT>
+  \f                \u000C            form feed              <FF>
+  \r                \u000D            carriage return        <CR>
+  \"                \u0022            double quote           "
+  \'                \u0027            single quote           '
+  \\                \u005C            backslash              \
+
+-   The CV of CharacterEscapeSequence :: NonEscapeCharacter is the CV of the NonEscapeCharacter.
+
+-   The CV of NonEscapeCharacter :: SourceCharacter but not one of EscapeCharacter or LineTerminator
+    is the SourceCharacter character itself.
+
+-   The CV of HexEscapeSequence :: x HexDigit HexDigit is the character whose code unit value is (16
+    times the MV of the first HexDigit) plus the MV of the second HexDigit.
+
+-   The CV of UnicodeEscapeSequence :: u HexDigit HexDigit HexDigit HexDigit is the character whose
+    code unit value is (4096 times the MV of the first HexDigit) plus (256 times the MV of the
+    second HexDigit) plus (16 times the MV of the third HexDigit) plus the MV of the fourth
+    HexDigit.
+
+A conforming implementation, when processing strict mode code (see 10.1.1), may not extend the
+syntax of EscapeSequence to include OctalEscapeSequence as described in B.1.2.
+
+NOTE A line terminator character cannot appear in a string literal, except as part of a
+LineContinuation to produce the empty character sequence. The correct way to cause a line terminator
+character to be part of the String value of a string literal is to use an escape sequence such as \n
+or \u000A.
+
+7.8.5 Regular Expression Literals
+=================================
+
+A regular expression literal is an input element that is converted to a RegExp object (see 15.10)
+each time the literal is evaluated. Two regular expression literals in a program evaluate to regular
+expression objects that never compare as === to each other even if the two literals’ contents are
+identical. A RegExp object may also be created at runtime by new RegExp (see 15.10.4) or calling the
+RegExp constructor as a function (15.10.3).
+
+The productions below describe the syntax for a regular expression literal and are used by the input
+element scanner to find the end of the regular expression literal. The Strings of characters
+comprising the RegularExpressionBody and the RegularExpressionFlags are passed uninterpreted to the
+regular expression constructor, which interprets them according to its own, more stringent grammar.
+An implementation may extend the regular expression constructor’s grammar, but it must not extend
+the RegularExpressionBody and RegularExpressionFlags productions or the productions used by these
+productions.
+
+Syntax
+------
+
+RegularExpressionLiteral ::
+
+/ RegularExpressionBody / RegularExpressionFlags
+
+RegularExpressionBody ::
+
+RegularExpressionFirstChar RegularExpressionChars
+
+RegularExpressionChars ::
+
+[empty]
+
+RegularExpressionChars RegularExpressionChar
+
+RegularExpressionFirstChar ::
+
+RegularExpressionNonTerminator but not one of * or \ or / or [
+
+RegularExpressionBackslashSequence
+
+RegularExpressionClass
+
+RegularExpressionChar ::
+
+RegularExpressionNonTerminator but not one of \ or / or [
+
+RegularExpressionBackslashSequence
+
+RegularExpressionClass
+
+RegularExpressionBackslashSequence ::
+
+\ RegularExpressionNonTerminator
+
+RegularExpressionNonTerminator ::
+
+SourceCharacter but not LineTerminator
+
+RegularExpressionClass ::
+
+[ RegularExpressionClassChars ]
+
+RegularExpressionClassChars ::
+
+[empty]
+
+RegularExpressionClassChars RegularExpressionClassChar
+
+RegularExpressionClassChar ::
+
+RegularExpressionNonTerminator but not one of ] or \
+
+RegularExpressionBackslashSequence
+
+RegularExpressionFlags ::
+
+[empty]
+
+RegularExpressionFlags IdentifierPart
+
+NOTE Regular expression literals may not be empty; instead of representing an empty regular
+expression literal, the characters // start a single-line comment. To specify an empty regular
+expression, use: /(?:)/.
+
+Semantics
+---------
+
+A regular expression literal evaluates to a value of the Object type that is an instance of the
+standard built-in constructor RegExp. This value is determined in two steps: first, the characters
+comprising the regular expression’s RegularExpressionBody and RegularExpressionFlags production
+expansions are collected uninterpreted into two Strings Pattern and Flags, respectively. Then each
+time the literal is evaluated, a new object is created as if by the expression new RegExp(Pattern,
+Flags) where RegExp is the standard built-in constructor with that name. The newly constructed
+object becomes the value of the RegularExpressionLiteral. If the call to new RegExp would generate
+an error as specified in 15.10.4.1, the error must be treated as an early error (Clause 16).

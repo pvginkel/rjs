@@ -1,0 +1,40 @@
+12.10 The with Statement
+========================
+
+Syntax
+------
+
+WithStatement :
+
+with ( Expression ) Statement
+
+The with statement adds an object environment record for a computed object to the lexical
+environment of the current execution context. It then executes a statement using this augmented
+lexical environment. Finally, it restores the original lexical environment.
+
+Semantics
+---------
+
+The production WithStatement : with ( Expression ) Statement is evaluated as follows:
+
+1.  Let val be the result of evaluating Expression.
+2.  Let obj be ToObject(GetValue(val)).
+3.  Let oldEnv be the running execution context’s LexicalEnvironment.
+4.  Let newEnv be the result of calling NewObjectEnvironment passing obj and oldEnv as the
+    arguments.
+5.  Set the provideThis flag of newEnv to true.
+6.  Set the running execution context’s LexicalEnvironment to newEnv.
+7.  Let C be the result of evaluating Statement but if an exception is thrown during the evaluation,
+    let C be (throw, V, empty), where V is the exception. (Execution now proceeds as if no exception
+    were thrown.)
+8.  Set the running execution context’s Lexical Environment to oldEnv.
+9.  Return C.
+
+NOTE No matter how control leaves the embedded Statement, whether normally or by some form of abrupt
+completion or exception, the LexicalEnvironment is always restored to its former state.
+
+12.10.1 Strict Mode Restrictions
+================================
+
+Strict mode code may not include a WithStatement. The occurrence of a WithStatement in such a
+context is treated as a SyntaxError.

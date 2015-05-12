@@ -1,0 +1,51 @@
+10.3 Execution Contexts
+=======================
+
+When control is transferred to ECMAScript executable code, control is entering an execution context.
+Active execution contexts logically form a stack. The top execution context on this logical stack is
+the running execution context. A new execution context is created whenever control is transferred
+from the executable code associated with the currently running execution context to executable code
+that is not associated with that execution context. The newly created execution context is pushed
+onto the stack and becomes the running execution context.
+
+An execution context contains whatever state is necessary to track the execution progress of its
+associated code. In addition, each execution context has the state components listed in Table 19.
+
+Table 19 —Execution Context State Components
+
+  Component             Purpose
+  --------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  LexicalEnvironment    Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.
+  VariableEnvironment   Identifies the Lexical Environment whose environment record holds bindings created by VariableStatements and FunctionDeclarations within this execution context.
+  ThisBinding           The value associated with the this keyword within ECMAScript code associated with this execution context.
+
+The LexicalEnvironment and VariableEnvironment components of an execution context are always Lexical
+Environments. When an execution context is created its LexicalEnvironment and VariableEnvironment
+components initially have the same value. The value of the VariableEnvironment component never
+changes while the value of the LexicalEnvironment component may change during execution of code
+within an execution context.
+
+In most situations only the running execution context (the top of the execution context stack) is
+directly manipulated by algorithms within this specification. Hence when the terms
+“LexicalEnvironment”, “VariableEnvironment” and “ThisBinding” are used without qualification they
+are in reference to those components of the running execution context.
+
+An execution context is purely a specification mechanism and need not correspond to any particular
+artefact of an ECMAScript implementation. It is impossible for an ECMAScript program to access an
+execution context.
+
+10.3.1 Identifier Resolution
+============================
+
+Identifier resolution is the process of determining the binding of an Identifier using the
+LexicalEnvironment of the running execution context. During execution of ECMAScript code, the
+syntactic production PrimaryExpression : Identifier is evaluated using the following algorithm:
+
+1.  Let env be the running execution context’s LexicalEnvironment.
+2.  If the syntactic production that is being evaluated is contained in a strict mode code, then let
+    strict be true, else let strict be false.
+3.  Return the result of calling GetIdentifierReference function passing env, Identifier, and strict
+    as arguments.
+
+The result of evaluating an identifier is always a value of type Reference with its referenced name
+component equal to the Identifier String.

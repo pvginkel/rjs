@@ -1,0 +1,61 @@
+7.4 Comments
+============
+
+Comments can be either single or multi-line. Multi-line comments cannot nest.
+
+Because a single-line comment can contain any character except a LineTerminator character, and
+because of the general rule that a token is always as long as possible, a single-line comment always
+consists of all characters from the // marker to the end of the line. However, the LineTerminator at
+the end of the line is not considered to be part of the single-line comment; it is recognised
+separately by the lexical grammar and becomes part of the stream of input elements for the syntactic
+grammar. This point is very important, because it implies that the presence or absence of
+single-line comments does not affect the process of automatic semicolon insertion (see 7.9).
+
+Comments behave like white space and are discarded except that, if a MultiLineComment contains a
+line terminator character, then the entire comment is considered to be a LineTerminator for purposes
+of parsing by the syntactic grammar.
+
+Syntax
+------
+
+Comment ::
+
+MultiLineComment
+
+SingleLineComment
+
+MultiLineComment ::
+
+/* MultiLineCommentCharsopt */
+
+MultiLineCommentChars ::
+
+MultiLineNotAsteriskChar MultiLineCommentCharsopt
+
+* PostAsteriskCommentCharsopt
+
+PostAsteriskCommentChars ::
+
+MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentCharsopt
+
+* PostAsteriskCommentCharsopt
+
+MultiLineNotAsteriskChar ::
+
+SourceCharacter but not *
+
+MultiLineNotForwardSlashOrAsteriskChar ::
+
+SourceCharacter but not one of / or *
+
+SingleLineComment ::
+
+// SingleLineCommentCharsopt
+
+SingleLineCommentChars ::
+
+SingleLineCommentChar SingleLineCommentCharsopt
+
+SingleLineCommentChar ::
+
+SourceCharacter but not LineTerminator

@@ -1,0 +1,32 @@
+12.5 The if Statement
+=====================
+
+Syntax
+------
+
+IfStatement :
+
+if ( Expression ) Statement else Statement
+
+if ( Expression ) Statement
+
+Each else for which the choice of associated if is ambiguous shall be associated with the nearest
+possible if that would otherwise have no corresponding else.
+
+Semantics
+---------
+
+The production IfStatement : if ( Expression ) Statement else Statement is evaluated as follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  If ToBoolean(GetValue(exprRef)) is true, then
+    1.  Return the result of evaluating the first Statement.
+
+3.  Else,
+    1.  Return the result of evaluating the second Statement.
+
+The production IfStatement : if ( Expression ) Statement is evaluated as follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  If ToBoolean(GetValue(exprRef)) is false, return (normal, empty, empty).
+3.  Return the result of evaluating Statement.

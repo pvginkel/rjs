@@ -1,0 +1,6 @@
+8.8 The List Specification Type
+===============================
+
+The List type is used to explain the evaluation of argument lists (see 11.2.4) in new expressions,
+in function calls, and in other algorithms where a simple list of values is needed. Values of the
+List type are simply ordered sequences of values. These sequences may be of any length.

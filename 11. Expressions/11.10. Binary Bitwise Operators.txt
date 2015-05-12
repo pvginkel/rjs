@@ -1,0 +1,56 @@
+11.10 Binary Bitwise Operators
+==============================
+
+Syntax
+------
+
+BitwiseANDExpression :
+
+EqualityExpression
+
+BitwiseANDExpression & EqualityExpression
+
+BitwiseANDExpressionNoIn :
+
+EqualityExpressionNoIn
+
+BitwiseANDExpressionNoIn & EqualityExpressionNoIn
+
+BitwiseXORExpression :
+
+BitwiseANDExpression
+
+BitwiseXORExpression ^ BitwiseANDExpression
+
+BitwiseXORExpressionNoIn :
+
+BitwiseANDExpressionNoIn
+
+BitwiseXORExpressionNoIn ^ BitwiseANDExpressionNoIn
+
+BitwiseORExpression :
+
+BitwiseXORExpression
+
+BitwiseORExpression | BitwiseXORExpression
+
+BitwiseORExpressionNoIn :
+
+BitwiseXORExpressionNoIn
+
+BitwiseORExpressionNoIn | BitwiseXORExpressionNoIn
+
+Semantics
+---------
+
+The production A : A @ B, where @ is one of the bitwise operators in the productions above, is
+evaluated as follows:
+
+1.  Let lref be the result of evaluating A.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating B.
+4.  Let rval be GetValue(rref).
+5.  Let lnum be ToInt32(lval).
+6.  Let rnum be ToInt32(rval).
+7.  Return the result of applying the bitwise operator @ to lnum and rnum. The result is a signed 32
+    bit integer.

@@ -1,0 +1,169 @@
+12.6 Iteration Statements
+=========================
+
+Syntax
+------
+
+IterationStatement :
+
+do Statement while ( Expression );
+
+while ( Expression ) Statement
+
+for ( ExpressionNoInopt ; Expressionopt ; Expressionopt ) Statement
+
+for ( var VariableDeclarationListNoIn ; Expressionopt ; Expressionopt ) Statement
+
+for ( LeftHandSideExpression in Expression ) Statement
+
+for ( var VariableDeclarationNoIn in Expression ) Statement
+
+12.6.1 The do-while Statement
+=============================
+
+The production do Statement while ( Expression ); is evaluated as follows:
+
+1.  Let V = empty.
+2.  Let iterating be true.
+3.  Repeat, while iterating is true
+    1.  Let stmt be the result of evaluating Statement.
+    2.  If stmt.value is not empty, let V = stmt.value.
+    3.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt.type is break and stmt.target is in the current label set, return (normal, V,
+            empty).
+        2.  If stmt is an abrupt completion, return stmt.
+
+    4.  Let exprRef be the result of evaluating Expression.
+    5.  If ToBoolean(GetValue(exprRef)) is false, set iterating to false.
+
+4.  Return (normal, V, empty);
+
+12.6.2 The while Statement
+==========================
+
+The production IterationStatement : while ( Expression ) Statement is evaluated as follows:
+
+1.  Let V = empty.
+2.  Repeat
+    1.  Let exprRef be the result of evaluating Expression.
+    2.  If ToBoolean(GetValue(exprRef)) is false, return (normal, V, empty).
+    3.  Let stmt be the result of evaluating Statement.
+    4.  If stmt.value is not empty, let V = stmt.value.
+    5.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt.type is break and stmt.target is in the current label set, then
+            1.  Return (normal, V, empty).
+
+        2.  If stmt is an abrupt completion, return stmt.
+
+12.6.3 The for Statement
+========================
+
+The production  
+ IterationStatement : for ( ExpressionNoInopt ; Expressionopt ; Expressionopt ) Statement  
+is evaluated as follows:
+
+1.  If ExpressionNoIn is present, then.
+    1.  Let exprRef be the result of evaluating ExpressionNoIn.
+    2.  Call GetValue(exprRef). (This value is not used but the call may have side-effects.)
+
+2.  Let V = empty.
+3.  Repeat
+    1.  If the first Expression is present, then
+        1.  Let testExprRef be the result of evaluating the first Expression.
+        2.  If ToBoolean(GetValue(testExprRef)) is false, return (normal, V, empty).
+
+    2.  Let stmt be the result of evaluating Statement.
+    3.  If stmt.value is not empty, let V = stmt.value
+    4.  If stmt.type is break and stmt.target is in the current label set, return (normal, V,
+        empty).
+    5.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt is an abrupt completion, return stmt.
+
+    6.  If the second Expression is present, then
+        1.  Let incExprRef be the result of evaluating the second Expression.
+        2.  Call GetValue(incExprRef). (This value is not used.)
+
+The production  
+ IterationStatement : for ( var VariableDeclarationListNoIn ; Expressionopt ; Expressionopt )
+Statement  
+is evaluated as follows:
+
+1.  Evaluate VariableDeclarationListNoIn.
+2.  Let V = empty.
+3.  Repeat
+    1.  If the first Expression is present, then
+        1.  Let testExprRef be the result of evaluating the first Expression.
+        2.  If ToBoolean(GetValue(testExprRef)) is false, then return (normal, V, empty).
+
+    2.  Let stmt be the result of evaluating Statement.
+    3.  If stmt.value is not empty, let V = stmt.value.
+    4.  If stmt.type is break and stmt.target is in the current label set, return (normal, V,
+        empty).
+    5.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt is an abrupt completion, return stmt.
+
+    6.  If the second Expression is present, then.
+        1.  Let incExprRef be the result of evaluating the second Expression.
+        2.  Call GetValue(incExprRef). (This value is not used.)
+
+12.6.4 The for-in Statement
+===========================
+
+The production IterationStatement : for ( LeftHandSideExpression in Expression ) Statement is
+evaluated as follows:
+
+1.  Let exprRef be the result of evaluating the Expression.
+2.  Let experValue be GetValue(exprRef).
+3.  If experValue is null or undefined, return (normal, empty, empty).
+4.  Let obj be ToObject(experValue).
+5.  Let V = empty.
+6.  Repeat
+    1.  Let P be the name of the next property of obj whose [[Enumerable]] attribute is true. If
+        there is no such property, return (normal, V, empty).
+    2.  Let lhsRef be the result of evaluating the LeftHandSideExpression ( it may be evaluated
+        repeatedly).
+    3.  Call PutValue(lhsRef, P).
+    4.  Let stmt be the result of evaluating Statement.
+    5.  If stmt.value is not empty, let V = stmt.value.
+    6.  If stmt.type is break and stmt.target is in the current label set, return (normal, V,
+        empty).
+    7.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt is an abrupt completion, return stmt.
+
+The production  
+ IterationStatement : for ( var VariableDeclarationNoIn in Expression ) Statement  
+is evaluated as follows:
+
+1.  Let varName be the result of evaluating VariableDeclarationNoIn.
+2.  Let exprRef be the result of evaluating the Expression.
+3.  Let experValue be GetValue(exprRef).
+4.  If experValue is null or undefined, return (normal, empty, empty).
+5.  Let obj be ToObject(experValue).
+6.  Let V = empty.
+7.  Repeat
+    1.  Let P be the name of the next property of obj whose [[Enumerable]] attribute is true. If
+        there is no such property, return (normal, V, empty).
+    2.  Let varRef be the result of evaluating varName as if it were an Identifier Reference
+        (11.1.2); it may be evaluated repeatedly.
+    3.  Call PutValue(varRef, P).
+    4.  Let stmt be the result of evaluating Statement.
+    5.  If stmt.value is not empty, let V = stmt.value.
+    6.  If stmt.type is break and stmt.target is in the current label set, return (normal, V,
+        empty).
+    7.  If stmt.type is not continue || stmt.target is not in the current label set, then
+        1.  If stmt is an abrupt completion, return stmt.
+
+The mechanics and order of enumerating the properties (step 6.a in the first algorithm, step 7.a in
+the second) is not specified. Properties of the object being enumerated may be deleted during
+enumeration. If a property that has not yet been visited during enumeration is deleted, then it will
+not be visited. If new properties are added to the object being enumerated during enumeration, the
+newly added properties are not guaranteed to be visited in the active enumeration. A property name
+must not be visited more than once in any enumeration.
+
+Enumerating the properties of an object includes enumerating properties of its prototype, and the
+prototype of the prototype, and so on, recursively; but a property of a prototype is not enumerated
+if it is “shadowed” because some previous object in the prototype chain has a property with the same
+name. The values of [[Enumerable]] attributes are not considered when determining if a property of a
+prototype object is shadowed by a previous object on the prototype chain.
+
+NOTE See NOTE 11.13.1.

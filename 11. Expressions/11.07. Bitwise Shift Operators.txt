@@ -1,0 +1,72 @@
+11.7 Bitwise Shift Operators
+============================
+
+Syntax
+------
+
+ShiftExpression :
+
+AdditiveExpression
+
+ShiftExpression << AdditiveExpression
+
+ShiftExpression >> AdditiveExpression
+
+ShiftExpression >>> AdditiveExpression
+
+11.7.1 The Left Shift Operator ( << )
+=====================================
+
+Performs a bitwise left shift operation on the left operand by the amount specified by the right
+operand.
+
+The production ShiftExpression : ShiftExpression << AdditiveExpression is evaluated as follows:
+
+1.  Let lref be the result of evaluating ShiftExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating AdditiveExpression.
+4.  Let rval be GetValue(rref).
+5.  Let lnum be ToInt32(lval).
+6.  Let rnum be ToUint32(rval).
+7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+    is, compute rnum & 0x1F.
+8.  Return the result of left shifting lnum by shiftCount bits. The result is a signed 32-bit
+    integer.
+
+11.7.2 The Signed Right Shift Operator ( >> )
+=============================================
+
+Performs a sign-filling bitwise right shift operation on the left operand by the amount specified by
+the right operand.
+
+The production ShiftExpression : ShiftExpression >> AdditiveExpression is evaluated as follows:
+
+1.  Let lref be the result of evaluating ShiftExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating AdditiveExpression.
+4.  Let rval be GetValue(rref).
+5.  Let lnum be ToInt32(lval).
+6.  Let rnum be ToUint32(rval).
+7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+    is, compute rnum & 0x1F.
+8.  Return the result of performing a sign-extending right shift of lnum by shiftCount bits. The
+    most significant bit is propagated. The result is a signed 32-bit integer.
+
+11.7.3 The Unsigned Right Shift Operator ( >>> )
+================================================
+
+Performs a zero-filling bitwise right shift operation on the left operand by the amount specified by
+the right operand.
+
+The production ShiftExpression : ShiftExpression >>> AdditiveExpression is evaluated as follows:
+
+1.  Let lref be the result of evaluating ShiftExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating AdditiveExpression.
+4.  Let rval be GetValue(rref).
+5.  Let lnum be ToUint32(lval).
+6.  Let rnum be ToUint32(rval).
+7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+    is, compute rnum & 0x1F.
+8.  Return the result of performing a zero-filling right shift of lnum by shiftCount bits. Vacated
+    bits are filled with zero. The result is an unsigned 32-bit integer.

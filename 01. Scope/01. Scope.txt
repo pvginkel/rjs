@@ -1,0 +1,4 @@
+1 Scope
+=======
+
+This Standard defines the ECMAScript scripting language.

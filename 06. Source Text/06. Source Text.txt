@@ -1,0 +1,52 @@
+6 Source Text
+=============
+
+ECMAScript source text is represented as a sequence of characters in the Unicode character encoding,
+version 3.0 or later. The text is expected to have been normalised to Unicode Normalization Form C
+(canonical composition), as described in Unicode Technical Report #15. Conforming ECMAScript
+implementations are not required to perform any normalisation of text, or behave as though they were
+performing normalisation of text, themselves. ECMAScript source text is assumed to be a sequence of
+16-bit code units for the purposes of this specification. Such a source text may include sequences
+of 16-bit code units that are not valid UTF-16 character encodings. If an actual source text is
+encoded in a form other than 16-bit code units it must be processed as if it was first converted to
+UTF-16.
+
+Syntax
+------
+
+SourceCharacter ::
+
+any Unicode code unit
+
+Throughout the rest of this document, the phrase “code unit” and the word “character” will be used
+to refer to a 16-bit unsigned value used to represent a single 16-bit unit of text. The phrase
+“Unicode character” will be used to refer to the abstract linguistic or typographical unit
+represented by a single Unicode scalar value (which may be longer than 16 bits and thus may be
+represented by more than one code unit). The phrase “code point” refers to such a Unicode scalar
+value. “Unicode character” only refers to entities represented by single Unicode scalar values: the
+components of a combining character sequence are still individual “Unicode characters,” even though
+a user might think of the whole sequence as a single character.
+
+In string literals, regular expression literals, and identifiers, any character (code unit) may also
+be expressed as a Unicode escape sequence consisting of six characters, namely \u plus four
+hexadecimal digits. Within a comment, such an escape sequence is effectively ignored as part of the
+comment. Within a string literal or regular expression literal, the Unicode escape sequence
+contributes one character to the value of the literal. Within an identifier, the escape sequence
+contributes one character to the identifier.
+
+NOTE Although this document sometimes refers to a “transformation” between a “character” within a
+“string” and the 16-bit unsigned integer that is the code unit of that character, there is actually
+no transformation because a “character” within a “string” is actually represented using that 16-bit
+unsigned value.
+
+ECMAScript differs from the Java programming language in the behaviour of Unicode escape sequences.
+In a Java program, if the Unicode escape sequence \u000A, for example, occurs within a single-line
+comment, it is interpreted as a line terminator (Unicode character 000A is line feed) and therefore
+the next character is not part of the comment. Similarly, if the Unicode escape sequence \u000A
+occurs within a string literal in a Java program, it is likewise interpreted as a line terminator,
+which is not allowed within a string literal—one must write \n instead of \u000A to cause a line
+feed to be part of the string value of a string literal. In an ECMAScript program, a Unicode escape
+sequence occurring within a comment is never interpreted and therefore cannot contribute to
+termination of the comment. Similarly, a Unicode escape sequence occurring within a string literal
+in an ECMAScript program always contributes a character to the String value of the literal and is
+never interpreted as a line terminator or as a quote mark that might terminate the string literal.

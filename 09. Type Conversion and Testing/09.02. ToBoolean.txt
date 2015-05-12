@@ -1,0 +1,16 @@
+9.2 ToBoolean
+=============
+
+The abstract operation ToBoolean converts its argument to a value of type Boolean according to Table
+11:
+
+Table 11 — ToBoolean Conversions
+
+  Argument Type   Result
+  --------------- -------------------------------------------------------------------------------------------------------------
+  Undefined       false
+  Null            false
+  Boolean         The result equals the input argument (no conversion).
+  Number          The result is false if the argument is +0, −0, or NaN; otherwise the result is true.
+  String          The result is false if the argument is the empty String (its length is zero); otherwise the result is true.
+  Object          true

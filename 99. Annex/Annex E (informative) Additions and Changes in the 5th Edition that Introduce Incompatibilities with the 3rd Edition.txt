@@ -1,0 +1,124 @@
+Annex E (informative) Additions and Changes in the 5th Edition that Introduce Incompatibilities with the 3rd Edition
+====================================================================================================================
+
+7.1: Unicode format control characters are no longer stripped from ECMAScript source text before
+processing. In Edition 5, if such a character appears in a StringLiteral or RegularExpressionLiteral
+the character will be incorporated into the literal where in Edition 3 the character would not be
+incorporated into the literal.
+
+7.2: Unicode character <BOM> is now treated as whitespace and its presence in the middle of what
+appears to be an identifier could result in a syntax error which would not have occurred in Edition
+3
+
+7.3: Line terminator characters that are preceded by an escape sequence are now allowed within a
+string literal token. In Edition 3 a syntax error would have been produced.
+
+7.8.5: Regular expression literals now return a unique object each time the literal is evaluated.
+This change is detectable by any programs that test the object identity of such literal values or
+that are sensitive to the shared side effects.
+
+7.8.5: Edition 5 requires early reporting of any possible RegExp constructor errors that would be
+produced when converting a RegularExpressionLiteral to a RegExp object. Prior to Edition 5
+implementations were permitted to defer the reporting of such errors until the actual execution time
+creation of the object.
+
+7.8.5: In Edition 5 unescaped “/” characters may appear as a CharacterClass in a regular expression
+literal. In Edition 3 such a character would have been interpreted as the final character of the
+literal.
+
+10.4.2: In Edition 5, indirect calls to the eval function use the global environment as both the
+variable environment and lexical environment for the eval code. In Edition 3, the variable and
+lexical environments of the caller of an indirect eval was used as the environments for the eval
+code.
+
+15.4.4: In Edition 5 all methods of Array.prototype are intentionally generic. In Edition 3 toString
+and toLocaleString were not generic and would throw a TypeError exception if applied to objects that
+were not instances of Array.
+
+10.6: In Edition 5 the array indexed properties of argument objects that correspond to actual formal
+parameters are enumerable. In Edition 3, such properties were not enumerable.
+
+10.6: In Edition 5 the value of the [[Class]] internal property of an arguments object is
+"Arguments". In Edition 3, it was "Object". This is observable if toString is called as a method of
+an arguments object.
+
+12.6.4: for-in statements no longer throw a TypeError if the in expression evaluates to null or
+undefined. Instead, the statement behaves as if the value of the expression was an object with no
+enumerable properties.
+
+15: In Edition 5, the following new properties are defined on built-in objects that exist in Edition
+3: Object.getPrototypeOf, Object.getOwnPropertyDescriptor, Object.getOwnPropertyNames,
+Object.create, Object.defineProperty, Object.defineProperties, Object.seal, Object.freeze,
+Object.preventExtensions, Object.isSealed, Object.isFrozen, Object.isExtensible, Object.keys,
+Function.prototype.bind, Array.prototype.indexOf, Array.prototype.lastIndexOf,
+Array.prototype.every, Array.prototype.some, Array.prototype.forEach, Array.prototype.map,
+Array.prototype.filter, Array.prototype.reduce, Array.prototype.reduceRight, String.prototype.trim,
+Date.now, Date.prototype.toISOString, Date.prototype.toJSON.
+
+15: Implementations are now required to ignore extra arguments to standard built-in methods unless
+otherwise explicitly specified. In Edition 3 the handling of extra arguments was unspecified and
+implementations were explicitly allowed to throw a TypeError exception.
+
+15.1.1: The value properties NaN, Infinity, and undefined of the Global Object have been changed to
+be read-only properties.
+
+15.1.2.1. Implementations are no longer permitted to restrict the use of eval in ways that are not a
+direct call. In addition, any invocation of eval that is not a direct call uses the global
+environment as its variable environment rather than the caller’s variable environment.
+
+15.1.2.2: The specification of the function parseInt no longer allows implementations to treat
+Strings beginning with a 0 character as octal values.
+
+15.3.4.3: In Edition 3, a TypeError is thrown if the second argument passed to
+Function.prototype.apply is neither an array object nor an arguments object. In Edition 5, the
+second argument may be any kind of generic array-like object that has a valid length property.
+
+15.3.4.3, 15.3.4.4: In Edition 3 passing undefined or null as the first argument to either
+Function.prototype.apply or Function.prototype.call causes the global object to be passed to the
+indirectly invoked target function as the this value. If the first argument is a primitive value the
+result of calling ToObject on the primitive value is passed as the this value. In Edition 5, these
+transformations are not performed and the actual first argument value is passed as the this value.
+This difference will normally be unobservable to existing ECMAScript Edition 3 code because a
+corresponding transformation takes place upon activation of the target function. However, depending
+upon the implementation, this difference may be observable by host object functions called using
+apply or call. In addition, invoking a standard built-in function in this manner with null or
+undefined passed as the this value will in many cases cause behaviour in Edition 5 implementations
+that differ from Edition 3 behaviour. In particular, in Edition 5 built-in functions that are
+specified to actually use the passed this value as an object typically throw a TypeError exception
+if passed null or undefined as the this value.
+
+15.3.5.2: In Edition 5, the prototype property of Function instances is not enumerable. In Edition
+3, this property was enumerable.
+
+15.5.5.2: In Edition 5, the individual characters of a String object’s [[PrimitiveValue] may be
+accessed as array indexed properties of the String object. These properties are non-writable and
+non-configurable and shadow any inherited properties with the same names. In Edition 3, these
+properties did not exist and ECMAScript code could dynamically add and remove writable properties
+with such names and could access inherited properties with such names.
+
+15.9.4.2: Date.parse is now required to first attempt to parse its argument as an ISO format string.
+Programs that use this format but depended upon implementation specific behaviour (including
+failure) may behave differently.
+
+15.10.2.12: In Edition 5, \s now additionally matches <BOM>.
+
+15.10.4.1: In Edition 3, the exact form of the String value of the source property of an object
+created by the RegExp constructor is implementation defined. In Edition 5, the String must conform
+to certain specified requirements and hence may be different from that produced by an Edition 3
+implementation.
+
+15.10.6.4: In Edition 3, the result of RegExp.prototype.toString need not be derived from the value
+of the RegExp object’s source property. In Edition 5 the result must be derived from the source
+property in a specified manner and hence may be different from the result produced by an Edition 3
+implementation.
+
+15.11.2.1, 15.11.4.3: In Edition 5, if an initial value for the message property of an Error object
+is not specified via the Error constructor the initial value of the property is the empty String. In
+Edition 3, such an initial value is implementation defined.
+
+15.11.4.4: In Edition 3, the result of Error.prototype.toString is implementation defined. In
+Edition 5, the result is fully specified and hence may differ from some Edition 3 implementations.
+
+15.12: In Edition 5, the name JSON is defined in the global environment. In Edition 3, testing for
+the presence of that name will show it to be undefined unless it is defined by the program or
+implementation.

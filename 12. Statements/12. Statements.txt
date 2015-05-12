@@ -1,0 +1,58 @@
+12 Statements
+=============
+
+Syntax
+------
+
+Statement :
+
+Block
+
+VariableStatement
+
+EmptyStatement
+
+ExpressionStatement
+
+IfStatement
+
+IterationStatement
+
+ContinueStatement
+
+BreakStatement
+
+ReturnStatement
+
+WithStatement
+
+LabelledStatement
+
+SwitchStatement
+
+ThrowStatement
+
+TryStatement
+
+DebuggerStatement
+
+Semantics
+---------
+
+A Statement can be part of a LabelledStatement, which itself can be part of a LabelledStatement, and
+so on. The labels introduced this way are collectively referred to as the “current label set” when
+describing the semantics of individual statements. A LabelledStatement has no semantic meaning other
+than the introduction of a label to a label set. The label set of an IterationStatement or a
+SwitchStatement initially contains the single element empty. The label set of any other statement is
+initially empty.
+
+The result of evaluating a Statement is always a Completion value.
+
+NOTE Several widely used implementations of ECMAScript are known to support the use of
+FunctionDeclaration as a Statement. However there are significant and irreconcilable variations
+among the implementations in the semantics applied to such FunctionDeclarations. Because of these
+irreconcilable differences, the use of a FunctionDeclaration as a Statement results in code that is
+not reliably portable among implementations. It is recommended that ECMAScript implementations
+either disallow this usage of FunctionDeclaration or issue a warning when such a usage is
+encountered. Future editions of ECMAScript may define alternative portable means for declaring
+functions in a Statement context.

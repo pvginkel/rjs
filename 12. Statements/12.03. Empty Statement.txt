@@ -1,0 +1,16 @@
+12.3 Empty Statement
+====================
+
+Syntax
+------
+
+EmptyStatement :
+
+;
+
+Semantics
+---------
+
+The production EmptyStatement : ; is evaluated as follows:
+
+1.  Return (normal, empty, empty).

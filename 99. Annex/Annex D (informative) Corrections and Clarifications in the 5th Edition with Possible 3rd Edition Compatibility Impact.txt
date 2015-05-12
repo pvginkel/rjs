@@ -1,0 +1,49 @@
+Annex D (informative) Corrections and Clarifications in the 5th Edition with Possible 3rd Edition Compatibility Impact
+======================================================================================================================
+
+Throughout: In the Edition 3 specification the meaning of phrases such as “as if by the expression
+new   Array()” are subject to misinterpretation. In the Edition 5 specification text for all
+internal references and invocations of standard built-in objects and methods has been clarified by
+making it explicit that the intent is that the actual built-in object is to be used rather than the
+current dynamic value of the correspondingly named property.
+
+11.8.2, 11.8.3, 11.8.5: ECMAScript generally uses a left to right evaluation order, however the
+Edition 3 specification language for the > and <= operators resulted in a partial right to left
+order. The specification has been corrected for these operators such that it now specifies a full
+left to right evaluation order. However, this change of order is potentially observable if
+side-effects occur during the evaluation process.
+
+11.1.4: Edition 5 clarifies the fact that a trailing comma at the end of an ArrayInitialiser does
+not add to the length of the array. This is not a semantic change from Edition 3 but some
+implementations may have previously misinterpreted this.
+
+11.2.3: Edition 5 reverses the order of steps 2 and 3 of the algorithm. The original order as
+specified in Editions 1 through 3 was incorrectly specified such that side-effects of evaluating
+Arguments could affect the result of evaluating MemberExpression.
+
+12.4: In Edition 3, an object is created, as if by new Object()to serve as the scope for resolving
+the name of the exception parameter passed to a catch clause of a try statement. If the actual
+exception object is a function and it is called from within the catch clause, the scope object will
+be passed as the this value of the call. The body of the function can then define new properties on
+its this value and those property names become visible identifiers bindings within the scope of the
+catch clause after the function returns. In Edition 5, when an exception parameter is called as a
+function, undefined is passed as the this value.
+
+13: In Edition 3, the algorithm for the production FunctionExpression with an Identifier adds an
+object created as if by new Object() to the scope chain to serve as a scope for looking up the name
+of the function. The identifier resolution rules (10.1.4 in Edition 3) when applied to such an
+object will, if necessary, follow the object’s prototype chain when attempting to resolve an
+identifier. This means all the properties of Object.prototype are visible as identifiers within that
+scope. In practice most implementations of Edition 3 have not implemented this semantics. Edition 5
+changes the specified semantics by using a Declarative Environment Record to bind the name of the
+function.
+
+14: In Edition 3, the algorithm for the production SourceElements : SourceElements SourceElement did
+not correctly propagate statement result values in the same manner as Block. This could result in
+the eval function producing an incorrect result when evaluating a Program text. In practice most
+implementations of Edition 3 have implemented the correct propagation rather than what was specified
+in Edition 5.
+
+15.10.6: RegExp.prototype is now a RegExp object rather than an instance of Object. The value of its
+[[Class]] internal property which is observable using Object.prototype.toString is now “RegExp”
+rather than “Object”.

@@ -1,0 +1,16 @@
+9.9 ToObject
+============
+
+The abstract operation ToObject converts its argument to a value of type Object according to Table
+14:
+
+Table 14 — ToObject
+
+  Argument Type   Result
+  --------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Undefined       Throw a TypeError exception.
+  Null            Throw a TypeError exception.
+  Boolean         Create a new Boolean object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.6 for a description of Boolean objects.
+  Number          Create a new Number object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.7 for a description of Number objects.
+  String          Create a new String object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.5 for a description of String objects.
+  Object          The result is the input argument (no conversion).

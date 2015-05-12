@@ -1,0 +1,53 @@
+12.1 Block
+==========
+
+Syntax
+------
+
+Block :
+
+{ StatementListopt }
+
+StatementList :
+
+Statement
+
+StatementList Statement
+
+Semantics
+---------
+
+The production Block : { } is evaluated as follows:
+
+1.  Return (normal, empty, empty).
+
+The production Block : { StatementList } is evaluated as follows:
+
+1.  Return the result of evaluating StatementList.
+
+The production StatementList : Statement is evaluated as follows:
+
+1.  Let s be the result of evaluating Statement.
+2.  If an exception was thrown, return (throw, V, empty) where V is the exception. (Execution now
+    proceeds as if no exception were thrown.)
+3.  Return s.
+
+The production StatementList : StatementList Statement is evaluated as follows:
+
+1.  Let sl be the result of evaluating StatementList.
+2.  If sl is an abrupt completion, return sl.
+3.  Let s be the result of evaluating Statement.
+4.  If an exception was thrown, return (throw, V, empty) where V is the exception. (Execution now
+    proceeds as if no exception were thrown.)
+5.  If s.value is empty, let V = sl.value, otherwise let V = s.value.
+6.  Return (s.type, V, s.target).
+
+NOTE Steps 5 and 6 of the above algoritm ensure that the value of a StatementList is the value of
+the last value producing Statement in the StatementList. For example, the following calls to the
+eval function all return the value 1:
+
+    eval("1;;;;;")
+
+    eval("1;{}")
+
+    eval("1;var a;")

@@ -1,0 +1,11 @@
+3 Normative references
+======================
+
+The following referenced documents are indispensable for the application of this document. For dated
+references, only the edition cited applies. For undated references, the latest edition of the
+referenced document (including any amendments) applies.
+
+ISO/IEC 9899:1996, Programming Languages – C, including amendment 1 and technical corrigenda 1 and 2
+
+ISO/IEC 10646-1:1993, Information Technology – Universal Multiple-Octet Coded Character Set (UCS)
+plus its amendments and corrigenda

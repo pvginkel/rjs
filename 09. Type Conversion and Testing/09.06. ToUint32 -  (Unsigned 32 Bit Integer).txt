@@ -1,0 +1,25 @@
+9.6 ToUint32: (Unsigned 32 Bit Integer)
+=======================================
+
+The abstract operation ToUint32 converts its argument to one of 2^32 integer values in the range 0
+through 2^32−1, inclusive. This abstraction operation functions as follows:
+
+1.  Let number be the result of calling ToNumber on the input argument.
+2.  If number is NaN, +0, −0, +∞, or −∞, return +0.
+3.  Let posInt be sign(number) × floor(abs(number)).
+4.  Let int32bit be posInt modulo 2^32; that is, a finite integer value k of Number type with
+    positive sign and less than 2^32 in magnitude such that the mathematical difference of posInt
+    and k is mathematically an integer multiple of 2^32.
+5.  Return int32bit.
+
+NOTE Given the above definition of ToUInt32:
+
+-   Step 5 is the only difference between ToUint32 and ToInt32.
+
+-   The ToUint32 abstract operation is idempotent: if applied to a result that it produced, the
+    second application leaves that value unchanged.
+
+-   ToUint32(ToInt32(x)) is equal to ToUint32(x) for all values of x. (It is to preserve this latter
+    property that +∞ and −∞ are mapped to +0.)
+
+-   ToUint32 maps −0 to +0.

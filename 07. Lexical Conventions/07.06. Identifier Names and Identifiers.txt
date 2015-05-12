@@ -1,0 +1,153 @@
+7.6 Identifier Names and Identifiers
+====================================
+
+Identifier Names are tokens that are interpreted according to the grammar given in the “Identifiers”
+section of chapter 5 of the Unicode standard, with some small modifications. An Identifier is an
+IdentifierName that is not a ReservedWord (see 7.6.1). The Unicode identifier grammar is based on
+both normative and informative character categories specified by the Unicode Standard. The
+characters in the specified categories in version 3.0 of the Unicode standard must be treated as in
+those categories by all conforming ECMAScript implementations.
+
+This standard specifies specific character additions: The dollar sign ($) and the underscore (_) are
+permitted anywhere in an IdentifierName.
+
+Unicode escape sequences are also permitted in an IdentifierName, where they contribute a single
+character to the IdentifierName, as computed by the CV of the UnicodeEscapeSequence (see 7.8.4). The
+\ preceding the UnicodeEscapeSequence does not contribute a character to the IdentifierName. A
+UnicodeEscapeSequence cannot be used to put a character into an IdentifierName that would otherwise
+be illegal. In other words, if a \ UnicodeEscapeSequence sequence were replaced by its
+UnicodeEscapeSequence’s CV, the result must still be a valid IdentifierName that has the exact same
+sequence of characters as the original IdentifierName. All interpretations of identifiers within
+this specification are based upon their actual characters regardless of whether or not an escape
+sequence was used to contribute any particular characters.
+
+Two IdentifierName that are canonically equivalent according to the Unicode standard are not equal
+unless they are represented by the exact same sequence of code units (in other words, conforming
+ECMAScript implementations are only required to do bitwise comparison on IdentifierName values). The
+intent is that the incoming source text has been converted to normalised form C before it reaches
+the compiler.
+
+ECMAScript implementations may recognise identifier characters defined in later editions of the
+Unicode Standard. If portability is a concern, programmers should only employ identifier characters
+defined in Unicode 3.0.
+
+Syntax
+------
+
+Identifier ::
+
+IdentifierName but not ReservedWord
+
+IdentifierName ::
+
+IdentifierStart
+
+IdentifierName IdentifierPart
+
+IdentifierStart ::
+
+UnicodeLetter
+
+$
+
+_
+
+\ UnicodeEscapeSequence
+
+IdentifierPart ::
+
+IdentifierStart
+
+UnicodeCombiningMark
+
+UnicodeDigit
+
+UnicodeConnectorPunctuation
+
+<ZWNJ>
+
+<ZWJ>
+
+UnicodeLetter ::
+
+any character in the Unicode categories “Uppercase letter (Lu)”, “Lowercase letter (Ll)”, “Titlecase
+letter (Lt)”, “Modifier letter (Lm)”, “Other letter (Lo)”, or “Letter number (Nl)”.
+
+UnicodeCombiningMark ::
+
+any character in the Unicode categories “Non-spacing mark (Mn)” or “Combining spacing mark (Mc)”
+
+UnicodeDigit ::
+
+any character in the Unicode category “Decimal number (Nd)”
+
+UnicodeConnectorPunctuation ::
+
+any character in the Unicode category “Connector punctuation (Pc)”
+
+The definitions of the nonterminal UnicodeEscapeSequence is given in 7.8.4
+
+7.6.1 Reserved Words
+====================
+
+A reserved word is an IdentifierName that cannot be used as an Identifier.
+
+Syntax
+------
+
+ReservedWord ::
+
+Keyword
+
+FutureReservedWord
+
+NullLiteral
+
+BooleanLiteral
+
+7.6.1.1 Keywords
+================
+
+The following tokens are ECMAScript keywords and may not be used as Identifiers in ECMAScript
+programs.
+
+Syntax
+------
+
+Keyword :: one of
+
+  ---------- ---------- ------------ --------
+  break      do         instanceof   typeof
+  case       else       new          var
+  catch      finally    return       void
+  continue   for        switch       while
+  debugger   function   this         with
+  default    if         throw        
+  delete     in         try          
+  ---------- ---------- ------------ --------
+
+7.6.1.2 Future Reserved Words
+=============================
+
+The following words are used as keywords in proposed extensions and are therefore reserved to allow
+for the possibility of future adoption of those extensions.
+
+Syntax
+------
+
+FutureReservedWord :: one of
+
+  ------- -------- --------- -------
+  class   enum     extends   super
+  const   export   import    
+  ------- -------- --------- -------
+
+The following tokens are also considered to be FutureReservedWords when they occur within strict
+mode code (see 10.1.1). The occurrence of any of these tokens within strict mode code in any context
+where the occurrence of a FutureReservedWord would produce an error must also produce an equivalent
+error:
+
+  ------------ --------- ----------- -------- -------
+  implements   let       private     public   yield
+  interface    package   protected   static   
+  ------------ --------- ----------- -------- -------

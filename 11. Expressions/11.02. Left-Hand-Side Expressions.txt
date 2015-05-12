@@ -1,0 +1,191 @@
+11.2 Left-Hand-Side Expressions
+===============================
+
+Syntax
+------
+
+MemberExpression :
+
+PrimaryExpression
+
+FunctionExpression
+
+MemberExpression [ Expression ]
+
+MemberExpression . IdentifierName
+
+new MemberExpression Arguments
+
+NewExpression :
+
+MemberExpression
+
+new NewExpression
+
+CallExpression :
+
+MemberExpression Arguments
+
+CallExpression Arguments
+
+CallExpression [ Expression ]
+
+CallExpression . IdentifierName
+
+Arguments :
+
+( )
+
+( ArgumentList )
+
+ArgumentList :
+
+AssignmentExpression
+
+ArgumentList , AssignmentExpression
+
+LeftHandSideExpression :
+
+NewExpression
+
+CallExpression
+
+11.2.1 Property Accessors
+=========================
+
+Properties are accessed by name, using either the dot notation:
+
+MemberExpression . IdentifierName  
+CallExpression . IdentifierName
+
+or the bracket notation:
+
+MemberExpression [ Expression ]  
+CallExpression [ Expression ]
+
+The dot notation is explained by the following syntactic conversion:
+
+MemberExpression . IdentifierName
+
+is identical in its behaviour to
+
+MemberExpression [ <identifier-name-string> ]
+
+and similarly
+
+CallExpression . IdentifierName
+
+is identical in its behaviour to
+
+CallExpression [ <identifier-name-string> ]
+
+where <identifier-name-string> is a string literal containing the same sequence of characters after
+processing of Unicode escape sequences as the IdentifierName.
+
+The production MemberExpression : MemberExpression [ Expression ] is evaluated as follows:
+
+1.  Let baseReference be the result of evaluating MemberExpression.
+2.  Let baseValue be GetValue(baseReference).
+3.  Let propertyNameReference be the result of evaluating Expression.
+4.  Let propertyNameValue be GetValue(propertyNameReference).
+5.  Call CheckObjectCoercible(baseValue).
+6.  Let propertyNameString be ToString(propertyNameValue).
+7.  If the syntactic production that is being evaluated is contained in strict mode code, let strict
+    be true, else let strict be false.
+8.  Return a value of type Reference whose base value is baseValue and whose referenced name is
+    propertyNameString, and whose strict mode flag is strict.
+
+The production CallExpression : CallExpression [ Expression ] is evaluated in exactly the same
+manner, except that the contained CallExpression is evaluated in step 1.
+
+11.2.2 The new Operator
+=======================
+
+The production NewExpression : new NewExpression is evaluated as follows:
+
+1.  Let ref be the result of evaluating NewExpression.
+2.  Let constructor be GetValue(ref).
+3.  If Type(constructor) is not Object, throw a TypeError exception.
+4.  If constructor does not implement the [[Construct]] internal method, throw a TypeError
+    exception.
+5.  Return the result of calling the [[Construct]] internal method on constructor, providing no
+    arguments (that is, an empty list of arguments).
+
+The production MemberExpression : new MemberExpression Arguments is evaluated as follows:
+
+1.  Let ref be the result of evaluating MemberExpression.
+2.  Let constructor be GetValue(ref).
+3.  Let argList be the result of evaluating Arguments, producing an internal list of argument values
+    (11.2.4).
+4.  If Type(constructor) is not Object, throw a TypeError exception.
+5.  If constructor does not implement the [[Construct]] internal method, throw a TypeError
+    exception.
+6.  Return the result of calling the [[Construct]] internal method on constructor, providing the
+    list argList as the argument values.
+
+11.2.3 Function Calls
+=====================
+
+The production CallExpression : MemberExpression Arguments is evaluated as follows:
+
+1.  Let ref be the result of evaluating MemberExpression.
+2.  Let func be GetValue(ref).
+3.  Let argList be the result of evaluating Arguments, producing an internal list of argument values
+    (see 11.2.4).
+4.  If Type(func) is not Object, throw a TypeError exception.
+5.  If IsCallable(func) is false, throw a TypeError exception.
+6.  If Type(ref) is Reference, then
+    1.  If IsPropertyReference(ref) is true, then
+        1.  Let thisValue be GetBase(ref).
+
+    2.  Else, the base of ref is an Environment Record
+        1.  Let thisValue be the result of calling the ImplicitThisValue concrete method of
+            GetBase(ref).
+
+7.  Else, Type(ref) is not Reference.
+    1.  Let thisValue be undefined.
+
+8.  Return the result of calling the [[Call]] internal method on func, providing thisValue as the
+    this value and providing the list argList as the argument values.
+
+The production CallExpression : CallExpression Arguments is evaluated in exactly the same manner,
+except that the contained CallExpression is evaluated in step 1.
+
+NOTE The returned result will never be of type Reference if func is a native ECMAScript object.
+Whether calling a host object can return a value of type Reference is implementation-dependent. If a
+value of type Reference is returned, it must be a non-strict Property Reference.
+
+11.2.4 Argument Lists
+=====================
+
+The evaluation of an argument list produces a List of values (see 8.8).
+
+The production Arguments : ( ) is evaluated as follows:
+
+1.  Return an empty List.
+
+The production Arguments : ( ArgumentList ) is evaluated as follows:
+
+1.  Return the result of evaluating ArgumentList.
+
+The production ArgumentList : AssignmentExpression is evaluated as follows:
+
+1.  Let ref be the result of evaluating AssignmentExpression.
+2.  Let arg be GetValue(ref).
+3.  Return a List whose sole item is arg.
+
+The production ArgumentList : ArgumentList , AssignmentExpression is evaluated as follows:
+
+1.  Let precedingArgs be the result of evaluating ArgumentList.
+2.  Let ref be the result of evaluating AssignmentExpression.
+3.  Let arg be GetValue(ref).
+4.  Return a List whose length is one greater than the length of precedingArgs and whose items are
+    the items of precedingArgs, in order, followed at the end by arg which is the last item of the
+    new list.
+
+11.2.5 Function Expressions
+===========================
+
+The production MemberExpression : FunctionExpression is evaluated as follows:
+
+1.  Return the result of evaluating FunctionExpression.

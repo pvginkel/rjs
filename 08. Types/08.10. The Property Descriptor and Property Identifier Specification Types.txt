@@ -1,0 +1,149 @@
+8.10 The Property Descriptor and Property Identifier Specification Types
+========================================================================
+
+The Property Descriptor type is used to explain the manipulation and reification of named property
+attributes. Values of the Property Descriptor type are records composed of named fields where each
+field’s name is an attribute name and its value is a corresponding attribute value as specified in
+8.6.1. In addition, any field may be present or absent.
+
+Property Descriptor values may be further classified as data property descriptors and accessor
+property descriptors based upon the existence or use of certain fields. A data property descriptor
+is one that includes any fields named either [[Value]] or [[Writable]]. An accessor property
+descriptor is one that includes any fields named either [[Get]] or [[Set]]. Any property descriptor
+may have fields named [[Enumerable]] and [[Configurable]]. A Property Descriptor value may not be
+both a data property descriptor and an accessor property descriptor; however, it may be neither. A
+generic property descriptor is a Property Descriptor value that is neither a data property
+descriptor nor an accessor property descriptor. A fully populated property descriptor is one that is
+either an accessor property descriptor or a data property descriptor and that has all of the fields
+that correspond to the property attributes defined in either 8.6.1 Table 5 or Table 6.
+
+For notational convenience within this specification, an object literal-like syntax can be used to
+define a property descriptor value. For example, Property Descriptor {[[Value]]: 42, [[Writable]]:
+false, [[Configurable]]: true} defines a data property descriptor. Field name order is not
+significant. Any fields that are not explicitly listed are considered to be absent.
+
+In specification text and algorithms, dot notation may be used to refer to a specific field of a
+Property Descriptor. For example, if D is a property descriptor then D.[[Value]] is shorthand for
+“the field of D named [[Value]]”.
+
+The Property Identifier type is used to associate a property name with a Property Descriptor. Values
+of the Property Identifier type are pairs of the form (name, descriptor), where name is a String and
+descriptor is a Property Descriptor value.
+
+The following abstract operations are used in this specification to operate upon Property Descriptor
+values:
+
+8.10.1 IsAccessorDescriptor ( Desc )
+====================================
+
+When the abstract operation IsAccessorDescriptor is called with property descriptor Desc, the
+following steps are taken:
+
+1.  If Desc is undefined, then return false.
+2.  If both Desc.[[Get]] and Desc.[[Set]] are absent, then return false.
+3.  Return true.
+
+8.10.2 IsDataDescriptor ( Desc )
+================================
+
+When the abstract operation IsDataDescriptor is called with property descriptor Desc, the following
+steps are taken:
+
+1.  If Desc is undefined, then return false.
+2.  If both Desc.[[Value]] and Desc.[[Writable]] are absent, then return false.
+3.  Return true.
+
+8.10.3 IsGenericDescriptor ( Desc )
+===================================
+
+When the abstract operation IsGenericDescriptor is called with property descriptor Desc, the
+following steps are taken:
+
+1.  If Desc is undefined, then return false.
+2.  If IsAccessorDescriptor(Desc) and IsDataDescriptor(Desc) are both false, then return true.
+3.  Return false.
+
+8.10.4 FromPropertyDescriptor ( Desc )
+======================================
+
+When the abstract operation FromPropertyDescriptor is called with property descriptor Desc, the
+following steps are taken:
+
+The following algorithm assumes that Desc is a fully populated Property Descriptor, such as that
+returned from [[GetOwnProperty]] (see 8.12.1).
+
+1.  If Desc is undefined, then return undefined.
+2.  Let obj be the result of creating a new object as if by the expression new Object() where Object
+    is the standard built-in constructor with that name.
+3.  If IsDataDescriptor(Desc) is true, then
+    1.  Call the [[DefineOwnProperty]] internal method of obj with arguments "value", Property
+        Descriptor {[[Value]]: Desc.[[Value]], [[Writable]]: true, [[Enumerable]]: true,
+        [[Configurable]]: true}, and false.
+    2.  Call the [[DefineOwnProperty]] internal method of obj with arguments "writable", Property
+        Descriptor {[[Value]]: Desc.[[Writable]], [[Writable]]: true, [[Enumerable]]: true,
+        [[Configurable]]: true}, and false.
+
+4.  Else, IsAccessorDescriptor(Desc) must be true, so
+    1.  Call the [[DefineOwnProperty]] internal method of obj with arguments "get", Property
+        Descriptor {[[Value]]: Desc.[[Get]], [[Writable]]: true, [[Enumerable]]: true,
+        [[Configurable]]: true}, and false.
+    2.  Call the [[DefineOwnProperty]] internal method of obj with arguments "set", Property
+        Descriptor {[[Value]]: Desc.[[Set]], [[Writable]]: true, [[Enumerable]]: true,
+        [[Configurable]]: true}, and false.
+
+5.  Call the [[DefineOwnProperty]] internal method of obj with arguments "enumerable", Property
+    Descriptor {[[Value]]: Desc.[[Enumerable]], [[Writable]]: true, [[Enumerable]]: true,
+    [[Configurable]]: true}, and false.
+6.  Call the [[DefineOwnProperty]] internal method of obj with arguments "configurable", Property
+    Descriptor {[[Value]]: Desc.[[Configurable]], [[Writable]]: true, [[Enumerable]]: true,
+    [[Configurable]]: true}, and false.
+7.  Return obj.
+
+8.10.5 ToPropertyDescriptor ( Obj )
+===================================
+
+When the abstract operation ToPropertyDescriptor is called with object Obj, the following steps are
+taken:
+
+1.  If Type(Obj) is not Object throw a TypeError exception.
+2.  Let desc be the result of creating a new Property Descriptor that initially has no fields.
+3.  If the result of calling the [[HasProperty]] internal method of Obj with argument "enumerable"
+    is true, then
+    1.  Let enum be the result of calling the [[Get]] internal method of Obj with "enumerable".
+    2.  Set the [[Enumerable]] field of desc to ToBoolean(enum).
+
+4.  If the result of calling the [[HasProperty]] internal method of Obj with argument "configurable"
+    is true, then
+    1.  Let conf be the result of calling the [[Get]] internal method of Obj with argument
+        "configurable".
+    2.  Set the [[Configurable]] field of desc to ToBoolean(conf).
+
+5.  If the result of calling the [[HasProperty]] internal method of Obj with argument "value" is
+    true, then
+    1.  Let value be the result of calling the [[Get]] internal method of Obj with argument “value”.
+    2.  Set the [[Value]] field of desc to value.
+
+6.  If the result of calling the [[HasProperty]] internal method of Obj with argument "writable" is
+    true, then
+    1.  Let writable be the result of calling the [[Get]] internal method of Obj with argument
+        "writable".
+    2.  Set the [[Writable]] field of desc to ToBoolean(writable).
+
+7.  If the result of calling the [[HasProperty]] internal method of Obj with argument "get" is true,
+    then
+    1.  Let getter be the result of calling the [[Get]] internal method of Obj with argument "get".
+    2.  If IsCallable(getter) is false and getter is not undefined, then throw a TypeError
+        exception.
+    3.  Set the [[Get]] field of desc to getter.
+
+8.  If the result of calling the [[HasProperty]] internal method of Obj with argument "set" is true,
+    then
+    1.  Let setter be the result of calling the [[Get]] internal method of Obj with argument "set".
+    2.  If IsCallable(setter) is false and setter is not undefined, then throw a TypeError
+        exception.
+    3.  Set the [[Set]] field of desc to setter.
+
+9.  If either desc.[[Get]] or desc.[[Set]] are present, then
+    1.  If either desc.[[Value]] or desc.[[Writable]] are present, then throw a TypeError exception.
+
+10. Return desc.

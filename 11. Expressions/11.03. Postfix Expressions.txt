@@ -1,0 +1,51 @@
+11.3 Postfix Expressions
+========================
+
+Syntax
+------
+
+PostfixExpression :
+
+LeftHandSideExpression
+
+LeftHandSideExpression [no LineTerminator here] ++
+
+LeftHandSideExpression [no LineTerminator here] --
+
+11.3.1 Postfix Increment Operator
+=================================
+
+The production PostfixExpression : LeftHandSideExpression [no LineTerminator here] ++ is evaluated
+as follows:
+
+1.  Let lhs be the result of evaluating LeftHandSideExpression.
+2.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(lhs) is Reference is true
+    -   IsStrictReference(lhs) is true
+    -   Type(GetBase(lhs)) is Environment Record
+    -   GetReferencedName(lhs) is either "eval" or "arguments"
+
+3.  Let oldValue be ToNumber(GetValue(lhs)).
+4.  Let newValue be the result of adding the value 1 to oldValue, using the same rules as for the +
+    operator (see 11.6.3).
+5.  Call PutValue(lhs, newValue).
+6.  Return oldValue.
+
+11.3.2 Postfix Decrement Operator
+=================================
+
+The production PostfixExpression : LeftHandSideExpression [no LineTerminator here] -- is evaluated
+as follows:
+
+1.  Let lhs be the result of evaluating LeftHandSideExpression.
+2.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(lhs) is Reference is true
+    -   IsStrictReference(lhs) is true
+    -   Type(GetBase(lhs)) is Environment Record
+    -   GetReferencedName(lhs) is either "eval" or "arguments"
+
+3.  Let oldValue be ToNumber(GetValue(lhs)).
+4.  Let newValue be the result of subtracting the value 1 from oldValue, using the same rules as for
+    the - operator (11.6.3).
+5.  Call PutValue(lhs, newValue).
+6.  Return oldValue.

@@ -1,0 +1,179 @@
+10.6 Arguments Object
+=====================
+
+When control enters an execution context for function code, an arguments object is created unless
+(as specified in 10.5) the identifier arguments occurs as an Identifier in the function’s
+FormalParameterList or occurs as the Identifier of a VariableDeclaration or FunctionDeclaration
+contained in the function code.
+
+The arguments object is created by calling the abstract operation CreateArgumentsObject with
+arguments func the function object whose code is to be evaluated, names a List containing the
+function’s formal parameter names, args the actual arguments passed to the [[Call]] internal method,
+env the variable environment for the function code, and strict a Boolean that indicates whether or
+not the function code is strict code. When CreateArgumentsObject is called the following steps are
+performed:
+
+1.  Let len be the number of elements in args.
+2.  Let obj be the result of creating a new ECMAScript object.
+3.  Set all the internal methods of obj as specified in 8.12.
+4.  Set the [[Class]] internal property of obj to "Arguments".
+5.  Let Object be the standard built-in Object constructor (15.2.2).
+6.  Set the [[Prototype]] internal property of obj to the standard built-in Object prototype object
+    (15.2.4).
+7.  Call the [[DefineOwnProperty]] internal method on obj passing "length", the Property Descriptor
+    {[[Value]]: len, [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}, and false
+    as arguments.
+8.  Let map be the result of creating a new object as if by the expression new Object() where Object
+    is the standard built-in constructor with that name
+9.  Let mappedNames be an empty List.
+10. Let indx = len - 1.
+11. Repeat while indx >= 0,
+    1.  Let val be the element of args at 0-origined list position indx.
+    2.  Call the [[DefineOwnProperty]] internal method on obj passing ToString(indx), the property
+        descriptor {[[Value]]: val, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]:
+        true}, and false as arguments.
+    3.  If indx is less than the number of elements in names, then
+        1.  Let name be the element of names at 0-origined list position indx.
+        2.  If strict is false and name is not an element of mappedNames, then
+            1.  Add name as an element of the list mappedNames.
+            2.  Let g be the result of calling the MakeArgGetter abstract operation with arguments
+                name and env.
+            3.  Let p be the result of calling the MakeArgSetter abstract operation with arguments
+                name and env.
+            4.  Call the [[DefineOwnProperty]] internal method of map passing ToString(indx), the
+                Property Descriptor {[[Set]]: p, [[Get]]: g, [[Configurable]]: true}, and false as
+                arguments.
+
+    4.  Let indx = indx - 1
+
+12. If mappedNames is not empty, then
+    1.  Set the [[ParameterMap]] internal property of obj to map.
+    2.  Set the [[Get]], [[GetOwnProperty]], [[DefineOwnProperty]], and [[Delete]] internal methods
+        of obj to the definitions provided below.
+
+13. If strict is false, then
+    1.  Call the [[DefineOwnProperty]] internal method on obj passing "callee", the property
+        descriptor {[[Value]]: func, [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]:
+        true}, and false as arguments.
+
+14. Else, strict is true so
+    1.  Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
+    2.  Call the [[DefineOwnProperty]] internal method of obj with arguments "caller",
+        PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+        [[Configurable]]: false}, and false.
+    3.  Call the [[DefineOwnProperty]] internal method of obj with arguments "callee",
+        PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+        [[Configurable]]: false}, and false.
+
+15. Return obj
+
+The abstract operation MakeArgGetter called with String name and environment record env creates a
+function object that when executed returns the value bound for name in env. It performs the
+following steps:
+
+1.  Let body be the result of concatenating the Strings "return ", name, and ";".
+2.  Return the result of creating a function object as described in 13.2 using no
+    FormalParameterList, body for FunctionBody, env as Scope, and true for Strict.
+
+The abstract operation MakeArgSetter called with String name and environment record env creates a
+function object that when executed sets the value bound for name in env. It performs the following
+steps:
+
+1.  Let param be the String name concatenated with the String "_arg".
+2.  Let body be the String "<name> = <param>;" with <name> replaced by the value of name and <param>
+    replaced by the value of param.
+3.  Return the result of creating a function object as described in 13.2 using a List containing the
+    single String param as FormalParameterList, body for FunctionBody, env as Scope, and true for
+    Strict.
+
+The [[Get]] internal method of an arguments object for a non-strict mode function with formal
+parameters when called with a property name P performs the following steps:
+
+1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+    the argument.
+3.  If the value of isMapped is undefined, then
+    1.  Let v be the result of calling the default [[Get]] internal method (8.12.3) on the arguments
+        object passing P as the argument.
+    2.  If P is "caller" and v is a strict mode Function object, throw a TypeError exception.
+    3.  Return v.
+
+4.  Else, map contains a formal parameter mapping for P so,
+    1.  Return the result of calling the [[Get]] internal method of map passing P as the argument.
+
+The [[GetOwnProperty]] internal method of an arguments object for a non-strict mode function with
+formal parameters when called with a property name P performs the following steps:
+
+1.  Let desc be the result of calling the default [[GetOwnProperty]] internal method (8.12.1) on the
+    arguments object passing P as the argument.
+2.  If desc is undefined then return desc.
+3.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+4.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+    the argument.
+5.  If the value of isMapped is not undefined, then
+    1.  Set desc.[[Value]] to the result of calling the [[Get]] internal method of map passing P as
+        the argument.
+
+6.  Return desc.
+
+The [[DefineOwnProperty]] internal method of an arguments object for a non-strict mode function with
+formal parameters when called with a property name P, Property Descriptor Desc, and Boolean flag
+Throw performs the following steps:
+
+1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+    the argument.
+3.  Let allowed be the result of calling the default [[DefineOwnProperty]] internal method (8.12.9)
+    on the arguments object passing P, Desc, and false as the arguments.
+4.  If allowed is false, then
+    1.  If Throw is true then throw a TypeError exception, otherwise return false.
+
+5.  If the value of isMapped is not undefined, then
+    1.  If IsAccessorDescriptor(Desc) is true, then
+        1.  Call the [[Delete]] internal method of map passing P, and false as the arguments.
+
+    2.  Else
+        1.  If Desc.[[Value]] is present, then
+            1.  Call the [[Put]] internal method of map passing P, Desc.[[Value]], and Throw as the
+                arguments.
+
+        2.  If Desc.[[Writable]] is present and its value is false, then
+            1.  Call the [[Delete]] internal method of map passing P and false as arguments.
+
+6.  Return true.
+
+The [[Delete]] internal method of an arguments object for a non-strict mode function with formal
+parameters when called with a property name P and Boolean flag Throw performs the following steps:
+
+1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+    the argument.
+3.  Let result be the result of calling the default [[Delete]] internal method (8.12.7) on the
+    arguments object passing P and Throw as the arguments.
+4.  If result is true and the value of isMapped is not undefined, then
+    1.  Call the [[Delete]] internal method of map passing P, and false as the arguments.
+
+5.  Return result.
+
+NOTE 1 For non-strict mode functions the array index (defined in 15.4) named data properties of an
+arguments object whose numeric name values are less than the number of formal parameters of the
+corresponding function object initially share their values with the corresponding argument bindings
+in the function’s execution context. This means that changing the property changes the corresponding
+value of the argument binding and vice-versa. This correspondence is broken if such a property is
+deleted and then redefined or if the property is changed into an accessor property. For strict mode
+functions, the values of the arguments object’s properties are simply a copy of the arguments passed
+to the function and there is no dynamic linkage between the property values and the formal parameter
+values.
+
+NOTE 2 The ParameterMap object and its property values are used as a device for specifying the
+arguments object correspondence to argument bindings. The ParameterMap object and the objects that
+are the values of its properties are not directly accessible from ECMAScript code. An ECMAScript
+implementation does not need to actually create or use such objects to implement the specified
+semantics.
+
+NOTE 3 Arguments objects for strict mode functions define non-configurable accessor properties named
+"caller" and "callee" which throw a TypeError exception on access. The "callee" property has a more
+specific meaning for non-strict mode functions and a "caller" property has historically been
+provided as an implementation-defined extension by some ECMAScript implementations. The strict mode
+definition of these properties exists to ensure that neither of them is defined in any other manner
+by conforming ECMAScript implementations.

@@ -1,0 +1,5 @@
+8.1 The Undefined Type
+======================
+
+The Undefined type has exactly one value, called undefined. Any variable that has not been assigned
+a value has the value undefined.

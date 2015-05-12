@@ -1,0 +1,56 @@
+14 Program
+==========
+
+Syntax
+------
+
+Program :
+
+SourceElementsopt
+
+SourceElements :
+
+SourceElement
+
+SourceElements SourceElement
+
+SourceElement :
+
+Statement
+
+FunctionDeclaration
+
+Semantics
+---------
+
+The production Program : SourceElementsopt is evaluated as follows:
+
+1.  The code of this Program is strict mode code if the Directive Prologue (14.1) of its
+    SourceElements contains a Use Strict Directive or if any of the conditions of 10.1.1 apply. If
+    the code of this Program is strict mode code, SourceElements is evaluated in the following steps
+    as strict mode code. Otherwise SourceElements is evaluated in the following steps as non-strict
+    mode code.
+2.  If SourceElements is not present, return (normal, empty, empty).
+3.  Let progCxt be a new execution context for global code as described in 10.4.1.
+4.  Let result be the result of evaluating SourceElements.
+5.  Exit the execution context progCxt.
+6.  Return result.
+
+NOTE The processes for initiating the evaluation of a Program and for dealing with the result of
+such an evaluation are defined by an ECMAScript implementation and not by this specification.
+
+The production SourceElements : SourceElements SourceElement is evaluated as follows:
+
+1.  Let headResult be the result of evaluating SourceElements.
+2.  If headResult is an abrupt completion, return headResult.
+3.  Let tailResult be result of evaluating SourceElement.
+4.  If tailResult.value is empty, let V = headResult.value, otherwise let V = tailResult.value.
+5.  Return (tailResult.type, V, tailResult.target)
+
+The production SourceElement : Statement is evaluated as follows:
+
+1.  Return the result of evaluating Statement.
+
+The production SourceElement : FunctionDeclaration is evaluated as follows:
+
+1.  Return (normal, empty, empty).

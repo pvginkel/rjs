@@ -1,0 +1,227 @@
+4.3 Terms and definitions
+=========================
+
+For the purposes of this document, the following terms and definitions apply.
+
+4.3.1 type
+==========
+
+set of data values as defined in Clause 8 of this specification
+
+4.3.2 primitive value
+=====================
+
+member of one of the types Undefined, Null, Boolean, Number, or String as defined in Clause 8
+
+NOTE A primitive value is a datum that is represented directly at the lowest level of the language
+implementation.
+
+4.3.3 object
+============
+
+member of the type Object
+
+NOTE An object is a collection of properties and has a single prototype object. The prototype may be
+the null value.
+
+4.3.4 constructor
+=================
+
+function object that creates and initialises objects
+
+NOTE The value of a constructor’s “prototype” property is a prototype object that is used to
+implement inheritance and shared properties.
+
+4.3.5 prototype
+===============
+
+object that provides shared properties for other objects
+
+NOTE When a constructor creates an object, that object implicitly references the constructor’s
+“prototype” property for the purpose of resolving property references. The constructor’s “prototype”
+property can be referenced by the program expression constructor.prototype, and properties added to
+an object’s prototype are shared, through inheritance, by all objects sharing the prototype.
+Alternatively, a new object may be created with an explicitly specified prototype by using the
+Object.create built-in function.
+
+4.3.6 native object
+===================
+
+object in an ECMAScript implementation whose semantics are fully defined by this specification
+rather than by the host environment
+
+NOTE Standard native objects are defined in this specification. Some native objects are built-in;
+others may be constructed during the course of execution of an ECMAScript program.
+
+4.3.7 built-in object
+=====================
+
+object supplied by an ECMAScript implementation, independent of the host environment, that is
+present at the start of the execution of an ECMAScript program
+
+NOTE Standard built-in objects are defined in this specification, and an ECMAScript implementation
+may specify and define others. Every built-in object is a native object. A built-in constructor is a
+built-in object that is also a constructor.
+
+4.3.8 host object
+=================
+
+object supplied by the host environment to complete the execution environment of ECMAScript
+
+NOTE Any object that is not native is a host object.
+
+4.3.9 undefined value
+=====================
+
+primitive value used when a variable has not been assigned a value
+
+4.3.10 Undefined type
+=====================
+
+type whose sole value is the undefined value
+
+4.3.11 null value
+=================
+
+primitive value that represents the intentional absence of any object value
+
+4.3.12 Null type
+================
+
+type whose sole value is the null value
+
+4.3.13 Boolean value
+====================
+
+member of the Boolean type
+
+NOTE There are only two Boolean values, true and false.
+
+4.3.14 Boolean type
+===================
+
+type consisting of the primitive values true and false
+
+4.3.15 Boolean object
+=====================
+
+member of the Object type that is an instance of the standard built-in Boolean constructor
+
+NOTE A Boolean object is created by using the Boolean constructor in a new expression, supplying a
+Boolean value as an argument. The resulting object has an internal property whose value is the
+Boolean value. A Boolean object can be coerced to a Boolean value.
+
+4.3.16 String value
+===================
+
+primitive value that is a finite ordered sequence of zero or more 16-bit unsigned integer
+
+NOTE A String value is a member of the String type. Each integer value in the sequence usually
+represents a single 16-bit unit of UTF-16 text. However, ECMAScript does not place any restrictions
+or requirements on the values except that they must be 16-bit unsigned integers.
+
+4.3.17 String type
+==================
+
+set of all possible String values
+
+4.3.18 String object
+====================
+
+member of the Object type that is an instance of the standard built-in String constructor
+
+NOTE A String object is created by using the String constructor in a new expression, supplying a
+String value as an argument. The resulting object has an internal property whose value is the String
+value. A String object can be coerced to a String value by calling the String constructor as a
+function (15.5.1).
+
+4.3.19 Number value
+===================
+
+primitive value corresponding to a double-precision 64-bit binary format IEEE 754 value
+
+NOTE A Number value is a member of the Number type and is a direct representation of a number.
+
+4.3.20 Number type
+==================
+
+set of all possible Number values including the special “Not-a-Number” (NaN) values, positive
+infinity, and negative infinity
+
+4.3.21 Number object
+====================
+
+member of the Object type that is an instance of the standard built-in Number constructor
+
+NOTE A Number object is created by using the Number constructor in a new expression, supplying a
+Number value as an argument. The resulting object has an internal property whose value is the Number
+value. A Number object can be coerced to a Number value by calling the Number constructor as a
+function (15.7.1).
+
+4.3.22 Infinity
+===============
+
+number value that is the positive infinite Number value
+
+4.3.23 NaN
+==========
+
+number value that is a IEEE 754 “Not-a-Number” value
+
+4.3.24 function
+===============
+
+member of the Object type that is an instance of the standard built-in Function constructor and that
+may be invoked as a subroutine
+
+NOTE In addition to its named properties, a function contains executable code and state that
+determine how it behaves when invoked. A function’s code may or may not be written in ECMAScript.
+
+4.3.25 built-in function
+========================
+
+built-in object that is a function
+
+NOTE Examples of built-in functions include parseInt and Math.exp. An implementation may provide
+implementation-dependent built-in functions that are not described in this specification.
+
+4.3.26 property
+===============
+
+association between a name and a value that is a part of an object
+
+NOTE Depending upon the form of the property the value may be represented either directly as a data
+value (a primitive value, an object, or a function object) or indirectly by a pair of accessor
+functions.
+
+4.3.27 method
+=============
+
+function that is the value of a property
+
+NOTE When a function is called as a method of an object, the object is passed to the function as its
+this value.
+
+4.3.28 built-in method
+======================
+
+method that is a built-in function
+
+NOTE Standard built-in methods are defined in this specification, and an ECMAScript implementation
+may specify and provide other additional built-in methods.
+
+4.3.29 attribute
+================
+
+internal value that defines some characteristic of a property
+
+4.3.30 own property
+===================
+
+property that is directly contained by its object
+
+4.3.31 inherited property
+=========================
+
+property of an object that is not an own property but is a property (either own or inherited) of the
+object’s prototype

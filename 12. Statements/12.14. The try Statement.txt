@@ -1,0 +1,81 @@
+12.14 The try Statement
+=======================
+
+Syntax
+------
+
+TryStatement :
+
+try Block Catch
+
+try Block Finally
+
+try Block Catch Finally
+
+Catch :
+
+catch ( Identifier ) Block
+
+Finally :
+
+finally Block
+
+The try statement encloses a block of code in which an exceptional condition can occur, such as a
+runtime error or a throw statement. The catch clause provides the exception-handling code. When a
+catch clause catches an exception, its Identifier is bound to that exception.
+
+Semantics
+---------
+
+The production TryStatement : try Block Catch is evaluated as follows:
+
+1.  Let B be the result of evaluating Block.
+2.  If B.type is not throw, return B.
+3.  Return the result of evaluating Catch with parameter B.value.
+
+The production TryStatement : try Block Finally is evaluated as follows:
+
+1.  Let B be the result of evaluating Block.
+2.  Let F be the result of evaluating Finally.
+3.  If F.type is normal, return B.
+4.  Return F.
+
+The production TryStatement : try Block Catch Finally is evaluated as follows:
+
+1.  Let B be the result of evaluating Block.
+2.  If B.type is throw, then
+    1.  Let C be the result of evaluating Catch with parameter B.value.
+
+3.  Else, B.type is not throw,
+    1.  Let C be B.
+
+4.  Let F be the result of evaluating Finally.
+5.  If F.type is normal, return C.
+6.  Return F.
+
+The production Catch : catch ( Identifier ) Block is evaluated as follows:
+
+1.  Let C be the parameter that has been passed to this production.
+2.  Let oldEnv be the running execution context’s LexicalEnvironment.
+3.  Let catchEnv be the result of calling NewDeclarativeEnvironment passing oldEnv as the argument.
+4.  Call the CreateMutableBinding concrete method of catchEnv passing the Identifier String value as
+    the argument.
+5.  Call the SetMutableBinding concrete method of catchEnv passing the Identifier, C, and false as
+    arguments. Note that the last argument is immaterial in this situation.
+6.  Set the running execution context’s LexicalEnvironment to catchEnv.
+7.  Let B be the result of evaluating Block.
+8.  Set the running execution context’s LexicalEnvironment to oldEnv.
+9.  Return B.
+
+NOTE No matter how control leaves the Block the LexicalEnvironment is always restored to its former
+state.
+
+The production Finally : finally Block is evaluated as follows:
+
+1.  Return the result of evaluating Block.
+
+12.14.1 Strict Mode Restrictions
+================================
+
+It is a SyntaxError if a TryStatement with a Catch occurs within strict code and the Identifier of
+the Catch production is either "eval" or “arguments”.

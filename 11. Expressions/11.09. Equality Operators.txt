@@ -1,0 +1,178 @@
+11.9 Equality Operators
+=======================
+
+Syntax
+------
+
+EqualityExpression :
+
+RelationalExpression
+
+EqualityExpression == RelationalExpression
+
+EqualityExpression != RelationalExpression
+
+EqualityExpression === RelationalExpression
+
+EqualityExpression !== RelationalExpression
+
+EqualityExpressionNoIn :
+
+RelationalExpressionNoIn
+
+EqualityExpressionNoIn == RelationalExpressionNoIn
+
+EqualityExpressionNoIn != RelationalExpressionNoIn
+
+EqualityExpressionNoIn === RelationalExpressionNoIn
+
+EqualityExpressionNoIn !== RelationalExpressionNoIn
+
+Semantics
+---------
+
+The result of evaluating an equality operator is always of type Boolean, reflecting whether the
+relationship named by the operator holds between its two operands.
+
+The EqualityExpressionNoIn productions are evaluated in the same manner as the EqualityExpression
+productions except that the contained EqualityExpressionNoIn and RelationalExpressionNoIn are
+evaluated instead of the contained EqualityExpression and RelationalExpression, respectively.
+
+11.9.1 The Equals Operator ( == )
+=================================
+
+The production EqualityExpression : EqualityExpression == RelationalExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating EqualityExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating RelationalExpression.
+4.  Let rval be GetValue(rref).
+5.  Return the result of performing abstract equality comparison rval == lval. (see 11.9.3).
+
+11.9.2 The Does-not-equals Operator ( != )
+==========================================
+
+The production EqualityExpression : EqualityExpression != RelationalExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating EqualityExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating RelationalExpression.
+4.  Let rval be GetValue(rref).
+5.  Let r be the result of performing abstract equality comparison rval == lval. (see 11.9.3).
+6.  If r is true, return false. Otherwise, return true.
+
+11.9.3 The Abstract Equality Comparison Algorithm
+=================================================
+
+The comparison x == y, where x and y are values, produces true or false. Such a comparison is
+performed as follows:
+
+1.  If Type(x) is the same as Type(y), then
+    1.  If Type(x) is Undefined, return true.
+    2.  If Type(x) is Null, return true.
+    3.  If Type(x) is Number, then
+        1.  If x is NaN, return false.
+        2.  If y is NaN, return false.
+        3.  If x is the same Number value as y, return true.
+        4.  If x is +0 and y is −0, return true.
+        5.  If x is −0 and y is +0, return true.
+        6.  Return false.
+
+    4.  If Type(x) is String, then return true if x and y are exactly the same sequence of
+        characters (same length and same characters in corresponding positions). Otherwise, return
+        false.
+    5.  If Type(x) is Boolean, return true if x and y are both true or both false. Otherwise, return
+        false.
+    6.  Return true if x and y refer to the same object. Otherwise, return false.
+
+2.  If x is null and y is undefined, return true.
+3.  If x is undefined and y is null, return true.
+4.  If Type(x) is Number and Type(y) is String,  
+    return the result of the comparison x == ToNumber(y).
+5.  If Type(x) is String and Type(y) is Number,  
+    return the result of the comparison ToNumber(x) == y.
+6.  If Type(x) is Boolean, return the result of the comparison ToNumber(x) == y.
+7.  If Type(y) is Boolean, return the result of the comparison x == ToNumber(y).
+8.  If Type(x) is either String or Number and Type(y) is Object,  
+    return the result of the comparison x == ToPrimitive(y).
+9.  If Type(x) is Object and Type(y) is either String or Number,  
+    return the result of the comparison ToPrimitive(x) == y.
+10. Return false.
+
+NOTE 1 Given the above definition of equality:
+
+-   String comparison can be forced by: "" + a == "" + b.
+-   Numeric comparison can be forced by: +a == +b.
+-   Boolean comparison can be forced by: !a == !b.
+
+NOTE 2 The equality operators maintain the following invariants:
+
+-   A != B is equivalent to !(A == B).
+-   A == B is equivalent to B == A, except in the order of evaluation of A and B.
+
+NOTE 3 The equality operator is not always transitive. For example, there might be two distinct
+String objects, each representing the same String value; each String object would be considered
+equal to the String value by the == operator, but the two String objects would not be equal to each
+other. For Example:
+
+-   new String("a") == "a" and "a" == new             String("a")are both true.
+-   new String("a") == new String("a") is false.
+
+NOTE 4 Comparison of Strings uses a simple equality test on sequences of code unit values. There is
+no attempt to use the more complex, semantically oriented definitions of character or string
+equality and collating order defined in the Unicode specification. Therefore Strings values that are
+canonically equal according to the Unicode standard could test as unequal. In effect this algorithm
+assumes that both Strings are already in normalised form.
+
+11.9.4 The Strict Equals Operator ( === )
+=========================================
+
+The production EqualityExpression : EqualityExpression === RelationalExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating EqualityExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating RelationalExpression.
+4.  Let rval be GetValue(rref).
+5.  Return the result of performing the strict equality comparison rval === lval. (See 11.9.6)
+
+11.9.5 The Strict Does-not-equal Operator ( !== )
+=================================================
+
+The production EqualityExpression : EqualityExpression !== RelationalExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating EqualityExpression.
+2.  Let lval be GetValue(lref).
+3.  Let rref be the result of evaluating RelationalExpression.
+4.  Let rval be GetValue(rref).
+5.  Let r be the result of performing strict equality comparison rval === lval. (See 11.9.6)
+6.  If r is true, return false. Otherwise, return true.
+
+11.9.6 The Strict Equality Comparison Algorithm
+===============================================
+
+The comparison x === y, where x and y are values, produces true or false. Such a comparison is
+performed as follows:
+
+1.  If Type(x) is different from Type(y), return false.
+2.  If Type(x) is Undefined, return true.
+3.  If Type(x) is Null, return true.
+4.  If Type(x) is Number, then
+    1.  If x is NaN, return false.
+    2.  If y is NaN, return false.
+    3.  If x is the same Number value as y, return true.
+    4.  If x is +0 and y is −0, return true.
+    5.  If x is −0 and y is +0, return true.
+    6.  Return false.
+
+5.  If Type(x) is String, then return true if x and y are exactly the same sequence of characters
+    (same length and same characters in corresponding positions); otherwise, return false.
+6.  If Type(x) is Boolean, return true if x and y are both true or both false; otherwise, return
+    false.
+7.  Return true if x and y refer to the same object. Otherwise, return false.
+
+NOTE This algorithm differs from the SameValue Algorithm (9.12) in its treatment of signed zeroes
+and NaNs.

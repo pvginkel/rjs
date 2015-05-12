@@ -1,0 +1,95 @@
+12.2 Variable Statement
+=======================
+
+Syntax
+------
+
+VariableStatement :
+
+var VariableDeclarationList ;
+
+VariableDeclarationList :
+
+VariableDeclaration
+
+VariableDeclarationList , VariableDeclaration
+
+VariableDeclarationListNoIn :
+
+VariableDeclarationNoIn
+
+VariableDeclarationListNoIn , VariableDeclarationNoIn
+
+VariableDeclaration :
+
+Identifier Initialiseropt
+
+VariableDeclarationNoIn :
+
+Identifier InitialiserNoInopt
+
+Initialiser :
+
+= AssignmentExpression
+
+InitialiserNoIn :
+
+= AssignmentExpressionNoIn
+
+A variable statement declares variables that are created as defined in 10.5. Variables are
+initialised to undefined when created. A variable with an Initialiser is assigned the value of its
+AssignmentExpression when the VariableStatement is executed, not when the variable is created.
+
+Semantics
+---------
+
+The production VariableStatement : var VariableDeclarationList ; is evaluated as follows:
+
+1.  Evaluate VariableDeclarationList.
+2.  Return (normal, empty, empty).
+
+The production VariableDeclarationList :VariableDeclaration is evaluated as follows:
+
+1.  Evaluate VariableDeclaration.
+
+The production VariableDeclarationList : VariableDeclarationList , VariableDeclaration is evaluated
+as follows:
+
+1.  Evaluate VariableDeclarationList.
+2.  Evaluate VariableDeclaration.
+
+The production VariableDeclaration : Identifier is evaluated as follows:
+
+1.  Return a String value containing the same sequence of characters as in the Identifier.
+
+The production VariableDeclaration : Identifier Initialiser is evaluated as follows:
+
+1.  Let lhs be the result of evaluating Identifier as described in 11.1.2.
+2.  Let rhs be the result of evaluating Initialiser.
+3.  Let value be GetValue(rhs).
+4.  Call PutValue(lhs, value).
+5.  Return a String value containing the same sequence of characters as in the Identifier.
+
+NOTE The String value of a VariableDeclaration is used in the evaluation of for-in statements
+(12.6.4).
+
+If a VariableDeclaration is nested within a with statement and the Identifier in the
+VariableDeclaration is the same as a property name of the binding object of the with statement’s
+object environment record, then step 4 will assign value to the property instead of to the
+VariableEnvironment binding of the Identifier.
+
+The production Initialiser : = AssignmentExpression is evaluated as follows:
+
+1.  Return the result of evaluating AssignmentExpression.
+
+The VariableDeclarationListNoIn, VariableDeclarationNoIn and InitialiserNoIn productions are
+evaluated in the same manner as the VariableDeclarationList, VariableDeclaration and Initialiser
+productions except that the contained VariableDeclarationListNoIn, VariableDeclarationNoIn,
+InitialiserNoIn and AssignmentExpressionNoIn are evaluated instead of the contained
+VariableDeclarationList, VariableDeclaration, Initialiser and AssignmentExpression, respectively.
+
+12.2.1 Strict Mode Restrictions
+===============================
+
+It is a SyntaxError if a VariableDeclaration or VariableDeclarationNoIn occurs within strict code
+and its Identifier is either "eval" or “arguments”.

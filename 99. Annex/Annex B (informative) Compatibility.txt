@@ -1,0 +1,266 @@
+Annex B (informative) Compatibility
+===================================
+
+B.1 Additional Syntax
+=====================
+
+Past editions of ECMAScript have included additional syntax and semantics for specifying octal
+literals and octal escape sequences. These have been removed from this edition of ECMAScript. This
+non-normative annex presents uniform syntax and semantics for octal literals and octal escape
+sequences for compatibility with some older ECMAScript programs.
+
+B.1.1 Numeric Literals
+======================
+
+The syntax and semantics of 7.8.3 can be extended as follows except that this extension is not
+allowed for strict mode code:
+
+Syntax
+------
+
+NumericLiteral ::
+
+DecimalLiteral
+
+HexIntegerLiteral
+
+OctalIntegerLiteral
+
+OctalIntegerLiteral ::
+
+0 OctalDigit
+
+OctalIntegerLiteral OctalDigit
+
+OctalDigit :: one of
+
+0 1 2 3 4 5 6 7
+
+Semantics
+
+-   The MV of NumericLiteral :: OctalIntegerLiteral is the MV of OctalIntegerLiteral.
+-   The MV of OctalDigit :: 0 is 0.
+-   The MV of OctalDigit :: 1 is 1.
+-   The MV of OctalDigit :: 2 is 2.
+-   The MV of OctalDigit :: 3 is 3.
+-   The MV of OctalDigit :: 4 is 4.
+-   The MV of OctalDigit :: 5 is 5.
+-   The MV of OctalDigit :: 6 is 6.
+-   The MV of OctalDigit :: 7 is 7.
+-   The MV of OctalIntegerLiteral :: 0 OctalDigit is the MV of OctalDigit.
+-   The MV of OctalIntegerLiteral :: OctalIntegerLiteral OctalDigit is (the MV of
+    OctalIntegerLiteral times 8) plus the MV of OctalDigit.
+
+B.1.2 String Literals
+=====================
+
+The syntax and semantics of 7.8.4 can be extended as follows except that this extension is not
+allowed for strict mode code:
+
+Syntax
+------
+
+EscapeSequence ::
+
+CharacterEscapeSequence
+
+OctalEscapeSequence
+
+HexEscapeSequence
+
+UnicodeEscapeSequence
+
+OctalEscapeSequence ::
+
+OctalDigit [lookahead ? DecimalDigit]
+
+ZeroToThree OctalDigit [lookahead ? DecimalDigit]
+
+FourToSeven OctalDigit
+
+ZeroToThree OctalDigit OctalDigit
+
+ZeroToThree :: one of
+
+0 1 2 3
+
+FourToSeven :: one of
+
+4 5 6 7
+
+Semantics
+---------
+
+-   The CV of EscapeSequence :: OctalEscapeSequence is the CV of the OctalEscapeSequence.
+
+-   The CV of OctalEscapeSequence :: OctalDigit [lookahead ? DecimalDigit] is the character whose
+    code unit value is the MV of the OctalDigit.
+
+-   The CV of OctalEscapeSequence :: ZeroToThree OctalDigit [lookahead ? DecimalDigit] is the
+    character whose code unit value is (8 times the MV of the ZeroToThree) plus the MV of the
+    OctalDigit.
+
+-   The CV of OctalEscapeSequence :: FourToSeven OctalDigit is the character whose code unit value
+    is (8 times the MV of the FourToSeven) plus the MV of the OctalDigit.
+
+-   The CV of OctalEscapeSequence :: ZeroToThree OctalDigit OctalDigit is the character whose code
+    unit value is (64 (that is, 8^2) times the MV of the ZeroToThree) plus (8 times the MV of the
+    first OctalDigit) plus the MV of the second OctalDigit.
+
+-   The MV of ZeroToThree :: 0 is 0.
+
+-   The MV of ZeroToThree :: 1 is 1.
+
+-   The MV of ZeroToThree :: 2 is 2.
+
+-   The MV of ZeroToThree :: 3 is 3.
+
+-   The MV of FourToSeven :: 4 is 4.
+
+-   The MV of FourToSeven :: 5 is 5.
+
+-   The MV of FourToSeven :: 6 is 6.
+
+-   The MV of FourToSeven :: 7 is 7.
+
+B.2 Additional Properties
+=========================
+
+Some implementations of ECMAScript have included additional properties for some of the standard
+native objects. This non-normative annex suggests uniform semantics for such properties without
+making the properties or their semantics part of this standard.
+
+B.2.1 escape (string)
+=====================
+
+The escape function is a property of the global object. It computes a new version of a String value
+in which certain characters have been replaced by a hexadecimal escape sequence.
+
+For those characters being replaced whose code unit value is 0xFF or less, a two-digit escape
+sequence of the form %xx is used. For those characters being replaced whose code unit value is
+greater than 0xFF, a four-digit escape sequence of the form %uxxxx is used.
+
+When the escape function is called with one argument string, the following steps are taken:
+
+1.  Call ToString(string).
+2.  Compute the number of characters in Result(1).
+3.  Let R be the empty string.
+4.  Let k be 0.
+5.  If k equals Result(2), return R.
+6.  Get the character (represented as a 16-bit unsigned integer) at position k within Result(1).
+7.  If Result(6) is one of the 69 nonblank characters  
+    “ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@*_+-./”then go to step 13.
+8.  If Result(6), is less than 256, go to step 11.
+9.  Let S be a String containing six characters “%uwxyz” where wxyz are four hexadecimal digits
+    encoding the value of Result(6).
+10. Go to step 14.
+11. Let S be a String containing three characters “%xy” where xy are two hexadecimal digits encoding
+    the value of Result(6).
+12. Go to step 14.
+13. Let S be a String containing the single character Result(6).
+14. Let R be a new String value computed by concatenating the previous value of R and S.
+15. Increase k by 1.
+16. Go to step 5.
+
+NOTE The encoding is partly based on the encoding described in RFC 1738, but the entire encoding
+specified in this standard is described above without regard to the contents of RFC 1738. This
+encoding does not reflect changes to RFC 1738 made by RFC 3986.
+
+B.2.2 unescape (string)
+=======================
+
+The unescape function is a property of the global object. It computes a new version of a String
+value in which each escape sequence of the sort that might be introduced by the escape function is
+replaced with the character that it represents.
+
+When the unescape function is called with one argument string, the following steps are taken:
+
+1.  Call ToString(string).
+2.  Compute the number of characters in Result(1).
+3.  Let R be the empty String.
+4.  Let k be 0.
+5.  If k equals Result(2), return R.
+6.  Let c be the character at position k within Result(1).
+7.  If c is not %, go to step 18.
+8.  If k is greater than Result(2)-6, go to step 14.
+9.  If the character at position k+1 within Result(1) is not u, go to step 14.
+10. If the four characters at positions k+2, k+3, k+4, and k+5 within Result(1) are not all
+    hexadecimal digits, go to step 14.
+11. Let c be the character whose code unit value is the integer represented by the four hexadecimal
+    digits at positions k+2, k+3, k+4, and k+5 within Result(1).
+12. Increase k by 5.
+13. Go to step 18.
+14. If k is greater than Result(2)-3, go to step 18.
+15. If the two characters at positions k+1 and k+2 within Result(1) are not both hexadecimal digits,
+    go to step 18.
+16. Let c be the character whose code unit value is the integer represented by two zeroes plus the
+    two hexadecimal digits at positions k+1 and k+2 within Result(1).
+17. Increase k by 2.
+18. Let R be a new String value computed by concatenating the previous value of R and c.
+19. Increase k by 1.
+20. Go to step 5.
+
+B.2.3 String.prototype.substr (start, length)
+=============================================
+
+The substr method takes two arguments, start and length, and returns a substring of the result of
+converting the this object to a String, starting from character position start and running for
+length characters (or through the end of the String if length is undefined). If start is negative,
+it is treated as (sourceLength+start) where sourceLength is the length of the String. The result is
+a String value, not a String object. The following steps are taken:
+
+1.  Call ToString, giving it the this value as its argument.
+2.  Call ToInteger(start).
+3.  If length is undefined, use +8; otherwise call ToInteger(length).
+4.  Compute the number of characters in Result(1).
+5.  If Result(2) is positive or zero, use Result(2); else use max(Result(4)+Result(2),0).
+6.  Compute min(max(Result(3),0), Result(4)–Result(5)).
+7.  If Result(6) = 0, return the empty String “”.
+8.  Return a String containing Result(6) consecutive characters from Result(1) beginning with the
+    character at position Result(5).
+
+The length property of the substr method is 2.
+
+NOTE The substr function is intentionally generic; it does not require that its this value be a
+String object. Therefore it can be transferred to other kinds of objects for use as a method.
+
+B.2.4 Date.prototype.getYear ( )
+================================
+
+NOTE The getFullYear method is preferred for nearly all purposes, because it avoids the “year 2000
+problem.”
+
+When the getYear method is called with no arguments, the following steps are taken:
+
+1.  Let t be this time value.
+2.  If t is NaN, return NaN.
+3.  Return YearFromTime(LocalTime(t)) - 1900.
+
+B.2.5 Date.prototype.setYear (year)
+===================================
+
+NOTE The setFullYear method is preferred for nearly all purposes, because it avoids the “year 2000
+problem.”
+
+When the setYear method is called with one argument year, the following steps are taken:
+
+1.  Let t be the result of LocalTime(this time value); but if this time value is NaN, let t be +0.
+2.  Call ToNumber(year).
+3.  If Result(2) is NaN, set the [[PrimitiveValue]] internal property of the this value to NaN and
+    return NaN.
+4.  If Result(2) is not NaN and 0 = ToInteger(Result(2)) = 99 then Result(4) is ToInteger(Result(2))
+    + 1900. Otherwise, Result(4) is Result(2).
+5.  Compute MakeDay(Result(4), MonthFromTime(t), DateFromTime(t)).
+6.  Compute UTC(MakeDate(Result(5), TimeWithinDay(t))).
+7.  Set the [[PrimitiveValue]] internal property of the this value to TimeClip(Result(6)).
+8.  Return the value of the [[PrimitiveValue]] internal property of the this value.
+
+B.2.6 Date.prototype.toGMTString ( )
+====================================
+
+NOTE The property toUTCString is preferred. The toGMTString property is provided principally for
+compatibility with old code. It is recommended that the toUTCString property be used in new
+ECMAScript code.
+
+The Function object that is the initial value of Date.prototype.toGMTString is the same Function
+object that is the initial value of Date.prototype.toUTCString.

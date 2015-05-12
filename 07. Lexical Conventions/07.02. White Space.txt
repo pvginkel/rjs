@@ -1,0 +1,55 @@
+7.2 White Space
+===============
+
+White space characters are used to improve source text readability and to separate tokens
+(indivisible lexical units) from each other, but are otherwise insignificant. White space characters
+may occur between any two tokens and at the start or end of input. White space characters may also
+occur within a StringLiteral or a RegularExpressionLiteral (where they are considered significant
+characters forming part of the literal value) or within a Comment, but cannot appear within any
+other kind of token.
+
+The ECMAScript white space characters are listed in Table 2.
+
+Table 2 — Whitespace Characters
+
++-----------------------------------+-----------------------------------+-----------------------------------+
+| Code Unit Value                   | Name                              | Formal Name                       |
++===================================+===================================+===================================+
+| \u0009                            | Tab                               | <TAB>                             |
++-----------------------------------+-----------------------------------+-----------------------------------+
+| \u000B                            | Vertical Tab                      | <VT>                              |
++-----------------------------------+-----------------------------------+-----------------------------------+
+| \u000C                            | Form Feed                         | <FF>                              |
++-----------------------------------+-----------------------------------+-----------------------------------+
+| \u0020                            | Space                             | <SP>                              |
++-----------------------------------+-----------------------------------+-----------------------------------+
+| \u00A0                            | No-break space                    | <NBSP>                            |
++-----------------------------------+-----------------------------------+-----------------------------------+
+|     \uFEFF                        | Byte Order Mark                   | <BOM>                             |
+|                                   |                                   |                                   |
+| Other category “Zs”               | Any other Unicode “space          | <USP>                             |
+|                                   | separator”                        |                                   |
++-----------------------------------+-----------------------------------+-----------------------------------+
+
+ECMAScript implementations must recognise all of the white space characters defined in Unicode 3.0.
+Later editions of the Unicode Standard may define other white space characters. ECMAScript
+implementations may recognise white space characters from later editions of the Unicode Standard.
+
+Syntax
+------
+
+WhiteSpace ::
+
+<TAB>
+
+<VT>
+
+<FF>
+
+<SP>
+
+<NBSP>
+
+<BOM>
+
+<USP>

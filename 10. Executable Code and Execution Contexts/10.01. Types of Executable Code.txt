@@ -1,0 +1,46 @@
+10.1 Types of Executable Code
+=============================
+
+There are three types of ECMAScript executable code:
+
+-   Global code is source text that is treated as an ECMAScript Program. The global code of a
+    particular Program does not include any source text that is parsed as part of a FunctionBody.
+
+-   Eval code is the source text supplied to the built-in eval function. More precisely, if the
+    parameter to the built-in eval function is a String, it is treated as an ECMAScript Program. The
+    eval code for a particular invocation of eval is the global code portion of that Program.
+
+-   Function code is source text that is parsed as part of a FunctionBody. The function code of a
+    particular FunctionBody does not include any source text that is parsed as part of a nested
+    FunctionBody. Function code also denotes the source text supplied when using the built-in
+    Function object as a constructor. More precisely, the last parameter provided to the Function
+    constructor is converted to a String and treated as the FunctionBody. If more than one parameter
+    is provided to the Function constructor, all parameters except the last one are converted to
+    Strings and concatenated together, separated by commas. The resulting String is interpreted as
+    the FormalParameterList for the FunctionBody defined by the last parameter. The function code
+    for a particular instantiation of a Function does not include any source text that is parsed as
+    part of a nested FunctionBody.
+
+10.1.1 Strict Mode Code
+=======================
+
+An ECMAScript Program syntactic unit may be processed using either unrestricted or strict mode
+syntax and semantics. When processed using strict mode the three types of ECMAScript code are
+referred to as strict global code, strict eval code, and strict function code. Code is interpreted
+as strict mode code in the following situations:
+
+-   Global code is strict global code if it begins with a Directive Prologue that contains a Use
+    Strict Directive (see 14.1).
+
+-   Eval code is strict eval code if it begins with a Directive Prologue that contains a Use Strict
+    Directive or if the call to eval is a direct call (see 15.1.2.1.1) to the eval function that is
+    contained in strict mode code.
+
+-   Function code that is part of a FunctionDeclaration, FunctionExpression, or accessor
+    PropertyAssignment is strict function code if its FunctionDeclaration, FunctionExpression, or
+    PropertyAssignment is contained in strict mode code or if the function code begins with a
+    Directive Prologue that contains a Use Strict Directive.
+
+-   Function code that is supplied as the last argument to the built-in Function constructor is
+    strict function code if the last argument is a String that when processed as a FunctionBody
+    begins with a Directive Prologue that contains a Use Strict Directive.

@@ -1,0 +1,92 @@
+9.8 ToString
+============
+
+The abstract operation ToString converts its argument to a value of type String according to Table
+13:
+
+Table 13 — ToString Conversions
+
++----------------------------------------------------+----------------------------------------------------+
+| Argument Type                                      | Result                                             |
++====================================================+====================================================+
+| Undefined                                          | "undefined"                                        |
++----------------------------------------------------+----------------------------------------------------+
+| Null                                               | "null"                                             |
++----------------------------------------------------+----------------------------------------------------+
+| Boolean                                            | If the argument is true, then the result is        |
+|                                                    | "true".                                            |
+|                                                    |                                                    |
+|                                                    | If the argument is false, then the result is       |
+|                                                    | “false”.                                           |
++----------------------------------------------------+----------------------------------------------------+
+| Number                                             | See 9.8.1.                                         |
++----------------------------------------------------+----------------------------------------------------+
+| String                                             | Return the input argument (no conversion)          |
++----------------------------------------------------+----------------------------------------------------+
+| Object                                             | Apply the following steps:                         |
+|                                                    |                                                    |
+|                                                    | 1. Let primValue be ToPrimitive(input argument,    |
+|                                                    | hint String).                                      |
+|                                                    |                                                    |
+|                                                    | 2. Return ToString(primValue).                     |
++----------------------------------------------------+----------------------------------------------------+
+
+9.8.1 ToString Applied to the Number Type
+=========================================
+
+The abstract operation ToString converts a Number m to String format as follows:
+
+1.  If m is NaN, return the String "NaN".
+2.  If m is +0 or −0, return the String "0".
+3.  If m is less than zero, return the String concatenation of the String "-" and ToString(−m).
+4.  If m is infinity, return the String "Infinity".
+5.  Otherwise, let n, k, and s be integers such that k ≥ 1, 10k−1 ≤ s < 10k, the Number value for s
+    × 10n−k is m, and k is as small as possible. Note that k is the number of digits in the decimal
+    representation of s, that s is not divisible by 10, and that the least significant digit of s is
+    not necessarily uniquely determined by these criteria.
+6.  If k ≤ n ≤ 21, return the String consisting of the k digits of the decimal representation of s
+    (in order, with no leading zeroes), followed by n−k occurrences of the character ‘0’.
+7.  If 0 < n ≤ 21, return the String consisting of the most significant n digits of the decimal
+    representation of s, followed by a decimal point ‘.’, followed by the remaining k−n digits of
+    the decimal representation of s.
+8.  If −6 < n ≤ 0, return the String consisting of the character ‘0’, followed by a decimal point
+    ‘.’, followed by −n occurrences of the character ‘0’, followed by the k digits of the decimal
+    representation of s.
+9.  Otherwise, if k = 1, return the String consisting of the single digit of s, followed by
+    lowercase character ‘e’, followed by a plus sign ‘+’ or minus sign ‘−’ according to whether n−1
+    is positive or negative, followed by the decimal representation of the integer abs(n−1) (with no
+    leading zeroes).
+10. Return the String consisting of the most significant digit of the decimal representation of s,
+    followed by a decimal point ‘.’, followed by the remaining k−1 digits of the decimal
+    representation of s, followed by the lowercase character ‘e’, followed by a plus sign ‘+’ or
+    minus sign ‘−’ according to whether n−1 is positive or negative, followed by the decimal
+    representation of the integer abs(n−1) (with no leading zeroes).
+
+NOTE 1 The following observations may be useful as guidelines for implementations, but are not part
+of the normative requirements of this Standard:
+
+-   If x is any Number value other than −0, then ToNumber(ToString(x)) is exactly the same Number
+    value as x.
+
+-   The least significant digit of s is not always uniquely determined by the requirements listed in
+    step 5.
+
+NOTE 2 For implementations that provide more accurate conversions than required by the rules above,
+it is recommended that the following alternative version of step 5 be used as a guideline:
+
+Otherwise, let n, k, and s be integers such that k ≥ 1, 10k−1 ≤ s < 10k, the Number value for s ×
+10n−k is m, and k is as small as possible. If there are multiple possibilities for s, choose the
+value of s for which s × 10n−k is closest in value to m. If there are two such possible values of s,
+choose the one that is even. Note that k is the number of digits in the decimal representation of s
+and that s is not divisible by 10.
+
+NOTE 3 Implementers of ECMAScript may find useful the paper and code written by David M. Gay for
+binary-to-decimal conversion of floating-point numbers:
+
+Gay, David M. Correctly Rounded Binary-Decimal and Decimal-Binary Conversions. Numerical Analysis,
+Manuscript 90-10. AT&T Bell Laboratories (Murray Hill, New Jersey). November 30, 1990. Available
+as  
+http://cm.bell-labs.com/cm/cs/doc/90/4-10.ps.gz. Associated code available as  
+http://cm.bell-labs.com/netlib/fp/dtoa.c.gz and as  
+http://cm.bell-labs.com/netlib/fp/g_fmt.c.gz and may also be found at the various netlib mirror
+sites.

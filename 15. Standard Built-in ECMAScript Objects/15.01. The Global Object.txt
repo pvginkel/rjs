@@ -1,0 +1,564 @@
+15.1 The Global Object
+======================
+
+The unique global object is created before control enters any execution context.
+
+Unless otherwise specified, the standard built-in properties of the global object have attributes
+{[[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}.
+
+The global object does not have a [[Construct]] internal property; it is not possible to use the
+global object as a constructor with the new operator.
+
+The global object does not have a [[Call]] internal property; it is not possible to invoke the
+global object as a function.
+
+The values of the [[Prototype]] and [[Class]] internal properties of the global object are
+implementation-dependent.
+
+In addition to the properties defined in this specification the global object may have additional
+host defined properties. This may include a property whose value is the global object itself; for
+example, in the HTML document object model the window property of the global object is the global
+object itself.
+
+15.1.1 Value Properties of the Global Object
+============================================
+
+15.1.1.1 NaN
+============
+
+The value of NaN is NaN (see 8.5). This property has the attributes { [[Writable]]: false,
+[[Enumerable]]: false, [[Configurable]]: false }.
+
+15.1.1.2 Infinity
+=================
+
+The value of Infinity is +∞ (see 8.5). This property has the attributes { [[Writable]]: false,
+[[Enumerable]]: false, [[Configurable]]: false }.
+
+15.1.1.3 undefined
+==================
+
+The value of undefined is undefined (see 8.1). This property has the attributes { [[Writable]]:
+false, [[Enumerable]]: false, [[Configurable]]: false }.
+
+15.1.2 Function Properties of the Global Object
+===============================================
+
+15.1.2.1 eval (x)
+=================
+
+When the eval function is called with one argument x, the following steps are taken:
+
+1.  If Type(x) is not String, return x.
+2.  Let prog be the ECMAScript code that is the result of parsing x as a Program. If the parse
+    fails, throw a SyntaxError exception (but see also clause 16).
+3.  Let evalCtx be the result of establishing a new execution context (10.4.2) for the eval code
+    prog.
+4.  Let result be the result of evaluating the program prog.
+5.  Exit the running execution context evalCtx, restoring the previous execution context.
+6.  If result.type is normal and its completion value is a value V, then return the value V.
+7.  If result.type is normal and its completion value is empty, then return the value undefined.
+8.  Otherwise, result.type must be throw. Throw result.value as an exception.
+
+15.1.2.1.1 Direct Call to Eval
+==============================
+
+A direct call to the eval function is one that is expressed as a CallExpression that meets the
+following two conditions:
+
+The Reference that is the result of evaluating the MemberExpression in the CallExpression has an
+environment record as its base value and its reference name is "eval".
+
+The result of calling the abstract operation GetValue with that Reference as the argument is the
+standard built-in function defined in 15.1.2.1.
+
+15.1.2.2 parseInt (string , radix)
+==================================
+
+The parseInt function produces an integer value dictated by interpretation of the contents of the
+string argument according to the specified radix. Leading white space in string is ignored. If radix
+is undefined or 0, it is assumed to be 10 except when the number begins with the character pairs 0x
+or 0X, in which case a radix of 16 is assumed. If radix is 16, the number may also optionally begin
+with the character pairs 0x or 0X.
+
+When the parseInt function is called, the following steps are taken:
+
+1.  Let inputString be ToString(string).
+2.  Let S be a newly created substring of inputString consisting of the first character that is not
+    a StrWhiteSpaceChar and all characters following that character. (In other words, remove leading
+    white space.) If inputString does not contain any such characters, let S be the empty string.
+3.  Let sign be 1.
+4.  If S is not empty and the first character of S is a minus sign -, let sign be −1.
+5.  If S is not empty and the first character of S is a plus sign + or a minus sign -, then remove
+    the first character from S.
+6.  Let R = ToInt32(radix).
+7.  Let stripPrefix be true.
+8.  If R ≠ 0, then
+    1.  If R < 2 or R > 36, then return NaN.
+    2.  If R ≠ 16, let stripPrefix be false.
+
+9.  Else, R = 0
+    1.  Let R = 10.
+
+10. If stripPrefix is true, then
+    1.  If the length of S is at least 2 and the first two characters of S are either “0x” or “0X”,
+        then remove the first two characters from S and let R = 16.
+
+11. If S contains any character that is not a radix-R digit, then let Z be the substring of S
+    consisting of all characters before the first such character; otherwise, let Z be S.
+12. If Z is empty, return NaN.
+13. Let mathInt be the mathematical integer value that is represented by Z in radix-R notation,
+    using the letters A-Z and a-z for digits with values 10 through 35. (However, if R is 10 and Z
+    contains more than 20 significant digits, every significant digit after the 20th may be replaced
+    by a 0 digit, at the option of the implementation; and if R is not 2, 4, 8, 10, 16, or 32, then
+    mathInt may be an implementation-dependent approximation to the mathematical integer value that
+    is represented by Z in radix-R notation.)
+14. Let number be the Number value for mathInt.
+15. Return sign × number.
+
+NOTE parseInt may interpret only a leading portion of string as an integer value; it ignores any
+characters that cannot be interpreted as part of the notation of an integer, and no indication is
+given that any such characters were ignored.
+
+15.1.2.3 parseFloat (string)
+============================
+
+The parseFloat function produces a Number value dictated by interpretation of the contents of the
+string argument as a decimal literal.
+
+When the parseFloat function is called, the following steps are taken:
+
+1.  Let inputString be ToString(string).
+2.  Let trimmedString be a substring of inputString consisting of the leftmost character that is not
+    a StrWhiteSpaceChar and all characters to the right of that character. (In other words, remove
+    leading white space.) If inputString does not contain any such characters, let trimmedString be
+    the empty string.
+3.  If neither trimmedString nor any prefix of trimmedString satisfies the syntax of a
+    StrDecimalLiteral (see 9.3.1), return NaN.
+4.  Let numberString be the longest prefix of trimmedString, which might be trimmedString itself,
+    that satisfies the syntax of a StrDecimalLiteral.
+5.  Return the Number value for the MV of numberString.
+
+NOTE parseFloat may interpret only a leading portion of string as a Number value; it ignores any
+characters that cannot be interpreted as part of the notation of an decimal literal, and no
+indication is given that any such characters were ignored.
+
+15.1.2.4 isNaN (number)
+=======================
+
+Returns true if the argument coerces to NaN, and otherwise returns false.
+
+1.  If ToNumber(number) is NaN, return true.
+2.  Otherwise, return false.
+
+NOTE A reliable way for ECMAScript code to test if a value X is a NaN is an expression of the form X
+!== X. The result will be true if and only if X is a NaN.
+
+15.1.2.5 isFinite (number)
+==========================
+
+Returns false if the argument coerces to NaN, +∞, or −∞, and otherwise returns true.
+
+1.  If ToNumber(number) is NaN, +∞, or −∞, return false.
+2.  Otherwise, return true.
+
+15.1.3 URI Handling Function Properties
+=======================================
+
+Uniform Resource Identifiers, or URIs, are Strings that identify resources (e.g. web pages or files)
+and transport protocols by which to access them (e.g. HTTP or FTP) on the Internet. The ECMAScript
+language itself does not provide any support for using URIs except for functions that encode and
+decode URIs as described in 15.1.3.1, 15.1.3.2, 15.1.3.3 and 15.1.3.4.
+
+NOTE Many implementations of ECMAScript provide additional functions and methods that manipulate web
+pages; these functions are beyond the scope of this standard.
+
+A URI is composed of a sequence of components separated by component separators. The general form
+is:
+
+Scheme : First / Second ; Third ? Fourth
+
+where the italicised names represent components and “:”, “/”, “;” and “?” are reserved characters
+used as separators. The encodeURI and decodeURI functions are intended to work with complete URIs;
+they assume that any reserved characters in the URI are intended to have special meaning and so are
+not encoded. The encodeURIComponent and decodeURIComponent functions are intended to work with the
+individual component parts of a URI; they assume that any reserved characters represent text and so
+must be encoded so that they are not interpreted as reserved characters when the component is part
+of a complete URI.
+
+The following lexical grammar specifies the form of encoded URIs.
+
+Syntax
+------
+
+uri :::
+
+uriCharactersopt
+
+uriCharacters :::
+
+uriCharacter uriCharactersopt
+
+uriCharacter :::
+
+uriReserved
+
+uriUnescaped
+
+uriEscaped
+
+uriReserved ::: one of
+
+; / ? : @ & = + $ ,
+
+uriUnescaped :::
+
+uriAlpha
+
+DecimalDigit
+
+uriMark
+
+uriEscaped :::
+
+% HexDigit HexDigit
+
+uriAlpha ::: one of
+
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+uriMark ::: one of
+
+- _ . ! ~ * ' ( )
+
+NOTE The above syntax is based upon RFC 2396 and does not reflect changes introduced by the more
+recent RFC 3986.
+
+When a character to be included in a URI is not listed above or is not intended to have the special
+meaning sometimes given to the reserved characters, that character must be encoded. The character is
+transformed into its UTF-8 encoding, with surrogate pairs first converted from UTF-16 to the
+corresponding code point value. (Note that for code units in the range [0,127] this results in a
+single octet with the same value.) The resulting sequence of octets is then transformed into a
+String with each octet represented by an escape sequence of the form “%xx”.
+
+The encoding and escaping process is described by the abstract operation Encode taking two String
+arguments string and unescapedSet.
+
+1.  Let strLen be the number of characters in string.
+2.  Let R be the empty String.
+3.  Let k be 0.
+4.  Repeat
+    1.  If k equals strLen, return R.
+    2.  Let C be the character at position k within string.
+    3.  If C is in unescapedSet, then
+        1.  Let S be a String containing only the character C.
+        2.  Let R be a new String value computed by concatenating the previous value of R and S.
+
+    4.  Else, C is not in unescapedSet
+        1.  If the code unit value of C is not less than 0xDC00 and not greater than 0xDFFF, throw a
+            URIError exception.
+        2.  If the code unit value of C is less than 0xD800 or greater than 0xDBFF, then
+            1.  Let V be the code unit value of C.
+
+        3.  Else,
+            1.  Increase k by 1.
+            2.  If k equals strLen, throw a URIError exception.
+            3.  Let kChar be the code unit value of the character at position k within string.
+            4.  If kChar is less than 0xDC00 or greater than 0xDFFF, throw a URIError exception.
+            5.  Let V be (((the code unit value of C) – 0xD800) × 0x400 + (kChar – 0xDC00) +
+                0x10000).
+
+        4.  Let Octets be the array of octets resulting by applying the UTF-8 transformation to V,
+            and let L be the array size.
+        5.  Let j be 0.
+        6.  Repeat, while j < L
+            1.  Let jOctet be the value at position j within Octets.
+            2.  Let S be a String containing three characters “%XY” where XY are two uppercase
+                hexadecimal digits encoding the value of jOctet.
+            3.  Let R be a new String value computed by concatenating the previous value of R and S.
+            4.  Increase j by 1.
+
+    5.  Increase k by 1.
+
+The unescaping and decoding process is described by the abstract operation Decode taking two String
+arguments string and reservedSet.
+
+1.  Let strLen be the number of characters in string.
+2.  Let R be the empty String.
+3.  Let k be 0.
+4.  Repeat
+    1.  If k equals strLen, return R.
+    2.  Let C be the character at position k within string.
+    3.  If C is not ‘%’, then
+        1.  Let S be the String containing only the character C.
+
+    4.  Else, C is ‘%’
+        1.  Let start be k.
+        2.  If k + 2 is greater than or equal to strLen, throw a URIError exception.
+        3.  If the characters at position (k+1) and (k + 2) within string do not represent
+            hexadecimal digits, throw a URIError exception.
+        4.  Let B be the 8-bit value represented by the two hexadecimal digits at position (k + 1)
+            and (k + 2).
+        5.  Increment k by 2.
+        6.  If the most significant bit in B is 0, then
+            1.  Let C be the character with code unit value B.
+            2.  If C is not in reservedSet, then
+                1.  Let S be the String containing only the character C.
+
+            3.  Else, C is in reservedSet
+                1.  Let S be the substring of string from position start to position k included.
+
+        7.  Else, the most significant bit in B is 1
+            1.  Let n be the smallest non-negative number such that (B << n) & 0x80 is equal to 0.
+            2.  If n equals 1 or n is greater than 4, throw a URIError exception.
+            3.  Let Octets be an array of 8-bit integers of size n.
+            4.  Put B into Octets at position 0.
+            5.  If k + (3 × (n – 1)) is greater than or equal to strLen, throw a URIError exception.
+            6.  Let j be 1.
+            7.  Repeat, while j < n
+                1.  Increment k by 1.
+                2.  If the character at position k is not ‘%’, throw a URIError exception.
+                3.  If the characters at position (k +1) and (k + 2) within string do not represent
+                    hexadecimal digits, throw a URIError exception.
+                4.  Let B be the 8-bit value represented by the two hexadecimal digits at position
+                    (k + 1) and (k + 2).
+                5.  If the two most significant bits in B are not 10, throw a URIError exception.
+                6.  Increment k by 2.
+                7.  Put B into Octets at position j.
+                8.  Increment j by 1.
+
+            8.  Let V be the value obtained by applying the UTF-8 transformation to Octets, that is,
+                from an array of octets into a 21-bit value. If Octets does not contain a valid
+                UTF-8 encoding of a Unicode code point throw an URIError exception.
+            9.  If V is less than 0x10000, then
+                1.  Let C be the character with code unit value V.
+                2.  If C is not in reservedSet, then
+                    1.  Let S be the String containing only the character C.
+
+                3.  Else, C is in reservedSet
+                    1.  Let S be the substring of string from position start to position k included.
+
+            10. Else, V is ≥ 0x10000
+                1.  Let L be (((V – 0x10000) & 0x3FF) + 0xDC00).
+                2.  Let H be ((((V – 0x10000) >> 10) & 0x3FF) + 0xD800).
+                3.  Let S be the String containing the two characters with code unit values H and L.
+
+    5.  Let R be a new String value computed by concatenating the previous value of R and S.
+    6.  Increase k by 1.
+
+NOTE This syntax of Uniform Resource Identifiers is based upon RFC 2396 and does not reflect the
+more recent RFC 3986 which replaces RFC 2396. A formal description and implementation of UTF-8 is
+given in RFC 3629.
+
+In UTF-8, characters are encoded using sequences of 1 to 6 octets. The only octet of a “sequence” of
+one has the higher-order bit set to 0, the remaining 7 bits being used to encode the character
+value. In a sequence of n octets, n>1, the initial octet has the n higher-order bits set to 1,
+followed by a bit set to 0. The remaining bits of that octet contain bits from the value of the
+character to be encoded. The following octets all have the higher-order bit set to 1 and the
+following bit set to 0, leaving 6 bits in each to contain bits from the character to be encoded. The
+possible UTF-8 encodings of ECMAScript characters are specified in Table 21.
+
+Table 21 — UTF-8 Encodings
+
++------------------+------------------+------------------+------------------+------------------+------------------+
+| Code Unit Value  | Representation   | 1st Octet        | 2nd Octet        | 3rd Octet        | 4th Octet        |
++==================+==================+==================+==================+==================+==================+
+| 0x0000 - 0x007F  | 00000000         | 0zzzzzzz         |                  |                  |                  |
+|                  | 0zzzzzzz         |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0x0080 - 0x07FF  | 00000yyy         | 110yyyyy         | 10zzzzzz         |                  |                  |
+|                  | yyzzzzzz         |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0x0800 - 0xD7FF  | xxxxyyyy         | 1110xxxx         | 10yyyyyy         | 10zzzzzz         |                  |
+|                  | yyzzzzzz         |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0xD800 - 0xDBFF  | 110110vv         | 11110uuu         | 10uuwwww         | 10xxyyyy         | 10zzzzzz         |
+|                  | vvwwwwxx         |                  |                  |                  |                  |
+| followed by      |                  |                  |                  |                  |                  |
+|                  | followed by      |                  |                  |                  |                  |
+| 0xDC00 – 0xDFFF  |                  |                  |                  |                  |                  |
+|                  | 110111yy         |                  |                  |                  |                  |
+|                  | yyzzzzzz         |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0xD800 - 0xDBFF  | causes URIError  |                  |                  |                  |                  |
+|                  |                  |                  |                  |                  |                  |
+| not followed by  |                  |                  |                  |                  |                  |
+|                  |                  |                  |                  |                  |                  |
+| 0xDC00 – 0xDFFF  |                  |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0xDC00 – 0xDFFF  | causes URIError  |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+| 0xE000 - 0xFFFF  | xxxxyyyy         | 1110xxxx         | 10yyyyyy         | 10zzzzzz         |                  |
+|                  | yyzzzzzz         |                  |                  |                  |                  |
++------------------+------------------+------------------+------------------+------------------+------------------+
+
+Where
+
+uuuuu = vvvv + 1
+
+to account for the addition of 0x10000 as in Surrogates, section 3.7, of the Unicode Standard.
+
+The range of code unit values 0xD800-0xDFFF is used to encode surrogate pairs; the above
+transformation combines a UTF-16 surrogate pair into a UTF-32 representation and encodes the
+resulting 21-bit value in UTF-8. Decoding reconstructs the surrogate pair.
+
+RFC 3629 prohibits the decoding of invalid UTF-8 octet sequences. For example, the invalid sequence
+C0 80 must not decode into the character U+0000. Implementations of the Decode algorithm are
+required to throw a URIError when encountering such invalid sequences.
+
+15.1.3.1 decodeURI (encodedURI)
+===============================
+
+The decodeURI function computes a new version of a URI in which each escape sequence and UTF-8
+encoding of the sort that might be introduced by the encodeURI function is replaced with the
+character that it represents. Escape sequences that could not have been introduced by encodeURI are
+not replaced.
+
+When the decodeURI function is called with one argument encodedURI, the following steps are taken:
+
+1.  Let uriString be ToString(encodedURI).
+2.  Let reservedURISet be a String containing one instance of each character valid in uriReserved
+    plus “#”.
+3.  Return the result of calling Decode(uriString, reservedURISet)
+
+NOTE The character “#” is not decoded from escape sequences even though it is not a reserved URI
+character.
+
+15.1.3.2 decodeURIComponent (encodedURIComponent)
+=================================================
+
+The decodeURIComponent function computes a new version of a URI in which each escape sequence and
+UTF-8 encoding of the sort that might be introduced by the encodeURIComponent function is replaced
+with the character that it represents.
+
+When the decodeURIComponent function is called with one argument encodedURIComponent, the following
+steps are taken:
+
+1.  Let componentString be ToString(encodedURIComponent).
+2.  Let reservedURIComponentSet be the empty String.
+3.  Return the result of calling Decode(componentString, reservedURIComponentSet)
+
+15.1.3.3 encodeURI (uri)
+========================
+
+The encodeURI function computes a new version of a URI in which each instance of certain characters
+is replaced by one, two, three, or four escape sequences representing the UTF-8 encoding of the
+character.
+
+When the encodeURI function is called with one argument uri, the following steps are taken:
+
+1.  Let uriString be ToString(uri).
+2.  Let unescapedURISet be a String containing one instance of each character valid in uriReserved
+    and uriUnescaped plus “#”.
+3.  Return the result of calling Encode(uriString, unescapedURISet)
+
+NOTE The character “#” is not encoded to an escape sequence even though it is not a reserved or
+unescaped URI character.
+
+15.1.3.4 encodeURIComponent (uriComponent)
+==========================================
+
+The encodeURIComponent function computes a new version of a URI in which each instance of certain
+characters is replaced by one, two, three, or four escape sequences representing the UTF-8 encoding
+of the character.
+
+When the encodeURIComponent function is called with one argument uriComponent, the following steps
+are taken:
+
+1.  Let componentString be ToString(uriComponent).
+2.  Let unescapedURIComponentSet be a String containing one instance of each character valid in
+    uriUnescaped.
+3.  Return the result of calling Encode(componentString, unescapedURIComponentSet)
+
+15.1.4 Constructor Properties of the Global Object
+==================================================
+
+15.1.4.1 Object ( . . . )
+=========================
+
+See 15.2.1 and 15.2.2.
+
+15.1.4.2 Function ( . . . )
+===========================
+
+See 15.3.1 and 15.3.2.
+
+15.1.4.3 Array ( . . . )
+========================
+
+See 15.4.1 and 15.4.2.
+
+15.1.4.4 String ( . . . )
+=========================
+
+See 15.5.1 and 15.5.2.
+
+15.1.4.5 Boolean ( . . . )
+==========================
+
+See 15.6.1 and 15.6.2.
+
+15.1.4.6 Number ( . . . )
+=========================
+
+See 15.7.1 and 15.7.2.
+
+15.1.4.7 Date ( . . . )
+=======================
+
+See 15.9.2.
+
+15.1.4.8 RegExp ( . . . )
+=========================
+
+See 15.10.3 and 15.10.4.
+
+15.1.4.9 Error ( . . . )
+========================
+
+See 15.11.1 and 15.11.2.
+
+15.1.4.10 EvalError ( . . . )
+=============================
+
+See 15.11.6.1.
+
+15.1.4.11 RangeError ( . . . )
+==============================
+
+See 15.11.6.2.
+
+15.1.4.12 ReferenceError ( . . . )
+==================================
+
+See 15.11.6.3.
+
+15.1.4.13 SyntaxError ( . . . )
+===============================
+
+See 15.11.6.4.
+
+15.1.4.14 TypeError ( . . . )
+=============================
+
+See 15.11.6.5.
+
+15.1.4.15 URIError ( . . . )
+============================
+
+See 15.11.6.6.
+
+15.1.5 Other Properties of the Global Object
+============================================
+
+15.1.5.1 Math
+=============
+
+See 15.8.
+
+15.1.5.2 JSON
+=============
+
+See 15.12.

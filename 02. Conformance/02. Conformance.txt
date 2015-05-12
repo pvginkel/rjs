@@ -1,0 +1,21 @@
+2 Conformance
+=============
+
+A conforming implementation of ECMAScript must provide and support all the types, values, objects,
+properties, functions, and program syntax and semantics described in this specification.
+
+A conforming implementation of this Standard shall interpret characters in conformance with the
+Unicode Standard, Version 3.0 or later and ISO/IEC 10646-1 with either UCS-2 or UTF-16 as the
+adopted encoding form, implementation level 3. If the adopted ISO/IEC 10646-1 subset is not
+otherwise specified, it is presumed to be the BMP subset, collection 300. If the adopted encoding
+form is not otherwise specified, it presumed to be the UTF-16 encoding form.
+
+A conforming implementation of ECMAScript is permitted to provide additional types, values, objects,
+properties, and functions beyond those described in this specification. In particular, a conforming
+implementation of ECMAScript is permitted to provide properties not described in this specification,
+and values for those properties, for objects that are described in this specification.
+
+A conforming implementation of ECMAScript is permitted to support program and regular expression
+syntax not described in this specification. In particular, a conforming implementation of ECMAScript
+is permitted to support program syntax that makes use of the “future reserved words” listed in
+7.6.1.2 of this specification.

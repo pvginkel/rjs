@@ -1,0 +1,18 @@
+9.1 ToPrimitive
+===============
+
+The abstract operation ToPrimitive takes an input argument and an optional argument PreferredType.
+The abstract operation ToPrimitive converts its input argument to a non-Object type. If an object is
+capable of converting to more than one primitive type, it may use the optional hint PreferredType to
+favour that type. Conversion occurs according to Table 10:
+
+Table 10 — ToPrimitive Conversions
+
+  Input Type   Result
+  ------------ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Undefined    The result equals the input argument (no conversion).
+  Null         The result equals the input argument (no conversion).
+  Boolean      The result equals the input argument (no conversion).
+  Number       The result equals the input argument (no conversion).
+  String       The result equals the input argument (no conversion).
+  Object       Return a default value for the Object. The default value of an object is retrieved by calling the [[DefaultValue]] internal method of the object, passing the optional hint PreferredType. The behaviour of the [[DefaultValue]] internal method is defined by this specification for all native ECMAScript objects in 8.12.8.

@@ -1,0 +1,31 @@
+7.1 Unicode Format-Control Characters
+=====================================
+
+The Unicode format-control characters (i.e., the characters in category “Cf” in the Unicode
+Character Database such as left-to-right mark or right-to-left mark) are control codes used to
+control the formatting of a range of text in the absence of higher-level protocols for this (such as
+mark-up languages).
+
+It is useful to allow format-control characters in source text to facilitate editing and display.
+All format control characters may be used within comments, and within string literals and regular
+expression literals.
+
+<ZWNJ> and <ZWJ> are format-control characters that are used to make necessary distinctions when
+forming words or phrases in certain languages. In ECMAScript source text, <ZWNJ> and <ZWJ> may also
+be used in an identifier after the first character.
+
+<BOM> is a format-control character used primarily at the start of a text to mark it as Unicode and
+to allow detection of the text’s encoding and byte order. <BOM> characters intended for this purpose
+can sometimes also appear after the start of a text, for example as a result of concatenating files.
+<BOM> characters are treated as white space characters (see 7.2).
+
+The special treatment of certain format-control characters outside of comments, string literals, and
+regular expression literals is summarised in Table 1.
+
+Table 1 — Format-Control Character Usage
+
+  Code Unit Value   Name                    Formal Name   Usage
+  ----------------- ----------------------- ------------- ----------------
+  \u200C            Zero width non-joiner   <ZWNJ>        IdentifierPart
+  \u200D            Zero width joiner       <ZWJ>         IdentifierPart
+  \uFEFF            Byte Order Mark         <BOM>         Whitespace

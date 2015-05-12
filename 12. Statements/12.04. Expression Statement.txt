@@ -1,0 +1,22 @@
+12.4 Expression Statement
+=========================
+
+Syntax
+------
+
+ExpressionStatement :
+
+[lookahead ∉ {{, function}] Expression ;
+
+NOTE An ExpressionStatement cannot start with an opening curly brace because that might make it
+ambiguous with a Block. Also, an ExpressionStatement cannot start with the function keyword because
+that might make it ambiguous with a FunctionDeclaration.
+
+Semantics
+---------
+
+The production ExpressionStatement : [lookahead ∉ {{, function}] Expression ; is evaluated as
+follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  Return (normal, GetValue(exprRef), empty).

@@ -1,0 +1,23 @@
+9.5 ToInt32: (Signed 32 Bit Integer)
+====================================
+
+The abstract operation ToInt32 converts its argument to one of 2^32 integer values in the range
+−2^31 through 2^31−1, inclusive. This abstract operation functions as follows:
+
+1.  Let number be the result of calling ToNumber on the input argument.
+2.  If number is NaN, +0, −0, +∞, or −∞, return +0.
+3.  Let posInt be sign(number) * floor(abs(number)).
+4.  Let int32bit be posInt modulo 2^32; that is, a finite integer value k of Number type with
+    positive sign and less than 2^32 in magnitude such that the mathematical difference of posInt
+    and k is mathematically an integer multiple of 2^32.
+5.  If int32bit is greater than or equal to 2^31, return int32bit − 2^32, otherwise return int32bit.
+
+NOTE Given the above definition of ToInt32:
+
+-   The ToInt32 abstract operation is idempotent: if applied to a result that it produced, the
+    second application leaves that value unchanged.
+
+-   ToInt32(ToUint32(x)) is equal to ToInt32(x) for all values of x. (It is to preserve this latter
+    property that +∞ and −∞ are mapped to +0.)
+
+-   ToInt32 maps −0 to +0.

@@ -1,0 +1,289 @@
+5.1 Syntactic and Lexical Grammars
+==================================
+
+5.1.1 Context-Free Grammars
+===========================
+
+A context-free grammar consists of a number of productions. Each production has an abstract symbol
+called a nonterminal as its left-hand side, and a sequence of zero or more nonterminal and terminal
+symbols as its right-hand side. For each grammar, the terminal symbols are drawn from a specified
+alphabet.
+
+Starting from a sentence consisting of a single distinguished nonterminal, called the goal symbol, a
+given context-free grammar specifies a language, namely, the (perhaps infinite) set of possible
+sequences of terminal symbols that can result from repeatedly replacing any nonterminal in the
+sequence with a right-hand side of a production for which the nonterminal is the left-hand side.
+
+5.1.2 The Lexical and RegExp Grammars
+=====================================
+
+A lexical grammar for ECMAScript is given in clause 7. This grammar has as its terminal symbols
+characters (Unicode code units) that conform to the rules for SourceCharacter defined in Clause 6.
+It defines a set of productions, starting from the goal symbol InputElementDiv or
+InputElementRegExp, that describe how sequences of such characters are translated into a sequence of
+input elements.
+
+Input elements other than white space and comments form the terminal symbols for the syntactic
+grammar for ECMAScript and are called ECMAScript tokens. These tokens are the reserved words,
+identifiers, literals, and punctuators of the ECMAScript language. Moreover, line terminators,
+although not considered to be tokens, also become part of the stream of input elements and guide the
+process of automatic semicolon insertion (7.9). Simple white space and single-line comments are
+discarded and do not appear in the stream of input elements for the syntactic grammar. A
+MultiLineComment (that is, a comment of the form “/*…*/” regardless of whether it spans more than
+one line) is likewise simply discarded if it contains no line terminator; but if a MultiLineComment
+contains one or more line terminators, then it is replaced by a single line terminator, which
+becomes part of the stream of input elements for the syntactic grammar.
+
+A RegExp grammar for ECMAScript is given in 15.10. This grammar also has as its terminal symbols the
+characters as defined by SourceCharacter. It defines a set of productions, starting from the goal
+symbol Pattern, that describe how sequences of characters are translated into regular expression
+patterns.
+
+Productions of the lexical and RegExp grammars are distinguished by having two colons “::” as
+separating punctuation. The lexical and RegExp grammars share some productions.
+
+5.1.3 The Numeric String Grammar
+================================
+
+Another grammar is used for translating Strings into numeric values. This grammar is similar to the
+part of the lexical grammar having to do with numeric literals and has as its terminal symbols
+SourceCharacter. This grammar appears in 9.3.1.
+
+Productions of the numeric string grammar are distinguished by having three colons “:::” as
+punctuation.
+
+5.1.4 The Syntactic Grammar
+===========================
+
+The syntactic grammar for ECMAScript is given in clauses 11, 12, 13 and 14. This grammar has
+ECMAScript tokens defined by the lexical grammar as its terminal symbols (5.1.2). It defines a set
+of productions, starting from the goal symbol Program, that describe how sequences of tokens can
+form syntactically correct ECMAScript programs.
+
+When a stream of characters is to be parsed as an ECMAScript program, it is first converted to a
+stream of input elements by repeated application of the lexical grammar; this stream of input
+elements is then parsed by a single application of the syntactic grammar. The program is
+syntactically in error if the tokens in the stream of input elements cannot be parsed as a single
+instance of the goal nonterminal Program, with no tokens left over.
+
+Productions of the syntactic grammar are distinguished by having just one colon “:” as punctuation.
+
+The syntactic grammar as presented in clauses 11, 12, 13 and 14 is actually not a complete account
+of which token sequences are accepted as correct ECMAScript programs. Certain additional token
+sequences are also accepted, namely, those that would be described by the grammar if only semicolons
+were added to the sequence in certain places (such as before line terminator characters).
+Furthermore, certain token sequences that are described by the grammar are not considered acceptable
+if a terminator character appears in certain “awkward” places.
+
+5.1.5 The JSON Grammar
+======================
+
+The JSON grammar is used to translate a String describing a set of ECMAScript objects into actual
+objects. The JSON grammar is given in 15.12.1.
+
+The JSON grammar consists of the JSON lexical grammar and the JSON syntactic grammar. The JSON
+lexical grammar is used to translate character sequences into tokens and is similar to parts of the
+ECMAScript lexical grammar. The JSON syntactic grammar describes how sequences of tokens from the
+JSON lexical grammar can form syntactically correct JSON object descriptions.
+
+Productions of the JSON lexical grammar are distinguished by having two colons “::” as separating
+punctuation. The JSON lexical grammar uses some productions from the ECMAScript lexical grammar. The
+JSON syntactic grammar is similar to parts of the ECMAScript syntactic grammar. Productions of the
+JSON syntactic grammar are distinguished by using one colon “:” as separating punctuation.
+
+5.1.6 Grammar Notation
+======================
+
+Terminal symbols of the lexical, RegExp, and numeric string grammars, and some of the terminal
+symbols of the other grammars, are shown in fixed width font, both in the productions of the
+grammars and throughout this specification whenever the text directly refers to such a terminal
+symbol. These are to appear in a program exactly as written. All terminal symbol characters
+specified in this way are to be understood as the appropriate Unicode character from the ASCII
+range, as opposed to any similar-looking characters from other Unicode ranges.
+
+Nonterminal symbols are shown in italic type. The definition of a nonterminal is introduced by the
+name of the nonterminal being defined followed by one or more colons. (The number of colons
+indicates to which grammar the production belongs.) One or more alternative right-hand sides for the
+nonterminal then follow on succeeding lines. For example, the syntactic definition:
+
+WhileStatement :
+
+while ( Expression ) Statement
+
+states that the nonterminal WhileStatement represents the token while, followed by a left
+parenthesis token, followed by an Expression, followed by a right parenthesis token, followed by a
+Statement. The occurrences of Expression and Statement are themselves nonterminals. As another
+example, the syntactic definition:
+
+ArgumentList :
+
+AssignmentExpression
+
+ArgumentList , AssignmentExpression
+
+states that an ArgumentList may represent either a single AssignmentExpression or an ArgumentList,
+followed by a comma, followed by an AssignmentExpression. This definition of ArgumentList is
+recursive, that is, it is defined in terms of itself. The result is that an ArgumentList may contain
+any positive number of arguments, separated by commas, where each argument expression is an
+AssignmentExpression. Such recursive definitions of nonterminals are common.
+
+The subscripted suffix “opt”, which may appear after a terminal or nonterminal, indicates an
+optional symbol. The alternative containing the optional symbol actually specifies two right-hand
+sides, one that omits the optional element and one that includes it. This means that:
+
+VariableDeclaration :
+
+Identifier Initialiseropt
+
+is a convenient abbreviation for:
+
+VariableDeclaration :
+
+Identifier
+
+Identifier Initialiser
+
+and that:
+
+IterationStatement :
+
+for ( ExpressionNoInopt ; Expressionopt ; Expressionopt ) Statement
+
+is a convenient abbreviation for:
+
+IterationStatement :
+
+for ( ; Expressionopt ; Expressionopt ) Statement
+
+for ( ExpressionNoIn ; Expressionopt ; Expressionopt ) Statement
+
+which in turn is an abbreviation for:
+
+IterationStatement :
+
+for ( ; ; Expressionopt ) Statement
+
+for ( ; Expression ; Expressionopt ) Statement
+
+for ( ExpressionNoIn ; ; Expressionopt ) Statement
+
+for ( ExpressionNoIn ; Expression ; Expressionopt ) Statement
+
+which in turn is an abbreviation for:
+
+IterationStatement :
+
+for ( ; ; ) Statement
+
+for ( ; ; Expression ) Statement
+
+for ( ; Expression ; ) Statement
+
+for ( ; Expression ; Expression ) Statement
+
+for ( ExpressionNoIn ; ; ) Statement
+
+for ( ExpressionNoIn ; ; Expression ) Statement
+
+for ( ExpressionNoIn ; Expression ; ) Statement
+
+for ( ExpressionNoIn ; Expression ; Expression ) Statement
+
+so the nonterminal IterationStatement actually has eight alternative right-hand sides.
+
+When the words “one of” follow the colon(s) in a grammar definition, they signify that each of the
+terminal symbols on the following line or lines is an alternative definition. For example, the
+lexical grammar for ECMAScript contains the production:
+
+NonZeroDigit :: one of
+
+1 2 3 4 5 6 7 8 9
+
+which is merely a convenient abbreviation for:
+
+NonZeroDigit ::
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+If the phrase “[empty]” appears as the right-hand side of a production, it indicates that the
+production’s right-hand side contains no terminals or nonterminals.
+
+If the phrase “[lookahead ∉ set]” appears in the right-hand side of a production, it indicates that
+the production may not be used if the immediately following input token is a member of the given
+set. The set can be written as a list of terminals enclosed in curly braces. For convenience, the
+set can also be written as a nonterminal, in which case it represents the set of all terminals to
+which that nonterminal could expand. For example, given the definitions
+
+DecimalDigit :: one of
+
+0 1 2 3 4 5 6 7 8 9
+
+DecimalDigits ::
+
+DecimalDigit
+
+DecimalDigits DecimalDigit
+
+the definition
+
+LookaheadExample ::
+
+n [lookahead ∉ {1, 3, 5, 7, 9}] DecimalDigits
+
+DecimalDigit [lookahead ∉ DecimalDigit]
+
+matches either the letter n followed by one or more decimal digits the first of which is even, or a
+decimal digit not followed by another decimal digit.
+
+If the phrase “[no LineTerminator here]” appears in the right-hand side of a production of the
+syntactic grammar, it indicates that the production is a restricted production: it may not be used
+if a LineTerminator occurs in the input stream at the indicated position. For example, the
+production:
+
+ThrowStatement :
+
+throw [no LineTerminator here] Expression ;
+
+indicates that the production may not be used if a LineTerminator occurs in the program between the
+throw token and the Expression.
+
+Unless the presence of a LineTerminator is forbidden by a restricted production, any number of
+occurrences of LineTerminator may appear between any two consecutive tokens in the stream of input
+elements without affecting the syntactic acceptability of the program.
+
+When an alternative in a production of the lexical grammar or the numeric string grammar appears to
+be a multi-character token, it represents the sequence of characters that would make up such a
+token.
+
+The right-hand side of a production may specify that certain expansions are not permitted by using
+the phrase “but not” and then indicating the expansions to be excluded. For example, the production:
+
+Identifier ::
+
+IdentifierName but not ReservedWord
+
+means that the nonterminal Identifier may be replaced by any sequence of characters that could
+replace IdentifierName provided that the same sequence of characters could not replace ReservedWord.
+
+Finally, a few nonterminal symbols are described by a descriptive phrase in sans-serif type in cases
+where it would be impractical to list all the alternatives:
+
+SourceCharacter ::
+
+any Unicode code unit

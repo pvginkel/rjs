@@ -1,0 +1,16 @@
+9.11 IsCallable
+===============
+
+The abstract operation IsCallable determines if its argument, which must be an ECMAScript language
+value, is a callable function Object according to Table 16:
+
+Table 16 — IsCallable Results
+
+  Argument Type   Result
+  --------------- --------------------------------------------------------------------------------------------------
+  Undefined       Return false.
+  Null            Return false.
+  Boolean         Return false.
+  Number          Return false.
+  String          Return false.
+  Object          If the argument object has a [[Call]] internal method, then return true, otherwise return false.

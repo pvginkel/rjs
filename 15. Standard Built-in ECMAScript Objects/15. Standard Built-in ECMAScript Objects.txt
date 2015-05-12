@@ -1,0 +1,67 @@
+15 Standard Built-in ECMAScript Objects
+=======================================
+
+There are certain built-in objects available whenever an ECMAScript program begins execution. One,
+the global object, is part of the lexical environment of the executing program. Others are
+accessible as initial properties of the global object.
+
+Unless specified otherwise, the [[Class]] internal property of a built-in object is "Function" if
+that built-in object has a [[Call]] internal property, or "Object" if that built-in object does not
+have a [[Call]] internal property. Unless specified otherwise, the [[Extensible]] internal property
+of a built-in object initially has the value true.
+
+Many built-in objects are functions: they can be invoked with arguments. Some of them furthermore
+are constructors: they are functions intended for use with the new operator. For each built-in
+function, this specification describes the arguments required by that function and properties of the
+Function object. For each built-in constructor, this specification furthermore describes properties
+of the prototype object of that constructor and properties of specific object instances returned by
+a new expression that invokes that constructor.
+
+Unless otherwise specified in the description of a particular function, if a function or constructor
+described in this clause is given fewer arguments than the function is specified to require, the
+function or constructor shall behave exactly as if it had been given sufficient additional
+arguments, each such argument being the undefined value.
+
+Unless otherwise specified in the description of a particular function, if a function or constructor
+described in this clause is given more arguments than the function is specified to allow, the extra
+arguments are evaluated by the call and then ignored by the function. However, an implementation may
+define implementation specific behaviour relating to such arguments as long as the behaviour is not
+the throwing of a TypeError exception that is predicated simply on the presence of an extra
+argument.
+
+NOTE Implementations that add additional capabilities to the set of built-in functions are
+encouraged to do so by adding new functions rather than adding new parameters to existing functions.
+
+Every built-in function and every built-in constructor has the Function prototype object, which is
+the initial value of the expression Function.prototype (15.3.4), as the value of its [[Prototype]]
+internal property.
+
+Unless otherwise specified every built-in prototype object has the Object prototype object, which is
+the initial value of the expression Object.prototype (15.2.4), as the value of its [[Prototype]]
+internal property, except the Object prototype object itself.
+
+None of the built-in functions described in this clause that are not constructors shall implement
+the [[Construct]] internal method unless otherwise specified in the description of a particular
+function. None of the built-in functions described in this clause shall have a prototype property
+unless otherwise specified in the description of a particular function.
+
+This clause generally describes distinct behaviours for when a constructor is “called as a function”
+and for when it is “called as part of a new expression”. The “called as a function” behaviour
+corresponds to the invocation of the constructor’s [[Call]] internal method and the “called as part
+of a new expression” behaviour corresponds to the invocation of the constructor’s [[Construct]]
+internal method.
+
+Every built-in Function object described in this clause—whether as a constructor, an ordinary
+function, or both—has a length property whose value is an integer. Unless otherwise specified, this
+value is equal to the largest number of named arguments shown in the subclause headings for the
+function description, including optional parameters.
+
+NOTE For example, the Function object that is the initial value of the slice property of the String
+prototype object is described under the subclause heading “String.prototype.slice (start, end)”
+which shows the two named arguments start and end; therefore the value of the length property of
+that Function object is 2.
+
+In every case, the length property of a built-in Function object described in this clause has the
+attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]: false }. Every other
+property described in this clause has the attributes { [[Writable]]: true, [[Enumerable]]: false,
+[[Configurable]]: true } unless otherwise specified.

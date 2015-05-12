@@ -1,0 +1,31 @@
+12.8 The break Statement
+========================
+
+Syntax
+------
+
+BreakStatement :
+
+break ;
+
+break [no LineTerminator here] Identifier ;
+
+Semantics
+---------
+
+A program is considered syntactically incorrect if either of the following is true:
+
+-   The program contains a break statement without the optional Identifier, which is not nested,
+    directly or indirectly (but not crossing function boundaries), within an IterationStatement or a
+    SwitchStatement.
+
+-   The program contains a break statement with the optional Identifier, where Identifier does not
+    appear in the label set of an enclosing (but not crossing function boundaries) Statement.
+
+A BreakStatement without an Identifier is evaluated as follows:
+
+1.  Return (break, empty, empty).
+
+A BreakStatement with an Identifier is evaluated as follows:
+
+1.  Return (break, empty, Identifier).

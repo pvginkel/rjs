@@ -1,0 +1,58 @@
+11.11 Binary Logical Operators
+==============================
+
+Syntax
+------
+
+LogicalANDExpression :
+
+BitwiseORExpression
+
+LogicalANDExpression && BitwiseORExpression
+
+LogicalANDExpressionNoIn :
+
+BitwiseORExpressionNoIn
+
+LogicalANDExpressionNoIn && BitwiseORExpressionNoIn
+
+LogicalORExpression :
+
+LogicalANDExpression
+
+LogicalORExpression || LogicalANDExpression
+
+LogicalORExpressionNoIn :
+
+LogicalANDExpressionNoIn
+
+LogicalORExpressionNoIn || LogicalANDExpressionNoIn
+
+Semantics
+---------
+
+The production LogicalANDExpression : LogicalANDExpression && BitwiseORExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating LogicalANDExpression.
+2.  Let lval be GetValue(lref).
+3.  If ToBoolean(lval) is false, return lval.
+4.  Let rref be the result of evaluating BitwiseORExpression.
+5.  Return GetValue(rref).
+
+The production LogicalORExpression : LogicalORExpression || LogicalANDExpression is evaluated as
+follows:
+
+1.  Let lref be the result of evaluating LogicalORExpression.
+2.  Let lval be GetValue(lref).
+3.  If ToBoolean(lval) is true, return lval.
+4.  Let rref be the result of evaluating LogicalANDExpression.
+5.  Return GetValue(rref).
+
+The LogicalANDExpressionNoIn and LogicalORExpressionNoIn productions are evaluated in the same
+manner as the LogicalANDExpression and LogicalORExpression productions except that the contained
+LogicalANDExpressionNoIn, BitwiseORExpressionNoIn and LogicalORExpressionNoIn are evaluated instead
+of the contained LogicalANDExpression, BitwiseORExpression and LogicalORExpression, respectively.
+
+NOTE The value produced by a && or || operator is not necessarily of type Boolean. The value
+produced will always be the value of one of the two operand expressions.

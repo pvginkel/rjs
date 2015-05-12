@@ -1,0 +1,80 @@
+10.4 Establishing an Execution Context
+======================================
+
+Evaluation of global code or code using the eval function (15.1.2.1) establishes and enters a new
+execution context. Every invocation of an ECMAScript code function (13.2.1) also establishes and
+enters a new execution context, even if a function is calling itself recursively. Every return exits
+an execution context. A thrown exception may also exit one or more execution contexts.
+
+When control enters an execution context, the execution context’s ThisBinding is set, its
+VariableEnvironment and initial LexicalEnvironment are defined, and declaration binding
+instantiation (10.5) is performed. The exact manner in which these actions occur depend on the type
+of code being entered.
+
+10.4.1 Entering Global Code
+===========================
+
+The following steps are performed when control enters the execution context for global code:
+
+1.  Initialise the execution context using the global code as described in 10.4.1.1.
+2.  Perform Declaration Binding Instantiation as described in 10.5 using the global code.
+
+10.4.1.1 Initial Global Execution Context
+=========================================
+
+The following steps are performed to initialise a global execution context for ECMAScript code C:
+
+1.  Set the VariableEnvironment to the Global Environment.
+2.  Set the LexicalEnvironment to the Global Environment.
+3.  Set the ThisBinding to the global object.
+
+10.4.2 Entering Eval Code
+=========================
+
+The following steps are performed when control enters the execution context for eval code:
+
+1.  If there is no calling context or if the eval code is not being evaluated by a direct call
+    (15.1.2.1.1) to the eval function then,
+    1.  Initialise the execution context as if it was a global execution context using the eval code
+        as C as described in 10.4.1.1.
+
+2.  Else,
+    1.  Set the ThisBinding to the same value as the ThisBinding of the calling execution context.
+    2.  Set the LexicalEnvironment to the same value as the LexicalEnvironment of the calling
+        execution context.
+    3.  Set the VariableEnvironment to the same value as the VariableEnvironment of the calling
+        execution context.
+
+3.  If the eval code is strict code, then
+    1.  Let strictVarEnv be the result of calling NewDeclarativeEnvironment passing the
+        LexicalEnvironment as the argument.
+    2.  Set the LexicalEnvironment to strictVarEnv.
+    3.  Set the VariableEnvironment to strictVarEnv.
+
+4.  Perform Declaration Binding Instantiation as described in 10.5 using the eval code.
+
+10.4.2.1 Strict Mode Restrictions
+=================================
+
+The eval code cannot instantiate variable or function bindings in the variable environment of the
+calling context that invoked the eval if either the code of the calling context or the eval code is
+strict code. Instead such bindings are instantiated in a new VariableEnvironment that is only
+accessible to the eval code.
+
+10.4.3 Entering Function Code
+=============================
+
+The following steps are performed when control enters the execution context for function code
+contained in function object F, a caller provided thisArg, and a caller provided argumentsList:
+
+1.  If the function code is strict code, set the ThisBinding to thisArg.
+2.  Else if thisArg is null or undefined, set the ThisBinding to the global object.
+3.  Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).
+4.  Else set the ThisBinding to thisArg.
+5.  Let localEnv be the result of calling NewDeclarativeEnvironment passing the value of the
+    [[Scope]] internal property of F as the argument.
+6.  Set the LexicalEnvironment to localEnv.
+7.  Set the VariableEnvironment to localEnv.
+8.  Let code be the value of F’s [[Code]] internal property.
+9.  Perform Declaration Binding Instantiation using the function code code and argumentsList as
+    described in 10.5.

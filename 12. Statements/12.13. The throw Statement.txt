@@ -1,0 +1,17 @@
+12.13 The throw Statement
+=========================
+
+Syntax
+------
+
+ThrowStatement :
+
+throw [no LineTerminator here] Expression ;
+
+Semantics
+---------
+
+The production ThrowStatement : throw [no LineTerminator here] Expression ; is evaluated as follows:
+
+1.  Let exprRef be the result of evaluating Expression.
+2.  Return (throw, GetValue(exprRef), empty).

@@ -1,0 +1,19 @@
+9.7 ToUint16: (Unsigned 16 Bit Integer)
+=======================================
+
+The abstract operation ToUint16 converts its argument to one of 2^16 integer values in the range 0
+through 2^16−1, inclusive. This abstract operation functions as follows:
+
+1.  Let number be the result of calling ToNumber on the input argument.
+2.  If number is NaN, +0, −0, +∞, or −∞, return +0.
+3.  Let posInt be sign(number) × floor(abs(number)).
+4.  Let int16bit be posInt modulo 2^16; that is, a finite integer value k of Number type with
+    positive sign and less than 2^16 in magnitude such that the mathematical difference of posInt
+    and k is mathematically an integer multiple of 2^16.
+5.  Return int16bit.
+
+NOTE Given the above definition of ToUint16:
+
+-   The substitution of 2^16 for 2^32 in step 4 is the only difference between ToUint32 and
+    ToUint16.
+-   ToUint16 maps −0 to +0.

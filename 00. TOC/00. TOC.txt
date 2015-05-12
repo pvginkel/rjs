@@ -1,0 +1,507 @@
+ECMAScript Language Specification - ECMA-262 Edition 5.1
+
+[Ecma International Logo.]
+
+Standard ECMA-262
+=================
+
+5.1 Edition / June 2011
+=======================
+
+ECMAScript® Language Specification
+==================================
+
+This is the HTML rendering of Ecma-262 Edition 5.1, The ECMAScript Language Specification.
+
+The PDF rendering of this document is located at
+http://www.ecma-international.org/ecma-262/5.1/ECMA-262.pdf.
+
+The PDF version is the definitive specification. Any discrepancies between this HTML version and the
+PDF version are unintentional.
+
+Copyright notice
+================
+
+Copyright © 2011 Ecma International
+
+-   Ecma International
+-   Rue du Rhone 114
+-   CH-1204 Geneva
+-   Tel: +41 22 849 6000
+-   Fax: +41 22 849 6001
+-   Web: http://www.ecma-international.org
+
+This document and possible translations of it may be copied and furnished to others, and derivative
+works that comment on or otherwise explain it or assist in its implementation may be prepared,
+copied, published, and distributed, in whole or in part, without restriction of any kind, provided
+that the above copyright notice and this section are included on all such copies and derivative
+works. However, this document itself may not be modified in any way, including by removing the
+copyright notice or references to Ecma International, except as needed for the purpose of developing
+any document or deliverable produced by Ecma International (in which case the rules applied to
+copyrights must be followed) or as required to translate it into languages other than English.
+
+The limited permissions granted above are perpetual and will not be revoked by Ecma International or
+its successors or assigns.
+
+This document and the information contained herein is provided on an “AS IS” basis and ECMA
+INTERNATIONAL DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY
+WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY OWNERSHIP RIGHTS OR ANY
+IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
+
+Software License
+
+All Software contained in this document (“Software)” is protected by copyright and is being made
+available under the “BSD License”, included below. This Software may be subject to third party
+rights (rights from parties other than Ecma International), including patent rights, and no licenses
+under such third party rights are granted under this license even if the third party concerned is a
+member of Ecma International. SEE THE ECMA CODE OF CONDUCT IN PATENT MATTERS AVAILABLE AT
+http://www.ecma-international.org/memento/codeofconduct.htm FOR INFORMATION REGARDING THE LICENSING
+OF PATENT CLAIMS THAT ARE REQUIRED TO IMPLEMENT ECMA INTERNATIONAL STANDARDS*.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted
+provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions
+and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+and the following disclaimer in the documentation and/or other materials provided with the
+distribution.
+
+3. Neither the name of the authors nor Ecma International may be used to endorse or promote products
+derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE ECMA INTERNATIONAL “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ECMA INTERNATIONAL BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Contents
+========
+
+1.  Copyright notice
+2.  Introduction
+3.  1 Scope
+4.  2 Conformance
+5.  3 Normative references
+6.  4 Overview
+    1.  4.1 Web Scripting
+    2.  4.2 Language Overview
+        1.  4.2.1 Objects
+        2.  4.2.2 The Strict Variant of ECMAScript
+
+    3.  4.3 Terms and definitions
+        1.  4.3.1 type
+        2.  4.3.2 primitive value
+        3.  4.3.3 object
+        4.  4.3.4 constructor
+        5.  4.3.5 prototype
+        6.  4.3.6 native object
+        7.  4.3.7 built-in object
+        8.  4.3.8 host object
+        9.  4.3.9 undefined value
+        10. 4.3.10 Undefined type
+        11. 4.3.11 null value
+        12. 4.3.12 Null type
+        13. 4.3.13 Boolean value
+        14. 4.3.14 Boolean type
+        15. 4.3.15 Boolean object
+        16. 4.3.16 String value
+        17. 4.3.17 String type
+        18. 4.3.18 String object
+        19. 4.3.19 Number value
+        20. 4.3.20 Number type
+        21. 4.3.21 Number object
+        22. 4.3.22 Infinity
+        23. 4.3.23 NaN
+        24. 4.3.24 function
+        25. 4.3.25 built-in function
+        26. 4.3.26 property
+        27. 4.3.27 method
+        28. 4.3.28 built-in method
+        29. 4.3.29 attribute
+        30. 4.3.30 own property
+        31. 4.3.31 inherited property
+
+7.  5 Notational Conventions
+    1.  5.1 Syntactic and Lexical Grammars
+        1.  5.1.1 Context-Free Grammars
+        2.  5.1.2 The Lexical and RegExp Grammars
+        3.  5.1.3 The Numeric String Grammar
+        4.  5.1.4 The Syntactic Grammar
+        5.  5.1.5 The JSON Grammar
+        6.  5.1.6 Grammar Notation
+
+    2.  5.2 Algorithm Conventions
+
+8.  6 Source Text
+9.  7 Lexical Conventions
+    1.  7.1 Unicode Format-Control Characters
+    2.  7.2 White Space
+    3.  7.3 Line Terminators
+    4.  7.4 Comments
+    5.  7.5 Tokens
+    6.  7.6 Identifier Names and Identifiers
+        1.  7.6.1 Reserved Words
+
+    7.  7.7 Punctuators
+    8.  7.8 Literals
+        1.  7.8.1 Null Literals
+        2.  7.8.2 Boolean Literals
+        3.  7.8.3 Numeric Literals
+        4.  7.8.4 String Literals
+        5.  7.8.5 Regular Expression Literals
+
+    9.  7.9 Automatic Semicolon Insertion
+        1.  7.9.1 Rules of Automatic Semicolon Insertion
+        2.  7.9.2 Examples of Automatic Semicolon Insertion
+
+10. 8 Types
+    1.  8.1 The Undefined Type
+    2.  8.2 The Null Type
+    3.  8.3 The Boolean Type
+    4.  8.4 The String Type
+    5.  8.5 The Number Type
+    6.  8.6 The Object Type
+        1.  8.6.1 Property Attributes
+        2.  8.6.2 Object Internal Properties and Methods
+
+    7.  8.7 The Reference Specification Type
+        1.  8.7.1 GetValue (V)
+        2.  8.7.2 PutValue (V, W)
+
+    8.  8.8 The List Specification Type
+    9.  8.9 The Completion Specification Type
+    10. 8.10 The Property Descriptor and Property Identifier Specification Types
+        1.  8.10.1 IsAccessorDescriptor ( Desc )
+        2.  8.10.2 IsDataDescriptor ( Desc )
+        3.  8.10.3 IsGenericDescriptor ( Desc )
+        4.  8.10.4 FromPropertyDescriptor ( Desc )
+        5.  8.10.5 ToPropertyDescriptor ( Obj )
+
+    11. 8.11 The Lexical Environment and Environment Record Specification Types
+    12. 8.12 Algorithms for Object Internal Methods
+        1.  8.12.1 [[GetOwnProperty]] (P)
+        2.  8.12.2 [[GetProperty]] (P)
+        3.  8.12.3 [[Get]] (P)
+        4.  8.12.4 [[CanPut]] (P)
+        5.  8.12.5 [[Put]] ( P, V, Throw )
+        6.  8.12.6 [[HasProperty]] (P)
+        7.  8.12.7 [[Delete]] (P, Throw)
+        8.  8.12.8 [[DefaultValue]] (hint)
+        9.  8.12.9 [[DefineOwnProperty]] (P, Desc, Throw)
+
+11. 9 Type Conversion and Testing
+    1.  9.1 ToPrimitive
+    2.  9.2 ToBoolean
+    3.  9.3 ToNumber
+        1.  9.3.1 ToNumber Applied to the String Type
+
+    4.  9.4 ToInteger
+    5.  9.5 ToInt32: (Signed 32 Bit Integer)
+    6.  9.6 ToUint32: (Unsigned 32 Bit Integer)
+    7.  9.7 ToUint16: (Unsigned 16 Bit Integer)
+    8.  9.8 ToString
+        1.  9.8.1 ToString Applied to the Number Type
+
+    9.  9.9 ToObject
+    10. 9.10 CheckObjectCoercible
+    11. 9.11 IsCallable
+    12. 9.12 The SameValue Algorithm
+
+12. 10 Executable Code and Execution Contexts
+    1.  10.1 Types of Executable Code
+        1.  10.1.1 Strict Mode Code
+
+    2.  10.2 Lexical Environments
+        1.  10.2.1 Environment Records
+        2.  10.2.2 Lexical Environment Operations
+        3.  10.2.3 The Global Environment
+
+    3.  10.3 Execution Contexts
+        1.  10.3.1 Identifier Resolution
+
+    4.  10.4 Establishing an Execution Context
+        1.  10.4.1 Entering Global Code
+        2.  10.4.2 Entering Eval Code
+        3.  10.4.3 Entering Function Code
+
+    5.  10.5 Declaration Binding Instantiation
+    6.  10.6 Arguments Object
+
+13. 11 Expressions
+    1.  11.1 Primary Expressions
+        1.  11.1.1 The this Keyword
+        2.  11.1.2 Identifier Reference
+        3.  11.1.3 Literal Reference
+        4.  11.1.4 Array Initialiser
+        5.  11.1.5 Object Initialiser
+        6.  11.1.6 The Grouping Operator
+
+    2.  11.2 Left-Hand-Side Expressions
+        1.  11.2.1 Property Accessors
+        2.  11.2.2 The new Operator
+        3.  11.2.3 Function Calls
+        4.  11.2.4 Argument Lists
+        5.  11.2.5 Function Expressions
+
+    3.  11.3 Postfix Expressions
+        1.  11.3.1 Postfix Increment Operator
+        2.  11.3.2 Postfix Decrement Operator
+
+    4.  11.4 Unary Operators
+        1.  11.4.1 The delete Operator
+        2.  11.4.2 The void Operator
+        3.  11.4.3 The typeof Operator
+        4.  11.4.4 Prefix Increment Operator
+        5.  11.4.5 Prefix Decrement Operator
+        6.  11.4.6 Unary + Operator
+        7.  11.4.7 Unary - Operator
+        8.  11.4.8 Bitwise NOT Operator ( ~ )
+        9.  11.4.9 Logical NOT Operator ( ! )
+
+    5.  11.5 Multiplicative Operators
+        1.  11.5.1 Applying the * Operator
+        2.  11.5.2 Applying the / Operator
+        3.  11.5.3 Applying the % Operator
+
+    6.  11.6 Additive Operators
+        1.  11.6.1 The Addition operator ( + )
+        2.  11.6.2 The Subtraction Operator ( - )
+        3.  11.6.3 Applying the Additive Operators to Numbers
+
+    7.  11.7 Bitwise Shift Operators
+        1.  11.7.1 The Left Shift Operator ( << )
+        2.  11.7.2 The Signed Right Shift Operator ( >> )
+        3.  11.7.3 The Unsigned Right Shift Operator ( >>> )
+
+    8.  11.8 Relational Operators
+        1.  11.8.1 The Less-than Operator ( < )
+        2.  11.8.2 The Greater-than Operator ( > )
+        3.  11.8.3 The Less-than-or-equal Operator ( <= )
+        4.  11.8.4 The Greater-than-or-equal Operator ( >= )
+        5.  11.8.5 The Abstract Relational Comparison Algorithm
+        6.  11.8.6 The instanceof operator
+        7.  11.8.7 The in operator
+
+    9.  11.9 Equality Operators
+        1.  11.9.1 The Equals Operator ( == )
+        2.  11.9.2 The Does-not-equals Operator ( != )
+        3.  11.9.3 The Abstract Equality Comparison Algorithm
+        4.  11.9.4 The Strict Equals Operator ( === )
+        5.  11.9.5 The Strict Does-not-equal Operator ( !== )
+        6.  11.9.6 The Strict Equality Comparison Algorithm
+
+    10. 11.10 Binary Bitwise Operators
+    11. 11.11 Binary Logical Operators
+    12. 11.12 Conditional Operator ( ? : )
+    13. 11.13 Assignment Operators
+        1.  11.13.1 Simple Assignment ( = )
+        2.  11.13.2 Compound Assignment ( op= )
+
+    14. 11.14 Comma Operator ( , )
+
+14. 12 Statements
+    1.  12.1 Block
+    2.  12.2 Variable Statement
+        1.  12.2.1 Strict Mode Restrictions
+
+    3.  12.3 Empty Statement
+    4.  12.4 Expression Statement
+    5.  12.5 The if Statement
+    6.  12.6 Iteration Statements
+        1.  12.6.1 The do-while Statement
+        2.  12.6.2 The while Statement
+        3.  12.6.3 The for Statement
+        4.  12.6.4 The for-in Statement
+
+    7.  12.7 The continue Statement
+    8.  12.8 The break Statement
+    9.  12.9 The return Statement
+    10. 12.10 The with Statement
+        1.  12.10.1 Strict Mode Restrictions
+
+    11. 12.11 The switch Statement
+    12. 12.12 Labelled Statements
+    13. 12.13 The throw Statement
+    14. 12.14 The try Statement
+        1.  12.14.1 Strict Mode Restrictions
+
+    15. 12.15 The debugger statement
+
+15. 13 Function Definition
+    1.  13.1 Strict Mode Restrictions
+    2.  13.2 Creating Function Objects
+        1.  13.2.1 [[Call]]
+        2.  13.2.2 [[Construct]]
+        3.  13.2.3 The [[ThrowTypeError]] Function Object
+
+16. 14 Program
+    1.  14.1 Directive Prologues and the Use Strict Directive
+
+17. 15 Standard Built-in ECMAScript Objects
+    1.  15.1 The Global Object
+        1.  15.1.1 Value Properties of the Global Object
+        2.  15.1.2 Function Properties of the Global Object
+        3.  15.1.3 URI Handling Function Properties
+        4.  15.1.4 Constructor Properties of the Global Object
+        5.  15.1.5 Other Properties of the Global Object
+
+    2.  15.2 Object Objects
+        1.  15.2.1 The Object Constructor Called as a Function
+        2.  15.2.2 The Object Constructor
+        3.  15.2.3 Properties of the Object Constructor
+        4.  15.2.4 Properties of the Object Prototype Object
+        5.  15.2.5 Properties of Object Instances
+
+    3.  15.3 Function Objects
+        1.  15.3.1 The Function Constructor Called as a Function
+        2.  15.3.2 The Function Constructor
+        3.  15.3.3 Properties of the Function Constructor
+        4.  15.3.4 Properties of the Function Prototype Object
+        5.  15.3.5 Properties of Function Instances
+
+    4.  15.4 Array Objects
+        1.  15.4.1 The Array Constructor Called as a Function
+        2.  15.4.2 The Array Constructor
+        3.  15.4.3 Properties of the Array Constructor
+        4.  15.4.4 Properties of the Array Prototype Object
+        5.  15.4.5 Properties of Array Instances
+
+    5.  15.5 String Objects
+        1.  15.5.1 The String Constructor Called as a Function
+        2.  15.5.2 The String Constructor
+        3.  15.5.3 Properties of the String Constructor
+        4.  15.5.4 Properties of the String Prototype Object
+        5.  15.5.5 Properties of String Instances
+
+    6.  15.6 Boolean Objects
+        1.  15.6.1 The Boolean Constructor Called as a Function
+        2.  15.6.2 The Boolean Constructor
+        3.  15.6.3 Properties of the Boolean Constructor
+        4.  15.6.4 Properties of the Boolean Prototype Object
+        5.  15.6.5 Properties of Boolean Instances
+
+    7.  15.7 Number Objects
+        1.  15.7.1 The Number Constructor Called as a Function
+        2.  15.7.2 The Number Constructor
+        3.  15.7.3 Properties of the Number Constructor
+        4.  15.7.4 Properties of the Number Prototype Object
+        5.  15.7.5 Properties of Number Instances
+
+    8.  15.8 The Math Object
+        1.  15.8.1 Value Properties of the Math Object
+        2.  15.8.2 Function Properties of the Math Object
+
+    9.  15.9 Date Objects
+        1.  15.9.1 Overview of Date Objects and Definitions of Abstract Operators
+        2.  15.9.2 The Date Constructor Called as a Function
+        3.  15.9.3 The Date Constructor
+        4.  15.9.4 Properties of the Date Constructor
+        5.  15.9.5 Properties of the Date Prototype Object
+        6.  15.9.6 Properties of Date Instances
+
+    10. 15.10 RegExp (Regular Expression) Objects
+        1.  15.10.1 Patterns
+        2.  15.10.2 Pattern Semantics
+        3.  15.10.3 The RegExp Constructor Called as a Function
+        4.  15.10.4 The RegExp Constructor
+        5.  15.10.5 Properties of the RegExp Constructor
+        6.  15.10.6 Properties of the RegExp Prototype Object
+        7.  15.10.7 Properties of RegExp Instances
+
+    11. 15.11 Error Objects
+        1.  15.11.1 The Error Constructor Called as a Function
+        2.  15.11.2 The Error Constructor
+        3.  15.11.3 Properties of the Error Constructor
+        4.  15.11.4 Properties of the Error Prototype Object
+        5.  15.11.5 Properties of Error Instances
+        6.  15.11.6 Native Error Types Used in This Standard
+        7.  15.11.7 NativeError Object Structure
+
+    12. 15.12 The JSON Object
+        1.  15.12.1 The JSON Grammar
+        2.  15.12.2 parse ( text [ , reviver ] )
+        3.  15.12.3 stringify ( value [ , replacer [ , space ] ] )
+
+18. 16 Errors
+19. Annex A (informative) Grammar Summary
+    1.  A.1 Lexical Grammar
+    2.  A.2 Number Conversions
+    3.  A.3 Expressions
+    4.  A.4 Statements
+    5.  A.5 Functions and Programs
+    6.  A.6 Universal Resource Identifier Character Classes
+    7.  A.7 Regular Expressions
+    8.  A.8 JSON
+        1.  A.8.1 JSON Lexical Grammar
+        2.  A.8.2 JSON Syntactic Grammar
+
+20. Annex B (informative) Compatibility
+    1.  B.1 Additional Syntax
+        1.  B.1.1 Numeric Literals
+        2.  B.1.2 String Literals
+
+    2.  B.2 Additional Properties
+        1.  B.2.1 escape (string)
+        2.  B.2.2 unescape (string)
+        3.  B.2.3 String.prototype.substr (start, length)
+        4.  B.2.4 Date.prototype.getYear ( )
+        5.  B.2.5 Date.prototype.setYear (year)
+        6.  B.2.6 Date.prototype.toGMTString ( )
+
+21. Annex C (informative) The Strict Mode of ECMAScript
+22. Annex D (informative) Corrections and Clarifications in the 5th Edition with Possible 3rd
+    Edition Compatibility Impact
+23. Annex E (informative) Additions and Changes in the 5th Edition that Introduce Incompatibilities
+    with the 3rd Edition
+24. Annex F (informative) Technically Significant Corrections and Clarifications in the 5.1 Edition
+25. Bibliography
+
+Introduction
+============
+
+This Ecma Standard is based on several originating technologies, the most well known being
+JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape
+and first appeared in that company’s Navigator 2.0 browser. It has appeared in all subsequent
+browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0.
+
+The development of this Standard started in November 1996. The first edition of this Ecma Standard
+was adopted by the Ecma General Assembly of June 1997.
+
+That Ecma Standard was submitted to ISO/IEC JTC 1 for adoption under the fast-track procedure, and
+approved as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June
+1998 approved the second edition of ECMA-262 to keep it fully aligned with ISO/IEC 16262. Changes
+between the first and the second edition are editorial in nature.
+
+The third edition of the Standard introduced powerful regular expressions, better string handling,
+new control statements, try/catch exception handling, tighter definition of errors, formatting for
+numeric output and minor changes in anticipation of forthcoming internationalisation facilities and
+future language growth. The third edition of the ECMAScript standard was adopted by the Ecma General
+Assembly of December 1999 and published as ISO/IEC 16262:2002 in June 2002.
+
+Since publication of the third edition, ECMAScript has achieved massive adoption in conjunction with
+the World Wide Web where it has become the programming language that is supported by essentially all
+web browsers. Significant work was done to develop a fourth edition of ECMAScript. Although that
+work was not completed and not published as the fourth edition of ECMAScript, it informs continuing
+evolution of the language. The fifth edition of ECMAScript (published as ECMA-262 5th edition)
+codifies de facto interpretations of the language specification that have become common among
+browser implementations and adds support for new features that have emerged since the publication of
+the third edition. Such features include accessor properties, reflective creation and inspection of
+objects, program control of property attributes, additional array manipulation functions, support
+for the JSON object encoding format, and a strict mode that provides enhanced error checking and
+program security.
+
+This present edition 5.1 of the ECMAScript Standard is fully aligned with third edition of the
+international standard ISO/IEC 16262:2011.
+
+ECMAScript is a vibrant language and the evolution of the language is not complete. Significant
+technical enhancement will continue with future editions of this specification.
+
+This Ecma Standard has been adopted by the General Assembly of June 2011.
+
+ECMAScript Language Specification

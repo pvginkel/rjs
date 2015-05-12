@@ -1,0 +1,170 @@
+11.4 Unary Operators
+====================
+
+Syntax
+------
+
+UnaryExpression :
+
+PostfixExpression
+
+delete UnaryExpression
+
+void UnaryExpression
+
+typeof UnaryExpression
+
+++ UnaryExpression
+
+-- UnaryExpression
+
++ UnaryExpression
+
+- UnaryExpression
+
+~ UnaryExpression
+
+! UnaryExpression
+
+11.4.1 The delete Operator
+==========================
+
+The production UnaryExpression : delete UnaryExpression is evaluated as follows:
+
+1.  Let ref be the result of evaluating UnaryExpression.
+2.  If Type(ref) is not Reference, return true.
+3.  If IsUnresolvableReference(ref) then,
+    1.  If IsStrictReference(ref) is true, throw a SyntaxError exception.
+    2.  Else, return true.
+
+4.  If IsPropertyReference(ref) is true, then
+    1.  Return the result of calling the [[Delete]] internal method on ToObject(GetBase(ref))
+        providing GetReferencedName(ref) and IsStrictReference(ref) as the arguments.
+
+5.  Else, ref is a Reference to an Environment Record binding, so
+    1.  If IsStrictReference(ref) is true, throw a SyntaxError exception.
+    2.  Let bindings be GetBase(ref).
+    3.  Return the result of calling the DeleteBinding concrete method of bindings, providing
+        GetReferencedName(ref) as the argument.
+
+NOTE When a delete operator occurs within strict mode code, a SyntaxError exception is thrown if its
+UnaryExpression is a direct reference to a variable, function argument, or function name. In
+addition, if a delete operator occurs within strict mode code and the property to be deleted has the
+attribute { [[Configurable]]: false }, a TypeError exception is thrown.
+
+11.4.2 The void Operator
+========================
+
+The production UnaryExpression : void UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Call GetValue(expr).
+3.  Return undefined.
+
+NOTE GetValue must be called even though its value is not used because it may have observable
+side-effects.
+
+11.4.3 The typeof Operator
+==========================
+
+The production UnaryExpression : typeof UnaryExpression is evaluated as follows:
+
+1.  Let val be the result of evaluating UnaryExpression.
+2.  If Type(val) is Reference, then
+    1.  If IsUnresolvableReference(val) is true, return "undefined".
+    2.  Let val be GetValue(val).
+
+3.  Return a String determined by Type(val) according to Table 20.
+
+Table 20 — typeof Operator Results
+
+  Type of val                                           Result
+  ----------------------------------------------------- -----------------------------------------------------------------------------------------
+  Undefined                                             "undefined"
+  Null                                                  "object"
+  Boolean                                               "boolean"
+  Number                                                "number"
+  String                                                "string"
+  Object (native and does not implement [[Call]])       "object"
+  Object (native or host and does implement [[Call]])   "function"
+  Object (host and does not implement [[Call]])         Implementation-defined except may not be "undefined", "boolean", "number", or "string".
+
+11.4.4 Prefix Increment Operator
+================================
+
+The production UnaryExpression : ++ UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(expr) is Reference is true
+    -   IsStrictReference(expr) is true
+    -   Type(GetBase(expr)) is Environment Record
+    -   GetReferencedName(expr) is either "eval" or "arguments"
+
+3.  Let oldValue be ToNumber(GetValue(expr)).
+4.  Let newValue be the result of adding the value 1 to oldValue, using the same rules as for the +
+    operator (see 11.6.3).
+5.  Call PutValue(expr, newValue).
+6.  Return newValue.
+
+11.4.5 Prefix Decrement Operator
+================================
+
+The production UnaryExpression : -- UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Throw a SyntaxError exception if the following conditions are all true:
+    -   Type(expr) is Reference is true
+    -   IsStrictReference(expr) is true
+    -   Type(GetBase(expr)) is Environment Record
+    -   GetReferencedName(expr) is either "eval" or "arguments"
+
+3.  Let oldValue be ToNumber(GetValue(expr)).
+4.  Let newValue be the result of subtracting the value 1 from oldValue, using the same rules as for
+    the - operator (see 11.6.3).
+5.  Call PutValue(expr, newValue).
+6.  Return newValue.
+
+11.4.6 Unary + Operator
+=======================
+
+The unary + operator converts its operand to Number type.
+
+The production UnaryExpression : + UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Return ToNumber(GetValue(expr)).
+
+11.4.7 Unary - Operator
+=======================
+
+The unary - operator converts its operand to Number type and then negates it. Note that negating +0
+produces −0, and negating −0 produces +0.
+
+The production UnaryExpression : - UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Let oldValue be ToNumber(GetValue(expr)).
+3.  If oldValue is NaN, return NaN.
+4.  Return the result of negating oldValue; that is, compute a Number with the same magnitude but
+    opposite sign.
+
+11.4.8 Bitwise NOT Operator ( ~ )
+=================================
+
+The production UnaryExpression : ~ UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Let oldValue be ToInt32(GetValue(expr)).
+3.  Return the result of applying bitwise complement to oldValue. The result is a signed 32-bit
+    integer.
+
+11.4.9 Logical NOT Operator ( ! )
+=================================
+
+The production UnaryExpression : ! UnaryExpression is evaluated as follows:
+
+1.  Let expr be the result of evaluating UnaryExpression.
+2.  Let oldValue be ToBoolean(GetValue(expr)).
+3.  If oldValue is true, return false.
+4.  Return true.
