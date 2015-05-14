@@ -1,4 +1,7 @@
+>>>>>CM:GREEN
 8.2 The Null Type
+>>>>>CM:GREEN
 =================
 
+>>>>>CM:GREEN
 The Null type has exactly one value, called null.

@@ -1,21 +1,39 @@
+>>>>>CM:GREEN
 9.12 The SameValue Algorithm
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 The internal comparison abstract operation SameValue(x, y), where x and y are ECMAScript language
+>>>>>CM:GREEN
 values, produces true or false. Such a comparison is performed as follows:
 
+>>>>>CM:GREEN
 1.  If Type(x) is different from Type(y), return false.
+>>>>>CM:GREEN
 2.  If Type(x) is Undefined, return true.
+>>>>>CM:GREEN
 3.  If Type(x) is Null, return true.
+>>>>>CM:GREEN
 4.  If Type(x) is Number, then.
+>>>>>CM:GREEN
     1.  If x is NaN and y is NaN, return true.
+>>>>>CM:GREEN
     2.  If x is +0 and y is -0, return false.
+>>>>>CM:GREEN
     3.  If x is -0 and y is +0, return false.
+>>>>>CM:GREEN
     4.  If x is the same Number value as y, return true.
+>>>>>CM:GREEN
     5.  Return false.
 
+>>>>>CM:GREEN
 5.  If Type(x) is String, then return true if x and y are exactly the same sequence of characters
+>>>>>CM:GREEN
     (same length and same characters in corresponding positions); otherwise, return false.
+>>>>>CM:GREEN
 6.  If Type(x) is Boolean, return true if x and y are both true or both false; otherwise, return
+>>>>>CM:GREEN
     false.
+>>>>>CM:GREEN
 7.  Return true if x and y refer to the same object. Otherwise, return false.

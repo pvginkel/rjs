@@ -294,22 +294,35 @@ object. This property has the attribute { [[Writable]]: true, [[Enumerable]]: f
 
 NOTE Function objects created using Function.prototype.bind do not have a prototype property.
 
+>>>>>CM:GREEN
 15.3.5.3 [[HasInstance]] (V)
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 Assume F is a Function object.
 
+>>>>>CM:GREEN
 When the [[HasInstance]] internal method of F is called with value V, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If V is not an object, return false.
+>>>>>CM:GREEN
 2.  Let O be the result of calling the [[Get]] internal method of F with property name "prototype".
+>>>>>CM:GREEN
 3.  If Type(O) is not Object, throw a TypeError exception.
+>>>>>CM:GREEN
 4.  Repeat
+>>>>>CM:GREEN
     1.  Let V be the value of the [[Prototype]] internal property of V.
+>>>>>CM:GREEN
     2.  If V is null, return false.
+>>>>>CM:GREEN
     3.  If O and V refer to the same object, return true.
 
+>>>>>CM:GREEN
 NOTE Function objects created using Function.prototype.bind have a different implementation of
+>>>>>CM:GREEN
 [[HasInstance]] defined in 15.3.4.5.3.
 
 15.3.5.4 [[Get]] (P)

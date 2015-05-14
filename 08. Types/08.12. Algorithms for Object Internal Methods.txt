@@ -1,278 +1,496 @@
+>>>>>CM:GREEN
 8.12 Algorithms for Object Internal Methods
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 In the following algorithm descriptions, assume O is a native ECMAScript object, P is a String, Desc
+>>>>>CM:GREEN
 is a Property Description record, and Throw is a Boolean flag.
 
+>>>>>CM:GREEN
 8.12.1 [[GetOwnProperty]] (P)
+>>>>>CM:GREEN
 =============================
 
+>>>>>CM:GREEN
 When the [[GetOwnProperty]] internal method of O is called with property name P, the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  If O doesn’t have an own property with name P, return undefined.
+>>>>>CM:GREEN
 2.  Let D be a newly created Property Descriptor with no fields.
+>>>>>CM:GREEN
 3.  Let X be O’s own property named P.
+>>>>>CM:GREEN
 4.  If X is a data property, then
+>>>>>CM:GREEN
     1.  Set D.[[Value]] to the value of X’s [[Value]] attribute.
+>>>>>CM:GREEN
     2.  Set D.[[Writable]] to the value of X’s [[Writable]] attribute
 
+>>>>>CM:GREEN
 5.  Else X is an accessor property, so
+>>>>>CM:GREEN
     1.  Set D.[[Get]] to the value of X’s [[Get]] attribute.
+>>>>>CM:GREEN
     2.  Set D.[[Set]] to the value of X’s [[Set]] attribute.
 
+>>>>>CM:GREEN
 6.  Set D.[[Enumerable]] to the value of X’s [[Enumerable]] attribute.
+>>>>>CM:GREEN
 7.  Set D.[[Configurable]] to the value of X’s [[Configurable]] attribute.
+>>>>>CM:GREEN
 8.  Return D.
 
+>>>>>CM:GREEN
 However, if O is a String object it has a more elaborate [[GetOwnProperty]] internal method defined
+>>>>>CM:GREEN
 in 15.5.5.2.
 
+>>>>>CM:GREEN
 8.12.2 [[GetProperty]] (P)
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 When the [[GetProperty]] internal method of O is called with property name P, the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  Let prop be the result of calling the [[GetOwnProperty]] internal method of O with property name
+>>>>>CM:GREEN
     P.
+>>>>>CM:GREEN
 2.  If prop is not undefined, return prop.
+>>>>>CM:GREEN
 3.  Let proto be the value of the [[Prototype]] internal property of O.
+>>>>>CM:GREEN
 4.  If proto is null, return undefined.
+>>>>>CM:GREEN
 5.  Return the result of calling the [[GetProperty]] internal method of proto with argument P.
 
+>>>>>CM:GREEN
 8.12.3 [[Get]] (P)
+>>>>>CM:GREEN
 ==================
 
+>>>>>CM:GREEN
 When the [[Get]] internal method of O is called with property name P, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let desc be the result of calling the [[GetProperty]] internal method of O with property name P.
+>>>>>CM:GREEN
 2.  If desc is undefined, return undefined.
+>>>>>CM:GREEN
 3.  If IsDataDescriptor(desc) is true, return desc.[[Value]].
+>>>>>CM:GREEN
 4.  Otherwise, IsAccessorDescriptor(desc) must be true so, let getter be desc.[[Get]].
+>>>>>CM:GREEN
 5.  If getter is undefined, return undefined.
+>>>>>CM:GREEN
 6.  Return the result calling the [[Call]] internal method of getter providing O as the this value
+>>>>>CM:GREEN
     and providing no arguments.
 
+>>>>>CM:GREEN
 8.12.4 [[CanPut]] (P)
+>>>>>CM:GREEN
 =====================
 
+>>>>>CM:GREEN
 When the [[CanPut]] internal method of O is called with property name P, the following steps are
+>>>>>CM:GREEN
 taken:
 
+>>>>>CM:GREEN
 1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with argument P.
+>>>>>CM:GREEN
 2.  If desc is not undefined, then
+>>>>>CM:GREEN
     1.  If IsAccessorDescriptor(desc) is true, then
+>>>>>CM:GREEN
         1.  If desc.[[Set]] is undefined, then return false.
+>>>>>CM:GREEN
         2.  Else return true.
 
+>>>>>CM:GREEN
     2.  Else, desc must be a DataDescriptor so return the value of desc.[[Writable]].
 
+>>>>>CM:GREEN
 3.  Let proto be the [[Prototype]] internal property of O.
+>>>>>CM:GREEN
 4.  If proto is null, then return the value of the [[Extensible]] internal property of O.
+>>>>>CM:GREEN
 5.  Let inherited be the result of calling the [[GetProperty]] internal method of proto with
+>>>>>CM:GREEN
     property name P.
+>>>>>CM:GREEN
 6.  If inherited is undefined, return the value of the [[Extensible]] internal property of O.
+>>>>>CM:GREEN
 7.  If IsAccessorDescriptor(inherited) is true, then
+>>>>>CM:GREEN
     1.  If inherited.[[Set]] is undefined, then return false.
+>>>>>CM:GREEN
     2.  Else return true.
 
+>>>>>CM:GREEN
 8.  Else, inherited must be a DataDescriptor
+>>>>>CM:GREEN
     1.  If the [[Extensible]] internal property of O is false, return false.
+>>>>>CM:GREEN
     2.  Else return the value of inherited.[[Writable]].
 
+>>>>>CM:GREEN
 Host objects may define additional constraints upon [[Put]] operations. If possible, host objects
+>>>>>CM:GREEN
 should not allow [[Put]] operations in situations where this definition of [[CanPut]] returns false.
 
+>>>>>CM:GREEN
 8.12.5 [[Put]] ( P, V, Throw )
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 When the [[Put]] internal method of O is called with property P, value V, and Boolean flag Throw,
+>>>>>CM:GREEN
 the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If the result of calling the [[CanPut]] internal method of O with argument P is false, then
+>>>>>CM:GREEN
     1.  If Throw is true, then throw a TypeError exception.
+>>>>>CM:GREEN
     2.  Else return.
 
+>>>>>CM:GREEN
 2.  Let ownDesc be the result of calling the [[GetOwnProperty]] internal method of O with argument
+>>>>>CM:GREEN
     P.
+>>>>>CM:GREEN
 3.  If IsDataDescriptor(ownDesc) is true, then
+>>>>>CM:GREEN
     1.  Let valueDesc be the Property Descriptor {[[Value]]: V}.
+>>>>>CM:GREEN
     2.  Call the [[DefineOwnProperty]] internal method of O passing P, valueDesc, and Throw as
+>>>>>CM:GREEN
         arguments.
+>>>>>CM:GREEN
     3.  Return.
 
+>>>>>CM:GREEN
 4.  Let desc be the result of calling the [[GetProperty]] internal method of O with argument P. This
+>>>>>CM:GREEN
     may be either an own or inherited accessor property descriptor or an inherited data property
+>>>>>CM:GREEN
     descriptor.
+>>>>>CM:GREEN
 5.  If IsAccessorDescriptor(desc) is true, then
+>>>>>CM:GREEN
     1.  Let setter be desc.[[Set]] which cannot be undefined.
+>>>>>CM:GREEN
     2.  Call the [[Call]] internal method of setter providing O as the this value and providing V as
+>>>>>CM:GREEN
         the sole argument.
 
+>>>>>CM:GREEN
 6.  Else, create a named data property named P on object O as follows
+>>>>>CM:GREEN
     1.  Let newDesc be the Property Descriptor  
+>>>>>CM:GREEN
         {[[Value]]: V, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}.
+>>>>>CM:GREEN
     2.  Call the [[DefineOwnProperty]] internal method of O passing P, newDesc, and Throw as
+>>>>>CM:GREEN
         arguments.
 
+>>>>>CM:GREEN
 7.  Return.
 
+>>>>>CM:GREEN
 8.12.6 [[HasProperty]] (P)
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 When the [[HasProperty]] internal method of O is called with property name P, the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  Let desc be the result of calling the [[GetProperty]] internal method of O with property name P.
+>>>>>CM:GREEN
 2.  If desc is undefined, then return false.
+>>>>>CM:GREEN
 3.  Else return true.
 
+>>>>>CM:GREEN
 8.12.7 [[Delete]] (P, Throw)
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 When the [[Delete]] internal method of O is called with property name P and the Boolean flag Throw,
+>>>>>CM:GREEN
 the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with property name
+>>>>>CM:GREEN
     P.
+>>>>>CM:GREEN
 2.  If desc is undefined, then return true.
+>>>>>CM:GREEN
 3.  If desc.[[Configurable]] is true, then
+>>>>>CM:GREEN
     1.  Remove the own property with name P from O.
+>>>>>CM:GREEN
     2.  Return true.
 
+>>>>>CM:GREEN
 4.  Else if Throw, then throw a TypeError exception.
+>>>>>CM:GREEN
 5.  Return false.
 
+>>>>>CM:GREEN
 8.12.8 [[DefaultValue]] (hint)
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 When the [[DefaultValue]] internal method of O is called with hint String, the following steps are
+>>>>>CM:GREEN
 taken:
 
+>>>>>CM:GREEN
 1.  Let toString be the result of calling the [[Get]] internal method of object O with argument
+>>>>>CM:GREEN
     "toString".
+>>>>>CM:GREEN
 2.  If IsCallable(toString) is true then,
+>>>>>CM:GREEN
     1.  Let str be the result of calling the [[Call]] internal method of toString, with O as the
+>>>>>CM:GREEN
         this value and an empty argument list.
+>>>>>CM:GREEN
     2.  If str is a primitive value, return str.
 
+>>>>>CM:GREEN
 3.  Let valueOf be the result of calling the [[Get]] internal method of object O with argument
+>>>>>CM:GREEN
     "valueOf".
+>>>>>CM:GREEN
 4.  If IsCallable(valueOf) is true then,
+>>>>>CM:GREEN
     1.  Let val be the result of calling the [[Call]] internal method of valueOf, with O as the this
+>>>>>CM:GREEN
         value and an empty argument list.
+>>>>>CM:GREEN
     2.  If val is a primitive value, return val.
 
+>>>>>CM:GREEN
 5.  Throw a TypeError exception.
 
+>>>>>CM:GREEN
 When the [[DefaultValue]] internal method of O is called with hint Number, the following steps are
+>>>>>CM:GREEN
 taken:
 
+>>>>>CM:GREEN
 1.  Let valueOf be the result of calling the [[Get]] internal method of object O with argument
+>>>>>CM:GREEN
     "valueOf".
+>>>>>CM:GREEN
 2.  If IsCallable(valueOf) is true then,
+>>>>>CM:GREEN
     1.  Let val be the result of calling the [[Call]] internal method of valueOf, with O as the this
+>>>>>CM:GREEN
         value and an empty argument list.
+>>>>>CM:GREEN
     2.  If val is a primitive value, return val.
 
+>>>>>CM:GREEN
 3.  Let toString be the result of calling the [[Get]] internal method of object O with argument
+>>>>>CM:GREEN
     "toString".
+>>>>>CM:GREEN
 4.  If IsCallable(toString) is true then,
+>>>>>CM:GREEN
     1.  Let str be the result of calling the [[Call]] internal method of toString, with O as the
+>>>>>CM:GREEN
         this value and an empty argument list.
+>>>>>CM:GREEN
     2.  If str is a primitive value, return str.
 
+>>>>>CM:GREEN
 5.  Throw a TypeError exception.
 
+>>>>>CM:GREEN
 When the [[DefaultValue]] internal method of O is called with no hint, then it behaves as if the
+>>>>>CM:GREEN
 hint were Number, unless O is a Date object (see 15.9.6), in which case it behaves as if the hint
+>>>>>CM:GREEN
 were String.
 
+>>>>>CM:GREEN
 The above specification of [[DefaultValue]] for native objects can return only primitive values. If
+>>>>>CM:GREEN
 a host object implements its own [[DefaultValue]] internal method, it must ensure that its
+>>>>>CM:GREEN
 [[DefaultValue]] internal method can return only primitive values.
 
+>>>>>CM:GREEN
 8.12.9 [[DefineOwnProperty]] (P, Desc, Throw)
+>>>>>CM:GREEN
 =============================================
 
+>>>>>CM:GREEN
 In the following algorithm, the term “Reject” means “If Throw is true, then throw a TypeError
+>>>>>CM:GREEN
 exception, otherwise return false”. The algorithm contains steps that test various fields of the
+>>>>>CM:GREEN
 Property Descriptor Desc for specific values. The fields that are tested in this manner need not
+>>>>>CM:GREEN
 actually exist in Desc. If a field is absent then its value is considered to be false.
 
+>>>>>CM:GREEN
 When the [[DefineOwnProperty]] internal method of O is called with property name P, property
+>>>>>CM:GREEN
 descriptor Desc, and Boolean flag Throw, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let current be the result of calling the [[GetOwnProperty]] internal method of O with property
+>>>>>CM:GREEN
     name P.
+>>>>>CM:GREEN
 2.  Let extensible be the value of the [[Extensible]] internal property of O.
+>>>>>CM:GREEN
 3.  If current is undefined and extensible is false, then Reject.
+>>>>>CM:GREEN
 4.  If current is undefined and extensible is true, then
+>>>>>CM:GREEN
     1.  If IsGenericDescriptor(Desc) or IsDataDescriptor(Desc) is true, then
+>>>>>CM:GREEN
         1.  Create an own data property named P of object O whose [[Value]], [[Writable]],
+>>>>>CM:GREEN
             [[Enumerable]] and [[Configurable]] attribute values are described by Desc. If the value
+>>>>>CM:GREEN
             of an attribute field of Desc is absent, the attribute of the newly created property is
+>>>>>CM:GREEN
             set to its default value.
 
+>>>>>CM:GREEN
     2.  Else, Desc must be an accessor Property Descriptor so,
+>>>>>CM:GREEN
         1.  Create an own accessor property named P of object O whose [[Get]], [[Set]],
+>>>>>CM:GREEN
             [[Enumerable]] and [[Configurable]] attribute values are described by Desc. If the value
+>>>>>CM:GREEN
             of an attribute field of Desc is absent, the attribute of the newly created property is
+>>>>>CM:GREEN
             set to its default value.
 
+>>>>>CM:GREEN
     3.  Return true.
 
+>>>>>CM:GREEN
 5.  Return true, if every field in Desc is absent.
+>>>>>CM:GREEN
 6.  Return true, if every field in Desc also occurs in current and the value of every field in Desc
+>>>>>CM:GREEN
     is the same value as the corresponding field in current when compared using the SameValue
+>>>>>CM:GREEN
     algorithm (9.12).
+>>>>>CM:GREEN
 7.  If the [[Configurable]] field of current is false then
+>>>>>CM:GREEN
     1.  Reject, if the [[Configurable]] field of Desc is true.
+>>>>>CM:GREEN
     2.  Reject, if the [[Enumerable]] field of Desc is present and the [[Enumerable]] fields of
+>>>>>CM:GREEN
         current and Desc are the Boolean negation of each other.
 
+>>>>>CM:GREEN
 8.  If IsGenericDescriptor(Desc) is true, then no further validation is required.
+>>>>>CM:GREEN
 9.  Else, if IsDataDescriptor(current) and IsDataDescriptor(Desc) have different results, then
+>>>>>CM:GREEN
     1.  Reject, if the [[Configurable]] field of current is false.
+>>>>>CM:GREEN
     2.  If IsDataDescriptor(current) is true, then
+>>>>>CM:GREEN
         1.  Convert the property named P of object O from a data property to an accessor property.
+>>>>>CM:GREEN
             Preserve the existing values of the converted property’s [[Configurable]] and
+>>>>>CM:GREEN
             [[Enumerable]] attributes and set the rest of the property’s attributes to their default
+>>>>>CM:GREEN
             values.
 
+>>>>>CM:GREEN
     3.  Else,
+>>>>>CM:GREEN
         1.  Convert the property named P of object O from an accessor property to a data property.
+>>>>>CM:GREEN
             Preserve the existing values of the converted property’s [[Configurable]] and
+>>>>>CM:GREEN
             [[Enumerable]] attributes and set the rest of the property’s attributes to their default
+>>>>>CM:GREEN
             values.
 
+>>>>>CM:GREEN
 10. Else, if IsDataDescriptor(current) and IsDataDescriptor(Desc) are both true, then
+>>>>>CM:GREEN
     1.  If the [[Configurable]] field of current is false, then
+>>>>>CM:GREEN
         1.  Reject, if the [[Writable]] field of current is false and the [[Writable]] field of Desc
+>>>>>CM:GREEN
             is true.
+>>>>>CM:GREEN
         2.  If the [[Writable]] field of current is false, then
+>>>>>CM:GREEN
             1.  Reject, if the [[Value]] field of Desc is present and SameValue(Desc.[[Value]],
+>>>>>CM:GREEN
                 current.[[Value]]) is false.
 
+>>>>>CM:GREEN
     2.  else, the [[Configurable]] field of current is true, so any change is acceptable.
 
+>>>>>CM:GREEN
 11. Else, IsAccessorDescriptor(current) and IsAccessorDescriptor(Desc) are both true so,
+>>>>>CM:GREEN
     1.  If the [[Configurable]] field of current is false, then
+>>>>>CM:GREEN
         1.  Reject, if the [[Set]] field of Desc is present and SameValue(Desc.[[Set]],
+>>>>>CM:GREEN
             current.[[Set]]) is false.
+>>>>>CM:GREEN
         2.  Reject, if the [[Get]] field of Desc is present and SameValue(Desc.[[Get]],
+>>>>>CM:GREEN
             current.[[Get]]) is false.
 
+>>>>>CM:GREEN
 12. For each attribute field of Desc that is present, set the correspondingly named attribute of the
+>>>>>CM:GREEN
     property named P of object O to the value of the field.
+>>>>>CM:GREEN
 13. Return true.
 
+>>>>>CM:GREEN
 However, if O is an Array object, it has a more elaborate [[DefineOwnProperty]] internal method
+>>>>>CM:GREEN
 defined in 15.4.5.1.
 
+>>>>>CM:GREEN
 NOTE Step 10.b allows any field of Desc to be different from the corresponding field of current if
+>>>>>CM:GREEN
 current’s [[Configurable]] field is true. This even permits changing the [[Value]] of a property
+>>>>>CM:GREEN
 whose [[Writable]] attribute is false. This is allowed because a true [[Configurable]] attribute
+>>>>>CM:GREEN
 would permit an equivalent sequence of calls where [[Writable]] is first set to true, a new
+>>>>>CM:GREEN
 [[Value]] is set, and then [[Writable]] is set to false.

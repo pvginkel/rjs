@@ -1,16 +1,29 @@
+>>>>>CM:GREEN
 9.11 IsCallable
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 The abstract operation IsCallable determines if its argument, which must be an ECMAScript language
+>>>>>CM:GREEN
 value, is a callable function Object according to Table 16:
 
+>>>>>CM:GREEN
 Table 16 — IsCallable Results
 
+>>>>>CM:GREEN
   Argument Type   Result
+>>>>>CM:GREEN
   --------------- --------------------------------------------------------------------------------------------------
+>>>>>CM:GREEN
   Undefined       Return false.
+>>>>>CM:GREEN
   Null            Return false.
+>>>>>CM:GREEN
   Boolean         Return false.
+>>>>>CM:GREEN
   Number          Return false.
+>>>>>CM:GREEN
   String          Return false.
+>>>>>CM:GREEN
   Object          If the argument object has a [[Call]] internal method, then return true, otherwise return false.

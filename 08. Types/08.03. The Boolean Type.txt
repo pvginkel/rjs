@@ -1,4 +1,7 @@
+>>>>>CM:GREEN
 8.3 The Boolean Type
+>>>>>CM:GREEN
 ====================
 
+>>>>>CM:GREEN
 The Boolean type represents a logical entity having two values, called true and false.

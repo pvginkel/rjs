@@ -1,5 +1,9 @@
+>>>>>CM:GREEN
 8.1 The Undefined Type
+>>>>>CM:GREEN
 ======================
 
+>>>>>CM:GREEN
 The Undefined type has exactly one value, called undefined. Any variable that has not been assigned
+>>>>>CM:GREEN
 a value has the value undefined.
