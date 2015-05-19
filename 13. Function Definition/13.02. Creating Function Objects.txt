@@ -64,23 +64,39 @@ arguments, the following steps are taken:
 5.  If result.type is return then return result.value.
 6.  Otherwise result.type must be normal. Return undefined.
 
+>>>>>CM:GREEN
 13.2.2 [[Construct]]
+>>>>>CM:GREEN
 ====================
 
+>>>>>CM:GREEN
 When the [[Construct]] internal method for a Function object F is called with a possibly empty list
+>>>>>CM:GREEN
 of arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let obj be a newly created native ECMAScript object.
+>>>>>CM:GREEN
 2.  Set all the internal methods of obj as specified in 8.12.
+>>>>>CM:GREEN
 3.  Set the [[Class]] internal property of obj to "Object".
+>>>>>CM:GREEN
 4.  Set the [[Extensible]] internal property of obj to true.
+>>>>>CM:GREEN
 5.  Let proto be the value of calling the [[Get]] internal property of F with argument "prototype".
+>>>>>CM:GREEN
 6.  If Type(proto) is Object, set the [[Prototype]] internal property of obj to proto.
+>>>>>CM:GREEN
 7.  If Type(proto) is not Object, set the [[Prototype]] internal property of obj to the standard
+>>>>>CM:GREEN
     built-in Object prototype object as described in 15.2.4.
+>>>>>CM:GREEN
 8.  Let result be the result of calling the [[Call]] internal property of F, providing obj as the
+>>>>>CM:GREEN
     this value and providing the argument list passed into [[Construct]] as args.
+>>>>>CM:GREEN
 9.  If Type(result) is Object then return result.
+>>>>>CM:GREEN
 10. Return obj.
 
 13.2.3 The [[ThrowTypeError]] Function Object

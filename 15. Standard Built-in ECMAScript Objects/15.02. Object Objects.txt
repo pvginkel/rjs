@@ -56,12 +56,17 @@ Function prototype object.
 Besides the internal properties and the length property (whose value is 1), the Object constructor
 has the following properties:
 
+>>>>>CM:GREEN
 15.2.3.1 Object.prototype
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 The initial value of Object.prototype is the standard built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 This property has the attributes {[[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
 15.2.3.2 Object.getPrototypeOf ( O )

@@ -1,16 +1,29 @@
+>>>>>CM:GREEN
 9.9 ToObject
+>>>>>CM:GREEN
 ============
 
+>>>>>CM:GREEN
 The abstract operation ToObject converts its argument to a value of type Object according to Table
+>>>>>CM:GREEN
 14:
 
+>>>>>CM:GREEN
 Table 14 — ToObject
 
+>>>>>CM:GREEN
   Argument Type   Result
+>>>>>CM:GREEN
   --------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>>>>CM:GREEN
   Undefined       Throw a TypeError exception.
+>>>>>CM:GREEN
   Null            Throw a TypeError exception.
+>>>>>CM:GREEN
   Boolean         Create a new Boolean object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.6 for a description of Boolean objects.
+>>>>>CM:GREEN
   Number          Create a new Number object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.7 for a description of Number objects.
+>>>>>CM:GREEN
   String          Create a new String object whose [[PrimitiveValue]] internal property is set to the value of the argument. See 15.5 for a description of String objects.
+>>>>>CM:GREEN
   Object          The result is the input argument (no conversion).

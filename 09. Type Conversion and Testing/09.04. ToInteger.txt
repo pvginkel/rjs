@@ -1,10 +1,18 @@
+>>>>>CM:GREEN
 9.4 ToInteger
+>>>>>CM:GREEN
 =============
 
+>>>>>CM:GREEN
 The abstract operation ToInteger converts its argument to an integral numeric value. This abstract
+>>>>>CM:GREEN
 operation functions as follows:
 
+>>>>>CM:GREEN
 1.  Let number be the result of calling ToNumber on the input argument.
+>>>>>CM:GREEN
 2.  If number is NaN, return +0.
+>>>>>CM:GREEN
 3.  If number is +0, −0, +∞, or −∞, return number.
+>>>>>CM:GREEN
 4.  Return the result of computing sign(number) × floor(abs(number)).

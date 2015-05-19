@@ -41,53 +41,88 @@ absence of a hint in some other manner.
 NOTE 2 Step 7 differs from step 3 of the comparison algorithm for the relational operators (11.8.5),
 by using the logical-or operation instead of the logical-and operation.
 
+>>>>>CM:GREEN
 11.6.2 The Subtraction Operator ( - )
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 The production AdditiveExpression : AdditiveExpression - MultiplicativeExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating AdditiveExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating MultiplicativeExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let lnum be ToNumber(lval).
+>>>>>CM:GREEN
 6.  Let rnum be ToNumber(rval).
+>>>>>CM:GREEN
 7.  Return the result of applying the subtraction operation to lnum and rnum. See the note below
+>>>>>CM:GREEN
     11.6.3.
 
+>>>>>CM:GREEN
 11.6.3 Applying the Additive Operators to Numbers
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 The + operator performs addition when applied to two operands of numeric type, producing the sum of
+>>>>>CM:GREEN
 the operands. The - operator performs subtraction, producing the difference of two numeric operands.
 
+>>>>>CM:GREEN
 Addition is a commutative operation, but not always associative.
 
+>>>>>CM:GREEN
 The result of an addition is determined using the rules of IEEE 754 binary double-precision
+>>>>>CM:GREEN
 arithmetic:
 
+>>>>>CM:GREEN
 -   If either operand is NaN, the result is NaN.
 
+>>>>>CM:GREEN
 -   The sum of two infinities of opposite sign is NaN.
 
+>>>>>CM:GREEN
 -   The sum of two infinities of the same sign is the infinity of that sign.
 
+>>>>>CM:GREEN
 -   The sum of an infinity and a finite value is equal to the infinite operand.
 
+>>>>>CM:GREEN
 -   The sum of two negative zeroes is −0. The sum of two positive zeroes, or of two zeroes of
+>>>>>CM:GREEN
     opposite sign, is +0.
 
+>>>>>CM:GREEN
 -   The sum of a zero and a nonzero finite value is equal to the nonzero operand.
 
+>>>>>CM:GREEN
 -   The sum of two nonzero finite values of the same magnitude and opposite sign is +0.
 
+>>>>>CM:GREEN
 -   In the remaining cases, where neither an infinity, nor a zero, nor NaN is involved, and the
+>>>>>CM:GREEN
     operands have the same sign or have different magnitudes, the sum is computed and rounded to the
+>>>>>CM:GREEN
     nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large
+>>>>>CM:GREEN
     to represent, the operation overflows and the result is then an infinity of appropriate sign.
+>>>>>CM:GREEN
     The ECMAScript language requires support of gradual underflow as defined by IEEE 754.
 
+>>>>>CM:GREEN
 The - operator performs subtraction when applied to two operands of numeric type, producing the
+>>>>>CM:GREEN
 difference of its operands; the left operand is the minuend and the right operand is the subtrahend.
+>>>>>CM:GREEN
 Given numeric operands a and b, it is always the case that a–b produces the same result as a +(–b).

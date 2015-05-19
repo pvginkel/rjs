@@ -1,53 +1,85 @@
+>>>>>CM:GREEN
 11.9 Equality Operators
+>>>>>CM:GREEN
 =======================
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 EqualityExpression :
 
+>>>>>CM:GREEN
 RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression == RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression != RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression === RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpression !== RelationalExpression
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn :
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn == RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn != RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn === RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn !== RelationalExpressionNoIn
 
+>>>>>CM:GREEN
 Semantics
+>>>>>CM:GREEN
 ---------
 
+>>>>>CM:GREEN
 The result of evaluating an equality operator is always of type Boolean, reflecting whether the
+>>>>>CM:GREEN
 relationship named by the operator holds between its two operands.
 
+>>>>>CM:GREEN
 The EqualityExpressionNoIn productions are evaluated in the same manner as the EqualityExpression
+>>>>>CM:GREEN
 productions except that the contained EqualityExpressionNoIn and RelationalExpressionNoIn are
+>>>>>CM:GREEN
 evaluated instead of the contained EqualityExpression and RelationalExpression, respectively.
 
+>>>>>CM:GREEN
 11.9.1 The Equals Operator ( == )
+>>>>>CM:GREEN
 =================================
 
+>>>>>CM:GREEN
 The production EqualityExpression : EqualityExpression == RelationalExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating EqualityExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Return the result of performing abstract equality comparison rval == lval. (see 11.9.3).
 
 11.9.2 The Does-not-equals Operator ( != )
@@ -63,79 +95,139 @@ follows:
 5.  Let r be the result of performing abstract equality comparison rval == lval. (see 11.9.3).
 6.  If r is true, return false. Otherwise, return true.
 
+>>>>>CM:GREEN
 11.9.3 The Abstract Equality Comparison Algorithm
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 The comparison x == y, where x and y are values, produces true or false. Such a comparison is
+>>>>>CM:GREEN
 performed as follows:
 
+>>>>>CM:GREEN
 1.  If Type(x) is the same as Type(y), then
+>>>>>CM:GREEN
     1.  If Type(x) is Undefined, return true.
+>>>>>CM:GREEN
     2.  If Type(x) is Null, return true.
+>>>>>CM:GREEN
     3.  If Type(x) is Number, then
+>>>>>CM:GREEN
         1.  If x is NaN, return false.
+>>>>>CM:GREEN
         2.  If y is NaN, return false.
+>>>>>CM:GREEN
         3.  If x is the same Number value as y, return true.
+>>>>>CM:GREEN
         4.  If x is +0 and y is −0, return true.
+>>>>>CM:GREEN
         5.  If x is −0 and y is +0, return true.
+>>>>>CM:GREEN
         6.  Return false.
 
+>>>>>CM:GREEN
     4.  If Type(x) is String, then return true if x and y are exactly the same sequence of
+>>>>>CM:GREEN
         characters (same length and same characters in corresponding positions). Otherwise, return
+>>>>>CM:GREEN
         false.
+>>>>>CM:GREEN
     5.  If Type(x) is Boolean, return true if x and y are both true or both false. Otherwise, return
+>>>>>CM:GREEN
         false.
+>>>>>CM:GREEN
     6.  Return true if x and y refer to the same object. Otherwise, return false.
 
+>>>>>CM:GREEN
 2.  If x is null and y is undefined, return true.
+>>>>>CM:GREEN
 3.  If x is undefined and y is null, return true.
+>>>>>CM:GREEN
 4.  If Type(x) is Number and Type(y) is String,  
+>>>>>CM:GREEN
     return the result of the comparison x == ToNumber(y).
+>>>>>CM:GREEN
 5.  If Type(x) is String and Type(y) is Number,  
+>>>>>CM:GREEN
     return the result of the comparison ToNumber(x) == y.
+>>>>>CM:GREEN
 6.  If Type(x) is Boolean, return the result of the comparison ToNumber(x) == y.
+>>>>>CM:GREEN
 7.  If Type(y) is Boolean, return the result of the comparison x == ToNumber(y).
+>>>>>CM:GREEN
 8.  If Type(x) is either String or Number and Type(y) is Object,  
+>>>>>CM:GREEN
     return the result of the comparison x == ToPrimitive(y).
+>>>>>CM:GREEN
 9.  If Type(x) is Object and Type(y) is either String or Number,  
+>>>>>CM:GREEN
     return the result of the comparison ToPrimitive(x) == y.
+>>>>>CM:GREEN
 10. Return false.
 
+>>>>>CM:GREEN
 NOTE 1 Given the above definition of equality:
 
+>>>>>CM:GREEN
 -   String comparison can be forced by: "" + a == "" + b.
+>>>>>CM:GREEN
 -   Numeric comparison can be forced by: +a == +b.
+>>>>>CM:GREEN
 -   Boolean comparison can be forced by: !a == !b.
 
+>>>>>CM:GREEN
 NOTE 2 The equality operators maintain the following invariants:
 
+>>>>>CM:GREEN
 -   A != B is equivalent to !(A == B).
+>>>>>CM:GREEN
 -   A == B is equivalent to B == A, except in the order of evaluation of A and B.
 
+>>>>>CM:GREEN
 NOTE 3 The equality operator is not always transitive. For example, there might be two distinct
+>>>>>CM:GREEN
 String objects, each representing the same String value; each String object would be considered
+>>>>>CM:GREEN
 equal to the String value by the == operator, but the two String objects would not be equal to each
+>>>>>CM:GREEN
 other. For Example:
 
+>>>>>CM:GREEN
 -   new String("a") == "a" and "a" == new             String("a")are both true.
+>>>>>CM:GREEN
 -   new String("a") == new String("a") is false.
 
+>>>>>CM:GREEN
 NOTE 4 Comparison of Strings uses a simple equality test on sequences of code unit values. There is
+>>>>>CM:GREEN
 no attempt to use the more complex, semantically oriented definitions of character or string
+>>>>>CM:GREEN
 equality and collating order defined in the Unicode specification. Therefore Strings values that are
+>>>>>CM:GREEN
 canonically equal according to the Unicode standard could test as unequal. In effect this algorithm
+>>>>>CM:GREEN
 assumes that both Strings are already in normalised form.
 
+>>>>>CM:GREEN
 11.9.4 The Strict Equals Operator ( === )
+>>>>>CM:GREEN
 =========================================
 
+>>>>>CM:GREEN
 The production EqualityExpression : EqualityExpression === RelationalExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating EqualityExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Return the result of performing the strict equality comparison rval === lval. (See 11.9.6)
 
 11.9.5 The Strict Does-not-equal Operator ( !== )

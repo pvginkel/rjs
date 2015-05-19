@@ -1,16 +1,29 @@
+>>>>>CM:GREEN
 9.2 ToBoolean
+>>>>>CM:GREEN
 =============
 
+>>>>>CM:GREEN
 The abstract operation ToBoolean converts its argument to a value of type Boolean according to Table
+>>>>>CM:GREEN
 11:
 
+>>>>>CM:GREEN
 Table 11 — ToBoolean Conversions
 
+>>>>>CM:GREEN
   Argument Type   Result
+>>>>>CM:GREEN
   --------------- -------------------------------------------------------------------------------------------------------------
+>>>>>CM:GREEN
   Undefined       false
+>>>>>CM:GREEN
   Null            false
+>>>>>CM:GREEN
   Boolean         The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   Number          The result is false if the argument is +0, −0, or NaN; otherwise the result is true.
+>>>>>CM:GREEN
   String          The result is false if the argument is the empty String (its length is zero); otherwise the result is true.
+>>>>>CM:GREEN
   Object          true

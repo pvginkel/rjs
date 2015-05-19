@@ -1,18 +1,33 @@
+>>>>>CM:GREEN
 9.1 ToPrimitive
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 The abstract operation ToPrimitive takes an input argument and an optional argument PreferredType.
+>>>>>CM:GREEN
 The abstract operation ToPrimitive converts its input argument to a non-Object type. If an object is
+>>>>>CM:GREEN
 capable of converting to more than one primitive type, it may use the optional hint PreferredType to
+>>>>>CM:GREEN
 favour that type. Conversion occurs according to Table 10:
 
+>>>>>CM:GREEN
 Table 10 — ToPrimitive Conversions
 
+>>>>>CM:GREEN
   Input Type   Result
+>>>>>CM:GREEN
   ------------ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>>>>CM:GREEN
   Undefined    The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   Null         The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   Boolean      The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   Number       The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   String       The result equals the input argument (no conversion).
+>>>>>CM:GREEN
   Object       Return a default value for the Object. The default value of an object is retrieved by calling the [[DefaultValue]] internal method of the object, passing the optional hint PreferredType. The behaviour of the [[DefaultValue]] internal method is defined by this specification for all native ECMAScript objects in 8.12.8.

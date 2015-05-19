@@ -158,23 +158,37 @@ NOTE The thisArg value is passed without modification as the this value. This is
 Edition 3, where a undefined or null thisArg is replaced with the global object and ToObject is
 applied to all other values and that result is passed as the this value.
 
+>>>>>CM:GREEN
 15.3.4.4 Function.prototype.call (thisArg [ , arg1 [ , arg2, … ] ] )
+>>>>>CM:GREEN
 ====================================================================
 
+>>>>>CM:GREEN
 When the call method is called on an object func with argument thisArg and optional arguments arg1,
+>>>>>CM:GREEN
 arg2 etc, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If IsCallable(func) is false, then throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let argList be an empty List.
+>>>>>CM:GREEN
 3.  If this method was called with more than one argument then in left to right order starting with
+>>>>>CM:GREEN
     arg1 append each argument as the last element of argList
+>>>>>CM:GREEN
 4.  Return the result of calling the [[Call]] internal method of func, providing thisArg as the this
+>>>>>CM:GREEN
     value and argList as the list of arguments.
 
+>>>>>CM:GREEN
 The length property of the call method is 1.
 
+>>>>>CM:GREEN
 NOTE The thisArg value is passed without modification as the this value. This is a change from
+>>>>>CM:GREEN
 Edition 3, where a undefined or null thisArg is replaced with the global object and ToObject is
+>>>>>CM:GREEN
 applied to all other values and that result is passed as the this value.
 
 15.3.4.5 Function.prototype.bind (thisArg [, arg1 [, arg2, …]])

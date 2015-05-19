@@ -1,250 +1,405 @@
+>>>>>CM:GREEN
 9.3 ToNumber
+>>>>>CM:GREEN
 ============
 
+>>>>>CM:GREEN
 The abstract operation ToNumber converts its argument to a value of type Number according to Table
+>>>>>CM:GREEN
 12:
 
+>>>>>CM:GREEN
 Table 12 — To Number Conversions
 
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Argument Type                                      | Result                                             |
+>>>>>CM:GREEN
 +====================================================+====================================================+
+>>>>>CM:GREEN
 | Undefined                                          | NaN                                                |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Null                                               | +0                                                 |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Boolean                                            | The result is 1 if the argument is true. The       |
+>>>>>CM:GREEN
 |                                                    | result is +0 if the argument is false.             |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Number                                             | The result equals the input argument (no           |
+>>>>>CM:GREEN
 |                                                    | conversion).                                       |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | String                                             | See grammar and note below.                        |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Object                                             | Apply the following steps:                         |
+>>>>>CM:GREEN
 |                                                    |                                                    |
+>>>>>CM:GREEN
 |                                                    | 1.  Let primValue be ToPrimitive(input argument,   |
+>>>>>CM:GREEN
 |                                                    |     hint Number).                                  |
+>>>>>CM:GREEN
 |                                                    | 2.  Return ToNumber(primValue).                    |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
 
+>>>>>CM:GREEN
 9.3.1 ToNumber Applied to the String Type
+>>>>>CM:GREEN
 =========================================
 
+>>>>>CM:GREEN
 ToNumber applied to Strings applies the following grammar to the input String. If the grammar cannot
+>>>>>CM:GREEN
 interpret the String as an expansion of StringNumericLiteral, then the result of ToNumber is NaN.
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 StringNumericLiteral :::
 
+>>>>>CM:GREEN
 StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 StrWhiteSpaceopt StrNumericLiteral StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 StrWhiteSpace :::
 
+>>>>>CM:GREEN
 StrWhiteSpaceChar StrWhiteSpaceopt
 
+>>>>>CM:GREEN
 StrWhiteSpaceChar :::
 
+>>>>>CM:GREEN
 WhiteSpace
 
+>>>>>CM:GREEN
 LineTerminator
 
+>>>>>CM:GREEN
 StrNumericLiteral :::
 
+>>>>>CM:GREEN
 StrDecimalLiteral
 
+>>>>>CM:GREEN
 HexIntegerLiteral
 
+>>>>>CM:GREEN
 StrDecimalLiteral :::
 
+>>>>>CM:GREEN
 StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 + StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 - StrUnsignedDecimalLiteral
 
+>>>>>CM:GREEN
 StrUnsignedDecimalLiteral :::
 
+>>>>>CM:GREEN
 Infinity
 
+>>>>>CM:GREEN
 DecimalDigits . DecimalDigitsopt ExponentPartopt
 
+>>>>>CM:GREEN
 . DecimalDigits ExponentPartopt
 
+>>>>>CM:GREEN
 DecimalDigits ExponentPartopt
 
+>>>>>CM:GREEN
 DecimalDigits :::
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 DecimalDigits DecimalDigit
 
+>>>>>CM:GREEN
 DecimalDigit ::: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9
 
+>>>>>CM:GREEN
 ExponentPart :::
 
+>>>>>CM:GREEN
 ExponentIndicator SignedInteger
 
+>>>>>CM:GREEN
 ExponentIndicator ::: one of
 
+>>>>>CM:GREEN
 e E
 
+>>>>>CM:GREEN
 SignedInteger :::
 
+>>>>>CM:GREEN
 DecimalDigits
 
+>>>>>CM:GREEN
 + DecimalDigits
 
+>>>>>CM:GREEN
 - DecimalDigits
 
+>>>>>CM:GREEN
 HexIntegerLiteral :::
 
+>>>>>CM:GREEN
 0x HexDigit
 
+>>>>>CM:GREEN
 0X HexDigit
 
+>>>>>CM:GREEN
 HexIntegerLiteral HexDigit
 
+>>>>>CM:GREEN
 HexDigit ::: one of
 
+>>>>>CM:GREEN
 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
 
+>>>>>CM:GREEN
 Some differences should be noted between the syntax of a StringNumericLiteral and a NumericLiteral
+>>>>>CM:GREEN
 (see 7.8.3):
 
+>>>>>CM:GREEN
 -   A StringNumericLiteral may be preceded and/or followed by white space and/or line terminators.
 
+>>>>>CM:GREEN
 -   A StringNumericLiteral that is decimal may have any number of leading 0 digits.
 
+>>>>>CM:GREEN
 -   A StringNumericLiteral that is decimal may be preceded by + or - to indicate its sign.
 
+>>>>>CM:GREEN
 -   A StringNumericLiteral that is empty or contains only white space is converted to +0.
 
+>>>>>CM:GREEN
 The conversion of a String to a Number value is similar overall to the determination of the Number
+>>>>>CM:GREEN
 value for a numeric literal (see 7.8.3), but some of the details are different, so the process for
+>>>>>CM:GREEN
 converting a String numeric literal to a value of Number type is given here in full. This value is
+>>>>>CM:GREEN
 determined in two steps: first, a mathematical value (MV) is derived from the String numeric
+>>>>>CM:GREEN
 literal; second, this mathematical value is rounded as described below.
 
+>>>>>CM:GREEN
 -   The MV of StringNumericLiteral ::: [empty] is 0.
 
+>>>>>CM:GREEN
 -   The MV of StringNumericLiteral ::: StrWhiteSpace is 0.
 
+>>>>>CM:GREEN
 -   The MV of StringNumericLiteral ::: StrWhiteSpaceopt StrNumericLiteral StrWhiteSpaceopt is the MV
+>>>>>CM:GREEN
     of StrNumericLiteral, no matter whether white space is present or not.
 
+>>>>>CM:GREEN
 -   The MV of StrNumericLiteral ::: StrDecimalLiteral is the MV of StrDecimalLiteral.
 
+>>>>>CM:GREEN
 -   The MV of StrNumericLiteral ::: HexIntegerLiteral is the MV of HexIntegerLiteral.
 
+>>>>>CM:GREEN
 -   The MV of StrDecimalLiteral ::: StrUnsignedDecimalLiteral is the MV of
+>>>>>CM:GREEN
     StrUnsignedDecimalLiteral.
 
+>>>>>CM:GREEN
 -   The MV of StrDecimalLiteral ::: + StrUnsignedDecimalLiteral is the MV of
+>>>>>CM:GREEN
     StrUnsignedDecimalLiteral.
 
+>>>>>CM:GREEN
 -   The MV of StrDecimalLiteral ::: - StrUnsignedDecimalLiteral is the negative of the MV of
+>>>>>CM:GREEN
     StrUnsignedDecimalLiteral. (Note that if the MV of StrUnsignedDecimalLiteral is 0, the negative
+>>>>>CM:GREEN
     of this MV is also 0. The rounding rule described below handles the conversion of this signless
+>>>>>CM:GREEN
     mathematical zero to a floating-point +0 or −0 as appropriate.)
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: Infinity is 10^10000 (a value so large that it will
+>>>>>CM:GREEN
     round to +∞).
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . is the MV of DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . DecimalDigits is the MV of the first
+>>>>>CM:GREEN
     DecimalDigits plus (the MV of the second DecimalDigits times 10−n), where n is the number of
+>>>>>CM:GREEN
     characters in the second DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . ExponentPart is the MV of DecimalDigits
+>>>>>CM:GREEN
     times 10e, where e is the MV of ExponentPart.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits . DecimalDigits ExponentPart is (the MV of
+>>>>>CM:GREEN
     the first DecimalDigits plus (the MV of the second DecimalDigits times 10−n)) times 10e, where n
+>>>>>CM:GREEN
     is the number of characters in the second DecimalDigits and e is the MV of ExponentPart.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: . DecimalDigits is the MV of DecimalDigits times 10−n,
+>>>>>CM:GREEN
     where n is the number of characters in DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: . DecimalDigits ExponentPart is the MV of DecimalDigits
+>>>>>CM:GREEN
     times 10e−n, where n is the number of characters in DecimalDigits and e is the MV of
+>>>>>CM:GREEN
     ExponentPart.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits is the MV of DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of StrUnsignedDecimalLiteral ::: DecimalDigits ExponentPart is the MV of DecimalDigits
+>>>>>CM:GREEN
     times 10e, where e is the MV of ExponentPart.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigits ::: DecimalDigit is the MV of DecimalDigit.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigits ::: DecimalDigits DecimalDigit is (the MV of DecimalDigits times 10)
+>>>>>CM:GREEN
     plus the MV of DecimalDigit.
 
+>>>>>CM:GREEN
 -   The MV of ExponentPart ::: ExponentIndicator SignedInteger is the MV of SignedInteger.
 
+>>>>>CM:GREEN
 -   The MV of SignedInteger ::: DecimalDigits is the MV of DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of SignedInteger ::: + DecimalDigits is the MV of DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of SignedInteger ::: - DecimalDigits is the negative of the MV of DecimalDigits.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 0 or of HexDigit ::: 0 is 0.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 1 or of HexDigit ::: 1 is 1.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 2 or of HexDigit ::: 2 is 2.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 3 or of HexDigit ::: 3 is 3.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 4 or of HexDigit ::: 4 is 4.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 5 or of HexDigit ::: 5 is 5.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 6 or of HexDigit ::: 6 is 6.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 7 or of HexDigit ::: 7 is 7.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 8 or of HexDigit ::: 8 is 8.
 
+>>>>>CM:GREEN
 -   The MV of DecimalDigit ::: 9 or of HexDigit ::: 9 is 9.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: a or of HexDigit ::: A is 10.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: b or of HexDigit ::: B is 11.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: c or of HexDigit ::: C is 12.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: d or of HexDigit ::: D is 13.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: e or of HexDigit ::: E is 14.
 
+>>>>>CM:GREEN
 -   The MV of HexDigit ::: f or of HexDigit ::: F is 15.
 
+>>>>>CM:GREEN
 -   The MV of HexIntegerLiteral ::: 0x HexDigit is the MV of HexDigit.
 
+>>>>>CM:GREEN
 -   The MV of HexIntegerLiteral ::: 0X HexDigit is the MV of HexDigit.
 
+>>>>>CM:GREEN
 -   The MV of HexIntegerLiteral ::: HexIntegerLiteral HexDigit is (the MV of HexIntegerLiteral times
+>>>>>CM:GREEN
     16) plus the MV of HexDigit.
 
+>>>>>CM:GREEN
 Once the exact MV for a String numeric literal has been determined, it is then rounded to a value of
+>>>>>CM:GREEN
 the Number type. If the MV is 0, then the rounded value is +0 unless the first non white space
+>>>>>CM:GREEN
 character in the String numeric literal is ‘-’, in which case the rounded value is −0. Otherwise,
+>>>>>CM:GREEN
 the rounded value must be the Number value for the MV (in the sense defined in 8.5), unless the
+>>>>>CM:GREEN
 literal includes a StrUnsignedDecimalLiteral and the literal has more than 20 significant digits, in
+>>>>>CM:GREEN
 which case the Number value may be either the Number value for the MV of a literal produced by
+>>>>>CM:GREEN
 replacing each significant digit after the 20th with a 0 digit or the Number value for the MV of a
+>>>>>CM:GREEN
 literal produced by replacing each significant digit after the 20th with a 0 digit and then
+>>>>>CM:GREEN
 incrementing the literal at the 20th digit position. A digit is significant if it is not part of an
+>>>>>CM:GREEN
 ExponentPart and
 
+>>>>>CM:GREEN
 -   it is not 0; or
+>>>>>CM:GREEN
 -   there is a nonzero digit to its left and there is a nonzero digit, not in the ExponentPart, to
+>>>>>CM:GREEN
     its right.

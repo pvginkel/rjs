@@ -14,1308 +14,2325 @@ every property whose name is an array index whose value is not smaller than the 
 automatically deleted. This constraint applies only to own properties of an Array object and is
 unaffected by length or array index properties that may be inherited from its prototypes.
 
+>>>>>CM:YELLOW
 An object, O, is said to be sparse if the following algorithm returns true:
 
+>>>>>CM:YELLOW
 1.  Let len be the result of calling the [[Get]] internal method of O with argument “length”.
+>>>>>CM:YELLOW
 2.  For each integer i in the range 0≤i<ToUint32(len)
+>>>>>CM:YELLOW
     1.  Let elem be the result of calling the [[GetOwnProperty]] internal method of O with argument
+>>>>>CM:YELLOW
         ToString(i).
+>>>>>CM:YELLOW
     2.  If elem is undefined, return true.
 
+>>>>>CM:YELLOW
 3.  Return false.
 
+>>>>>CM:GREEN
 15.4.1 The Array Constructor Called as a Function
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 When Array is called as a function rather than as a constructor, it creates and initialises a new
+>>>>>CM:GREEN
 Array object. Thus the function call Array(…) is equivalent to the object creation expression
+>>>>>CM:GREEN
 new Array(…) with the same arguments.
 
+>>>>>CM:GREEN
 15.4.1.1 Array ( [ item1 [ , item2 [ , … ] ] ] )
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 When the Array function is called the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Create and return a new Array object exactly as if the standard built-in constructor Array was
+>>>>>CM:GREEN
     used in a new expression with the same arguments (15.4.2).
 
+>>>>>CM:GREEN
 15.4.2 The Array Constructor
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 When Array is called as part of a new expression, it is a constructor: it initialises the newly
+>>>>>CM:GREEN
 created object.
 
+>>>>>CM:GREEN
 15.4.2.1 new Array ( [ item0 [ , item1 [ , … ] ] ] )
+>>>>>CM:GREEN
 ====================================================
 
+>>>>>CM:GREEN
 This description applies if and only if the Array constructor is given no arguments or at least two
+>>>>>CM:GREEN
 arguments.
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the original Array
+>>>>>CM:GREEN
 prototype object, the one that is the initial value of Array.prototype (15.4.3.1).
 
+>>>>>CM:GREEN
 The [[Class]] internal property of the newly constructed object is set to "Array".
 
+>>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 The length property of the newly constructed object is set to the number of arguments.
 
+>>>>>CM:GREEN
 The 0 property of the newly constructed object is set to item0 (if supplied); the 1 property of the
+>>>>>CM:GREEN
 newly constructed object is set to item1 (if supplied); and, in general, for as many arguments as
+>>>>>CM:GREEN
 there are, the k property of the newly constructed object is set to argument k, where the first
+>>>>>CM:GREEN
 argument is considered to be argument number 0. These properties all have the attributes
+>>>>>CM:GREEN
 {[[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}.
 
+>>>>>CM:GREEN
 15.4.2.2 new Array (len)
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the original Array
+>>>>>CM:GREEN
 prototype object, the one that is the initial value of Array.prototype (15.4.3.1). The [[Class]]
+>>>>>CM:GREEN
 internal property of the newly constructed object is set to "Array". The [[Extensible]] internal
+>>>>>CM:GREEN
 property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 If the argument len is a Number and ToUint32(len) is equal to len, then the length property of the
+>>>>>CM:GREEN
 newly constructed object is set to ToUint32(len). If the argument len is a Number and ToUint32(len)
+>>>>>CM:GREEN
 is not equal to len, a RangeError exception is thrown.
 
+>>>>>CM:GREEN
 If the argument len is not a Number, then the length property of the newly constructed object is set
+>>>>>CM:GREEN
 to 1 and the 0 property of the newly constructed object is set to len with attributes {[[Writable]]:
+>>>>>CM:GREEN
 true, [[Enumerable]]: true, [[Configurable]]: true}.
 
+>>>>>CM:GREEN
 15.4.3 Properties of the Array Constructor
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Array constructor is the Function prototype
+>>>>>CM:GREEN
 object (15.3.4).
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), the Array constructor
+>>>>>CM:GREEN
 has the following properties:
 
+>>>>>CM:GREEN
 15.4.3.1 Array.prototype
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 The initial value of Array.prototype is the Array prototype object (15.4.4).
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
+>>>>>CM:GREEN
 15.4.3.2 Array.isArray ( arg )
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 The isArray function takes one argument arg, and returns the Boolean value true if the argument is
+>>>>>CM:GREEN
 an object whose class internal property is "Array"; otherwise it returns false. The following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  If Type(arg) is not Object, return false.
+>>>>>CM:GREEN
 2.  If the value of the [[Class]] internal property of arg is "Array", then return true.
+>>>>>CM:GREEN
 3.  Return false.
 
+>>>>>CM:GREEN
 15.4.4 Properties of the Array Prototype Object
+>>>>>CM:GREEN
 ===============================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Array prototype object is the standard
+>>>>>CM:GREEN
 built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 The Array prototype object is itself an array; its [[Class]] is "Array", and it has a length
+>>>>>CM:GREEN
 property (whose initial value is +0) and the special [[DefineOwnProperty]] internal method described
+>>>>>CM:GREEN
 in 15.4.5.1.
 
+>>>>>CM:GREEN
 In following descriptions of functions that are properties of the Array prototype object, the phrase
+>>>>>CM:GREEN
 “this object” refers to the object that is the this value for the invocation of the function. It is
+>>>>>CM:GREEN
 permitted for the this to be an object for which the value of the [[Class]] internal property is not
+>>>>>CM:GREEN
 "Array".
 
+>>>>>CM:GREEN
 NOTE The Array prototype object does not have a valueOf property of its own; however, it inherits
+>>>>>CM:GREEN
 the valueOf property from the standard built-in Object prototype Object.
 
+>>>>>CM:GREEN
 15.4.4.1 Array.prototype.constructor
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 The initial value of Array.prototype.constructor is the standard built-in Array constructor.
 
+>>>>>CM:GREEN
 15.4.4.2 Array.prototype.toString ( )
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 When the toString method is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let array be the result of calling ToObject on the this value.
+>>>>>CM:GREEN
 2.  Let func be the result of calling the [[Get]] internal method of array with argument "join".
+>>>>>CM:GREEN
 3.  If IsCallable(func) is false, then let func be the standard built-in method
+>>>>>CM:GREEN
     Object.prototype.toString (15.2.4.2).
+>>>>>CM:GREEN
 4.  Return the result of calling the [[Call]] internal method of func providing array as the this
+>>>>>CM:GREEN
     value and an empty arguments list.
 
+>>>>>CM:GREEN
 NOTE The toString function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the toString function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.3 Array.prototype.toLocaleString ( )
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The elements of the array are converted to Strings using their toLocaleString methods, and these
+>>>>>CM:GREEN
 Strings are then concatenated, separated by occurrences of a separator String that has been derived
+>>>>>CM:GREEN
 in an implementation-defined locale-specific way. The result of calling this function is intended to
+>>>>>CM:GREEN
 be analogous to the result of toString, except that the result of this function is intended to be
+>>>>>CM:GREEN
 locale-specific.
 
+>>>>>CM:GREEN
 The result is calculated as follows:
 
+>>>>>CM:GREEN
 1.  Let array be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let arrayLen be the result of calling the [[Get]] internal method of array with argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(arrayLen).
+>>>>>CM:GREEN
 4.  Let separator be the String value for the list-separator String appropriate for the host
+>>>>>CM:GREEN
     environment’s current locale (this is derived in an implementation-defined way).
+>>>>>CM:GREEN
 5.  If len is zero, return the empty String.
+>>>>>CM:GREEN
 6.  Let firstElement be the result of calling the [[Get]] internal method of array with argument
+>>>>>CM:GREEN
     "0".
+>>>>>CM:GREEN
 7.  If firstElement is undefined or null, then
+>>>>>CM:GREEN
     1.  Let R be the empty String.
 
+>>>>>CM:GREEN
 8.  Else
+>>>>>CM:GREEN
     1.  Let elementObj be ToObject(firstElement).
+>>>>>CM:GREEN
     2.  Let func be the result of calling the [[Get]] internal method of elementObj with argument
+>>>>>CM:GREEN
         "toLocaleString".
+>>>>>CM:GREEN
     3.  If IsCallable(func) is false, throw a TypeError exception.
+>>>>>CM:GREEN
     4.  Let R be the result of calling the [[Call]] internal method of func providing elementObj as
+>>>>>CM:GREEN
         the this value and an empty arguments list.
 
+>>>>>CM:GREEN
 9.  Let k be 1.
+>>>>>CM:GREEN
 10. Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let S be a String value produced by concatenating R and separator.
+>>>>>CM:GREEN
     2.  Let nextElement be the result of calling the [[Get]] internal method of array with argument
+>>>>>CM:GREEN
         ToString(k).
+>>>>>CM:GREEN
     3.  If nextElement is undefined or null, then
+>>>>>CM:GREEN
         1.  Let R be the empty String.
 
+>>>>>CM:GREEN
     4.  Else
+>>>>>CM:GREEN
         1.  Let elementObj be ToObject(nextElement).
+>>>>>CM:GREEN
         2.  Let func be the result of calling the [[Get]] internal method of elementObj with
+>>>>>CM:GREEN
             argument "toLocaleString".
+>>>>>CM:GREEN
         3.  If IsCallable(func) is false, throw a TypeError exception.
+>>>>>CM:GREEN
         4.  Let R be the result of calling the [[Call]] internal method of func providing elementObj
+>>>>>CM:GREEN
             as the this value and an empty arguments list.
 
+>>>>>CM:GREEN
     5.  Let R be a String value produced by concatenating S and R.
+>>>>>CM:GREEN
     6.  Increase k by 1.
 
+>>>>>CM:GREEN
 11. Return R.
 
+>>>>>CM:GREEN
 NOTE 1 The first parameter to this function is likely to be used in a future version of this
+>>>>>CM:GREEN
 standard; it is recommended that implementations do not use this parameter position for anything
+>>>>>CM:GREEN
 else.
 
+>>>>>CM:GREEN
 NOTE 2 The toLocaleString function is intentionally generic; it does not require that its this value
+>>>>>CM:GREEN
 be an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+>>>>>CM:GREEN
 Whether the toLocaleString function can be applied successfully to a host object is
+>>>>>CM:GREEN
 implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.4 Array.prototype.concat ( [ item1 [ , item2 [ , … ] ] ] )
+>>>>>CM:GREEN
 =================================================================
 
+>>>>>CM:GREEN
 When the concat method is called with zero or more arguments item1, item2, etc., it returns an array
+>>>>>CM:GREEN
 containing the array elements of the object followed by the array elements of each argument in
+>>>>>CM:GREEN
 order.
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let A be a new array created as if by the expression new Array() where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name.
+>>>>>CM:GREEN
 3.  Let n be 0.
+>>>>>CM:GREEN
 4.  Let items be an internal List whose first element is O and whose subsequent elements are, in
+>>>>>CM:GREEN
     left to right order, the arguments that were passed to this function invocation.
+>>>>>CM:GREEN
 5.  Repeat, while items is not empty
+>>>>>CM:GREEN
     1.  Remove the first element from items and let E be the value of the element.
+>>>>>CM:GREEN
     2.  If the value of the [[Class]] internal property of E is "Array", then
+>>>>>CM:GREEN
         1.  Let k be 0.
+>>>>>CM:GREEN
         2.  Let len be the result of calling the [[Get]] internal method of E with argument
+>>>>>CM:GREEN
             "length".
+>>>>>CM:GREEN
         3.  Repeat, while k < len
+>>>>>CM:GREEN
             1.  Let P be ToString(k).
+>>>>>CM:GREEN
             2.  Let exists be the result of calling the [[HasProperty]] internal method of E with P.
+>>>>>CM:GREEN
             3.  If exists is true, then
+>>>>>CM:GREEN
                 1.  Let subElement be the result of calling the [[Get]] internal method of E with
+>>>>>CM:GREEN
                     argument P.
+>>>>>CM:GREEN
                 2.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(n),
+>>>>>CM:GREEN
                     Property Descriptor {[[Value]]: subElement, [[Writable]]: true, [[Enumerable]]:
+>>>>>CM:GREEN
                     true, [[Configurable]]: true}, and false.
 
+>>>>>CM:GREEN
             4.  Increase n by 1.
+>>>>>CM:GREEN
             5.  Increase k by 1.
 
+>>>>>CM:GREEN
     3.  Else, E is not an Array
+>>>>>CM:GREEN
         1.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(n), Property
+>>>>>CM:GREEN
             Descriptor {[[Value]]: E, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]:
+>>>>>CM:GREEN
             true}, and false.
+>>>>>CM:GREEN
         2.  Increase n by 1.
 
+>>>>>CM:GREEN
 6.  Return A.
 
+>>>>>CM:GREEN
 The length property of the concat method is 1.
 
+>>>>>CM:GREEN
 NOTE The concat function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the concat function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.5 Array.prototype.join (separator)
+>>>>>CM:GREEN
 =========================================
 
+>>>>>CM:GREEN
 The elements of the array are converted to Strings, and these Strings are then concatenated,
+>>>>>CM:GREEN
 separated by occurrences of the separator. If no separator is provided, a single comma is used as
+>>>>>CM:GREEN
 the separator.
 
+>>>>>CM:GREEN
 The join method takes one argument, separator, and performs the following steps:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  If separator is undefined, let separator be the single-character String ",".
+>>>>>CM:GREEN
 5.  Let sep be ToString(separator).
+>>>>>CM:GREEN
 6.  If len is zero, return the empty String.
+>>>>>CM:GREEN
 7.  Let element0 be the result of calling the [[Get]] internal method of O with argument "0".
+>>>>>CM:GREEN
 8.  If element0 is undefined or null, let R be the empty String; otherwise, Let R be
+>>>>>CM:GREEN
     ToString(element0).
+>>>>>CM:GREEN
 9.  Let k be 1.
+>>>>>CM:GREEN
 10. Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let S be the String value produced by concatenating R and sep.
+>>>>>CM:GREEN
     2.  Let element be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
         ToString(k).
+>>>>>CM:GREEN
     3.  If element is undefined or null, Let next be the empty String; otherwise, let next be
+>>>>>CM:GREEN
         ToString(element).
+>>>>>CM:GREEN
     4.  Let R be a String value produced by concatenating S and next.
+>>>>>CM:GREEN
     5.  Increase k by 1.
 
+>>>>>CM:GREEN
 11. Return R.
 
+>>>>>CM:GREEN
 The length property of the join method is 1.
 
+>>>>>CM:GREEN
 NOTE The join function is intentionally generic; it does not require that its this value be an Array
+>>>>>CM:GREEN
 object. Therefore, it can be transferred to other kinds of objects for use as a method. Whether the
+>>>>>CM:GREEN
 join function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.6 Array.prototype.pop ( )
+>>>>>CM:GREEN
 ================================
 
+>>>>>CM:GREEN
 The last element of the array is removed from the array and returned.
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  If len is zero,
+>>>>>CM:GREEN
     1.  Call the [[Put]] internal method of O with arguments "length", 0, and true.
+>>>>>CM:GREEN
     2.  Return undefined.
 
+>>>>>CM:GREEN
 5.  Else, len > 0
+>>>>>CM:GREEN
     1.  Let indx be ToString(len–1).
+>>>>>CM:GREEN
     2.  Let element be the result of calling the [[Get]] internal method of O with argument indx.
+>>>>>CM:GREEN
     3.  Call the [[Delete]] internal method of O with arguments indx and true.
+>>>>>CM:GREEN
     4.  Call the [[Put]] internal method of O with arguments "length", indx, and true.
+>>>>>CM:GREEN
     5.  Return element.
 
+>>>>>CM:GREEN
 NOTE The pop function is intentionally generic; it does not require that its this value be an Array
+>>>>>CM:GREEN
 object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the
+>>>>>CM:GREEN
 pop function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.7 Array.prototype.push ( [ item1 [ , item2 [ , … ] ] ] )
+>>>>>CM:GREEN
 ===============================================================
 
+>>>>>CM:GREEN
 The arguments are appended to the end of the array, in the order in which they appear. The new
+>>>>>CM:GREEN
 length of the array is returned as the result of the call.
 
+>>>>>CM:GREEN
 When the push method is called with zero or more arguments item1, item2, etc., the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let n be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  Let items be an internal List whose elements are, in left to right order, the arguments that
+>>>>>CM:GREEN
     were passed to this function invocation.
+>>>>>CM:GREEN
 5.  Repeat, while items is not empty
+>>>>>CM:GREEN
     1.  Remove the first element from items and let E be the value of the element.
+>>>>>CM:GREEN
     2.  Call the [[Put]] internal method of O with arguments ToString(n), E, and true.
+>>>>>CM:GREEN
     3.  Increase n by 1.
 
+>>>>>CM:GREEN
 6.  Call the [[Put]] internal method of O with arguments "length", n, and true.
+>>>>>CM:GREEN
 7.  Return n.
 
+>>>>>CM:GREEN
 The length property of the push method is 1.
 
+>>>>>CM:GREEN
 NOTE The push function is intentionally generic; it does not require that its this value be an Array
+>>>>>CM:GREEN
 object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the
+>>>>>CM:GREEN
 push function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.8 Array.prototype.reverse ( )
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 The elements of the array are rearranged so as to reverse their order. The object is returned as the
+>>>>>CM:GREEN
 result of the call.
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  Let middle be floor(len/2).
+>>>>>CM:GREEN
 5.  Let lower be 0.
+>>>>>CM:GREEN
 6.  Repeat, while lower ≠ middle
+>>>>>CM:GREEN
     1.  Let upper be len− lower −1.
+>>>>>CM:GREEN
     2.  Let upperP be ToString(upper).
+>>>>>CM:GREEN
     3.  Let lowerP be ToString(lower).
+>>>>>CM:GREEN
     4.  Let lowerValue be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
         lowerP.
+>>>>>CM:GREEN
     5.  Let upperValue be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
         upperP .
+>>>>>CM:GREEN
     6.  Let lowerExists be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
         argument lowerP.
+>>>>>CM:GREEN
     7.  Let upperExists be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
         argument upperP.
+>>>>>CM:GREEN
     8.  If lowerExists is true and upperExists is true, then
+>>>>>CM:GREEN
         1.  Call the [[Put]] internal method of O with arguments lowerP, upperValue, and true .
+>>>>>CM:GREEN
         2.  Call the [[Put]] internal method of O with arguments upperP, lowerValue, and true .
 
+>>>>>CM:GREEN
     9.  Else if lowerExists is false and upperExists is true, then
+>>>>>CM:GREEN
         1.  Call the [[Put]] internal method of O with arguments lowerP, upperValue, and true .
+>>>>>CM:GREEN
         2.  Call the [[Delete]] internal method of O, with arguments upperP and true.
 
+>>>>>CM:GREEN
     10. Else if lowerExists is true and upperExists is false, then
+>>>>>CM:GREEN
         1.  Call the [[Delete]] internal method of O, with arguments lowerP and true .
+>>>>>CM:GREEN
         2.  Call the [[Put]] internal method of O with arguments upperP, lowerValue, and true .
 
+>>>>>CM:GREEN
     11. Else, both lowerExists and upperExists are false
+>>>>>CM:GREEN
         1.  No action is required.
 
+>>>>>CM:GREEN
     12. Increase lower by 1.
 
+>>>>>CM:GREEN
 7.  Return O .
 
+>>>>>CM:GREEN
 NOTE The reverse function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore, it can be transferred to other kinds of objects for use as a method.
+>>>>>CM:GREEN
 Whether the reverse function can be applied successfully to a host object is
+>>>>>CM:GREEN
 implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.9 Array.prototype.shift ( )
+>>>>>CM:GREEN
 ==================================
 
+>>>>>CM:GREEN
 The first element of the array is removed from the array and returned.
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  If len is zero, then
+>>>>>CM:GREEN
     1.  Call the [[Put]] internal method of O with arguments "length", 0, and true.
+>>>>>CM:GREEN
     2.  Return undefined.
 
+>>>>>CM:GREEN
 5.  Let first be the result of calling the [[Get]] internal method of O with argument "0".
+>>>>>CM:GREEN
 6.  Let k be 1.
+>>>>>CM:GREEN
 7.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let from be ToString(k).
+>>>>>CM:GREEN
     2.  Let to be ToString(k–1).
+>>>>>CM:GREEN
     3.  Let fromPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
         argument from.
+>>>>>CM:GREEN
     4.  If fromPresent is true, then
+>>>>>CM:GREEN
         1.  Let fromVal be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
             from.
+>>>>>CM:GREEN
         2.  Call the [[Put]] internal method of O with arguments to, fromVal, and true.
 
+>>>>>CM:GREEN
     5.  Else, fromPresent is false
+>>>>>CM:GREEN
         1.  Call the [[Delete]] internal method of O with arguments to and true.
 
+>>>>>CM:GREEN
     6.  Increase k by 1.
 
+>>>>>CM:GREEN
 8.  Call the [[Delete]] internal method of O with arguments ToString(len–1) and true.
+>>>>>CM:GREEN
 9.  Call the [[Put]] internal method of O with arguments "length", (len–1) , and true.
+>>>>>CM:GREEN
 10. Return first.
 
+>>>>>CM:GREEN
 NOTE The shift function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the shift function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.10 Array.prototype.slice (start, end)
+>>>>>CM:GREEN
 ============================================
 
+>>>>>CM:GREEN
 The slice method takes two arguments, start and end, and returns an array containing the elements of
+>>>>>CM:GREEN
 the array from element start up to, but not including, element end (or through the end of the array
+>>>>>CM:GREEN
 if end is undefined). If start is negative, it is treated as length+start where length is the length
+>>>>>CM:GREEN
 of the array. If end is negative, it is treated as length+end where length is the length of the
+>>>>>CM:GREEN
 array. The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let A be a new array created as if by the expression new Array() where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name.
+>>>>>CM:GREEN
 3.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 4.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 5.  Let relativeStart be ToInteger(start).
+>>>>>CM:GREEN
 6.  If relativeStart is negative, let k be max((len + relativeStart),0); else let k be
+>>>>>CM:GREEN
     min(relativeStart, len).
+>>>>>CM:GREEN
 7.  If end is undefined, let relativeEnd be len; else let relativeEnd be ToInteger(end).
+>>>>>CM:GREEN
 8.  If relativeEnd is negative, let final be max((len + relativeEnd),0); else let final be
+>>>>>CM:GREEN
     min(relativeEnd, len).
+>>>>>CM:GREEN
 9.  Let n be 0.
+>>>>>CM:GREEN
 10. Repeat, while k < final
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(n), Property
+>>>>>CM:GREEN
             Descriptor {[[Value]]: kValue, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
             [[Configurable]]: true}, and false.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
+>>>>>CM:GREEN
     5.  Increase n by 1.
 
+>>>>>CM:GREEN
 11. Return A.
 
+>>>>>CM:GREEN
 The length property of the slice method is 2.
 
+>>>>>CM:GREEN
 NOTE The slice function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the slice function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:YELLOW
 15.4.4.11 Array.prototype.sort (comparefn)
+>>>>>CM:YELLOW
 ==========================================
 
+>>>>>CM:YELLOW
 The elements of this array are sorted. The sort is not necessarily stable (that is, elements that
+>>>>>CM:YELLOW
 compare equal do not necessarily remain in their original order). If comparefn is not undefined, it
+>>>>>CM:YELLOW
 should be a function that accepts two arguments x and y and returns a negative value if x < y, zero
+>>>>>CM:YELLOW
 if x = y, or a positive value if x > y.
 
+>>>>>CM:YELLOW
 Let obj be the result of calling ToObject passing the this value as the argument.
 
+>>>>>CM:YELLOW
 Let len be the result of applying Uint32 to the result of calling the [[Get]] internal method of obj
+>>>>>CM:YELLOW
 with argument "length".
 
+>>>>>CM:YELLOW
 If comparefn is not undefined and is not a consistent comparison function for the elements of this
+>>>>>CM:YELLOW
 array (see below), the behaviour of sort is implementation-defined.
 
+>>>>>CM:YELLOW
 Let proto be the value of the [[Prototype]] internal property of obj. If proto is not null and there
+>>>>>CM:YELLOW
 exists an integer j such that all of the conditions below are satisfied then the behaviour of sort
+>>>>>CM:YELLOW
 is implementation-defined:
 
+>>>>>CM:YELLOW
 -   obj is sparse (15.4)
+>>>>>CM:YELLOW
 -   0 ≤ j < len
+>>>>>CM:YELLOW
 -   The result of calling the [[HasProperty]] internal method of proto with argument ToString(j) is
+>>>>>CM:YELLOW
     true.
 
+>>>>>CM:YELLOW
 The behaviour of sort is also implementation defined if obj is sparse and any of the following
+>>>>>CM:YELLOW
 conditions are true:
 
+>>>>>CM:YELLOW
 -   The [[Extensible]] internal property of obj is false.
 
+>>>>>CM:YELLOW
 -   Any array index property of obj whose name is a nonnegative integer less than len is a data
+>>>>>CM:YELLOW
     property whose [[Configurable]] attribute is false.
 
+>>>>>CM:YELLOW
 The behaviour of sort is also implementation defined if any array index property of obj whose name
+>>>>>CM:YELLOW
 is a nonnegative integer less than len is an accessor property or is a data property whose
+>>>>>CM:YELLOW
 [[Writable]] attribute is false.
 
+>>>>>CM:YELLOW
 Otherwise, the following steps are taken.
 
+>>>>>CM:YELLOW
 1.  Perform an implementation-dependent sequence of calls to the [[Get]] , [[Put]], and [[Delete]]
+>>>>>CM:YELLOW
     internal methods of obj and to SortCompare (described below), where the first argument for each
+>>>>>CM:YELLOW
     call to [[Get]], [[Put]], or [[Delete]] is a nonnegative integer less than len and where the
+>>>>>CM:YELLOW
     arguments for calls to SortCompare are results of previous calls to the [[Get]] internal method.
+>>>>>CM:YELLOW
     The throw argument to the [[Put]] and [[Delete]] internal methods will be the value true. If obj
+>>>>>CM:YELLOW
     is not sparse then [[Delete]] must not be called.
+>>>>>CM:YELLOW
 2.  Return obj.
 
+>>>>>CM:YELLOW
 The returned object must have the following two properties.
 
+>>>>>CM:YELLOW
 -   There must be some mathematical permutation π of the nonnegative integers less than len, such
+>>>>>CM:YELLOW
     that for every nonnegative integer j less than len, if property old[j] existed, then new[π(j)]
+>>>>>CM:YELLOW
     is exactly the same value as old[j],. But if property old[j] did not exist, then new[π(j)] does
+>>>>>CM:YELLOW
     not exist.
 
+>>>>>CM:YELLOW
 -   Then for all nonnegative integers j and k, each less than len, if SortCompare(j,k) < 0 (see
+>>>>>CM:YELLOW
     SortCompare below), then π(j) < π(k).
 
+>>>>>CM:YELLOW
 Here the notation old[j] is used to refer to the hypothetical result of calling the [[Get]] internal
+>>>>>CM:YELLOW
 method of obj with argument j before this function is executed, and the notation new[j] to refer to
+>>>>>CM:YELLOW
 the hypothetical result of calling the [[Get]] internal method of obj with argument j after this
+>>>>>CM:YELLOW
 function has been executed.
 
+>>>>>CM:YELLOW
 A function comparefn is a consistent comparison function for a set of values S if all of the
+>>>>>CM:YELLOW
 requirements below are met for all values a, b, and c (possibly the same value) in the set S: The
+>>>>>CM:YELLOW
 notation a <CF b means comparefn(a,b) < 0; a =CF b means comparefn(a,b) = 0 (of either sign); and
+>>>>>CM:YELLOW
 a >CF b means comparefn(a,b) > 0.
 
+>>>>>CM:YELLOW
 -   Calling comparefn(a,b) always returns the same value v when given a specific pair of values a
+>>>>>CM:YELLOW
     and b as its two arguments. Furthermore, Type(v) is Number, and v is not NaN. Note that this
+>>>>>CM:YELLOW
     implies that exactly one of a <CF b, a =CF b, and a >CF b will be true for a given pair of a and
+>>>>>CM:YELLOW
     b.
 
+>>>>>CM:YELLOW
 -   Calling comparefn(a,b) does not modify the this object.
 
+>>>>>CM:YELLOW
 -   a =CF a (reflexivity)
 
+>>>>>CM:YELLOW
 -   If a =CF b, then b =CF a (symmetry)
 
+>>>>>CM:YELLOW
 -   If a =CF b and b =CF c, then a =CF c (transitivity of =CF)
 
+>>>>>CM:YELLOW
 -   If a <CF b and b <CF c, then a <CF c (transitivity of <CF)
 
+>>>>>CM:YELLOW
 -   If a >CF b and b >CF c, then a >CF c (transitivity of >CF)
 
+>>>>>CM:YELLOW
 NOTE The above conditions are necessary and sufficient to ensure that comparefn divides the set S
+>>>>>CM:YELLOW
 into equivalence classes and that these equivalence classes are totally ordered.
 
+>>>>>CM:YELLOW
 When the SortCompare abstract operation is called with two arguments j and k, the following steps
+>>>>>CM:YELLOW
 are taken:
 
+>>>>>CM:YELLOW
 1.  Let jString be ToString(j).
+>>>>>CM:YELLOW
 2.  Let kString be ToString(k).
+>>>>>CM:YELLOW
 3.  Let hasj be the result of calling the [[HasProperty]] internal method of obj with argument
+>>>>>CM:YELLOW
     jString.
+>>>>>CM:YELLOW
 4.  Let hask be the result of calling the [[HasProperty]] internal method of obj with argument
+>>>>>CM:YELLOW
     kString.
+>>>>>CM:YELLOW
 5.  If hasj and hask are both false, then return +0.
+>>>>>CM:YELLOW
 6.  If hasj is false, then return 1.
+>>>>>CM:YELLOW
 7.  If hask is false, then return –1.
+>>>>>CM:YELLOW
 8.  Let x be the result of calling the [[Get]] internal method of obj with argument jString.
+>>>>>CM:YELLOW
 9.  Let y be the result of calling the [[Get]] internal method of obj with argument kString.
+>>>>>CM:YELLOW
 10. If x and y are both undefined, return +0.
+>>>>>CM:YELLOW
 11. If x is undefined, return 1.
+>>>>>CM:YELLOW
 12. If y is undefined, return −1.
+>>>>>CM:YELLOW
 13. If the argument comparefn is not undefined, then
+>>>>>CM:YELLOW
     1.  If IsCallable(comparefn) is false, throw a TypeError exception.
+>>>>>CM:YELLOW
     2.  Return the result of calling the [[Call]] internal method of comparefn passing undefined as
+>>>>>CM:YELLOW
         the this value and with arguments x and y.
 
+>>>>>CM:YELLOW
 14. Let xString be ToString(x).
+>>>>>CM:YELLOW
 15. Let yString be ToString(y).
+>>>>>CM:YELLOW
 16. If xString < yString, return −1.
+>>>>>CM:YELLOW
 17. If xString > yString, return 1.
+>>>>>CM:YELLOW
 18. Return +0.
 
+>>>>>CM:YELLOW
 NOTE 1 Because non-existent property values always compare greater than undefined property values,
+>>>>>CM:YELLOW
 and undefined always compares greater than any other value, undefined property values always sort to
+>>>>>CM:YELLOW
 the end of the result, followed by non-existent property values.
 
+>>>>>CM:YELLOW
 NOTE 2 The sort function is intentionally generic; it does not require that its this value be an
+>>>>>CM:YELLOW
 Array object. Therefore, it can be transferred to other kinds of objects for use as a method.
+>>>>>CM:YELLOW
 Whether the sort function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.12 Array.prototype.splice (start, deleteCount [ , item1 [ , item2 [ , … ] ] ] )
+>>>>>CM:GREEN
 ======================================================================================
 
+>>>>>CM:GREEN
 When the splice method is called with two or more arguments start, deleteCount and (optionally)
+>>>>>CM:GREEN
 item1, item2, etc., the deleteCount elements of the array starting at array index start are replaced
+>>>>>CM:GREEN
 by the arguments item1, item2, etc. An Array object containing the deleted elements (if any) is
+>>>>>CM:GREEN
 returned. The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let A be a new array created as if by the expression new Array()where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name.
+>>>>>CM:GREEN
 3.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 4.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 5.  Let relativeStart be ToInteger(start).
+>>>>>CM:GREEN
 6.  If relativeStart is negative, let actualStart be max((len + relativeStart),0); else let
+>>>>>CM:GREEN
     actualStart be min(relativeStart, len).
+>>>>>CM:GREEN
 7.  Let actualDeleteCount be min(max(ToInteger(deleteCount),0), len – actualStart).
+>>>>>CM:GREEN
 8.  Let k be 0.
+>>>>>CM:GREEN
 9.  Repeat, while k < actualDeleteCount
+>>>>>CM:GREEN
     1.  Let from be ToString(actualStart+k).
+>>>>>CM:GREEN
     2.  Let fromPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
         argument from.
+>>>>>CM:GREEN
     3.  If fromPresent is true, then
+>>>>>CM:GREEN
         1.  Let fromValue be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
             from.
+>>>>>CM:GREEN
         2.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(k), Property
+>>>>>CM:GREEN
             Descriptor {[[Value]]: fromValue, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
             [[Configurable]]: true}, and false.
 
+>>>>>CM:GREEN
     4.  Increment k by 1.
 
+>>>>>CM:GREEN
 10. Let items be an internal List whose elements are, in left to right order, the portion of the
+>>>>>CM:GREEN
     actual argument list starting with item1. The list will be empty if no such items are present.
+>>>>>CM:GREEN
 11. Let itemCount be the number of elements in items.
+>>>>>CM:GREEN
 12. If itemCount < actualDeleteCount, then
+>>>>>CM:GREEN
     1.  Let k be actualStart.
+>>>>>CM:GREEN
     2.  Repeat, while k < (len – actualDeleteCount)
+>>>>>CM:GREEN
         1.  Let from be ToString(k+actualDeleteCount).
+>>>>>CM:GREEN
         2.  Let to be ToString(k+itemCount).
+>>>>>CM:GREEN
         3.  Let fromPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
             argument from.
+>>>>>CM:GREEN
         4.  If fromPresent is true, then
+>>>>>CM:GREEN
             1.  Let fromValue be the result of calling the [[Get]] internal method of O with
+>>>>>CM:GREEN
                 argument from.
+>>>>>CM:GREEN
             2.  Call the [[Put]] internal method of O with arguments to, fromValue, and true.
 
+>>>>>CM:GREEN
         5.  Else, fromPresent is false
+>>>>>CM:GREEN
             1.  Call the [[Delete]] internal method of O with arguments to and true.
 
+>>>>>CM:GREEN
         6.  Increase k by 1.
 
+>>>>>CM:GREEN
     3.  Let k be len.
+>>>>>CM:GREEN
     4.  Repeat, while k > (len – actualDeleteCount + itemCount)
+>>>>>CM:GREEN
         1.  Call the [[Delete]] internal method of O with arguments ToString(k–1) and true.
+>>>>>CM:GREEN
         2.  Decrease k by 1.
 
+>>>>>CM:GREEN
 13. Else if itemCount > actualDeleteCount, then
+>>>>>CM:GREEN
     1.  Let k be (len – actualDeleteCount).
+>>>>>CM:GREEN
     2.  Repeat, while k > actualStart
+>>>>>CM:GREEN
         1.  Let from be ToString(k + actualDeleteCount – 1).
+>>>>>CM:GREEN
         2.  Let to be ToString(k + itemCount – 1)
+>>>>>CM:GREEN
         3.  Let fromPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
             argument from.
+>>>>>CM:GREEN
         4.  If fromPresent is true, then
+>>>>>CM:GREEN
             1.  Let fromValue be the result of calling the [[Get]] internal method of O with
+>>>>>CM:GREEN
                 argument from.
+>>>>>CM:GREEN
             2.  Call the [[Put]] internal method of O with arguments to, fromValue, and true.
 
+>>>>>CM:GREEN
         5.  Else, fromPresent is false
+>>>>>CM:GREEN
             1.  Call the [[Delete]] internal method of O with argument to and true.
 
+>>>>>CM:GREEN
         6.  Decrease k by 1.
 
+>>>>>CM:GREEN
 14. Let k be actualStart.
+>>>>>CM:GREEN
 15. Repeat, while items is not empty
+>>>>>CM:GREEN
     1.  Remove the first element from items and let E be the value of that element.
+>>>>>CM:GREEN
     2.  Call the [[Put]] internal method of O with arguments ToString(k), E, and true.
+>>>>>CM:GREEN
     3.  Increase k by 1.
 
+>>>>>CM:GREEN
 16. Call the [[Put]] internal method of O with arguments "length", (len – actualDeleteCount +
+>>>>>CM:GREEN
     itemCount), and true.
+>>>>>CM:GREEN
 17. Return A.
 
+>>>>>CM:GREEN
 The length property of the splice method is 2.
 
+>>>>>CM:GREEN
 NOTE The splice function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the splice function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.13 Array.prototype.unshift ( [ item1 [ , item2 [ , … ] ] ] )
+>>>>>CM:GREEN
 ===================================================================
 
+>>>>>CM:GREEN
 The arguments are prepended to the start of the array, such that their order within the array is the
+>>>>>CM:GREEN
 same as the order in which they appear in the argument list.
 
+>>>>>CM:GREEN
 When the unshift method is called with zero or more arguments item1, item2, etc., the following
+>>>>>CM:GREEN
 steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenVal be the result of calling the [[Get]] internal method of O with argument "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenVal).
+>>>>>CM:GREEN
 4.  Let argCount be the number of actual arguments.
+>>>>>CM:GREEN
 5.  Let k be len.
+>>>>>CM:GREEN
 6.  Repeat, while k > 0,
+>>>>>CM:GREEN
     1.  Let from be ToString(k–1).
+>>>>>CM:GREEN
     2.  Let to be ToString(k+argCount –1).
+>>>>>CM:GREEN
     3.  Let fromPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
         argument from.
+>>>>>CM:GREEN
     4.  If fromPresent is true, then
+>>>>>CM:GREEN
         1.  Let fromValue be the result of calling the [[Get]] internal method of O with argument
+>>>>>CM:GREEN
             from.
+>>>>>CM:GREEN
         2.  Call the [[Put]] internal method of O with arguments to, fromValue, and true.
 
+>>>>>CM:GREEN
     5.  Else, fromPresent is false
+>>>>>CM:GREEN
         1.  Call the [[Delete]] internal method of O with arguments to, and true.
 
+>>>>>CM:GREEN
     6.  Decrease k by 1.
 
+>>>>>CM:GREEN
 7.  Let j be 0.
+>>>>>CM:GREEN
 8.  Let items be an internal List whose elements are, in left to right order, the arguments that
+>>>>>CM:GREEN
     were passed to this function invocation.
+>>>>>CM:GREEN
 9.  Repeat, while items is not empty
+>>>>>CM:GREEN
     1.  Remove the first element from items and let E be the value of that element.
+>>>>>CM:GREEN
     2.  Call the [[Put]] internal method of O with arguments ToString(j), E, and true.
+>>>>>CM:GREEN
     3.  Increase j by 1.
 
+>>>>>CM:GREEN
 10. Call the [[Put]] internal method of O with arguments "length", len+argCount, and true.
+>>>>>CM:GREEN
 11. Return len+argCount.
 
+>>>>>CM:GREEN
 The length property of the unshift method is 1.
 
+>>>>>CM:GREEN
 NOTE The unshift function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the unshift function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.14 Array.prototype.indexOf ( searchElement [ , fromIndex ] )
+>>>>>CM:GREEN
 ===================================================================
 
+>>>>>CM:GREEN
 indexOf compares searchElement to the elements of the array, in ascending order, using the internal
+>>>>>CM:GREEN
 Strict Equality Comparison Algorithm (11.9.6), and if found at one or more positions, returns the
+>>>>>CM:GREEN
 index of the first such position; otherwise, -1 is returned.
 
+>>>>>CM:GREEN
 The optional second argument fromIndex defaults to 0 (i.e. the whole array is searched). If it is
+>>>>>CM:GREEN
 greater than or equal to the length of the array, -1 is returned, i.e. the array will not be
+>>>>>CM:GREEN
 searched. If it is negative, it is used as the offset from the end of the array to compute
+>>>>>CM:GREEN
 fromIndex. If the computed index is less than 0, the whole array will be searched.
 
+>>>>>CM:GREEN
 When the indexOf method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If len is 0, return -1.
+>>>>>CM:GREEN
 5.  If argument fromIndex was passed let n be ToInteger(fromIndex); else let n be 0.
+>>>>>CM:GREEN
 6.  If n ≥ len, return -1.
+>>>>>CM:GREEN
 7.  If n ≥ 0, then
+>>>>>CM:GREEN
     1.  Let k be n.
 
+>>>>>CM:GREEN
 8.  Else, n<0
+>>>>>CM:GREEN
     1.  Let k be len - abs(n).
+>>>>>CM:GREEN
     2.  If k is less than 0, then let k be 0.
 
+>>>>>CM:GREEN
 9.  Repeat, while k<len
+>>>>>CM:GREEN
     1.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         ToString(k).
+>>>>>CM:GREEN
     2.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let elementK be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
             ToString(k).
+>>>>>CM:GREEN
         2.  Let same be the result of applying the Strict Equality Comparison Algorithm to
+>>>>>CM:GREEN
             searchElement and elementK.
+>>>>>CM:GREEN
         3.  If same is true, return k.
 
+>>>>>CM:GREEN
     3.  Increase k by 1.
 
+>>>>>CM:GREEN
 10. Return -1.
 
+>>>>>CM:GREEN
 The length property of the indexOf method is 1.
 
+>>>>>CM:GREEN
 NOTE The indexOf function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the indexOf function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.15 Array.prototype.lastIndexOf ( searchElement [ , fromIndex ] )
+>>>>>CM:GREEN
 =======================================================================
 
+>>>>>CM:GREEN
 lastIndexOf compares searchElement to the elements of the array in descending order using the
+>>>>>CM:GREEN
 internal Strict Equality Comparison Algorithm (11.9.6), and if found at one or more positions,
+>>>>>CM:GREEN
 returns the index of the last such position; otherwise, -1 is returned.
 
+>>>>>CM:GREEN
 The optional second argument fromIndex defaults to the array’s length minus one (i.e. the whole
+>>>>>CM:GREEN
 array is searched). If it is greater than or equal to the length of the array, the whole array will
+>>>>>CM:GREEN
 be searched. If it is negative, it is used as the offset from the end of the array to compute
+>>>>>CM:GREEN
 fromIndex. If the computed index is less than 0, -1 is returned.
 
+>>>>>CM:GREEN
 When the lastIndexOf method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If len is 0, return -1.
+>>>>>CM:GREEN
 5.  If argument fromIndex was passed let n be ToInteger(fromIndex); else let n be len-1.
+>>>>>CM:GREEN
 6.  If n ≥ 0, then let k be min(n, len – 1).
+>>>>>CM:GREEN
 7.  Else, n < 0
+>>>>>CM:GREEN
     1.  Let k be len - abs(n).
 
+>>>>>CM:GREEN
 8.  Repeat, while k≥ 0
+>>>>>CM:GREEN
     1.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         ToString(k).
+>>>>>CM:GREEN
     2.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let elementK be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
             ToString(k).
+>>>>>CM:GREEN
         2.  Let same be the result of applying the Strict Equality Comparison Algorithm to
+>>>>>CM:GREEN
             searchElement and elementK.
+>>>>>CM:GREEN
         3.  If same is true, return k.
 
+>>>>>CM:GREEN
     3.  Decrease k by 1.
 
+>>>>>CM:GREEN
 9.  Return -1.
 
+>>>>>CM:GREEN
 The length property of the lastIndexOf method is 1.
 
+>>>>>CM:GREEN
 NOTE The lastIndexOf function is intentionally generic; it does not require that its this value be
+>>>>>CM:GREEN
 an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+>>>>>CM:GREEN
 Whether the lastIndexOf function can be applied successfully to a host object is
+>>>>>CM:GREEN
 implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.16 Array.prototype.every ( callbackfn [ , thisArg ] )
+>>>>>CM:GREEN
 ============================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that accepts three arguments and returns a value that is coercible
+>>>>>CM:GREEN
 to the Boolean value true or false. every calls callbackfn once for each element present in the
+>>>>>CM:GREEN
 array, in ascending order, until it finds one where callbackfn returns false. If such an element is
+>>>>>CM:GREEN
 found, every immediately returns false. Otherwise, if callbackfn returned true for all elements,
+>>>>>CM:GREEN
 every will return true. callbackfn is called only for elements of the array which actually exist; it
+>>>>>CM:GREEN
 is not called for missing elements of the array.
 
+>>>>>CM:GREEN
 If a thisArg parameter is provided, it will be used as the this value for each invocation of
+>>>>>CM:GREEN
 callbackfn. If it is not provided, undefined is used instead.
 
+>>>>>CM:GREEN
 callbackfn is called with three arguments: the value of the element, the index of the element, and
+>>>>>CM:GREEN
 the object being traversed.
 
+>>>>>CM:GREEN
 every does not directly mutate the object on which it is called but the object may be mutated by the
+>>>>>CM:GREEN
 calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by every is set before the first call to callbackfn. Elements which
+>>>>>CM:GREEN
 are appended to the array after the call to every begins will not be visited by callbackfn. If
+>>>>>CM:GREEN
 existing elements of the array are changed, their value as passed to callbackfn will be the value at
+>>>>>CM:GREEN
 the time every visits them; elements that are deleted after the call to every begins and before
+>>>>>CM:GREEN
 being visited are not visited. every acts like the “for all” quantifier in mathematics. In
+>>>>>CM:GREEN
 particular, for an empty array, it returns true.
 
+>>>>>CM:GREEN
 When the every method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If thisArg was supplied, let T be thisArg; else let T be undefined.
+>>>>>CM:GREEN
 6.  Let k be 0.
+>>>>>CM:GREEN
 7.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let testResult be the result of calling the [[Call]] internal method of callbackfn with
+>>>>>CM:GREEN
             T as the this value and argument list containing kValue, k, and O.
+>>>>>CM:GREEN
         3.  If ToBoolean(testResult) is false, return false.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 8.  Return true.
 
+>>>>>CM:GREEN
 The length property of the every method is 1.
 
+>>>>>CM:GREEN
 NOTE The every function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the every function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.17 Array.prototype.some ( callbackfn [ , thisArg ] )
+>>>>>CM:GREEN
 ===========================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that accepts three arguments and returns a value that is coercible
+>>>>>CM:GREEN
 to the Boolean value true or false. some calls callbackfn once for each element present in the
+>>>>>CM:GREEN
 array, in ascending order, until it finds one where callbackfn returns true. If such an element is
+>>>>>CM:GREEN
 found, some immediately returns true. Otherwise, some returns false. callbackfn is called only for
+>>>>>CM:GREEN
 elements of the array which actually exist; it is not called for missing elements of the array.
 
+>>>>>CM:GREEN
 If a thisArg parameter is provided, it will be used as the this value for each invocation of
+>>>>>CM:GREEN
 callbackfn. If it is not provided, undefined is used instead.
 
+>>>>>CM:GREEN
 callbackfn is called with three arguments: the value of the element, the index of the element, and
+>>>>>CM:GREEN
 the object being traversed.
 
+>>>>>CM:GREEN
 some does not directly mutate the object on which it is called but the object may be mutated by the
+>>>>>CM:GREEN
 calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by some is set before the first call to callbackfn. Elements that
+>>>>>CM:GREEN
 are appended to the array after the call to some begins will not be visited by callbackfn. If
+>>>>>CM:GREEN
 existing elements of the array are changed, their value as passed to callbackfn will be the value at
+>>>>>CM:GREEN
 the time that some visits them; elements that are deleted after the call to some begins and before
+>>>>>CM:GREEN
 being visited are not visited. some acts like the “exists” quantifier in mathematics. In particular,
+>>>>>CM:GREEN
 for an empty array, it returns false.
 
+>>>>>CM:GREEN
 When the some method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If thisArg was supplied, let T be thisArg; else let T be undefined.
+>>>>>CM:GREEN
 6.  Let k be 0.
+>>>>>CM:GREEN
 7.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let testResult be the result of calling the [[Call]] internal method of callbackfn with
+>>>>>CM:GREEN
             T as the this value and argument list containing kValue, k, and O.
+>>>>>CM:GREEN
         3.  If ToBoolean(testResult) is true, return true.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 8.  Return false.
 
+>>>>>CM:GREEN
 The length property of the some method is 1.
 
+>>>>>CM:GREEN
 NOTE The some function is intentionally generic; it does not require that its this value be an Array
+>>>>>CM:GREEN
 object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the
+>>>>>CM:GREEN
 some function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.18 Array.prototype.forEach ( callbackfn [ , thisArg ] )
+>>>>>CM:GREEN
 ==============================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that accepts three arguments. forEach calls callbackfn once for each
+>>>>>CM:GREEN
 element present in the array, in ascending order. callbackfn is called only for elements of the
+>>>>>CM:GREEN
 array which actually exist; it is not called for missing elements of the array.
 
+>>>>>CM:GREEN
 If a thisArg parameter is provided, it will be used as the this value for each invocation of
+>>>>>CM:GREEN
 callbackfn. If it is not provided, undefined is used instead.
 
+>>>>>CM:GREEN
 callbackfn is called with three arguments: the value of the element, the index of the element, and
+>>>>>CM:GREEN
 the object being traversed.
 
+>>>>>CM:GREEN
 forEach does not directly mutate the object on which it is called but the object may be mutated by
+>>>>>CM:GREEN
 the calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by forEach is set before the first call to callbackfn. Elements
+>>>>>CM:GREEN
 which are appended to the array after the call to forEach begins will not be visited by callbackfn.
+>>>>>CM:GREEN
 If existing elements of the array are changed, their value as passed to callback will be the value
+>>>>>CM:GREEN
 at the time forEach visits them; elements that are deleted after the call to forEach begins and
+>>>>>CM:GREEN
 before being visited are not visited.
 
+>>>>>CM:GREEN
 When the forEach method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If thisArg was supplied, let T be thisArg; else let T be undefined.
+>>>>>CM:GREEN
 6.  Let k be 0.
+>>>>>CM:GREEN
 7.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Call the [[Call]] internal method of callbackfn with T as the this value and argument
+>>>>>CM:GREEN
             list containing kValue, k, and O.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 8.  Return undefined.
 
+>>>>>CM:GREEN
 The length property of the forEach method is 1.
 
+>>>>>CM:GREEN
 NOTE The forEach function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the forEach function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.19 Array.prototype.map ( callbackfn [ , thisArg ] )
+>>>>>CM:GREEN
 ==========================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that accepts three arguments. map calls callbackfn once for each
+>>>>>CM:GREEN
 element in the array, in ascending order, and constructs a new Array from the results. callbackfn is
+>>>>>CM:GREEN
 called only for elements of the array which actually exist; it is not called for missing elements of
+>>>>>CM:GREEN
 the array.
 
+>>>>>CM:GREEN
 If a thisArg parameter is provided, it will be used as the this value for each invocation of
+>>>>>CM:GREEN
 callbackfn. If it is not provided, undefined is used instead.
 
+>>>>>CM:GREEN
 callbackfn is called with three arguments: the value of the element, the index of the element, and
+>>>>>CM:GREEN
 the object being traversed.
 
+>>>>>CM:GREEN
 map does not directly mutate the object on which it is called but the object may be mutated by the
+>>>>>CM:GREEN
 calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by map is set before the first call to callbackfn. Elements which
+>>>>>CM:GREEN
 are appended to the array after the call to map begins will not be visited by callbackfn. If
+>>>>>CM:GREEN
 existing elements of the array are changed, their value as passed to callbackfn will be the value at
+>>>>>CM:GREEN
 the time map visits them; elements that are deleted after the call to map begins and before being
+>>>>>CM:GREEN
 visited are not visited.
 
+>>>>>CM:GREEN
 When the map method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If thisArg was supplied, let T be thisArg; else let T be undefined.
+>>>>>CM:GREEN
 6.  Let A be a new array created as if by the expression new Array(len) where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name and len is the value of len.
+>>>>>CM:GREEN
 7.  Let k be 0.
+>>>>>CM:GREEN
 8.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let mappedValue be the result of calling the [[Call]] internal method of callbackfn with
+>>>>>CM:GREEN
             T as the this value and argument list containing kValue, k, and O.
+>>>>>CM:GREEN
         3.  Call the [[DefineOwnProperty]] internal method of A with arguments Pk, Property
+>>>>>CM:GREEN
             Descriptor {[[Value]]: mappedValue, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
             [[Configurable]]: true}, and false.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 9.  Return A.
 
+>>>>>CM:GREEN
 The length property of the map method is 1.
 
+>>>>>CM:GREEN
 NOTE The map function is intentionally generic; it does not require that its this value be an Array
+>>>>>CM:GREEN
 object. Therefore it can be transferred to other kinds of objects for use as a method. Whether the
+>>>>>CM:GREEN
 map function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.20 Array.prototype.filter ( callbackfn [ , thisArg ] )
+>>>>>CM:GREEN
 =============================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that accepts three arguments and returns a value that is coercible
+>>>>>CM:GREEN
 to the Boolean value true or false. filter calls callbackfn once for each element in the array, in
+>>>>>CM:GREEN
 ascending order, and constructs a new array of all the values for which callbackfn returns true.
+>>>>>CM:GREEN
 callbackfn is called only for elements of the array which actually exist; it is not called for
+>>>>>CM:GREEN
 missing elements of the array.
 
+>>>>>CM:GREEN
 If a thisArg parameter is provided, it will be used as the this value for each invocation of
+>>>>>CM:GREEN
 callbackfn. If it is not provided, undefined is used instead.
 
+>>>>>CM:GREEN
 callbackfn is called with three arguments: the value of the element, the index of the element, and
+>>>>>CM:GREEN
 the object being traversed.
 
+>>>>>CM:GREEN
 filter does not directly mutate the object on which it is called but the object may be mutated by
+>>>>>CM:GREEN
 the calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by filter is set before the first call to callbackfn. Elements which
+>>>>>CM:GREEN
 are appended to the array after the call to filter begins will not be visited by callbackfn. If
+>>>>>CM:GREEN
 existing elements of the array are changed their value as passed to callbackfn will be the value at
+>>>>>CM:GREEN
 the time filter visits them; elements that are deleted after the call to filter begins and before
+>>>>>CM:GREEN
 being visited are not visited.
 
+>>>>>CM:GREEN
 When the filter method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If thisArg was supplied, let T be thisArg; else let T be undefined.
+>>>>>CM:GREEN
 6.  Let A be a new array created as if by the expression new Array() where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name.
+>>>>>CM:GREEN
 7.  Let k be 0.
+>>>>>CM:GREEN
 8.  Let to be 0.
+>>>>>CM:GREEN
 9.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let selected be the result of calling the [[Call]] internal method of callbackfn with T
+>>>>>CM:GREEN
             as the this value and argument list containing kValue, k, and O.
+>>>>>CM:GREEN
         3.  If ToBoolean(selected) is true, then
+>>>>>CM:GREEN
             1.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(to),
+>>>>>CM:GREEN
                 Property Descriptor {[[Value]]: kValue, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
                 [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
             2.  Increase to by 1.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 10. Return A.
 
+>>>>>CM:GREEN
 The length property of the filter method is 1.
 
+>>>>>CM:GREEN
 NOTE The filter function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the filter function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.21 Array.prototype.reduce ( callbackfn [ , initialValue ] )
+>>>>>CM:GREEN
 ==================================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that takes four arguments. reduce calls the callback, as a function,
+>>>>>CM:GREEN
 once for each element present in the array, in ascending order.
 
+>>>>>CM:GREEN
 callbackfn is called with four arguments: the previousValue (or value from the previous call to
+>>>>>CM:GREEN
 callbackfn), the currentValue (value of the current element), the currentIndex, and the object being
+>>>>>CM:GREEN
 traversed. The first time that callback is called, the previousValue and currentValue can be one of
+>>>>>CM:GREEN
 two values. If an initialValue was provided in the call to reduce, then previousValue will be equal
+>>>>>CM:GREEN
 to initialValue and currentValue will be equal to the first value in the array. If no initialValue
+>>>>>CM:GREEN
 was provided, then previousValue will be equal to the first value in the array and currentValue will
+>>>>>CM:GREEN
 be equal to the second. It is a TypeError if the array contains no elements and initialValue is not
+>>>>>CM:GREEN
 provided.
 
+>>>>>CM:GREEN
 reduce does not directly mutate the object on which it is called but the object may be mutated by
+>>>>>CM:GREEN
 the calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by reduce is set before the first call to callbackfn. Elements that
+>>>>>CM:GREEN
 are appended to the array after the call to reduce begins will not be visited by callbackfn. If
+>>>>>CM:GREEN
 existing elements of the array are changed, their value as passed to callbackfn will be the value at
+>>>>>CM:GREEN
 the time reduce visits them; elements that are deleted after the call to reduce begins and before
+>>>>>CM:GREEN
 being visited are not visited.
 
+>>>>>CM:GREEN
 When the reduce method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If len is 0 and initialValue is not present, throw a TypeError exception.
+>>>>>CM:GREEN
 6.  Let k be 0.
+>>>>>CM:GREEN
 7.  If initialValue is present, then
+>>>>>CM:GREEN
     1.  Set accumulator to initialValue.
 
+>>>>>CM:GREEN
 8.  Else, initialValue is not present
+>>>>>CM:GREEN
     1.  Let kPresent be false.
+>>>>>CM:GREEN
     2.  Repeat, while kPresent is false and k < len
+>>>>>CM:GREEN
         1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
         2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
             argument Pk.
+>>>>>CM:GREEN
         3.  If kPresent is true, then
+>>>>>CM:GREEN
             1.  Let accumulator be the result of calling the [[Get]] internal method of O with
+>>>>>CM:GREEN
                 argument Pk.
 
+>>>>>CM:GREEN
         4.  Increase k by 1.
 
+>>>>>CM:GREEN
     3.  If kPresent is false, throw a TypeError exception.
 
+>>>>>CM:GREEN
 9.  Repeat, while k < len
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let accumulator be the result of calling the [[Call]] internal method of callbackfn with
+>>>>>CM:GREEN
             undefined as the this value and argument list containing accumulator, kValue, k, and O.
 
+>>>>>CM:GREEN
     4.  Increase k by 1.
 
+>>>>>CM:GREEN
 10. Return accumulator.
 
+>>>>>CM:GREEN
 The length property of the reduce method is 1.
 
+>>>>>CM:GREEN
 NOTE The reduce function is intentionally generic; it does not require that its this value be an
+>>>>>CM:GREEN
 Array object. Therefore it can be transferred to other kinds of objects for use as a method. Whether
+>>>>>CM:GREEN
 the reduce function can be applied successfully to a host object is implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.4.22 Array.prototype.reduceRight ( callbackfn [ , initialValue ] )
+>>>>>CM:GREEN
 =======================================================================
 
+>>>>>CM:GREEN
 callbackfn should be a function that takes four arguments. reduceRight calls the callback, as a
+>>>>>CM:GREEN
 function, once for each element present in the array, in descending order.
 
+>>>>>CM:GREEN
 callbackfn is called with four arguments: the previousValue (or value from the previous call to
+>>>>>CM:GREEN
 callbackfn), the currentValue (value of the current element), the currentIndex, and the object being
+>>>>>CM:GREEN
 traversed. The first time the function is called, the previousValue and currentValue can be one of
+>>>>>CM:GREEN
 two values. If an initialValue was provided in the call to reduceRight, then previousValue will be
+>>>>>CM:GREEN
 equal to initialValue and currentValue will be equal to the last value in the array. If no
+>>>>>CM:GREEN
 initialValue was provided, then previousValue will be equal to the last value in the array and
+>>>>>CM:GREEN
 currentValue will be equal to the second-to-last value. It is a TypeError if the array contains no
+>>>>>CM:GREEN
 elements and initialValue is not provided.
 
+>>>>>CM:GREEN
 reduceRight does not directly mutate the object on which it is called but the object may be mutated
+>>>>>CM:GREEN
 by the calls to callbackfn.
 
+>>>>>CM:GREEN
 The range of elements processed by reduceRight is set before the first call to callbackfn. Elements
+>>>>>CM:GREEN
 that are appended to the array after the call to reduceRight begins will not be visited by
+>>>>>CM:GREEN
 callbackfn. If existing elements of the array are changed by callbackfn, their value as passed to
+>>>>>CM:GREEN
 callbackfn will be the value at the time reduceRight visits them; elements that are deleted after
+>>>>>CM:GREEN
 the call to reduceRight begins and before being visited are not visited.
 
+>>>>>CM:GREEN
 When the reduceRight method is called with one or two arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let lenValue be the result of calling the [[Get]] internal method of O with the argument
+>>>>>CM:GREEN
     "length".
+>>>>>CM:GREEN
 3.  Let len be ToUint32(lenValue).
+>>>>>CM:GREEN
 4.  If IsCallable(callbackfn) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If len is 0 and initialValue is not present, throw a TypeError exception.
+>>>>>CM:GREEN
 6.  Let k be len-1.
+>>>>>CM:GREEN
 7.  If initialValue is present, then
+>>>>>CM:GREEN
     1.  Set accumulator to initialValue.
 
+>>>>>CM:GREEN
 8.  Else, initialValue is not present
+>>>>>CM:GREEN
     1.  Let kPresent be false.
+>>>>>CM:GREEN
     2.  Repeat, while kPresent is false and k ≥ 0
+>>>>>CM:GREEN
         1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
         2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with
+>>>>>CM:GREEN
             argument Pk.
+>>>>>CM:GREEN
         3.  If kPresent is true, then
+>>>>>CM:GREEN
             1.  Let accumulator be the result of calling the [[Get]] internal method of O with
+>>>>>CM:GREEN
                 argument Pk.
 
+>>>>>CM:GREEN
         4.  Decrease k by 1.
 
+>>>>>CM:GREEN
     3.  If kPresent is false, throw a TypeError exception.
 
+>>>>>CM:GREEN
 9.  Repeat, while k ≥ 0
+>>>>>CM:GREEN
     1.  Let Pk be ToString(k).
+>>>>>CM:GREEN
     2.  Let kPresent be the result of calling the [[HasProperty]] internal method of O with argument
+>>>>>CM:GREEN
         Pk.
+>>>>>CM:GREEN
     3.  If kPresent is true, then
+>>>>>CM:GREEN
         1.  Let kValue be the result of calling the [[Get]] internal method of O with argument Pk.
+>>>>>CM:GREEN
         2.  Let accumulator be the result of calling the [[Call]] internal method of callbackfn with
+>>>>>CM:GREEN
             undefined as the this value and argument list containing accumulator, kValue, k, and O.
 
+>>>>>CM:GREEN
     4.  Decrease k by 1.
 
+>>>>>CM:GREEN
 10. Return accumulator.
 
+>>>>>CM:GREEN
 The length property of the reduceRight method is 1.
 
+>>>>>CM:GREEN
 NOTE The reduceRight function is intentionally generic; it does not require that its this value be
+>>>>>CM:GREEN
 an Array object. Therefore it can be transferred to other kinds of objects for use as a method.
+>>>>>CM:GREEN
 Whether the reduceRight function can be applied successfully to a host object is
+>>>>>CM:GREEN
 implementation-dependent.
 
+>>>>>CM:GREEN
 15.4.5 Properties of Array Instances
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 Array instances inherit properties from the Array prototype object and their [[Class]] internal
+>>>>>CM:GREEN
 property value is "Array". Array instances also have the following properties.
 
+>>>>>CM:GREEN
 15.4.5.1 [[DefineOwnProperty]] ( P, Desc, Throw )
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 Array objects use a variation of the [[DefineOwnProperty]] internal method used for other native
+>>>>>CM:GREEN
 ECMAScript objects (8.12.9).
 
+>>>>>CM:GREEN
 Assume A is an Array object, Desc is a Property Descriptor, and Throw is a Boolean flag.
 
+>>>>>CM:GREEN
 In the following algorithm, the term “Reject” means “If Throw is true, then throw a TypeError
+>>>>>CM:GREEN
 exception, otherwise return false.”
 
+>>>>>CM:GREEN
 When the [[DefineOwnProperty]] internal method of A is called with property P, Property Descriptor
+>>>>>CM:GREEN
 Desc, and Boolean flag Throw, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let oldLenDesc be the result of calling the [[GetOwnProperty]] internal method of A passing
+>>>>>CM:GREEN
     "length" as the argument. The result will never be undefined or an accessor descriptor because
+>>>>>CM:GREEN
     Array objects are created with a length data property that cannot be deleted or reconfigured.
+>>>>>CM:GREEN
 2.  Let oldLen be oldLenDesc.[[Value]].
+>>>>>CM:GREEN
 3.  If P is "length", then
+>>>>>CM:GREEN
     1.  If the [[Value]] field of Desc is absent, then
+>>>>>CM:GREEN
         1.  Return the result of calling the default [[DefineOwnProperty]] internal method (8.12.9)
+>>>>>CM:GREEN
             on A passing "length", Desc, and Throw as arguments.
 
+>>>>>CM:GREEN
     2.  Let newLenDesc be a copy of Desc.
+>>>>>CM:GREEN
     3.  Let newLen be ToUint32(Desc.[[Value]]).
+>>>>>CM:GREEN
     4.  If newLen is not equal to ToNumber( Desc.[[Value]]), throw a RangeError exception.
+>>>>>CM:GREEN
     5.  Set newLenDesc.[[Value] to newLen.
+>>>>>CM:GREEN
     6.  If newLen ≥oldLen, then
+>>>>>CM:GREEN
         1.  Return the result of calling the default [[DefineOwnProperty]] internal method (8.12.9)
+>>>>>CM:GREEN
             on A passing "length", newLenDesc, and Throw as arguments.
 
+>>>>>CM:GREEN
     7.  Reject if oldLenDesc.[[Writable]] is false.
+>>>>>CM:GREEN
     8.  If newLenDesc.[[Writable]] is absent or has the value true, let newWritable be true.
+>>>>>CM:GREEN
     9.  Else,
+>>>>>CM:GREEN
         1.  Need to defer setting the [[Writable]] attribute to false in case any elements cannot be
+>>>>>CM:GREEN
             deleted.
+>>>>>CM:GREEN
         2.  Let newWritable be false.
+>>>>>CM:GREEN
         3.  Set newLenDesc.[[Writable] to true.
 
+>>>>>CM:GREEN
     10. Let succeeded be the result of calling the default [[DefineOwnProperty]] internal method
+>>>>>CM:GREEN
         (8.12.9) on A passing "length", newLenDesc, and Throw as arguments.
+>>>>>CM:GREEN
     11. If succeeded is false, return false.
+>>>>>CM:GREEN
     12. While newLen < oldLen repeat,
+>>>>>CM:GREEN
         1.  Set oldLen to oldLen – 1.
+>>>>>CM:GREEN
         2.  Let deleteSucceeded be the result of calling the [[Delete]] internal method of A passing
+>>>>>CM:GREEN
             ToString(oldLen) and false as arguments.
+>>>>>CM:GREEN
         3.  If deleteSucceeded is false, then
+>>>>>CM:GREEN
             1.  Set newLenDesc.[[Value] to oldLen+1.
+>>>>>CM:GREEN
             2.  If newWritable is false, set newLenDesc.[[Writable] to false.
+>>>>>CM:GREEN
             3.  Call the default [[DefineOwnProperty]] internal method (8.12.9) on A passing
+>>>>>CM:GREEN
                 "length", newLenDesc, and false as arguments.
+>>>>>CM:GREEN
             4.  Reject.
 
+>>>>>CM:GREEN
     13. If newWritable is false, then
+>>>>>CM:GREEN
         1.  Call the default [[DefineOwnProperty]] internal method (8.12.9) on A passing "length",
+>>>>>CM:GREEN
             Property Descriptor{[[Writable]]: false}, and false as arguments. This call will always
+>>>>>CM:GREEN
             return true.
 
+>>>>>CM:GREEN
     14. Return true.
 
+>>>>>CM:GREEN
 4.  Else if P is an array index (15.4), then
+>>>>>CM:GREEN
     1.  Let index be ToUint32(P).
+>>>>>CM:GREEN
     2.  Reject if index ≥ oldLen and oldLenDesc.[[Writable]] is false.
+>>>>>CM:GREEN
     3.  Let succeeded be the result of calling the default [[DefineOwnProperty]] internal method
+>>>>>CM:GREEN
         (8.12.9) on A passing P, Desc, and false as arguments.
+>>>>>CM:GREEN
     4.  Reject if succeeded is false.
+>>>>>CM:GREEN
     5.  If index ≥ oldLen
+>>>>>CM:GREEN
         1.  Set oldLenDesc.[[Value]] to index + 1.
+>>>>>CM:GREEN
         2.  Call the default [[DefineOwnProperty]] internal method (8.12.9) on A passing "length",
+>>>>>CM:GREEN
             oldLenDesc, and false as arguments. This call will always return true.
 
+>>>>>CM:GREEN
     6.  Return true.
 
+>>>>>CM:GREEN
 5.  Return the result of calling the default [[DefineOwnProperty]] internal method (8.12.9) on A
+>>>>>CM:GREEN
     passing P, Desc, and Throw as arguments.
 
 15.4.5.2 length

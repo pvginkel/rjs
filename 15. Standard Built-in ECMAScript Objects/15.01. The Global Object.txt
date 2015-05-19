@@ -44,20 +44,33 @@ false, [[Enumerable]]: false, [[Configurable]]: false }.
 15.1.2 Function Properties of the Global Object
 ===============================================
 
+>>>>>CM:GREEN
 15.1.2.1 eval (x)
+>>>>>CM:GREEN
 =================
 
+>>>>>CM:GREEN
 When the eval function is called with one argument x, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(x) is not String, return x.
+>>>>>CM:GREEN
 2.  Let prog be the ECMAScript code that is the result of parsing x as a Program. If the parse
+>>>>>CM:GREEN
     fails, throw a SyntaxError exception (but see also clause 16).
+>>>>>CM:YELLOW
 3.  Let evalCtx be the result of establishing a new execution context (10.4.2) for the eval code
+>>>>>CM:YELLOW
     prog.
+>>>>>CM:GREEN
 4.  Let result be the result of evaluating the program prog.
+>>>>>CM:YELLOW
 5.  Exit the running execution context evalCtx, restoring the previous execution context.
+>>>>>CM:GREEN
 6.  If result.type is normal and its completion value is a value V, then return the value V.
+>>>>>CM:GREEN
 7.  If result.type is normal and its completion value is empty, then return the value undefined.
+>>>>>CM:GREEN
 8.  Otherwise, result.type must be throw. Throw result.value as an exception.
 
 15.1.2.1.1 Direct Call to Eval

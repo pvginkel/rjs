@@ -1,92 +1,171 @@
+>>>>>CM:GREEN
 9.8 ToString
+>>>>>CM:GREEN
 ============
 
+>>>>>CM:GREEN
 The abstract operation ToString converts its argument to a value of type String according to Table
+>>>>>CM:GREEN
 13:
 
+>>>>>CM:GREEN
 Table 13 — ToString Conversions
 
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Argument Type                                      | Result                                             |
+>>>>>CM:GREEN
 +====================================================+====================================================+
+>>>>>CM:GREEN
 | Undefined                                          | "undefined"                                        |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Null                                               | "null"                                             |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Boolean                                            | If the argument is true, then the result is        |
+>>>>>CM:GREEN
 |                                                    | "true".                                            |
+>>>>>CM:GREEN
 |                                                    |                                                    |
+>>>>>CM:GREEN
 |                                                    | If the argument is false, then the result is       |
+>>>>>CM:GREEN
 |                                                    | “false”.                                           |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Number                                             | See 9.8.1.                                         |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | String                                             | Return the input argument (no conversion)          |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
+>>>>>CM:GREEN
 | Object                                             | Apply the following steps:                         |
+>>>>>CM:GREEN
 |                                                    |                                                    |
+>>>>>CM:GREEN
 |                                                    | 1. Let primValue be ToPrimitive(input argument,    |
+>>>>>CM:GREEN
 |                                                    | hint String).                                      |
+>>>>>CM:GREEN
 |                                                    |                                                    |
+>>>>>CM:GREEN
 |                                                    | 2. Return ToString(primValue).                     |
+>>>>>CM:GREEN
 +----------------------------------------------------+----------------------------------------------------+
 
+>>>>>CM:YELLOW
 9.8.1 ToString Applied to the Number Type
+>>>>>CM:YELLOW
 =========================================
 
+>>>>>CM:YELLOW
 The abstract operation ToString converts a Number m to String format as follows:
 
+>>>>>CM:YELLOW
 1.  If m is NaN, return the String "NaN".
+>>>>>CM:YELLOW
 2.  If m is +0 or −0, return the String "0".
+>>>>>CM:YELLOW
 3.  If m is less than zero, return the String concatenation of the String "-" and ToString(−m).
+>>>>>CM:YELLOW
 4.  If m is infinity, return the String "Infinity".
+>>>>>CM:YELLOW
 5.  Otherwise, let n, k, and s be integers such that k ≥ 1, 10k−1 ≤ s < 10k, the Number value for s
+>>>>>CM:YELLOW
     × 10n−k is m, and k is as small as possible. Note that k is the number of digits in the decimal
+>>>>>CM:YELLOW
     representation of s, that s is not divisible by 10, and that the least significant digit of s is
+>>>>>CM:YELLOW
     not necessarily uniquely determined by these criteria.
+>>>>>CM:YELLOW
 6.  If k ≤ n ≤ 21, return the String consisting of the k digits of the decimal representation of s
+>>>>>CM:YELLOW
     (in order, with no leading zeroes), followed by n−k occurrences of the character ‘0’.
+>>>>>CM:YELLOW
 7.  If 0 < n ≤ 21, return the String consisting of the most significant n digits of the decimal
+>>>>>CM:YELLOW
     representation of s, followed by a decimal point ‘.’, followed by the remaining k−n digits of
+>>>>>CM:YELLOW
     the decimal representation of s.
+>>>>>CM:YELLOW
 8.  If −6 < n ≤ 0, return the String consisting of the character ‘0’, followed by a decimal point
+>>>>>CM:YELLOW
     ‘.’, followed by −n occurrences of the character ‘0’, followed by the k digits of the decimal
+>>>>>CM:YELLOW
     representation of s.
+>>>>>CM:YELLOW
 9.  Otherwise, if k = 1, return the String consisting of the single digit of s, followed by
+>>>>>CM:YELLOW
     lowercase character ‘e’, followed by a plus sign ‘+’ or minus sign ‘−’ according to whether n−1
+>>>>>CM:YELLOW
     is positive or negative, followed by the decimal representation of the integer abs(n−1) (with no
+>>>>>CM:YELLOW
     leading zeroes).
+>>>>>CM:YELLOW
 10. Return the String consisting of the most significant digit of the decimal representation of s,
+>>>>>CM:YELLOW
     followed by a decimal point ‘.’, followed by the remaining k−1 digits of the decimal
+>>>>>CM:YELLOW
     representation of s, followed by the lowercase character ‘e’, followed by a plus sign ‘+’ or
+>>>>>CM:YELLOW
     minus sign ‘−’ according to whether n−1 is positive or negative, followed by the decimal
+>>>>>CM:YELLOW
     representation of the integer abs(n−1) (with no leading zeroes).
 
+>>>>>CM:YELLOW
 NOTE 1 The following observations may be useful as guidelines for implementations, but are not part
+>>>>>CM:YELLOW
 of the normative requirements of this Standard:
 
+>>>>>CM:YELLOW
 -   If x is any Number value other than −0, then ToNumber(ToString(x)) is exactly the same Number
+>>>>>CM:YELLOW
     value as x.
 
+>>>>>CM:YELLOW
 -   The least significant digit of s is not always uniquely determined by the requirements listed in
+>>>>>CM:YELLOW
     step 5.
 
+>>>>>CM:YELLOW
 NOTE 2 For implementations that provide more accurate conversions than required by the rules above,
+>>>>>CM:YELLOW
 it is recommended that the following alternative version of step 5 be used as a guideline:
 
+>>>>>CM:YELLOW
 Otherwise, let n, k, and s be integers such that k ≥ 1, 10k−1 ≤ s < 10k, the Number value for s ×
+>>>>>CM:YELLOW
 10n−k is m, and k is as small as possible. If there are multiple possibilities for s, choose the
+>>>>>CM:YELLOW
 value of s for which s × 10n−k is closest in value to m. If there are two such possible values of s,
+>>>>>CM:YELLOW
 choose the one that is even. Note that k is the number of digits in the decimal representation of s
+>>>>>CM:YELLOW
 and that s is not divisible by 10.
 
+>>>>>CM:YELLOW
 NOTE 3 Implementers of ECMAScript may find useful the paper and code written by David M. Gay for
+>>>>>CM:YELLOW
 binary-to-decimal conversion of floating-point numbers:
 
+>>>>>CM:YELLOW
 Gay, David M. Correctly Rounded Binary-Decimal and Decimal-Binary Conversions. Numerical Analysis,
+>>>>>CM:YELLOW
 Manuscript 90-10. AT&T Bell Laboratories (Murray Hill, New Jersey). November 30, 1990. Available
+>>>>>CM:YELLOW
 as  
+>>>>>CM:YELLOW
 http://cm.bell-labs.com/cm/cs/doc/90/4-10.ps.gz. Associated code available as  
+>>>>>CM:YELLOW
 http://cm.bell-labs.com/netlib/fp/dtoa.c.gz and as  
+>>>>>CM:YELLOW
 http://cm.bell-labs.com/netlib/fp/g_fmt.c.gz and may also be found at the various netlib mirror
+>>>>>CM:YELLOW
 sites.

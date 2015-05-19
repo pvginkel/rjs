@@ -137,16 +137,27 @@ before x. Such a comparison is performed as follows:
     12. If the mathematical value of nx is less than the mathematical value of ny —note that these
         mathematical values are both finite and not both zero—return true. Otherwise, return false.
 
+>>>>>CM:GREEN
 4.  Else, both px and py are Strings
+>>>>>CM:GREEN
     1.  If py is a prefix of px, return false. (A String value p is a prefix of String value q if q
+>>>>>CM:GREEN
         can be the result of concatenating p and some other String r. Note that any String is a
+>>>>>CM:GREEN
         prefix of itself, because r may be the empty String.)
+>>>>>CM:GREEN
     2.  If px is a prefix of py, return true.
+>>>>>CM:GREEN
     3.  Let k be the smallest nonnegative integer such that the character at position k within px is
+>>>>>CM:GREEN
         different from the character at position k within py. (There must be such a k, for neither
+>>>>>CM:GREEN
         String is a prefix of the other.)
+>>>>>CM:GREEN
     4.  Let m be the integer that is the code unit value for the character at position k within px.
+>>>>>CM:GREEN
     5.  Let n be the integer that is the code unit value for the character at position k within py.
+>>>>>CM:GREEN
     6.  If m < n, return true. Otherwise, return false.
 
 NOTE 1 Step 3 differs from step 7 in the algorithm for the addition operator + (11.6.1) in using and

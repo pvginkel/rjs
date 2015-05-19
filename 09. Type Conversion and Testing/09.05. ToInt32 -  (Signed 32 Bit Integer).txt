@@ -1,23 +1,40 @@
+>>>>>CM:YELLOW
 9.5 ToInt32: (Signed 32 Bit Integer)
+>>>>>CM:YELLOW
 ====================================
 
+>>>>>CM:YELLOW
 The abstract operation ToInt32 converts its argument to one of 2^32 integer values in the range
+>>>>>CM:YELLOW
 −2^31 through 2^31−1, inclusive. This abstract operation functions as follows:
 
+>>>>>CM:YELLOW
 1.  Let number be the result of calling ToNumber on the input argument.
+>>>>>CM:YELLOW
 2.  If number is NaN, +0, −0, +∞, or −∞, return +0.
+>>>>>CM:YELLOW
 3.  Let posInt be sign(number) * floor(abs(number)).
+>>>>>CM:YELLOW
 4.  Let int32bit be posInt modulo 2^32; that is, a finite integer value k of Number type with
+>>>>>CM:YELLOW
     positive sign and less than 2^32 in magnitude such that the mathematical difference of posInt
+>>>>>CM:YELLOW
     and k is mathematically an integer multiple of 2^32.
+>>>>>CM:YELLOW
 5.  If int32bit is greater than or equal to 2^31, return int32bit − 2^32, otherwise return int32bit.
 
+>>>>>CM:YELLOW
 NOTE Given the above definition of ToInt32:
 
+>>>>>CM:YELLOW
 -   The ToInt32 abstract operation is idempotent: if applied to a result that it produced, the
+>>>>>CM:YELLOW
     second application leaves that value unchanged.
 
+>>>>>CM:YELLOW
 -   ToInt32(ToUint32(x)) is equal to ToInt32(x) for all values of x. (It is to preserve this latter
+>>>>>CM:YELLOW
     property that +∞ and −∞ are mapped to +0.)
 
+>>>>>CM:YELLOW
 -   ToInt32 maps −0 to +0.
