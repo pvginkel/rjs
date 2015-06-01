@@ -421,24 +421,24 @@ descriptor Desc, and Boolean flag Throw, the following steps are taken:
     1.  Reject, if the [[Configurable]] field of current is false.
 >>>>>CM:GREEN
     2.  If IsDataDescriptor(current) is true, then
->>>>>CM:GREEN
+>>>>>CM:YELLOW
         1.  Convert the property named P of object O from a data property to an accessor property.
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             Preserve the existing values of the converted property’s [[Configurable]] and
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             [[Enumerable]] attributes and set the rest of the property’s attributes to their default
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             values.
 
 >>>>>CM:GREEN
     3.  Else,
->>>>>CM:GREEN
+>>>>>CM:YELLOW
         1.  Convert the property named P of object O from an accessor property to a data property.
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             Preserve the existing values of the converted property’s [[Configurable]] and
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             [[Enumerable]] attributes and set the rest of the property’s attributes to their default
->>>>>CM:GREEN
+>>>>>CM:YELLOW
             values.
 
 >>>>>CM:GREEN

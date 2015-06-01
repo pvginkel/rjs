@@ -90,10 +90,14 @@ The initial value of Function.prototype is the standard built-in Function protot
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
 false }.
 
+>>>>>CM:GREEN
 15.3.3.2 Function.length
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 This is a data property with a value of 1. This property has the attributes { [[Writable]]: false,
+>>>>>CM:GREEN
 [[Enumerable]]: false, [[Configurable]]: false }.
 
 15.3.4 Properties of the Function Prototype Object

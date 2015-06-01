@@ -135,16 +135,24 @@ The production UnaryExpression : + UnaryExpression is evaluated as follows:
 1.  Let expr be the result of evaluating UnaryExpression.
 2.  Return ToNumber(GetValue(expr)).
 
+>>>>>CM:GREEN
 11.4.7 Unary - Operator
+>>>>>CM:GREEN
 =======================
 
+>>>>>CM:GREEN
 The unary - operator converts its operand to Number type and then negates it. Note that negating +0
+>>>>>CM:GREEN
 produces −0, and negating −0 produces +0.
 
+>>>>>CM:GREEN
 The production UnaryExpression : - UnaryExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let expr be the result of evaluating UnaryExpression.
+>>>>>CM:GREEN
 2.  Let oldValue be ToNumber(GetValue(expr)).
+>>>>>CM:GREEN
 3.  If oldValue is NaN, return NaN.
 4.  Return the result of negating oldValue; that is, compute a Number with the same magnitude but
     opposite sign.

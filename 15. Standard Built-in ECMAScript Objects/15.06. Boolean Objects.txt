@@ -1,33 +1,51 @@
 15.6 Boolean Objects
 ====================
 
+>>>>>CM:GREEN
 15.6.1 The Boolean Constructor Called as a Function
+>>>>>CM:GREEN
 ===================================================
 
+>>>>>CM:GREEN
 When Boolean is called as a function rather than as a constructor, it performs a type conversion.
 
+>>>>>CM:GREEN
 15.6.1.1 Boolean (value)
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 Returns a Boolean value (not a Boolean object) computed by ToBoolean(value).
 
+>>>>>CM:GREEN
 15.6.2 The Boolean Constructor
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 When Boolean is called as part of a new expression it is a constructor: it initialises the newly
+>>>>>CM:GREEN
 created object.
 
+>>>>>CM:GREEN
 15.6.2.1 new Boolean (value)
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the original Boolean
+>>>>>CM:GREEN
 prototype object, the one that is the initial value of Boolean.prototype (15.6.3.1).
 
+>>>>>CM:GREEN
 The [[Class]] internal property of the newly constructed Boolean object is set to "Boolean".
 
+>>>>>CM:GREEN
 The [[PrimitiveValue]] internal property of the newly constructed Boolean object is set to
+>>>>>CM:GREEN
 ToBoolean(value).
 
+>>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
 15.6.3 Properties of the Boolean Constructor

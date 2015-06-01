@@ -40,9 +40,13 @@ Unless otherwise specified every built-in prototype object has the Object protot
 the initial value of the expression Object.prototype (15.2.4), as the value of its [[Prototype]]
 internal property, except the Object prototype object itself.
 
+>>>>>CM:GREEN
 None of the built-in functions described in this clause that are not constructors shall implement
+>>>>>CM:GREEN
 the [[Construct]] internal method unless otherwise specified in the description of a particular
+>>>>>CM:GREEN
 function. None of the built-in functions described in this clause shall have a prototype property
+>>>>>CM:GREEN
 unless otherwise specified in the description of a particular function.
 
 This clause generally describes distinct behaviours for when a constructor is “called as a function”

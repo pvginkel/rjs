@@ -7,8 +7,11 @@ the sequence consists entirely of a StringLiteral token followed a semicolon. Th
 appear explicitly or may be inserted by automatic semicolon insertion. A Directive Prologue may be
 an empty sequence.
 
+>>>>>CM:GREEN
 A Use Strict Directive is an ExpressionStatement in a Directive Prologue whose StringLiteral is
+>>>>>CM:GREEN
 either the exact character sequences "use strict" or 'use strict'. A Use Strict Directive may not
+>>>>>CM:GREEN
 contain an EscapeSequence or LineContinuation.
 
 A Directive Prologue may contain more than one Use Strict Directive. However, an implementation may

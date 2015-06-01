@@ -1,40 +1,70 @@
+>>>>>CM:GREEN
 12.10 The with Statement
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 WithStatement :
 
+>>>>>CM:GREEN
 with ( Expression ) Statement
 
+>>>>>CM:GREEN
 The with statement adds an object environment record for a computed object to the lexical
+>>>>>CM:GREEN
 environment of the current execution context. It then executes a statement using this augmented
+>>>>>CM:GREEN
 lexical environment. Finally, it restores the original lexical environment.
 
+>>>>>CM:GREEN
 Semantics
+>>>>>CM:GREEN
 ---------
 
+>>>>>CM:GREEN
 The production WithStatement : with ( Expression ) Statement is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let val be the result of evaluating Expression.
+>>>>>CM:GREEN
 2.  Let obj be ToObject(GetValue(val)).
+>>>>>CM:GREEN
 3.  Let oldEnv be the running execution context’s LexicalEnvironment.
+>>>>>CM:GREEN
 4.  Let newEnv be the result of calling NewObjectEnvironment passing obj and oldEnv as the
+>>>>>CM:GREEN
     arguments.
+>>>>>CM:GREEN
 5.  Set the provideThis flag of newEnv to true.
+>>>>>CM:GREEN
 6.  Set the running execution context’s LexicalEnvironment to newEnv.
+>>>>>CM:GREEN
 7.  Let C be the result of evaluating Statement but if an exception is thrown during the evaluation,
+>>>>>CM:GREEN
     let C be (throw, V, empty), where V is the exception. (Execution now proceeds as if no exception
+>>>>>CM:GREEN
     were thrown.)
+>>>>>CM:GREEN
 8.  Set the running execution context’s Lexical Environment to oldEnv.
+>>>>>CM:GREEN
 9.  Return C.
 
+>>>>>CM:GREEN
 NOTE No matter how control leaves the embedded Statement, whether normally or by some form of abrupt
+>>>>>CM:GREEN
 completion or exception, the LexicalEnvironment is always restored to its former state.
 
+>>>>>CM:GREEN
 12.10.1 Strict Mode Restrictions
+>>>>>CM:GREEN
 ================================
 
+>>>>>CM:GREEN
 Strict mode code may not include a WithStatement. The occurrence of a WithStatement in such a
+>>>>>CM:GREEN
 context is treated as a SyntaxError.

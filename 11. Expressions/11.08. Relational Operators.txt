@@ -185,16 +185,27 @@ as follows:
 6.  If rval does not have a [[HasInstance]] internal method, throw a TypeError exception.
 7.  Return the result of calling the [[HasInstance]] internal method of rval with argument lval.
 
+>>>>>CM:GREEN
 11.8.7 The in operator
+>>>>>CM:GREEN
 ======================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression in ShiftExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  If Type(rval) is not Object, throw a TypeError exception.
+>>>>>CM:GREEN
 6.  Return the result of calling the [[HasProperty]] internal method of rval with argument
+>>>>>CM:GREEN
     ToString(lval).

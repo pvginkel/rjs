@@ -34,101 +34,168 @@ evaluating an Identifier is always a value of type Reference.
 
 A Literal is evaluated as described in 7.8.
 
+>>>>>CM:GREEN
 11.1.4 Array Initialiser
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 An array initialiser is an expression describing the initialisation of an Array object, written in a
+>>>>>CM:GREEN
 form of a literal. It is a list of zero or more expressions, each of which represents an array
+>>>>>CM:GREEN
 element, enclosed in square brackets. The elements need not be literals; they are evaluated each
+>>>>>CM:GREEN
 time the array initialiser is evaluated.
 
+>>>>>CM:GREEN
 Array elements may be elided at the beginning, middle or end of the element list. Whenever a comma
+>>>>>CM:GREEN
 in the element list is not preceded by an AssignmentExpression (i.e., a comma at the beginning or
+>>>>>CM:GREEN
 after another comma), the missing array element contributes to the length of the Array and increases
+>>>>>CM:GREEN
 the index of subsequent elements. Elided array elements are not defined. If an element is elided at
+>>>>>CM:GREEN
 the end of an array, that element does not contribute to the length of the Array.
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 ArrayLiteral :
 
+>>>>>CM:GREEN
 [ Elisionopt ]
 
+>>>>>CM:GREEN
 [ ElementList ]
 
+>>>>>CM:GREEN
 [ ElementList , Elisionopt ]
 
+>>>>>CM:GREEN
 ElementList :
 
+>>>>>CM:GREEN
 Elisionopt AssignmentExpression
 
+>>>>>CM:GREEN
 ElementList , Elisionopt AssignmentExpression
 
+>>>>>CM:GREEN
 Elision :
 
+>>>>>CM:GREEN
 ,
 
+>>>>>CM:GREEN
 Elision ,
 
+>>>>>CM:GREEN
 Semantics
+>>>>>CM:GREEN
 ---------
 
+>>>>>CM:GREEN
 The production ArrayLiteral : [ Elisionopt ] is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let array be the result of creating a new object as if by the expression new Array() where Array
+>>>>>CM:GREEN
     is the standard built-in constructor with that name.
+>>>>>CM:GREEN
 2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+>>>>>CM:GREEN
 3.  Call the [[Put]] internal method of array with arguments "length", pad, and false.
+>>>>>CM:GREEN
 4.  Return array.
 
+>>>>>CM:GREEN
 The production ArrayLiteral : [ ElementList ] is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Return the result of evaluating ElementList.
 
+>>>>>CM:GREEN
 The production ArrayLiteral : [ ElementList , Elisionopt ] is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let array be the result of evaluating ElementList.
+>>>>>CM:GREEN
 2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+>>>>>CM:GREEN
 3.  Let len be the result of calling the [[Get]] internal method of array with argument "length".
+>>>>>CM:GREEN
 4.  Call the [[Put]] internal method of array with arguments "length", ToUint32(pad+len), and false.
+>>>>>CM:GREEN
 5.  Return array.
 
+>>>>>CM:GREEN
 The production ElementList : Elisionopt AssignmentExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let array be the result of creating a new object as if by the expression new Array() where Array
+>>>>>CM:GREEN
     is the standard built-in constructor with that name.
+>>>>>CM:GREEN
 2.  Let firstIndex be the result of evaluating Elision; if not present, use the numeric value zero.
+>>>>>CM:GREEN
 3.  Let initResult be the result of evaluating AssignmentExpression.
+>>>>>CM:GREEN
 4.  Let initValue be GetValue(initResult).
+>>>>>CM:GREEN
 5.  Call the [[DefineOwnProperty]] internal method of array with arguments ToString(firstIndex), the
+>>>>>CM:GREEN
     Property Descriptor { [[Value]]: initValue, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
     [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
 6.  Return array.
 
+>>>>>CM:GREEN
 The production ElementList : ElementList , Elisionopt AssignmentExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let array be the result of evaluating ElementList.
+>>>>>CM:GREEN
 2.  Let pad be the result of evaluating Elision; if not present, use the numeric value zero.
+>>>>>CM:GREEN
 3.  Let initResult be the result of evaluating AssignmentExpression.
+>>>>>CM:GREEN
 4.  Let initValue be GetValue(initResult).
+>>>>>CM:GREEN
 5.  Let len be the result of calling the [[Get]] internal method of array with argument "length".
+>>>>>CM:YELLOW
 6.  Call the [[DefineOwnProperty]] internal method of array with arguments
+>>>>>CM:YELLOW
     ToString(ToUint32((pad+len)) and the Property Descriptor { [[Value]]: initValue, [[Writable]]:
+>>>>>CM:YELLOW
     true, [[Enumerable]]: true, [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
 7.  Return array.
 
+>>>>>CM:GREEN
 The production Elision : , is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Return the numeric value 1.
 
+>>>>>CM:GREEN
 The production Elision : Elision , is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let preceding be the result of evaluating Elision.
+>>>>>CM:GREEN
 2.  Return preceding+1.
 
+>>>>>CM:GREEN
 NOTE [[DefineOwnProperty]] is used to ensure that own properties are defined for the array even if
+>>>>>CM:GREEN
 the standard built-in Array prototype object has been modified in a manner that would preclude the
+>>>>>CM:GREEN
 creation of new own properties using [[Put]].
 
 11.1.5 Object Initialiser

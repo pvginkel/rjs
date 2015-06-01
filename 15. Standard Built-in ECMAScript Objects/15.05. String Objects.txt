@@ -1,34 +1,53 @@
 15.5 String Objects
 ===================
 
+>>>>>CM:GREEN
 15.5.1 The String Constructor Called as a Function
+>>>>>CM:GREEN
 ==================================================
 
+>>>>>CM:GREEN
 When String is called as a function rather than as a constructor, it performs a type conversion.
 
+>>>>>CM:GREEN
 15.5.1.1 String ( [ value ] )
+>>>>>CM:GREEN
 =============================
 
+>>>>>CM:GREEN
 Returns a String value (not a String object) computed by ToString(value). If value is not supplied,
+>>>>>CM:GREEN
 the empty String "" is returned.
 
+>>>>>CM:GREEN
 15.5.2 The String Constructor
+>>>>>CM:GREEN
 =============================
 
+>>>>>CM:GREEN
 When String is called as part of a new expression, it is a constructor: it initialises the newly
+>>>>>CM:GREEN
 created object.
 
+>>>>>CM:GREEN
 15.5.2.1 new String ( [ value ] )
+>>>>>CM:GREEN
 =================================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the standard built-in
+>>>>>CM:GREEN
 String prototype object that is the initial value of String.prototype (15.5.3.1).
 
+>>>>>CM:GREEN
 The [[Class]] internal property of the newly constructed object is set to "String".
 
+>>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 The [[PrimitiveValue]] internal property of the newly constructed object is set to ToString(value),
+>>>>>CM:GREEN
 or to the empty String if value is not supplied.
 
 15.5.3 Properties of the String Constructor
@@ -73,14 +92,21 @@ built-in Object prototype object (15.2.4).
 
 The initial value of String.prototype.constructor is the built-in String constructor.
 
+>>>>>CM:GREEN
 15.5.4.2 String.prototype.toString ( )
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 Returns this String value. (Note that, for a String object, the toString method happens to return
+>>>>>CM:GREEN
 the same thing as the valueOf method.)
 
+>>>>>CM:GREEN
 The toString function is not generic; it throws a TypeError exception if its this value is not a
+>>>>>CM:GREEN
 String or a String object. Therefore, it cannot be transferred to other kinds of objects for use as
+>>>>>CM:GREEN
 a method.
 
 15.5.4.3 String.prototype.valueOf ( )
@@ -654,12 +680,17 @@ array index named properties correspond to the individual characters of the Stri
 [[GetOwnProperty]] internal method is used to specify the number, values, and attributes of the
 array index named properties.
 
+>>>>>CM:GREEN
 15.5.5.1 length
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 The number of characters in the String value represented by this String object.
 
+>>>>>CM:GREEN
 Once a String object is created, this property is unchanging. It has the attributes { [[Writable]]:
+>>>>>CM:GREEN
 false, [[Enumerable]]: false, [[Configurable]]: false }.
 
 15.5.5.2 [[GetOwnProperty]] ( P )

@@ -1,179 +1,328 @@
+>>>>>CM:YELLOW
 10.6 Arguments Object
+>>>>>CM:YELLOW
 =====================
 
+>>>>>CM:YELLOW
 When control enters an execution context for function code, an arguments object is created unless
+>>>>>CM:YELLOW
 (as specified in 10.5) the identifier arguments occurs as an Identifier in the function’s
+>>>>>CM:YELLOW
 FormalParameterList or occurs as the Identifier of a VariableDeclaration or FunctionDeclaration
+>>>>>CM:YELLOW
 contained in the function code.
 
+>>>>>CM:YELLOW
 The arguments object is created by calling the abstract operation CreateArgumentsObject with
+>>>>>CM:YELLOW
 arguments func the function object whose code is to be evaluated, names a List containing the
+>>>>>CM:YELLOW
 function’s formal parameter names, args the actual arguments passed to the [[Call]] internal method,
+>>>>>CM:YELLOW
 env the variable environment for the function code, and strict a Boolean that indicates whether or
+>>>>>CM:YELLOW
 not the function code is strict code. When CreateArgumentsObject is called the following steps are
+>>>>>CM:YELLOW
 performed:
 
+>>>>>CM:YELLOW
 1.  Let len be the number of elements in args.
+>>>>>CM:YELLOW
 2.  Let obj be the result of creating a new ECMAScript object.
+>>>>>CM:YELLOW
 3.  Set all the internal methods of obj as specified in 8.12.
+>>>>>CM:YELLOW
 4.  Set the [[Class]] internal property of obj to "Arguments".
+>>>>>CM:YELLOW
 5.  Let Object be the standard built-in Object constructor (15.2.2).
+>>>>>CM:YELLOW
 6.  Set the [[Prototype]] internal property of obj to the standard built-in Object prototype object
+>>>>>CM:YELLOW
     (15.2.4).
+>>>>>CM:YELLOW
 7.  Call the [[DefineOwnProperty]] internal method on obj passing "length", the Property Descriptor
+>>>>>CM:YELLOW
     {[[Value]]: len, [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]: true}, and false
+>>>>>CM:YELLOW
     as arguments.
+>>>>>CM:YELLOW
 8.  Let map be the result of creating a new object as if by the expression new Object() where Object
+>>>>>CM:YELLOW
     is the standard built-in constructor with that name
+>>>>>CM:YELLOW
 9.  Let mappedNames be an empty List.
+>>>>>CM:YELLOW
 10. Let indx = len - 1.
+>>>>>CM:YELLOW
 11. Repeat while indx >= 0,
+>>>>>CM:YELLOW
     1.  Let val be the element of args at 0-origined list position indx.
+>>>>>CM:YELLOW
     2.  Call the [[DefineOwnProperty]] internal method on obj passing ToString(indx), the property
+>>>>>CM:YELLOW
         descriptor {[[Value]]: val, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]:
+>>>>>CM:YELLOW
         true}, and false as arguments.
+>>>>>CM:YELLOW
     3.  If indx is less than the number of elements in names, then
+>>>>>CM:YELLOW
         1.  Let name be the element of names at 0-origined list position indx.
+>>>>>CM:YELLOW
         2.  If strict is false and name is not an element of mappedNames, then
+>>>>>CM:YELLOW
             1.  Add name as an element of the list mappedNames.
+>>>>>CM:YELLOW
             2.  Let g be the result of calling the MakeArgGetter abstract operation with arguments
+>>>>>CM:YELLOW
                 name and env.
+>>>>>CM:YELLOW
             3.  Let p be the result of calling the MakeArgSetter abstract operation with arguments
+>>>>>CM:YELLOW
                 name and env.
+>>>>>CM:YELLOW
             4.  Call the [[DefineOwnProperty]] internal method of map passing ToString(indx), the
+>>>>>CM:YELLOW
                 Property Descriptor {[[Set]]: p, [[Get]]: g, [[Configurable]]: true}, and false as
+>>>>>CM:YELLOW
                 arguments.
 
+>>>>>CM:YELLOW
     4.  Let indx = indx - 1
 
+>>>>>CM:YELLOW
 12. If mappedNames is not empty, then
+>>>>>CM:YELLOW
     1.  Set the [[ParameterMap]] internal property of obj to map.
+>>>>>CM:YELLOW
     2.  Set the [[Get]], [[GetOwnProperty]], [[DefineOwnProperty]], and [[Delete]] internal methods
+>>>>>CM:YELLOW
         of obj to the definitions provided below.
 
+>>>>>CM:GREEN
 13. If strict is false, then
+>>>>>CM:GREEN
     1.  Call the [[DefineOwnProperty]] internal method on obj passing "callee", the property
+>>>>>CM:GREEN
         descriptor {[[Value]]: func, [[Writable]]: true, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
         true}, and false as arguments.
 
+>>>>>CM:GREEN
 14. Else, strict is true so
+>>>>>CM:GREEN
     1.  Let thrower be the [[ThrowTypeError]] function Object (13.2.3).
+>>>>>CM:GREEN
     2.  Call the [[DefineOwnProperty]] internal method of obj with arguments "caller",
+>>>>>CM:GREEN
         PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+>>>>>CM:GREEN
         [[Configurable]]: false}, and false.
+>>>>>CM:GREEN
     3.  Call the [[DefineOwnProperty]] internal method of obj with arguments "callee",
+>>>>>CM:GREEN
         PropertyDescriptor {[[Get]]: thrower, [[Set]]: thrower, [[Enumerable]]: false,
+>>>>>CM:GREEN
         [[Configurable]]: false}, and false.
 
+>>>>>CM:YELLOW
 15. Return obj
 
+>>>>>CM:YELLOW
 The abstract operation MakeArgGetter called with String name and environment record env creates a
+>>>>>CM:YELLOW
 function object that when executed returns the value bound for name in env. It performs the
+>>>>>CM:YELLOW
 following steps:
 
+>>>>>CM:YELLOW
 1.  Let body be the result of concatenating the Strings "return ", name, and ";".
+>>>>>CM:YELLOW
 2.  Return the result of creating a function object as described in 13.2 using no
+>>>>>CM:YELLOW
     FormalParameterList, body for FunctionBody, env as Scope, and true for Strict.
 
+>>>>>CM:YELLOW
 The abstract operation MakeArgSetter called with String name and environment record env creates a
+>>>>>CM:YELLOW
 function object that when executed sets the value bound for name in env. It performs the following
+>>>>>CM:YELLOW
 steps:
 
+>>>>>CM:YELLOW
 1.  Let param be the String name concatenated with the String "_arg".
+>>>>>CM:YELLOW
 2.  Let body be the String "<name> = <param>;" with <name> replaced by the value of name and <param>
+>>>>>CM:YELLOW
     replaced by the value of param.
+>>>>>CM:YELLOW
 3.  Return the result of creating a function object as described in 13.2 using a List containing the
+>>>>>CM:YELLOW
     single String param as FormalParameterList, body for FunctionBody, env as Scope, and true for
+>>>>>CM:YELLOW
     Strict.
 
+>>>>>CM:YELLOW
 The [[Get]] internal method of an arguments object for a non-strict mode function with formal
+>>>>>CM:YELLOW
 parameters when called with a property name P performs the following steps:
 
+>>>>>CM:YELLOW
 1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+>>>>>CM:YELLOW
 2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+>>>>>CM:YELLOW
     the argument.
+>>>>>CM:YELLOW
 3.  If the value of isMapped is undefined, then
+>>>>>CM:YELLOW
     1.  Let v be the result of calling the default [[Get]] internal method (8.12.3) on the arguments
+>>>>>CM:YELLOW
         object passing P as the argument.
+>>>>>CM:YELLOW
     2.  If P is "caller" and v is a strict mode Function object, throw a TypeError exception.
+>>>>>CM:YELLOW
     3.  Return v.
 
+>>>>>CM:YELLOW
 4.  Else, map contains a formal parameter mapping for P so,
+>>>>>CM:YELLOW
     1.  Return the result of calling the [[Get]] internal method of map passing P as the argument.
 
+>>>>>CM:YELLOW
 The [[GetOwnProperty]] internal method of an arguments object for a non-strict mode function with
+>>>>>CM:YELLOW
 formal parameters when called with a property name P performs the following steps:
 
+>>>>>CM:YELLOW
 1.  Let desc be the result of calling the default [[GetOwnProperty]] internal method (8.12.1) on the
+>>>>>CM:YELLOW
     arguments object passing P as the argument.
+>>>>>CM:YELLOW
 2.  If desc is undefined then return desc.
+>>>>>CM:YELLOW
 3.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+>>>>>CM:YELLOW
 4.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+>>>>>CM:YELLOW
     the argument.
+>>>>>CM:YELLOW
 5.  If the value of isMapped is not undefined, then
+>>>>>CM:YELLOW
     1.  Set desc.[[Value]] to the result of calling the [[Get]] internal method of map passing P as
+>>>>>CM:YELLOW
         the argument.
 
+>>>>>CM:YELLOW
 6.  Return desc.
 
+>>>>>CM:YELLOW
 The [[DefineOwnProperty]] internal method of an arguments object for a non-strict mode function with
+>>>>>CM:YELLOW
 formal parameters when called with a property name P, Property Descriptor Desc, and Boolean flag
+>>>>>CM:YELLOW
 Throw performs the following steps:
 
+>>>>>CM:YELLOW
 1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+>>>>>CM:YELLOW
 2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+>>>>>CM:YELLOW
     the argument.
+>>>>>CM:YELLOW
 3.  Let allowed be the result of calling the default [[DefineOwnProperty]] internal method (8.12.9)
+>>>>>CM:YELLOW
     on the arguments object passing P, Desc, and false as the arguments.
+>>>>>CM:YELLOW
 4.  If allowed is false, then
+>>>>>CM:YELLOW
     1.  If Throw is true then throw a TypeError exception, otherwise return false.
 
+>>>>>CM:YELLOW
 5.  If the value of isMapped is not undefined, then
+>>>>>CM:YELLOW
     1.  If IsAccessorDescriptor(Desc) is true, then
+>>>>>CM:YELLOW
         1.  Call the [[Delete]] internal method of map passing P, and false as the arguments.
 
+>>>>>CM:YELLOW
     2.  Else
+>>>>>CM:YELLOW
         1.  If Desc.[[Value]] is present, then
+>>>>>CM:YELLOW
             1.  Call the [[Put]] internal method of map passing P, Desc.[[Value]], and Throw as the
+>>>>>CM:YELLOW
                 arguments.
 
+>>>>>CM:YELLOW
         2.  If Desc.[[Writable]] is present and its value is false, then
+>>>>>CM:YELLOW
             1.  Call the [[Delete]] internal method of map passing P and false as arguments.
 
+>>>>>CM:YELLOW
 6.  Return true.
 
+>>>>>CM:YELLOW
 The [[Delete]] internal method of an arguments object for a non-strict mode function with formal
+>>>>>CM:YELLOW
 parameters when called with a property name P and Boolean flag Throw performs the following steps:
 
+>>>>>CM:YELLOW
 1.  Let map be the value of the [[ParameterMap]] internal property of the arguments object.
+>>>>>CM:YELLOW
 2.  Let isMapped be the result of calling the [[GetOwnProperty]] internal method of map passing P as
+>>>>>CM:YELLOW
     the argument.
+>>>>>CM:YELLOW
 3.  Let result be the result of calling the default [[Delete]] internal method (8.12.7) on the
+>>>>>CM:YELLOW
     arguments object passing P and Throw as the arguments.
+>>>>>CM:YELLOW
 4.  If result is true and the value of isMapped is not undefined, then
+>>>>>CM:YELLOW
     1.  Call the [[Delete]] internal method of map passing P, and false as the arguments.
 
+>>>>>CM:YELLOW
 5.  Return result.
 
+>>>>>CM:YELLOW
 NOTE 1 For non-strict mode functions the array index (defined in 15.4) named data properties of an
+>>>>>CM:YELLOW
 arguments object whose numeric name values are less than the number of formal parameters of the
+>>>>>CM:YELLOW
 corresponding function object initially share their values with the corresponding argument bindings
+>>>>>CM:YELLOW
 in the function’s execution context. This means that changing the property changes the corresponding
+>>>>>CM:YELLOW
 value of the argument binding and vice-versa. This correspondence is broken if such a property is
+>>>>>CM:YELLOW
 deleted and then redefined or if the property is changed into an accessor property. For strict mode
+>>>>>CM:YELLOW
 functions, the values of the arguments object’s properties are simply a copy of the arguments passed
+>>>>>CM:YELLOW
 to the function and there is no dynamic linkage between the property values and the formal parameter
+>>>>>CM:YELLOW
 values.
 
+>>>>>CM:YELLOW
 NOTE 2 The ParameterMap object and its property values are used as a device for specifying the
+>>>>>CM:YELLOW
 arguments object correspondence to argument bindings. The ParameterMap object and the objects that
+>>>>>CM:YELLOW
 are the values of its properties are not directly accessible from ECMAScript code. An ECMAScript
+>>>>>CM:YELLOW
 implementation does not need to actually create or use such objects to implement the specified
+>>>>>CM:YELLOW
 semantics.
 
+>>>>>CM:YELLOW
 NOTE 3 Arguments objects for strict mode functions define non-configurable accessor properties named
+>>>>>CM:YELLOW
 "caller" and "callee" which throw a TypeError exception on access. The "callee" property has a more
+>>>>>CM:YELLOW
 specific meaning for non-strict mode functions and a "caller" property has historically been
+>>>>>CM:YELLOW
 provided as an implementation-defined extension by some ECMAScript implementations. The strict mode
+>>>>>CM:YELLOW
 definition of these properties exists to ensure that neither of them is defined in any other manner
+>>>>>CM:YELLOW
 by conforming ECMAScript implementations.
