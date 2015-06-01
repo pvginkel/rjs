@@ -1,132 +1,224 @@
+>>>>>CM:YELLOW
 11.5 Multiplicative Operators
+>>>>>CM:YELLOW
 =============================
 
+>>>>>CM:YELLOW
 Syntax
+>>>>>CM:YELLOW
 ------
 
+>>>>>CM:YELLOW
 MultiplicativeExpression :
 
+>>>>>CM:YELLOW
 UnaryExpression
 
+>>>>>CM:YELLOW
 MultiplicativeExpression * UnaryExpression
 
+>>>>>CM:YELLOW
 MultiplicativeExpression / UnaryExpression
 
+>>>>>CM:YELLOW
 MultiplicativeExpression % UnaryExpression
 
+>>>>>CM:YELLOW
 Semantics
+>>>>>CM:YELLOW
 ---------
 
+>>>>>CM:YELLOW
 The production MultiplicativeExpression : MultiplicativeExpression @ UnaryExpression , where @
+>>>>>CM:YELLOW
 stands for one of the operators in the above definitions, is evaluated as follows:
 
+>>>>>CM:YELLOW
 1.  Let left be the result of evaluating MultiplicativeExpression.
+>>>>>CM:YELLOW
 2.  Let leftValue be GetValue(left).
+>>>>>CM:YELLOW
 3.  Let right be the result of evaluating UnaryExpression.
+>>>>>CM:YELLOW
 4.  Let rightValue be GetValue(right).
+>>>>>CM:YELLOW
 5.  Let leftNum be ToNumber(leftValue).
+>>>>>CM:YELLOW
 6.  Let rightNum be ToNumber(rightValue).
+>>>>>CM:YELLOW
 7.  Return the result of applying the specified operation (*, /, or %) to leftNum and rightNum. See
+>>>>>CM:YELLOW
     the Notes below 11.5.1, 11.5.2, 11.5.3.
 
+>>>>>CM:YELLOW
 11.5.1 Applying the * Operator
+>>>>>CM:YELLOW
 ==============================
 
+>>>>>CM:YELLOW
 The * operator performs multiplication, producing the product of its operands. Multiplication is
+>>>>>CM:YELLOW
 commutative. Multiplication is not always associative in ECMAScript, because of finite precision.
 
+>>>>>CM:YELLOW
 The result of a floating-point multiplication is governed by the rules of IEEE 754 binary
+>>>>>CM:YELLOW
 double-precision arithmetic:
 
+>>>>>CM:YELLOW
 -   If either operand is NaN, the result is NaN.
 
+>>>>>CM:YELLOW
 -   The sign of the result is positive if both operands have the same sign, negative if the operands
+>>>>>CM:YELLOW
     have different signs.
 
+>>>>>CM:YELLOW
 -   Multiplication of an infinity by a zero results in NaN.
 
+>>>>>CM:YELLOW
 -   Multiplication of an infinity by an infinity results in an infinity. The sign is determined by
+>>>>>CM:YELLOW
     the rule already stated above.
 
+>>>>>CM:YELLOW
 -   Multiplication of an infinity by a finite nonzero value results in a signed infinity. The sign
+>>>>>CM:YELLOW
     is determined by the rule already stated above.
 
+>>>>>CM:YELLOW
 -   In the remaining cases, where neither an infinity or NaN is involved, the product is computed
+>>>>>CM:YELLOW
     and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the
+>>>>>CM:YELLOW
     magnitude is too large to represent, the result is then an infinity of appropriate sign. If the
+>>>>>CM:YELLOW
     magnitude is too small to represent, the result is then a zero of appropriate sign. The
+>>>>>CM:YELLOW
     ECMAScript language requires support of gradual underflow as defined by IEEE 754.
 
+>>>>>CM:YELLOW
 11.5.2 Applying the / Operator
+>>>>>CM:YELLOW
 ==============================
 
+>>>>>CM:YELLOW
 The / operator performs division, producing the quotient of its operands. The left operand is the
+>>>>>CM:YELLOW
 dividend and the right operand is the divisor. ECMAScript does not perform integer division. The
+>>>>>CM:YELLOW
 operands and result of all division operations are double-precision floating-point numbers. The
+>>>>>CM:YELLOW
 result of division is determined by the specification of IEEE 754 arithmetic:
 
+>>>>>CM:YELLOW
 -   If either operand is NaN, the result is NaN.
 
+>>>>>CM:YELLOW
 -   The sign of the result is positive if both operands have the same sign, negative if the operands
+>>>>>CM:YELLOW
     have different signs.
 
+>>>>>CM:YELLOW
 -   Division of an infinity by an infinity results in NaN.
 
+>>>>>CM:GREEN
 -   Division of an infinity by a zero results in an infinity. The sign is determined by the rule
+>>>>>CM:GREEN
     already stated above.
 
+>>>>>CM:YELLOW
 -   Division of an infinity by a nonzero finite value results in a signed infinity. The sign is
+>>>>>CM:YELLOW
     determined by the rule already stated above.
 
+>>>>>CM:YELLOW
 -   Division of a finite value by an infinity results in zero. The sign is determined by the rule
+>>>>>CM:YELLOW
     already stated above.
 
+>>>>>CM:GREEN
 -   Division of a zero by a zero results in NaN; division of zero by any other finite value results
+>>>>>CM:GREEN
     in zero, with the sign determined by the rule already stated above.
 
+>>>>>CM:GREEN
 -   Division of a nonzero finite value by a zero results in a signed infinity. The sign is
+>>>>>CM:GREEN
     determined by the rule already stated above.
 
+>>>>>CM:YELLOW
 -   In the remaining cases, where neither an infinity, nor a zero, nor NaN is involved, the quotient
+>>>>>CM:YELLOW
     is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode.
+>>>>>CM:YELLOW
     If the magnitude is too large to represent, the operation overflows; the result is then an
+>>>>>CM:YELLOW
     infinity of appropriate sign. If the magnitude is too small to represent, the operation
+>>>>>CM:YELLOW
     underflows and the result is a zero of the appropriate sign. The ECMAScript language requires
+>>>>>CM:YELLOW
     support of gradual underflow as defined by IEEE 754.
 
+>>>>>CM:YELLOW
 11.5.3 Applying the % Operator
+>>>>>CM:YELLOW
 ==============================
 
+>>>>>CM:YELLOW
 The % operator yields the remainder of its operands from an implied division; the left operand is
+>>>>>CM:YELLOW
 the dividend and the right operand is the divisor.
 
+>>>>>CM:YELLOW
 NOTE In C and C++, the remainder operator accepts only integral operands; in ECMAScript, it also
+>>>>>CM:YELLOW
 accepts floating-point operands.
 
+>>>>>CM:YELLOW
 The result of a floating-point remainder operation as computed by the % operator is not the same as
+>>>>>CM:YELLOW
 the “remainder” operation defined by IEEE 754. The IEEE 754 “remainder” operation computes the
+>>>>>CM:YELLOW
 remainder from a rounding division, not a truncating division, and so its behaviour is not analogous
+>>>>>CM:YELLOW
 to that of the usual integer remainder operator. Instead the ECMAScript language defines % on
+>>>>>CM:YELLOW
 floating-point operations to behave in a manner analogous to that of the Java integer remainder
+>>>>>CM:YELLOW
 operator; this may be compared with the C library function fmod.
 
+>>>>>CM:YELLOW
 The result of an ECMAScript floating-point remainder operation is determined by the rules of IEEE
+>>>>>CM:YELLOW
 arithmetic:
 
+>>>>>CM:YELLOW
 -   If either operand is NaN, the result is NaN.
 
+>>>>>CM:YELLOW
     -   The sign of the result equals the sign of the dividend.
 
+>>>>>CM:YELLOW
     -   If the dividend is an infinity, or the divisor is a zero, or both, the result is NaN.
 
+>>>>>CM:YELLOW
     -   If the dividend is finite and the divisor is an infinity, the result equals the dividend.
 
+>>>>>CM:YELLOW
     -   If the dividend is a zero and the divisor is nonzero and finite, the result is the same as
+>>>>>CM:YELLOW
         the dividend.
 
+>>>>>CM:YELLOW
     -   In the remaining cases, where neither an infinity, nor a zero, nor NaN is involved, the
+>>>>>CM:YELLOW
         floating-point remainder r from a dividend n and a divisor d is defined by the mathematical
+>>>>>CM:YELLOW
         relation r = n − (d × q) where q is an integer that is negative only if n/d is negative and
+>>>>>CM:YELLOW
         positive only if n/d is positive, and whose magnitude is as large as possible without
+>>>>>CM:YELLOW
         exceeding the magnitude of the true mathematical quotient of n and d. r is computed and
+>>>>>CM:YELLOW
         rounded to the nearest representable value using IEEE 754 round-to-nearest mode.

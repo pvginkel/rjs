@@ -1,56 +1,90 @@
+>>>>>CM:GREEN
 11.10 Binary Bitwise Operators
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 BitwiseANDExpression :
 
+>>>>>CM:GREEN
 EqualityExpression
 
+>>>>>CM:GREEN
 BitwiseANDExpression & EqualityExpression
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn :
 
+>>>>>CM:GREEN
 EqualityExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn & EqualityExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseXORExpression :
 
+>>>>>CM:GREEN
 BitwiseANDExpression
 
+>>>>>CM:GREEN
 BitwiseXORExpression ^ BitwiseANDExpression
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn :
 
+>>>>>CM:GREEN
 BitwiseANDExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn ^ BitwiseANDExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseORExpression :
 
+>>>>>CM:GREEN
 BitwiseXORExpression
 
+>>>>>CM:GREEN
 BitwiseORExpression | BitwiseXORExpression
 
+>>>>>CM:GREEN
 BitwiseORExpressionNoIn :
 
+>>>>>CM:GREEN
 BitwiseXORExpressionNoIn
 
+>>>>>CM:GREEN
 BitwiseORExpressionNoIn | BitwiseXORExpressionNoIn
 
+>>>>>CM:GREEN
 Semantics
+>>>>>CM:GREEN
 ---------
 
+>>>>>CM:GREEN
 The production A : A @ B, where @ is one of the bitwise operators in the productions above, is
+>>>>>CM:GREEN
 evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating A.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating B.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let lnum be ToInt32(lval).
+>>>>>CM:GREEN
 6.  Let rnum be ToInt32(rval).
+>>>>>CM:GREEN
 7.  Return the result of applying the bitwise operator @ to lnum and rnum. The result is a signed 32
+>>>>>CM:GREEN
     bit integer.
