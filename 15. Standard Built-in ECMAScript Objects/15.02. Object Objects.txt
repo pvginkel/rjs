@@ -245,13 +245,19 @@ When the freeze function is called, the following steps are taken:
 3.  Set the [[Extensible]] internal property of O to false.
 4.  Return O.
 
+>>>>>CM:GREEN
 15.2.3.10 Object.preventExtensions ( O )
+>>>>>CM:GREEN
 ========================================
 
+>>>>>CM:GREEN
 When the preventExtensions function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Set the [[Extensible]] internal property of O to false.
+>>>>>CM:GREEN
 3.  Return O.
 
 15.2.3.11 Object.isSealed ( O )
