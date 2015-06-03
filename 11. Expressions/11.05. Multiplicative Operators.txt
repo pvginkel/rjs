@@ -111,15 +111,15 @@ operands and result of all division operations are double-precision floating-poi
 >>>>>CM:YELLOW
 result of division is determined by the specification of IEEE 754 arithmetic:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   If either operand is NaN, the result is NaN.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   The sign of the result is positive if both operands have the same sign, negative if the operands
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     have different signs.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Division of an infinity by an infinity results in NaN.
 
 >>>>>CM:GREEN
@@ -127,14 +127,14 @@ result of division is determined by the specification of IEEE 754 arithmetic:
 >>>>>CM:GREEN
     already stated above.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Division of an infinity by a nonzero finite value results in a signed infinity. The sign is
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     determined by the rule already stated above.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Division of a finite value by an infinity results in zero. The sign is determined by the rule
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     already stated above.
 
 >>>>>CM:GREEN

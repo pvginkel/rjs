@@ -234,19 +234,30 @@ power of x, where e is the base of the natural logarithms).
 -   If x is +∞, the result is +∞.
 -   If x is −∞, the result is +0.
 
+>>>>>CM:YELLOW
 15.8.2.9 floor (x)
+>>>>>CM:YELLOW
 ==================
 
+>>>>>CM:YELLOW
 Returns the greatest (closest to +∞) Number value that is not greater than x and is equal to a
+>>>>>CM:YELLOW
 mathematical integer. If x is already an integer, the result is x.
 
+>>>>>CM:YELLOW
 -   If x is NaN, the result is NaN.
+>>>>>CM:YELLOW
 -   If x is +0, the result is +0.
+>>>>>CM:YELLOW
 -   If x is −0, the result is −0.
+>>>>>CM:YELLOW
 -   If x is +∞, the result is +∞.
+>>>>>CM:YELLOW
 -   If x is −∞, the result is −∞.
+>>>>>CM:YELLOW
 -   If x is greater than 0 but less than 1, the result is +0.
 
+>>>>>CM:YELLOW
 NOTE The value of Math.floor(x) is the same as the value of -Math.ceil(-x).
 
 15.8.2.10 log (x)
@@ -285,33 +296,59 @@ the resulting values.
 
 The length property of the min method is 2.
 
+>>>>>CM:YELLOW
 15.8.2.13 pow (x, y)
+>>>>>CM:YELLOW
 ====================
 
+>>>>>CM:YELLOW
 Returns an implementation-dependent approximation to the result of raising x to the power y.
 
+>>>>>CM:YELLOW
 -   If y is NaN, the result is NaN.
+>>>>>CM:YELLOW
 -   If y is +0, the result is 1, even if x is NaN.
+>>>>>CM:YELLOW
 -   If y is −0, the result is 1, even if x is NaN.
+>>>>>CM:YELLOW
 -   If x is NaN and y is nonzero, the result is NaN.
+>>>>>CM:YELLOW
 -   If abs(x)>1 and y is +∞, the result is +∞.
+>>>>>CM:YELLOW
 -   If abs(x)>1 and y is −∞, the result is +0.
+>>>>>CM:YELLOW
 -   If abs(x)==1 and y is +∞, the result is NaN.
+>>>>>CM:YELLOW
 -   If abs(x)==1 and y is −∞, the result is NaN.
+>>>>>CM:YELLOW
 -   If abs(x)<1 and y is +∞, the result is +0.
+>>>>>CM:YELLOW
 -   If abs(x)<1 and y is −∞, the result is +∞.
+>>>>>CM:YELLOW
 -   If x is +∞ and y>0, the result is +∞.
+>>>>>CM:YELLOW
 -   If x is +∞ and y<0, the result is +0.
+>>>>>CM:YELLOW
 -   If x is −∞ and y>0 and y is an odd integer, the result is −∞.
+>>>>>CM:YELLOW
 -   If x is −∞ and y>0 and y is not an odd integer, the result is +∞.
+>>>>>CM:YELLOW
 -   If x is −∞ and y<0 and y is an odd integer, the result is −0.
+>>>>>CM:YELLOW
 -   If x is −∞ and y<0 and y is not an odd integer, the result is +0.
+>>>>>CM:YELLOW
 -   If x is +0 and y>0, the result is +0.
+>>>>>CM:YELLOW
 -   If x is +0 and y<0, the result is +∞.
+>>>>>CM:YELLOW
 -   If x is −0 and y>0 and y is an odd integer, the result is −0.
+>>>>>CM:YELLOW
 -   If x is −0 and y>0 and y is not an odd integer, the result is +0.
+>>>>>CM:YELLOW
 -   If x is −0 and y<0 and y is an odd integer, the result is −∞.
+>>>>>CM:YELLOW
 -   If x is −0 and y<0 and y is not an odd integer, the result is +∞.
+>>>>>CM:YELLOW
 -   If x<0 and x is finite and y is finite and y is not an integer, the result is NaN.
 
 15.8.2.14 random ( )

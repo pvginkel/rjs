@@ -67,9 +67,13 @@ accessible to the eval code.
 The following steps are performed when control enters the execution context for function code
 contained in function object F, a caller provided thisArg, and a caller provided argumentsList:
 
+>>>>>CM:GREEN
 1.  If the function code is strict code, set the ThisBinding to thisArg.
+>>>>>CM:GREEN
 2.  Else if thisArg is null or undefined, set the ThisBinding to the global object.
+>>>>>CM:GREEN
 3.  Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).
+>>>>>CM:GREEN
 4.  Else set the ThisBinding to thisArg.
 5.  Let localEnv be the result of calling NewDeclarativeEnvironment passing the value of the
     [[Scope]] internal property of F as the argument.

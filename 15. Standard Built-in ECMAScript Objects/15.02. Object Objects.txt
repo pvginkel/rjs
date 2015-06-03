@@ -345,36 +345,59 @@ When the toString method is called, the following steps are taken:
 >>>>>CM:GREEN
     and "]".
 
+>>>>>CM:GREEN
 15.2.4.3 Object.prototype.toLocaleString ( )
+>>>>>CM:GREEN
 ============================================
 
+>>>>>CM:GREEN
 When the toLocaleString method is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  Let toString be the result of calling the [[Get]] internal method of O passing “toString” as the
+>>>>>CM:GREEN
     argument.
+>>>>>CM:GREEN
 3.  If IsCallable(toString) is false, throw a TypeError exception.
+>>>>>CM:GREEN
 4.  Return the result of calling the [[Call]] internal method of toString passing O as the this
+>>>>>CM:GREEN
     value and no arguments.
 
+>>>>>CM:GREEN
 NOTE 1 This function is provided to give all Objects a generic toLocaleString interface, even though
+>>>>>CM:GREEN
 not all may use it. Currently, Array, Number, and Date provide their own locale-sensitive
+>>>>>CM:GREEN
 toLocaleString methods.
 
+>>>>>CM:GREEN
 NOTE 2 The first parameter to this function is likely to be used in a future version of this
+>>>>>CM:GREEN
 standard; it is recommended that implementations do not use this parameter position for anything
+>>>>>CM:GREEN
 else.
 
+>>>>>CM:GREEN
 15.2.4.4 Object.prototype.valueOf ( )
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 When the valueOf method is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the result of calling ToObject passing the this value as the argument.
+>>>>>CM:GREEN
 2.  If O is the result of calling the Object constructor with a host object (15.2.2.1), then
+>>>>>CM:GREEN
     1.  Return either O or another value such as the host object originally passed to the
+>>>>>CM:GREEN
         constructor. The specific result that is returned is implementation-defined.
 
+>>>>>CM:GREEN
 3.  Return O.
 
 >>>>>CM:GREEN

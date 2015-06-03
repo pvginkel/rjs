@@ -79,28 +79,46 @@ built-in Object prototype object (15.2.4).
 
 The initial value of Boolean.prototype.constructor is the built-in Boolean constructor.
 
+>>>>>CM:GREEN
 15.6.4.2 Boolean.prototype.toString ( )
+>>>>>CM:GREEN
 =======================================
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let B be the this value.
+>>>>>CM:GREEN
 2.  If Type(B) is Boolean, then let b be B.
+>>>>>CM:GREEN
 3.  Else if Type(B) is Object and the value of the [[Class]] internal property of B is "Boolean",
+>>>>>CM:GREEN
     then let b be the value of the [[PrimitiveValue]] internal property of B.
+>>>>>CM:GREEN
 4.  Else throw a TypeError exception.
+>>>>>CM:GREEN
 5.  If b is true, then return "true"; else return "false".
 
+>>>>>CM:GREEN
 15.6.4.3 Boolean.prototype.valueOf ( )
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let B be the this value.
+>>>>>CM:GREEN
 2.  If Type(B) is Boolean, then let b be B.
+>>>>>CM:GREEN
 3.  Else if Type(B) is Object and the value of the [[Class]] internal property of B is "Boolean",
+>>>>>CM:GREEN
     then let b be the value of the [[PrimitiveValue]] internal property of B.
+>>>>>CM:GREEN
 4.  Else throw a TypeError exception.
+>>>>>CM:GREEN
 5.  Return b.
 
 15.6.5 Properties of Boolean Instances
