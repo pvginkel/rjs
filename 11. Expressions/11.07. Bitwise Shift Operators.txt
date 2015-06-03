@@ -1,72 +1,126 @@
+>>>>>CM:GREEN
 11.7 Bitwise Shift Operators
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 ShiftExpression :
 
+>>>>>CM:GREEN
 AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression << AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression >> AdditiveExpression
 
+>>>>>CM:GREEN
 ShiftExpression >>> AdditiveExpression
 
+>>>>>CM:GREEN
 11.7.1 The Left Shift Operator ( << )
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 Performs a bitwise left shift operation on the left operand by the amount specified by the right
+>>>>>CM:GREEN
 operand.
 
+>>>>>CM:GREEN
 The production ShiftExpression : ShiftExpression << AdditiveExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating AdditiveExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let lnum be ToInt32(lval).
+>>>>>CM:GREEN
 6.  Let rnum be ToUint32(rval).
+>>>>>CM:GREEN
 7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+>>>>>CM:GREEN
     is, compute rnum & 0x1F.
+>>>>>CM:GREEN
 8.  Return the result of left shifting lnum by shiftCount bits. The result is a signed 32-bit
+>>>>>CM:GREEN
     integer.
 
+>>>>>CM:GREEN
 11.7.2 The Signed Right Shift Operator ( >> )
+>>>>>CM:GREEN
 =============================================
 
+>>>>>CM:GREEN
 Performs a sign-filling bitwise right shift operation on the left operand by the amount specified by
+>>>>>CM:GREEN
 the right operand.
 
+>>>>>CM:GREEN
 The production ShiftExpression : ShiftExpression >> AdditiveExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating AdditiveExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let lnum be ToInt32(lval).
+>>>>>CM:GREEN
 6.  Let rnum be ToUint32(rval).
+>>>>>CM:GREEN
 7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+>>>>>CM:GREEN
     is, compute rnum & 0x1F.
+>>>>>CM:GREEN
 8.  Return the result of performing a sign-extending right shift of lnum by shiftCount bits. The
+>>>>>CM:GREEN
     most significant bit is propagated. The result is a signed 32-bit integer.
 
+>>>>>CM:GREEN
 11.7.3 The Unsigned Right Shift Operator ( >>> )
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 Performs a zero-filling bitwise right shift operation on the left operand by the amount specified by
+>>>>>CM:GREEN
 the right operand.
 
+>>>>>CM:GREEN
 The production ShiftExpression : ShiftExpression >>> AdditiveExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating AdditiveExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let lnum be ToUint32(lval).
+>>>>>CM:GREEN
 6.  Let rnum be ToUint32(rval).
+>>>>>CM:GREEN
 7.  Let shiftCount be the result of masking out all but the least significant 5 bits of rnum, that
+>>>>>CM:GREEN
     is, compute rnum & 0x1F.
+>>>>>CM:GREEN
 8.  Return the result of performing a zero-filling right shift of lnum by shiftCount bits. Vacated
+>>>>>CM:GREEN
     bits are filled with zero. The result is an unsigned 32-bit integer.

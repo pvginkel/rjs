@@ -163,14 +163,21 @@ The production UnaryExpression : - UnaryExpression is evaluated as follows:
 4.  Return the result of negating oldValue; that is, compute a Number with the same magnitude but
     opposite sign.
 
+>>>>>CM:GREEN
 11.4.8 Bitwise NOT Operator ( ~ )
+>>>>>CM:GREEN
 =================================
 
+>>>>>CM:GREEN
 The production UnaryExpression : ~ UnaryExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let expr be the result of evaluating UnaryExpression.
+>>>>>CM:GREEN
 2.  Let oldValue be ToInt32(GetValue(expr)).
+>>>>>CM:GREEN
 3.  Return the result of applying bitwise complement to oldValue. The result is a signed 32-bit
+>>>>>CM:GREEN
     integer.
 
 11.4.9 Logical NOT Operator ( ! )
