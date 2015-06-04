@@ -127,26 +127,43 @@ When the getOwnPropertyDescriptor function is called, the following steps are ta
     name.
 4.  Return the result of calling FromPropertyDescriptor(desc) (8.10.4).
 
+>>>>>CM:GREEN
 15.2.3.4 Object.getOwnPropertyNames ( O )
+>>>>>CM:GREEN
 =========================================
 
+>>>>>CM:GREEN
 When the getOwnPropertyNames function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let array be the result of creating a new object as if by the expression new Array () where
+>>>>>CM:GREEN
     Array is the standard built-in constructor with that name.
+>>>>>CM:GREEN
 3.  Let n be 0.
+>>>>>CM:GREEN
 4.  For each named own property P of O
+>>>>>CM:GREEN
     1.  Let name be the String value that is the name of P.
+>>>>>CM:GREEN
     2.  Call the [[DefineOwnProperty]] internal method of array with arguments ToString(n), the
+>>>>>CM:GREEN
         PropertyDescriptor {[[Value]]: name, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
         [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
     3.  Increment n by 1.
 
+>>>>>CM:GREEN
 5.  Return array.
 
+>>>>>CM:GREEN
 NOTE If O is a String instance, the set of own properties processed in step 4 includes the implicit
+>>>>>CM:GREEN
 properties defined in 15.5.5.2 that correspond to character positions within the object’s
+>>>>>CM:GREEN
 [[PrimitiveValue]] String.
 
 15.2.3.5 Object.create ( O [, Properties] )
