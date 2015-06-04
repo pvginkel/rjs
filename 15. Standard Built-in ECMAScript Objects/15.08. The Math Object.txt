@@ -19,13 +19,19 @@ NOTE In this specification, the phrase “the Number value for x” has a techni
 15.8.1 Value Properties of the Math Object
 ==========================================
 
+>>>>>CM:GREEN
 15.8.1.1 E
+>>>>>CM:GREEN
 ==========
 
+>>>>>CM:GREEN
 The Number value for e, the base of the natural logarithms, which is approximately
+>>>>>CM:GREEN
 2.7182818284590452354.
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
 15.8.1.2 LN10
@@ -66,13 +72,19 @@ false }.
 
 NOTE The value of Math.LOG10E is approximately the reciprocal of the value of Math.LN10.
 
+>>>>>CM:GREEN
 15.8.1.6 PI
+>>>>>CM:GREEN
 ===========
 
+>>>>>CM:GREEN
 The Number value for π, the ratio of the circumference of a circle to its diameter, which is
+>>>>>CM:GREEN
 approximately 3.1415926535897932.
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
 15.8.1.7 SQRT1_2

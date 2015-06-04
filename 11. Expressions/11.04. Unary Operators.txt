@@ -26,30 +26,47 @@ typeof UnaryExpression
 
 ! UnaryExpression
 
+>>>>>CM:GREEN
 11.4.1 The delete Operator
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 The production UnaryExpression : delete UnaryExpression is evaluated as follows:
 
+>>>>>CM:GREEN
 1.  Let ref be the result of evaluating UnaryExpression.
+>>>>>CM:GREEN
 2.  If Type(ref) is not Reference, return true.
 3.  If IsUnresolvableReference(ref) then,
     1.  If IsStrictReference(ref) is true, throw a SyntaxError exception.
     2.  Else, return true.
 
+>>>>>CM:GREEN
 4.  If IsPropertyReference(ref) is true, then
+>>>>>CM:GREEN
     1.  Return the result of calling the [[Delete]] internal method on ToObject(GetBase(ref))
+>>>>>CM:GREEN
         providing GetReferencedName(ref) and IsStrictReference(ref) as the arguments.
 
+>>>>>CM:GREEN
 5.  Else, ref is a Reference to an Environment Record binding, so
+>>>>>CM:GREEN
     1.  If IsStrictReference(ref) is true, throw a SyntaxError exception.
+>>>>>CM:GREEN
     2.  Let bindings be GetBase(ref).
+>>>>>CM:GREEN
     3.  Return the result of calling the DeleteBinding concrete method of bindings, providing
+>>>>>CM:GREEN
         GetReferencedName(ref) as the argument.
 
+>>>>>CM:GREEN
 NOTE When a delete operator occurs within strict mode code, a SyntaxError exception is thrown if its
+>>>>>CM:GREEN
 UnaryExpression is a direct reference to a variable, function argument, or function name. In
+>>>>>CM:GREEN
 addition, if a delete operator occurs within strict mode code and the property to be deleted has the
+>>>>>CM:GREEN
 attribute { [[Configurable]]: false }, a TypeError exception is thrown.
 
 11.4.2 The void Operator
