@@ -47,94 +47,167 @@ The RelationalExpressionNoIn productions are evaluated in the same manner as the
 RelationalExpression productions except that the contained RelationalExpressionNoIn is evaluated
 instead of the contained RelationalExpression.
 
+>>>>>CM:GREEN
 11.8.1 The Less-than Operator ( < )
+>>>>>CM:GREEN
 ===================================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression < ShiftExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let r be the result of performing abstract relational comparison lval < rval. (see 11.8.5)
+>>>>>CM:GREEN
 6.  If r is undefined, return false. Otherwise, return r.
 
+>>>>>CM:GREEN
 11.8.2 The Greater-than Operator ( > )
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression > ShiftExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let r be the result of performing abstract relational comparison rval < lval with LeftFirst
+>>>>>CM:GREEN
     equal to false. (see 11.8.5).
+>>>>>CM:GREEN
 6.  If r is undefined, return false. Otherwise, return r.
 
+>>>>>CM:GREEN
 11.8.3 The Less-than-or-equal Operator ( <= )
+>>>>>CM:GREEN
 =============================================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression <= ShiftExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let r be the result of performing abstract relational comparison rval < lval with LeftFirst
+>>>>>CM:GREEN
     equal to false. (see 11.8.5).
+>>>>>CM:GREEN
 6.  If r is true or undefined, return false. Otherwise, return true.
 
+>>>>>CM:GREEN
 11.8.4 The Greater-than-or-equal Operator ( >= )
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression >= ShiftExpression is evaluated as
+>>>>>CM:GREEN
 follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  Let r be the result of performing abstract relational comparison lval < rval. (see 11.8.5)
+>>>>>CM:GREEN
 6.  If r is true or undefined, return false. Otherwise, return true.
 
+>>>>>CM:GREEN
 11.8.5 The Abstract Relational Comparison Algorithm
+>>>>>CM:GREEN
 ===================================================
 
+>>>>>CM:GREEN
 The comparison x < y, where x and y are values, produces true, false, or undefined (which indicates
+>>>>>CM:GREEN
 that at least one operand is NaN). In addition to x and y the algorithm takes a Boolean flag named
+>>>>>CM:GREEN
 LeftFirst as a parameter. The flag is used to control the order in which operations with potentially
+>>>>>CM:GREEN
 visible side-effects are performed upon x and y. It is necessary because ECMAScript specifies left
+>>>>>CM:GREEN
 to right evaluation of expressions. The default value of LeftFirst is true and indicates that the x
+>>>>>CM:GREEN
 parameter corresponds to an expression that occurs to the left of the y parameter’s corresponding
+>>>>>CM:GREEN
 expression. If LeftFirst is false, the reverse is the case and operations must be performed upon y
+>>>>>CM:GREEN
 before x. Such a comparison is performed as follows:
 
+>>>>>CM:GREEN
 1.  If the LeftFirst flag is true, then
+>>>>>CM:GREEN
     1.  Let px be the result of calling ToPrimitive(x, hint Number).
+>>>>>CM:GREEN
     2.  Let py be the result of calling ToPrimitive(y, hint Number).
 
+>>>>>CM:GREEN
 2.  Else the order of evaluation needs to be reversed to preserve left to right evaluation
+>>>>>CM:GREEN
     1.  Let py be the result of calling ToPrimitive(y, hint Number).
+>>>>>CM:GREEN
     2.  Let px be the result of calling ToPrimitive(x, hint Number).
 
+>>>>>CM:GREEN
 3.  If it is not the case that both Type(px) is String and Type(py) is String, then
+>>>>>CM:GREEN
     1.  Let nx be the result of calling ToNumber(px). Because px and py are primitive values
+>>>>>CM:GREEN
         evaluation order is not important.
+>>>>>CM:GREEN
     2.  Let ny be the result of calling ToNumber(py).
+>>>>>CM:GREEN
     3.  If nx is NaN, return undefined.
+>>>>>CM:GREEN
     4.  If ny is NaN, return undefined.
+>>>>>CM:GREEN
     5.  If nx and ny are the same Number value, return false.
+>>>>>CM:GREEN
     6.  If nx is +0 and ny is −0, return false.
+>>>>>CM:GREEN
     7.  If nx is −0 and ny is +0, return false.
+>>>>>CM:GREEN
     8.  If nx is +∞, return false.
+>>>>>CM:GREEN
     9.  If ny is +∞, return true.
+>>>>>CM:GREEN
     10. If ny is −∞, return false.
+>>>>>CM:GREEN
     11. If nx is −∞, return true.
+>>>>>CM:GREEN
     12. If the mathematical value of nx is less than the mathematical value of ny —note that these
+>>>>>CM:GREEN
         mathematical values are both finite and not both zero—return true. Otherwise, return false.
 
 >>>>>CM:GREEN
@@ -160,15 +233,24 @@ before x. Such a comparison is performed as follows:
 >>>>>CM:GREEN
     6.  If m < n, return true. Otherwise, return false.
 
+>>>>>CM:GREEN
 NOTE 1 Step 3 differs from step 7 in the algorithm for the addition operator + (11.6.1) in using and
+>>>>>CM:GREEN
 instead of or.
 
+>>>>>CM:GREEN
 NOTE 2 The comparison of Strings uses a simple lexicographic ordering on sequences of code unit
+>>>>>CM:GREEN
 values. There is no attempt to use the more complex, semantically oriented definitions of character
+>>>>>CM:GREEN
 or string equality and collating order defined in the Unicode specification. Therefore String values
+>>>>>CM:GREEN
 that are canonically equal according to the Unicode standard could test as unequal. In effect this
+>>>>>CM:GREEN
 algorithm assumes that both Strings are already in normalised form. Also, note that for strings
+>>>>>CM:GREEN
 containing supplementary characters, lexicographic ordering on sequences of UTF-16 code unit values
+>>>>>CM:GREEN
 differs from that on sequences of code point values.
 
 11.8.6 The instanceof operator

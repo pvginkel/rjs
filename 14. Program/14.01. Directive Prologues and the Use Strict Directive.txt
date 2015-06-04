@@ -1,10 +1,17 @@
+>>>>>CM:GREEN
 14.1 Directive Prologues and the Use Strict Directive
+>>>>>CM:GREEN
 =====================================================
 
+>>>>>CM:GREEN
 A Directive Prologue is the longest sequence of ExpressionStatement productions occurring as the
+>>>>>CM:GREEN
 initial SourceElement productions of a Program or FunctionBody and where each ExpressionStatement in
+>>>>>CM:GREEN
 the sequence consists entirely of a StringLiteral token followed a semicolon. The semicolon may
+>>>>>CM:GREEN
 appear explicitly or may be inserted by automatic semicolon insertion. A Directive Prologue may be
+>>>>>CM:GREEN
 an empty sequence.
 
 >>>>>CM:GREEN
@@ -14,12 +21,20 @@ either the exact character sequences "use strict" or 'use strict'. A Use Stric
 >>>>>CM:GREEN
 contain an EscapeSequence or LineContinuation.
 
+>>>>>CM:GREEN
 A Directive Prologue may contain more than one Use Strict Directive. However, an implementation may
+>>>>>CM:GREEN
 issue a warning if this occurs.
 
+>>>>>CM:GREEN
 NOTE The ExpressionStatement productions of a Directive Prologue are evaluated normally during
+>>>>>CM:GREEN
 evaluation of the containing SourceElements production. Implementations may define implementation
+>>>>>CM:GREEN
 specific meanings for ExpressionStatement productions which are not a Use Strict Directive and which
+>>>>>CM:GREEN
 occur in a Directive Prologue. If an appropriate notification mechanism exists, an implementation
+>>>>>CM:GREEN
 should issue a warning if it encounters in a Directive Prologue an ExpressionStatement that is not a
+>>>>>CM:GREEN
 Use Strict Directive or which does not have a meaning defined by the implementation.
