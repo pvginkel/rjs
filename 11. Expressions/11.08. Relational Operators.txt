@@ -1,50 +1,78 @@
+>>>>>CM:GREEN
 11.8 Relational Operators
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 RelationalExpression :
 
+>>>>>CM:GREEN
 ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression < ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression > ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression <= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression >= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression instanceof ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpression in ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn :
 
+>>>>>CM:GREEN
 ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn < ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn > ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn <= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn >= ShiftExpression
 
+>>>>>CM:GREEN
 RelationalExpressionNoIn instanceof ShiftExpression
 
+>>>>>CM:GREEN
 NOTE The “NoIn” variants are needed to avoid confusing the in operator in a relational expression
+>>>>>CM:GREEN
 with the in operator in a for statement.
 
+>>>>>CM:GREEN
 Semantics
+>>>>>CM:GREEN
 ---------
 
+>>>>>CM:GREEN
 The result of evaluating a relational operator is always of type Boolean, reflecting whether the
+>>>>>CM:GREEN
 relationship named by the operator holds between its two operands.
 
+>>>>>CM:GREEN
 The RelationalExpressionNoIn productions are evaluated in the same manner as the
+>>>>>CM:GREEN
 RelationalExpression productions except that the contained RelationalExpressionNoIn is evaluated
+>>>>>CM:GREEN
 instead of the contained RelationalExpression.
 
 >>>>>CM:GREEN
@@ -253,18 +281,29 @@ containing supplementary characters, lexicographic ordering on sequences of UTF-
 >>>>>CM:GREEN
 differs from that on sequences of code point values.
 
+>>>>>CM:GREEN
 11.8.6 The instanceof operator
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 The production RelationalExpression : RelationalExpression instanceof ShiftExpression is evaluated
+>>>>>CM:GREEN
 as follows:
 
+>>>>>CM:GREEN
 1.  Let lref be the result of evaluating RelationalExpression.
+>>>>>CM:GREEN
 2.  Let lval be GetValue(lref).
+>>>>>CM:GREEN
 3.  Let rref be the result of evaluating ShiftExpression.
+>>>>>CM:GREEN
 4.  Let rval be GetValue(rref).
+>>>>>CM:GREEN
 5.  If Type(rval) is not Object, throw a TypeError exception.
+>>>>>CM:GREEN
 6.  If rval does not have a [[HasInstance]] internal method, throw a TypeError exception.
+>>>>>CM:GREEN
 7.  Return the result of calling the [[HasInstance]] internal method of rval with argument lval.
 
 >>>>>CM:GREEN
