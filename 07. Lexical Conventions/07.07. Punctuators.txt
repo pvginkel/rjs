@@ -1,24 +1,43 @@
+>>>>>CM:GREEN
 7.7 Punctuators
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 Punctuator :: one of
 
+>>>>>CM:GREEN
   ----- ------ ----- ----- ----- -----
+>>>>>CM:GREEN
   {     }      (     )     [     ]
+>>>>>CM:GREEN
   .     ;      ,     <     >     <=
+>>>>>CM:GREEN
   >=    ==     !=    ===   !==   
+>>>>>CM:GREEN
   +     -      *     %     ++    –
+>>>>>CM:GREEN
   <<    >>     >>>   &     |     ^
+>>>>>CM:GREEN
   !     ~      &&    ||    ?     :
+>>>>>CM:GREEN
   =     +=     -=    *=    %=    <<=
+>>>>>CM:GREEN
   >>=   >>>=   &=    |=    ^=    
+>>>>>CM:GREEN
   ----- ------ ----- ----- ----- -----
 
+>>>>>CM:GREEN
 DivPunctuator :: one of
 
+>>>>>CM:GREEN
   --- ---- -- -- -- --
+>>>>>CM:GREEN
   /   /=            
+>>>>>CM:GREEN
   --- ---- -- -- -- --

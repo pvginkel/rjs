@@ -226,56 +226,96 @@ Number or a Number object. Therefore, it cannot be transferred to other kinds of
 >>>>>CM:GREEN
 a method.
 
+>>>>>CM:GREEN
 15.7.4.5 Number.prototype.toFixed (fractionDigits)
+>>>>>CM:GREEN
 ==================================================
 
+>>>>>CM:GREEN
 Return a String containing this Number value represented in decimal fixed-point notation with
+>>>>>CM:GREEN
 fractionDigits digits after the decimal point. If fractionDigits is undefined, 0 is assumed.
+>>>>>CM:GREEN
 Specifically, perform the following steps:
 
+>>>>>CM:GREEN
 1.  Let f be ToInteger(fractionDigits). (If fractionDigits is undefined, this step produces the
+>>>>>CM:GREEN
     value 0).
+>>>>>CM:GREEN
 2.  If f < 0 or f > 20, throw a RangeError exception.
+>>>>>CM:GREEN
 3.  Let x be this Number value.
+>>>>>CM:GREEN
 4.  If x is NaN, return the String "NaN".
+>>>>>CM:GREEN
 5.  Let s be the empty String.
+>>>>>CM:GREEN
 6.  If x < 0, then
+>>>>>CM:GREEN
     1.  Let s be "-".
+>>>>>CM:GREEN
     2.  Let x = –x.
 
+>>>>>CM:GREEN
 7.  If x ≥ 10^21, then
+>>>>>CM:GREEN
     1.  Let m = ToString(x).
 
+>>>>>CM:GREEN
 8.  Else, x < 10^21
+>>>>>CM:GREEN
     1.  Let n be an integer for which the exact mathematical value of n ÷ 10f – x is as close to
+>>>>>CM:GREEN
         zero as possible. If there are two such n, pick the larger n.
+>>>>>CM:GREEN
     2.  If n = 0, let m be the String "0". Otherwise, let m be the String consisting of the digits
+>>>>>CM:GREEN
         of the decimal representation of n (in order, with no leading zeroes).
+>>>>>CM:GREEN
     3.  If f ≠ 0, then
+>>>>>CM:GREEN
         1.  Let k be the number of characters in m.
+>>>>>CM:GREEN
         2.  If k ≤ f, then
+>>>>>CM:GREEN
             1.  Let z be the String consisting of f+1–k occurrences of the character ‘0’.
+>>>>>CM:GREEN
             2.  Let m be the concatenation of Strings z and m.
+>>>>>CM:GREEN
             3.  Let k = f + 1.
 
+>>>>>CM:GREEN
         3.  Let a be the first k–f characters of m, and let b be the remaining f characters of m.
+>>>>>CM:GREEN
         4.  Let m be the concatenation of the three Strings a, ".", and b.
 
+>>>>>CM:GREEN
 9.  Return the concatenation of the Strings s and m.
 
+>>>>>CM:GREEN
 The length property of the toFixed method is 1.
 
+>>>>>CM:GREEN
 If the toFixed method is called with more than one argument, then the behaviour is undefined (see
+>>>>>CM:GREEN
 clause 15).
 
+>>>>>CM:GREEN
 An implementation is permitted to extend the behaviour of toFixed for values of fractionDigits less
+>>>>>CM:GREEN
 than 0 or greater than 20. In this case toFixed would not necessarily throw RangeError for such
+>>>>>CM:GREEN
 values.
 
+>>>>>CM:GREEN
 NOTE The output of toFixed may be more precise than toString for some values because toString only
+>>>>>CM:GREEN
 prints enough significant digits to distinguish the number from adjacent number values. For example,
 
+>>>>>CM:GREEN
 (1000000000000000128).toString() returns "1000000000000000100",  
+>>>>>CM:GREEN
 while (1000000000000000128).toFixed(0) returns "1000000000000000128".
 
 15.7.4.6 Number.prototype.toExponential (fractionDigits)

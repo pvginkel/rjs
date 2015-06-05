@@ -126,49 +126,83 @@ The valueOf function is not generic; it throws a TypeError exception if its this
 String or String object. Therefore, it cannot be transferred to other kinds of objects for use as a
 method.
 
+>>>>>CM:GREEN
 15.5.4.4 String.prototype.charAt (pos)
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 Returns a String containing the character at position pos in the String resulting from converting
+>>>>>CM:GREEN
 this object to a String. If there is no character at that position, the result is the empty String.
+>>>>>CM:GREEN
 The result is a String value, not a String object.
 
+>>>>>CM:GREEN
 If pos is a value of Number type that is an integer, then the result of x.charAt(pos) is equal to
+>>>>>CM:GREEN
 the result of x.substring(pos, pos+1).
 
+>>>>>CM:GREEN
 When the charAt method is called with one argument pos, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let position be ToInteger(pos).
+>>>>>CM:GREEN
 4.  Let size be the number of characters in S.
+>>>>>CM:GREEN
 5.  If position < 0 or position ≥ size, return the empty String.
+>>>>>CM:GREEN
 6.  Return a String of length 1, containing one character from S, namely the character at position
+>>>>>CM:GREEN
     position, where the first (leftmost) character in S is considered to be at position 0, the next
+>>>>>CM:GREEN
     one at position 1, and so on.
 
+>>>>>CM:GREEN
 NOTE The charAt function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.5 String.prototype.charCodeAt (pos)
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 Returns a Number (a nonnegative integer less than 2^16) representing the code unit value of the
+>>>>>CM:GREEN
 character at position pos in the String resulting from converting this object to a String. If there
+>>>>>CM:GREEN
 is no character at that position, the result is NaN.
 
+>>>>>CM:GREEN
 When the charCodeAt method is called with one argument pos, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let position be ToInteger(pos).
+>>>>>CM:GREEN
 4.  Let size be the number of characters in S.
+>>>>>CM:GREEN
 5.  If position < 0 or position ≥ size, return NaN.
+>>>>>CM:GREEN
 6.  Return a value of Number type, whose value is the code unit value of the character at position
+>>>>>CM:GREEN
     position in the String S, where the first (leftmost) character in S is considered to be at
+>>>>>CM:GREEN
     position 0, the next one at position 1, and so on.
 
+>>>>>CM:GREEN
 NOTE The charCodeAt function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
 15.5.4.6 String.prototype.concat ( [ string1 [ , string2 [ , … ] ] ] )
@@ -195,60 +229,104 @@ The length property of the concat method is 1.
 NOTE The concat function is intentionally generic; it does not require that its this value be a
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.7 String.prototype.indexOf (searchString, position)
+>>>>>CM:GREEN
 ==========================================================
 
+>>>>>CM:GREEN
 If searchString appears as a substring of the result of converting this object to a String, at one
+>>>>>CM:GREEN
 or more positions that are greater than or equal to position, then the index of the smallest such
+>>>>>CM:GREEN
 position is returned; otherwise, ‑1 is returned. If position is undefined, 0 is assumed, so as to
+>>>>>CM:GREEN
 search all of the String.
 
+>>>>>CM:GREEN
 The indexOf method takes two arguments, searchString and position, and performs the following steps:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let searchStr be ToString(searchString).
+>>>>>CM:GREEN
 4.  Let pos be ToInteger(position). (If position is undefined, this step produces the value 0).
+>>>>>CM:GREEN
 5.  Let len be the number of characters in S.
+>>>>>CM:GREEN
 6.  Let start be min(max(pos, 0), len).
+>>>>>CM:GREEN
 7.  Let searchLen be the number of characters in searchStr.
+>>>>>CM:GREEN
 8.  Return the smallest possible integer k not smaller than start such that k+ searchLen is not
+>>>>>CM:GREEN
     greater than len, and for all nonnegative integers j less than searchLen, the character at
+>>>>>CM:GREEN
     position k+j of S is the same as the character at position j of searchStr; but if there is no
+>>>>>CM:GREEN
     such integer k, then return the value -1.
 
+>>>>>CM:GREEN
 The length property of the indexOf method is 1.
 
+>>>>>CM:GREEN
 NOTE The indexOf function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.8 String.prototype.lastIndexOf (searchString, position)
+>>>>>CM:GREEN
 ==============================================================
 
+>>>>>CM:GREEN
 If searchString appears as a substring of the result of converting this object to a String at one or
+>>>>>CM:GREEN
 more positions that are smaller than or equal to position, then the index of the greatest such
+>>>>>CM:GREEN
 position is returned; otherwise, ‑1 is returned. If position is undefined, the length of the String
+>>>>>CM:GREEN
 value is assumed, so as to search all of the String.
 
+>>>>>CM:GREEN
 The lastIndexOf method takes two arguments, searchString and position, and performs the following
+>>>>>CM:GREEN
 steps:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let searchStr be ToString(searchString).
+>>>>>CM:GREEN
 4.  Let numPos be ToNumber(position). (If position is undefined, this step produces the value NaN).
+>>>>>CM:GREEN
 5.  If numPos is NaN, let pos be +∞; otherwise, let pos be ToInteger(numPos).
+>>>>>CM:GREEN
 6.  Let len be the number of characters in S.
+>>>>>CM:GREEN
 7.  Let start min(max(pos, 0), len).
+>>>>>CM:GREEN
 8.  Let searchLen be the number of characters in searchStr.
+>>>>>CM:GREEN
 9.  Return the largest possible nonnegative integer k not larger than start such that k+ searchLen
+>>>>>CM:GREEN
     is not greater than len, and for all nonnegative integers j less than searchLen, the character
+>>>>>CM:GREEN
     at position k+j of S is the same as the character at position j of searchStr; but if there is no
+>>>>>CM:GREEN
     such integer k, then return the value -1.
 
+>>>>>CM:GREEN
 The length property of the lastIndexOf method is 1.
 
+>>>>>CM:GREEN
 NOTE The lastIndexOf function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
 15.5.4.9 String.prototype.localeCompare (that)
@@ -442,123 +520,221 @@ The length property of the slice method is 2.
 NOTE The slice function is intentionally generic; it does not require that its this value be a
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.14 String.prototype.split (separator, limit)
+>>>>>CM:GREEN
 ===================================================
 
+>>>>>CM:GREEN
 Returns an Array object into which substrings of the result of converting this object to a String
+>>>>>CM:GREEN
 have been stored. The substrings are determined by searching from left to right for occurrences of
+>>>>>CM:GREEN
 separator; these occurrences are not part of any substring in the returned array, but serve to
+>>>>>CM:GREEN
 divide up the String value. The value of separator may be a String of any length or it may be a
+>>>>>CM:GREEN
 RegExp object (i.e., an object whose [[Class]] internal property is "RegExp"; see 15.10).
 
+>>>>>CM:GREEN
 The value of separator may be an empty String, an empty regular expression, or a regular expression
+>>>>>CM:GREEN
 that can match an empty String. In this case, separator does not match the empty substring at the
+>>>>>CM:GREEN
 beginning or end of the input String, nor does it match the empty substring at the end of the
+>>>>>CM:GREEN
 previous separator match. (For example, if separator is the empty String, the String is split up
+>>>>>CM:GREEN
 into individual characters; the length of the result array equals the length of the String, and each
+>>>>>CM:GREEN
 substring contains one character.) If separator is a regular expression, only the first match at a
+>>>>>CM:GREEN
 given position of the this String is considered, even if backtracking could yield a
+>>>>>CM:GREEN
 non-empty-substring match at that position. (For example, "ab".split(/a*?/) evaluates to the array
+>>>>>CM:GREEN
 ["a","b"], while "ab".split(/a*/) evaluates to the array["","b"].)
 
+>>>>>CM:GREEN
 If the this object is (or converts to) the empty String, the result depends on whether separator can
+>>>>>CM:GREEN
 match the empty String. If it can, the result array contains no elements. Otherwise, the result
+>>>>>CM:GREEN
 array contains one element, which is the empty String.
 
+>>>>>CM:GREEN
 If separator is a regular expression that contains capturing parentheses, then each time separator
+>>>>>CM:GREEN
 is matched the results (including any undefined results) of the capturing parentheses are spliced
+>>>>>CM:GREEN
 into the output array. For example,
 
+>>>>>CM:GREEN
     "A<B>bold</B>and<CODE>coded</CODE>".split(/<(\/)?([^<>]+)>/)
 
+>>>>>CM:GREEN
 evaluates to the array
 
+>>>>>CM:GREEN
     ["A", undefined, "B", "bold", "/", "B", "and", undefined, "CODE", "coded", "/", "CODE", ""]
 
+>>>>>CM:GREEN
 If separator is undefined, then the result array contains just one String, which is the this value
+>>>>>CM:GREEN
 (converted to a String). If limit is not undefined, then the output array is truncated so that it
+>>>>>CM:GREEN
 contains no more than limit elements.
 
+>>>>>CM:GREEN
 When the split method is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let A be a new array created as if by the expression new Array()where Array is the standard
+>>>>>CM:GREEN
     built-in constructor with that name.
+>>>>>CM:GREEN
 4.  Let lengthA be 0.
+>>>>>CM:GREEN
 5.  If limit is undefined, let lim = 2^32–1; else let lim = ToUint32(limit).
+>>>>>CM:GREEN
 6.  Let s be the number of characters in S.
+>>>>>CM:GREEN
 7.  Let p = 0.
+>>>>>CM:GREEN
 8.  If separator is a RegExp object (its [[Class]] is "RegExp"), let R = separator; otherwise let R
+>>>>>CM:GREEN
     = ToString(separator).
+>>>>>CM:GREEN
 9.  If lim = 0, return A.
+>>>>>CM:GREEN
 10. If separator is undefined, then
+>>>>>CM:GREEN
     1.  Call the [[DefineOwnProperty]] internal method of A with arguments "0", Property Descriptor
+>>>>>CM:GREEN
         {[[Value]]: S, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
     2.  Return A.
 
+>>>>>CM:GREEN
 11. If s = 0, then
+>>>>>CM:GREEN
     1.  Call SplitMatch(S, 0, R) and let z be its MatchResult result.
+>>>>>CM:GREEN
     2.  If z is not failure, return A.
+>>>>>CM:GREEN
     3.  Call the [[DefineOwnProperty]] internal method of A with arguments "0", Property Descriptor
+>>>>>CM:GREEN
         {[[Value]]: S, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
     4.  Return A.
 
+>>>>>CM:GREEN
 12. Let q = p.
+>>>>>CM:GREEN
 13. Repeat, while q ≠ s
+>>>>>CM:GREEN
     1.  Call SplitMatch(S, q, R) and let z be its MatchResult result.
+>>>>>CM:GREEN
     2.  If z is failure, then let q = q+1.
+>>>>>CM:GREEN
     3.  Else, z is not failure
+>>>>>CM:GREEN
         1.  z must be a State. Let e be z’s endIndex and let cap be z’s captures array.
+>>>>>CM:GREEN
         2.  If e = p, then let q = q+1.
+>>>>>CM:GREEN
         3.  Else, e ≠ p
+>>>>>CM:GREEN
             1.  Let T be a String value equal to the substring of S consisting of the characters at
+>>>>>CM:GREEN
                 positions p (inclusive) through q (exclusive).
+>>>>>CM:GREEN
             2.  Call the [[DefineOwnProperty]] internal method of A with arguments
+>>>>>CM:GREEN
                 ToString(lengthA), Property Descriptor {[[Value]]: T, [[Writable]]: true,
+>>>>>CM:GREEN
                 [[Enumerable]]: true, [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
             3.  Increment lengthA by 1.
+>>>>>CM:GREEN
             4.  If lengthA = lim, return A.
+>>>>>CM:GREEN
             5.  Let p = e.
+>>>>>CM:GREEN
             6.  Let i = 0.
+>>>>>CM:GREEN
             7.  Repeat, while i is not equal to the number of elements in cap.
+>>>>>CM:GREEN
                 1.  Let i = i+1.
+>>>>>CM:GREEN
                 2.  Call the [[DefineOwnProperty]] internal method of A with arguments
+>>>>>CM:GREEN
                     ToString(lengthA), Property Descriptor {[[Value]]: cap[i], [[Writable]]: true,
+>>>>>CM:GREEN
                     [[Enumerable]]: true, [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
                 3.  Increment lengthA by 1.
+>>>>>CM:GREEN
                 4.  If lengthA = lim, return A.
 
+>>>>>CM:GREEN
             8.  Let q = p.
 
+>>>>>CM:GREEN
 14. Let T be a String value equal to the substring of S consisting of the characters at positions p
+>>>>>CM:GREEN
     (inclusive) through s (exclusive).
+>>>>>CM:GREEN
 15. Call the [[DefineOwnProperty]] internal method of A with arguments ToString(lengthA), Property
+>>>>>CM:GREEN
     Descriptor {[[Value]]: T, [[Writable]]: true, [[Enumerable]]: true, [[Configurable]]: true}, and
+>>>>>CM:GREEN
     false.
+>>>>>CM:GREEN
 16. Return A.
 
+>>>>>CM:GREEN
 The abstract operation SplitMatch takes three parameters, a String S, an integer q, and a String or
+>>>>>CM:GREEN
 RegExp R, and performs the following in order to return a MatchResult (see 15.10.2.1):
 
+>>>>>CM:GREEN
 1.  If R is a RegExp object (its [[Class]] is "RegExp"), then
+>>>>>CM:GREEN
     1.  Call the [[Match]] internal method of R giving it the arguments S and q, and return the
+>>>>>CM:GREEN
         MatchResult result.
 
+>>>>>CM:GREEN
 2.  Type(R) must be String. Let r be the number of characters in R.
+>>>>>CM:GREEN
 3.  Let s be the number of characters in S.
+>>>>>CM:GREEN
 4.  If q+r > s then return the MatchResult failure.
+>>>>>CM:GREEN
 5.  If there exists an integer i between 0 (inclusive) and r (exclusive) such that the character at
+>>>>>CM:GREEN
     position q+i of S is different from the character at position i of R, then return failure.
+>>>>>CM:GREEN
 6.  Let cap be an empty array of captures (see 15.10.2.1).
+>>>>>CM:GREEN
 7.  Return the State (q+r, cap). (see 15.10.2.1)
 
+>>>>>CM:GREEN
 The length property of the split method is 2.
 
+>>>>>CM:GREEN
 NOTE 1 The split method ignores the value of separator.global for separators that are RegExp
+>>>>>CM:GREEN
 objects.
 
+>>>>>CM:GREEN
 NOTE 2 The split function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
 15.5.4.15 String.prototype.substring (start, end)
