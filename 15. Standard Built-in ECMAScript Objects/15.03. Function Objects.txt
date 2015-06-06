@@ -298,43 +298,73 @@ NOTE Function objects created using Function.prototype.bind do not have a protot
 >>>>>CM:GREEN
 [[Code]], [[FormalParameters]], and [[Scope]] internal properties.
 
+>>>>>CM:GREEN
 15.3.4.5.1 [[Call]]
+>>>>>CM:GREEN
 ===================
 
+>>>>>CM:GREEN
 When the [[Call]] internal method of a function object, F, which was created using the bind function
+>>>>>CM:GREEN
 is called with a this value and a list of arguments ExtraArgs, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let boundArgs be the value of F’s [[BoundArgs]] internal property.
+>>>>>CM:GREEN
 2.  Let boundThis be the value of F’s [[BoundThis]] internal property.
+>>>>>CM:GREEN
 3.  Let target be the value of F’s [[TargetFunction]] internal property.
+>>>>>CM:GREEN
 4.  Let args be a new list containing the same values as the list boundArgs in the same order
+>>>>>CM:GREEN
     followed by the same values as the list ExtraArgs in the same order.
+>>>>>CM:GREEN
 5.  Return the result of calling the [[Call]] internal method of target providing boundThis as the
+>>>>>CM:GREEN
     this value and providing args as the arguments.
 
+>>>>>CM:GREEN
 15.3.4.5.2 [[Construct]]
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 When the [[Construct]] internal method of a function object, F that was created using the bind
+>>>>>CM:GREEN
 function is called with a list of arguments ExtraArgs, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let target be the value of F’s [[TargetFunction]] internal property.
+>>>>>CM:GREEN
 2.  If target has no [[Construct]] internal method, a TypeError exception is thrown.
+>>>>>CM:GREEN
 3.  Let boundArgs be the value of F’s [[BoundArgs]] internal property.
+>>>>>CM:GREEN
 4.  Let args be a new list containing the same values as the list boundArgs in the same order
+>>>>>CM:GREEN
     followed by the same values as the list ExtraArgs in the same order.
+>>>>>CM:GREEN
 5.  Return the result of calling the [[Construct]] internal method of target providing args as the
+>>>>>CM:GREEN
     arguments.
 
+>>>>>CM:GREEN
 15.3.4.5.3 [[HasInstance]] (V)
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 When the [[HasInstance]] internal method of a function object F, that was created using the bind
+>>>>>CM:GREEN
 function is called with argument V, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let target be the value of F’s [[TargetFunction]] internal property.
+>>>>>CM:GREEN
 2.  If target has no [[HasInstance]] internal method, a TypeError exception is thrown.
+>>>>>CM:GREEN
 3.  Return the result of calling the [[HasInstance]] internal method of target providing V as the
+>>>>>CM:GREEN
     argument.
 
 15.3.5 Properties of Function Instances
