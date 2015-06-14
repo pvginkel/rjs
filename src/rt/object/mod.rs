@@ -25,7 +25,8 @@ pub struct JsObject {
 	prototype: Ptr<JsObject>,
 	scope: Ptr<JsScope>,
 	store: StorePtr,
-	extensible: bool
+	extensible: bool,
+	can_construct: bool
 }
 
 impl JsObject {
@@ -44,7 +45,8 @@ impl JsObject {
 			prototype: Ptr::null(),
 			scope: Ptr::null(),
 			store: store,
-			extensible: true
+			extensible: true,
+			can_construct: false
 		}
 	}
 	
@@ -83,6 +85,7 @@ impl JsObject {
 		}
 		
 		result.function = Some(function);
+		result.can_construct = true;
 
 		let name = name.unwrap_or(name::EMPTY);
 		let name = JsString::from_str(env, &*env.ir.interner().get(name)).as_value(env);
@@ -395,6 +398,18 @@ impl Local<JsObject> {
 				}
 			}
 		}
+	}
+	
+	pub fn delete_unchecked(&mut self, env: &mut JsEnv, property: Name) {
+		if self.get_own_property(env, property).is_some() {
+			self.store.remove(env, property);
+		}
+	}
+	
+	pub fn set_can_construct(&mut self, _: &JsEnv, can_construct: bool) {
+		assert!(self.function.is_some());
+		
+		self.can_construct = can_construct;
 	}
 }
 

@@ -1,6 +1,4 @@
 pub static TYPE_NOT_A_FUNCTION : &'static str = "Value is not a function";
-pub static TYPE_MISSING_ARGUMENT : &'static str = "Missing argument";
-pub static TYPE_EXPECTED_ARRAY_ITEM : &'static str = "Expected at least one array item";
 pub static TYPE_INVALID : &'static str = "Unexpected type";
 pub static TYPE_CANNOT_PUT : &'static str = "Cannot set property";
 pub static TYPE_CANNOT_HAS_INSTANCE : &'static str = "Instance of parameter must be an object";
@@ -18,4 +16,5 @@ pub static TYPE_CANNOT_ACCESS_FUNCTION_PROPERTY : &'static str = "Cannot access 
 pub static TYPE_CANNOT_CALL_TO_STRING : &'static str = "Cannot call toString";
 pub static SYNTAX_CANNOT_RESOLVE_PROPERTY : &'static str = "Cannot resolve property";
 pub static TYPE_NOT_CALLABLE : &'static str = "Target must be callable";
+pub static TYPE_FUNCTION_HAS_NO_NAME : &'static str = "Function must have a name";
 pub static TYPE_PROPERTY_ONLY_HAS_GETTER : &'static str = "Cannot set property because it only has a getter";

@@ -87,8 +87,6 @@ pub fn setup(env: &mut JsEnv) -> JsResult<()> {
 }
 
 fn setup_global(env: &mut JsEnv) {
-	let _scope = env.new_local_scope();
-	
 	*env.global = JsObject::new(&env, JsStoreType::Hash);
 	
 	env.global_scope = {
@@ -118,6 +116,7 @@ fn setup_global(env: &mut JsEnv) {
 	setup_regexp(env, global, function_prototype);
 	setup_json(env, global, function_prototype);
 	setup_console(env, global, function_prototype);
+	setup_intrinsics(env, global, function_prototype);
 	
 	// Build global functions
 	
@@ -228,26 +227,14 @@ fn setup_array<'a>(env: &mut JsEnv, mut global: Local<JsValue>, function_prototy
 	
 	property!(global, name::ARRAY_CLASS, class, true, false, true, env);
 
-	function!(prototype, name::TO_STRING, Array_toString, 0, function_prototype, env);
-	function!(prototype, name::TO_LOCALE_STRING, Array_toLocaleString, 0, function_prototype, env);
-	function!(prototype, name::CONCAT, Array_concat, 1, function_prototype, env);
-	function!(prototype, name::JOIN, Array_join, 1, function_prototype, env);
 	function!(prototype, name::POP, Array_pop, 0, function_prototype, env);
 	function!(prototype, name::PUSH, Array_push, 1, function_prototype, env);
-	function!(prototype, name::REVERSE, Array_reverse, 0, function_prototype, env);
 	function!(prototype, name::SHIFT, Array_shift, 0, function_prototype, env);
 	function!(prototype, name::SLICE, Array_slice, 2, function_prototype, env);
 	function!(prototype, name::SORT, Array_sort, 1, function_prototype, env);
-	function!(prototype, name::SPLICE, Array_splice, 2, function_prototype, env);
 	function!(prototype, name::UNSHIFT, Array_unshift, 1, function_prototype, env);
 	function!(prototype, name::INDEX_OF, Array_indexOf, 1, function_prototype, env);
 	function!(prototype, name::LAST_INDEX_OF, Array_lastIndexOf, 1, function_prototype, env);
-	function!(prototype, name::EVERY, Array_every, 1, function_prototype, env);
-	function!(prototype, name::SOME, Array_some, 1, function_prototype, env);
-	function!(prototype, name::FOR_EACH, Array_forEach, 1, function_prototype, env);
-	function!(prototype, name::MAP, Array_map, 1, function_prototype, env);
-	function!(prototype, name::FILTER, Array_filter, 1, function_prototype, env);
-	function!(prototype, name::REDUCE, Array_reduce, 1, function_prototype, env);
 	function!(prototype, name::REDUCE_RIGHT, Array_reduceRight, 1, function_prototype, env);
 	
 	env.array_prototype = prototype.as_root(env);
@@ -370,6 +357,18 @@ fn setup_console<'a>(env: &mut JsEnv, mut global: Local<JsValue>, function_proto
 	property!(global, name::CONSOLE, class.as_value(env), true, false, true, env);
 	
 	function!(class, name::LOG, console_log, 1, function_prototype, env);
+}
+
+fn setup_intrinsics<'a>(env: &mut JsEnv, mut global: Local<JsValue>, function_prototype: Local<JsObject>) {
+	let mut class = JsObject::new_local(env, JsStoreType::Hash);
+	
+	class.set_class(env, Some(name::INTRINSICS_CLASS));
+	
+	property!(global, name::INTRINSICS_CLASS, class.as_value(env), true, false, true, env);
+	
+	function!(class, name::IS_CALLABLE, Intrinsics_isCallable, 1, function_prototype, env);
+	function!(class, name::HAS_PROPERTY, Intrinsics_hasProperty, 2, function_prototype, env);
+	function!(class, name::REGISTER_FUNCTION, Intrinsics_registerFunction, 2, function_prototype, env);
 }
 
 fn new_naked_function<'a>(env: &mut JsEnv, name: Option<Name>, args: u32, function: &JsFn, prototype: Local<JsObject>, can_construct: bool) -> Local<JsValue> {
