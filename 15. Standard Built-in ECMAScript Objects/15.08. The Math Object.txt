@@ -282,30 +282,48 @@ NOTE The value of Math.floor(x) is the same as the value of -Math.ceil(-x).
 -   If x is 1, the result is +0.
 -   If x is +∞, the result is +∞.
 
+>>>>>CM:GREEN
 15.8.2.11 max ( [ value1 [ , value2 [ , … ] ] ] )
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 Given zero or more arguments, calls ToNumber on each of the arguments and returns the largest of the
+>>>>>CM:GREEN
 resulting values.
 
+>>>>>CM:GREEN
 -   If no arguments are given, the result is −∞.
+>>>>>CM:GREEN
 -   If any value is NaN, the result is NaN.
+>>>>>CM:GREEN
 -   The comparison of values to determine the largest value is done as in 11.8.5 except that +0 is
+>>>>>CM:GREEN
     considered to be larger than −0.
 
+>>>>>CM:GREEN
 The length property of the max method is 2.
 
+>>>>>CM:GREEN
 15.8.2.12 min ( [ value1 [ , value2 [ , … ] ] ] )
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 Given zero or more arguments, calls ToNumber on each of the arguments and returns the smallest of
+>>>>>CM:GREEN
 the resulting values.
 
+>>>>>CM:GREEN
 -   If no arguments are given, the result is +∞.
+>>>>>CM:GREEN
 -   If any value is NaN, the result is NaN.
+>>>>>CM:GREEN
 -   The comparison of values to determine the smallest value is done as in 11.8.5 except that +0 is
+>>>>>CM:GREEN
     considered to be larger than −0.
 
+>>>>>CM:GREEN
 The length property of the min method is 2.
 
 >>>>>CM:YELLOW

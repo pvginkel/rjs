@@ -1,34 +1,48 @@
+>>>>>CM:GREEN
 15.4 Array Objects
+>>>>>CM:GREEN
 ==================
 
+>>>>>CM:GREEN
 Array objects give special treatment to a certain class of property names. A property name P (in the
+>>>>>CM:GREEN
 form of a String value) is an array index if and only if ToString(ToUint32(P)) is equal to P and
+>>>>>CM:GREEN
 ToUint32(P) is not equal to 2^32−1. A property whose property name is an array index is also called
+>>>>>CM:GREEN
 an element. Every Array object has a length property whose value is always a nonnegative integer
+>>>>>CM:GREEN
 less than 2^32. The value of the length property is numerically greater than the name of every
+>>>>>CM:GREEN
 property whose name is an array index; whenever a property of an Array object is created or changed,
+>>>>>CM:GREEN
 other properties are adjusted as necessary to maintain this invariant. Specifically, whenever a
+>>>>>CM:GREEN
 property is added whose name is an array index, the length property is changed, if necessary, to be
+>>>>>CM:GREEN
 one more than the numeric value of that array index; and whenever the length property is changed,
+>>>>>CM:GREEN
 every property whose name is an array index whose value is not smaller than the new length is
+>>>>>CM:GREEN
 automatically deleted. This constraint applies only to own properties of an Array object and is
+>>>>>CM:GREEN
 unaffected by length or array index properties that may be inherited from its prototypes.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 An object, O, is said to be sparse if the following algorithm returns true:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Let len be the result of calling the [[Get]] internal method of O with argument “length”.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 2.  For each integer i in the range 0≤i<ToUint32(len)
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Let elem be the result of calling the [[GetOwnProperty]] internal method of O with argument
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         ToString(i).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  If elem is undefined, return true.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 3.  Return false.
 
 >>>>>CM:GREEN
@@ -824,219 +838,219 @@ Array object. Therefore it can be transferred to other kinds of objects for use 
 >>>>>CM:GREEN
 the slice function can be applied successfully to a host object is implementation-dependent.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 15.4.4.11 Array.prototype.sort (comparefn)
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 ==========================================
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The elements of this array are sorted. The sort is not necessarily stable (that is, elements that
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 compare equal do not necessarily remain in their original order). If comparefn is not undefined, it
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 should be a function that accepts two arguments x and y and returns a negative value if x < y, zero
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 if x = y, or a positive value if x > y.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Let obj be the result of calling ToObject passing the this value as the argument.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Let len be the result of applying Uint32 to the result of calling the [[Get]] internal method of obj
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 with argument "length".
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 If comparefn is not undefined and is not a consistent comparison function for the elements of this
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 array (see below), the behaviour of sort is implementation-defined.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Let proto be the value of the [[Prototype]] internal property of obj. If proto is not null and there
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 exists an integer j such that all of the conditions below are satisfied then the behaviour of sort
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 is implementation-defined:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   obj is sparse (15.4)
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   0 ≤ j < len
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   The result of calling the [[HasProperty]] internal method of proto with argument ToString(j) is
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     true.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The behaviour of sort is also implementation defined if obj is sparse and any of the following
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 conditions are true:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   The [[Extensible]] internal property of obj is false.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Any array index property of obj whose name is a nonnegative integer less than len is a data
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     property whose [[Configurable]] attribute is false.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The behaviour of sort is also implementation defined if any array index property of obj whose name
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 is a nonnegative integer less than len is an accessor property or is a data property whose
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 [[Writable]] attribute is false.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Otherwise, the following steps are taken.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Perform an implementation-dependent sequence of calls to the [[Get]] , [[Put]], and [[Delete]]
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     internal methods of obj and to SortCompare (described below), where the first argument for each
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     call to [[Get]], [[Put]], or [[Delete]] is a nonnegative integer less than len and where the
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     arguments for calls to SortCompare are results of previous calls to the [[Get]] internal method.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     The throw argument to the [[Put]] and [[Delete]] internal methods will be the value true. If obj
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     is not sparse then [[Delete]] must not be called.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 2.  Return obj.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The returned object must have the following two properties.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   There must be some mathematical permutation π of the nonnegative integers less than len, such
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     that for every nonnegative integer j less than len, if property old[j] existed, then new[π(j)]
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     is exactly the same value as old[j],. But if property old[j] did not exist, then new[π(j)] does
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     not exist.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Then for all nonnegative integers j and k, each less than len, if SortCompare(j,k) < 0 (see
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     SortCompare below), then π(j) < π(k).
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Here the notation old[j] is used to refer to the hypothetical result of calling the [[Get]] internal
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 method of obj with argument j before this function is executed, and the notation new[j] to refer to
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 the hypothetical result of calling the [[Get]] internal method of obj with argument j after this
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 function has been executed.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 A function comparefn is a consistent comparison function for a set of values S if all of the
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 requirements below are met for all values a, b, and c (possibly the same value) in the set S: The
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 notation a <CF b means comparefn(a,b) < 0; a =CF b means comparefn(a,b) = 0 (of either sign); and
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 a >CF b means comparefn(a,b) > 0.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Calling comparefn(a,b) always returns the same value v when given a specific pair of values a
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     and b as its two arguments. Furthermore, Type(v) is Number, and v is not NaN. Note that this
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     implies that exactly one of a <CF b, a =CF b, and a >CF b will be true for a given pair of a and
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     b.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   Calling comparefn(a,b) does not modify the this object.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   a =CF a (reflexivity)
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   If a =CF b, then b =CF a (symmetry)
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   If a =CF b and b =CF c, then a =CF c (transitivity of =CF)
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   If a <CF b and b <CF c, then a <CF c (transitivity of <CF)
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   If a >CF b and b >CF c, then a >CF c (transitivity of >CF)
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 NOTE The above conditions are necessary and sufficient to ensure that comparefn divides the set S
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 into equivalence classes and that these equivalence classes are totally ordered.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 When the SortCompare abstract operation is called with two arguments j and k, the following steps
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 are taken:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Let jString be ToString(j).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 2.  Let kString be ToString(k).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 3.  Let hasj be the result of calling the [[HasProperty]] internal method of obj with argument
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     jString.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 4.  Let hask be the result of calling the [[HasProperty]] internal method of obj with argument
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     kString.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 5.  If hasj and hask are both false, then return +0.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 6.  If hasj is false, then return 1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 7.  If hask is false, then return –1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 8.  Let x be the result of calling the [[Get]] internal method of obj with argument jString.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 9.  Let y be the result of calling the [[Get]] internal method of obj with argument kString.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 10. If x and y are both undefined, return +0.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 11. If x is undefined, return 1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 12. If y is undefined, return −1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 13. If the argument comparefn is not undefined, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  If IsCallable(comparefn) is false, throw a TypeError exception.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Return the result of calling the [[Call]] internal method of comparefn passing undefined as
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         the this value and with arguments x and y.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 14. Let xString be ToString(x).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 15. Let yString be ToString(y).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 16. If xString < yString, return −1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 17. If xString > yString, return 1.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 18. Return +0.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 NOTE 1 Because non-existent property values always compare greater than undefined property values,
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 and undefined always compares greater than any other value, undefined property values always sort to
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 the end of the result, followed by non-existent property values.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 NOTE 2 The sort function is intentionally generic; it does not require that its this value be an
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Array object. Therefore, it can be transferred to other kinds of objects for use as a method.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Whether the sort function can be applied successfully to a host object is implementation-dependent.
 
 >>>>>CM:GREEN
@@ -2335,16 +2349,26 @@ Desc, and Boolean flag Throw, the following steps are taken:
 >>>>>CM:GREEN
     passing P, Desc, and Throw as arguments.
 
+>>>>>CM:GREEN
 15.4.5.2 length
+>>>>>CM:GREEN
 ===============
 
+>>>>>CM:GREEN
 The length property of this Array object is a data property whose value is always numerically
+>>>>>CM:GREEN
 greater than the name of every deletable property whose name is an array index.
 
+>>>>>CM:GREEN
 The length property initially has the attributes { [[Writable]]: true, [[Enumerable]]: false,
+>>>>>CM:GREEN
 [[Configurable]]: false }.
 
+>>>>>CM:GREEN
 NOTE Attempting to set the length property of an Array object to a value that is numerically less
+>>>>>CM:GREEN
 than or equal to the largest numeric property name of an existing array indexed non-deletable
+>>>>>CM:GREEN
 property of the array will result in the length being set to a numeric value that is one greater
+>>>>>CM:GREEN
 than that largest numeric property name. See 15.4.5.1.

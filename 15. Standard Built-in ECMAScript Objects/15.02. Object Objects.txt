@@ -245,21 +245,33 @@ When the seal function is called, the following steps are taken:
 3.  Set the [[Extensible]] internal property of O to false.
 4.  Return O.
 
+>>>>>CM:GREEN
 15.2.3.9 Object.freeze ( O )
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 When the freeze function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  For each named own property name P of O,
+>>>>>CM:GREEN
     1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with P.
+>>>>>CM:GREEN
     2.  If IsDataDescriptor(desc) is true, then
+>>>>>CM:GREEN
         1.  If desc.[[Writable]] is true, set desc.[[Writable]] to false.
 
+>>>>>CM:GREEN
     3.  If desc.[[Configurable]] is true, set desc.[[Configurable]] to false.
+>>>>>CM:GREEN
     4.  Call the [[DefineOwnProperty]] internal method of O with P, desc, and true as arguments.
 
+>>>>>CM:GREEN
 3.  Set the [[Extensible]] internal property of O to false.
+>>>>>CM:GREEN
 4.  Return O.
 
 >>>>>CM:GREEN

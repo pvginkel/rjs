@@ -1,4 +1,6 @@
+>>>>>CM:GREEN
 15.6 Boolean Objects
+>>>>>CM:GREEN
 ====================
 
 >>>>>CM:GREEN
@@ -48,35 +50,55 @@ ToBoolean(value).
 >>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 15.6.3 Properties of the Boolean Constructor
+>>>>>CM:GREEN
 ============================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Boolean constructor is the Function
+>>>>>CM:GREEN
 prototype object (15.3.4).
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), the Boolean constructor
+>>>>>CM:GREEN
 has the following property:
 
+>>>>>CM:GREEN
 15.6.3.1 Boolean.prototype
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 The initial value of Boolean.prototype is the Boolean prototype object (15.6.4).
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
+>>>>>CM:GREEN
 15.6.4 Properties of the Boolean Prototype Object
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 The Boolean prototype object is itself a Boolean object (its [[Class]] is "Boolean") whose value is
+>>>>>CM:GREEN
 false.
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Boolean prototype object is the standard
+>>>>>CM:GREEN
 built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 15.6.4.1 Boolean.prototype.constructor
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 The initial value of Boolean.prototype.constructor is the built-in Boolean constructor.
 
 >>>>>CM:GREEN
@@ -121,10 +143,15 @@ The following steps are taken:
 >>>>>CM:GREEN
 5.  Return b.
 
+>>>>>CM:GREEN
 15.6.5 Properties of Boolean Instances
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 Boolean instances inherit properties from the Boolean prototype object and their [[Class]] internal
+>>>>>CM:GREEN
 property value is "Boolean". Boolean instances also have a [[PrimitiveValue]] internal property.
 
+>>>>>CM:GREEN
 The [[PrimitiveValue]] internal property is the Boolean value represented by this Boolean object.
