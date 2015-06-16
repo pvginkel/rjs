@@ -224,43 +224,73 @@ The length property of the substr method is 2.
 NOTE The substr function is intentionally generic; it does not require that its this value be a
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 B.2.4 Date.prototype.getYear ( )
+>>>>>CM:GREEN
 ================================
 
+>>>>>CM:GREEN
 NOTE The getFullYear method is preferred for nearly all purposes, because it avoids the �year 2000
+>>>>>CM:GREEN
 problem.�
 
+>>>>>CM:GREEN
 When the getYear method is called with no arguments, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let t be this time value.
+>>>>>CM:GREEN
 2.  If t is NaN, return NaN.
+>>>>>CM:GREEN
 3.  Return YearFromTime(LocalTime(t)) - 1900.
 
+>>>>>CM:GREEN
 B.2.5 Date.prototype.setYear (year)
+>>>>>CM:GREEN
 ===================================
 
+>>>>>CM:GREEN
 NOTE The setFullYear method is preferred for nearly all purposes, because it avoids the �year 2000
+>>>>>CM:GREEN
 problem.�
 
+>>>>>CM:GREEN
 When the setYear method is called with one argument year, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let t be the result of LocalTime(this time value); but if this time value is NaN, let t be +0.
+>>>>>CM:GREEN
 2.  Call ToNumber(year).
+>>>>>CM:GREEN
 3.  If Result(2) is NaN, set the [[PrimitiveValue]] internal property of the this value to NaN and
+>>>>>CM:GREEN
     return NaN.
+>>>>>CM:GREEN
 4.  If Result(2) is not NaN and 0 = ToInteger(Result(2)) = 99 then Result(4) is ToInteger(Result(2))
+>>>>>CM:GREEN
     +�1900. Otherwise, Result(4) is Result(2).
+>>>>>CM:GREEN
 5.  Compute MakeDay(Result(4), MonthFromTime(t), DateFromTime(t)).
+>>>>>CM:GREEN
 6.  Compute UTC(MakeDate(Result(5), TimeWithinDay(t))).
+>>>>>CM:GREEN
 7.  Set the [[PrimitiveValue]] internal property of the this value to TimeClip(Result(6)).
+>>>>>CM:GREEN
 8.  Return the value of the [[PrimitiveValue]] internal property of the this value.
 
+>>>>>CM:GREEN
 B.2.6 Date.prototype.toGMTString ( )
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 NOTE The property toUTCString is preferred. The toGMTString property is provided principally for
+>>>>>CM:GREEN
 compatibility with old code. It is recommended that the toUTCString property be used in new
+>>>>>CM:GREEN
 ECMAScript code.
 
+>>>>>CM:GREEN
 The Function object that is the initial value of Date.prototype.toGMTString is the same Function
+>>>>>CM:GREEN
 object that is the initial value of Date.prototype.toUTCString.

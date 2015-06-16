@@ -128,13 +128,19 @@ specified by this standard) that implementations use the approximation algorithm
 arithmetic contained in fdlibm, the freely distributable mathematical library from Sun Microsystems
 (http://www.netlib.org/fdlibm).
 
+>>>>>CM:GREEN
 15.8.2.1 abs (x)
+>>>>>CM:GREEN
 ================
 
+>>>>>CM:GREEN
 Returns the absolute value of x; the result has the same magnitude as x but has positive sign.
 
+>>>>>CM:GREEN
 -   If x is NaN, the result is NaN.
+>>>>>CM:GREEN
 -   If x is −0, the result is +0.
+>>>>>CM:GREEN
 -   If x is −∞, the result is +∞.
 
 15.8.2.2 acos (x)
