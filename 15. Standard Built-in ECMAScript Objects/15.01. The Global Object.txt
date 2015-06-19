@@ -231,314 +231,551 @@ Returns false if the argument coerces to NaN, +∞, or −∞, and otherwise ret
 1.  If ToNumber(number) is NaN, +∞, or −∞, return false.
 2.  Otherwise, return true.
 
+>>>>>CM:GREEN
 15.1.3 URI Handling Function Properties
+>>>>>CM:GREEN
 =======================================
 
+>>>>>CM:GREEN
 Uniform Resource Identifiers, or URIs, are Strings that identify resources (e.g. web pages or files)
+>>>>>CM:GREEN
 and transport protocols by which to access them (e.g. HTTP or FTP) on the Internet. The ECMAScript
+>>>>>CM:GREEN
 language itself does not provide any support for using URIs except for functions that encode and
+>>>>>CM:GREEN
 decode URIs as described in 15.1.3.1, 15.1.3.2, 15.1.3.3 and 15.1.3.4.
 
+>>>>>CM:GREEN
 NOTE Many implementations of ECMAScript provide additional functions and methods that manipulate web
+>>>>>CM:GREEN
 pages; these functions are beyond the scope of this standard.
 
+>>>>>CM:GREEN
 A URI is composed of a sequence of components separated by component separators. The general form
+>>>>>CM:GREEN
 is:
 
+>>>>>CM:GREEN
 Scheme : First / Second ; Third ? Fourth
 
+>>>>>CM:GREEN
 where the italicised names represent components and “:”, “/”, “;” and “?” are reserved characters
+>>>>>CM:GREEN
 used as separators. The encodeURI and decodeURI functions are intended to work with complete URIs;
+>>>>>CM:GREEN
 they assume that any reserved characters in the URI are intended to have special meaning and so are
+>>>>>CM:GREEN
 not encoded. The encodeURIComponent and decodeURIComponent functions are intended to work with the
+>>>>>CM:GREEN
 individual component parts of a URI; they assume that any reserved characters represent text and so
+>>>>>CM:GREEN
 must be encoded so that they are not interpreted as reserved characters when the component is part
+>>>>>CM:GREEN
 of a complete URI.
 
+>>>>>CM:GREEN
 The following lexical grammar specifies the form of encoded URIs.
 
+>>>>>CM:GREEN
 Syntax
+>>>>>CM:GREEN
 ------
 
+>>>>>CM:GREEN
 uri :::
 
+>>>>>CM:GREEN
 uriCharactersopt
 
+>>>>>CM:GREEN
 uriCharacters :::
 
+>>>>>CM:GREEN
 uriCharacter uriCharactersopt
 
+>>>>>CM:GREEN
 uriCharacter :::
 
+>>>>>CM:GREEN
 uriReserved
 
+>>>>>CM:GREEN
 uriUnescaped
 
+>>>>>CM:GREEN
 uriEscaped
 
+>>>>>CM:GREEN
 uriReserved ::: one of
 
+>>>>>CM:GREEN
 ; / ? : @ & = + $ ,
 
+>>>>>CM:GREEN
 uriUnescaped :::
 
+>>>>>CM:GREEN
 uriAlpha
 
+>>>>>CM:GREEN
 DecimalDigit
 
+>>>>>CM:GREEN
 uriMark
 
+>>>>>CM:GREEN
 uriEscaped :::
 
+>>>>>CM:GREEN
 % HexDigit HexDigit
 
+>>>>>CM:GREEN
 uriAlpha ::: one of
 
+>>>>>CM:GREEN
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 
+>>>>>CM:GREEN
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
+>>>>>CM:GREEN
 uriMark ::: one of
 
+>>>>>CM:GREEN
 - _ . ! ~ * ' ( )
 
+>>>>>CM:GREEN
 NOTE The above syntax is based upon RFC 2396 and does not reflect changes introduced by the more
+>>>>>CM:GREEN
 recent RFC 3986.
 
+>>>>>CM:GREEN
 When a character to be included in a URI is not listed above or is not intended to have the special
+>>>>>CM:GREEN
 meaning sometimes given to the reserved characters, that character must be encoded. The character is
+>>>>>CM:GREEN
 transformed into its UTF-8 encoding, with surrogate pairs first converted from UTF-16 to the
+>>>>>CM:GREEN
 corresponding code point value. (Note that for code units in the range [0,127] this results in a
+>>>>>CM:GREEN
 single octet with the same value.) The resulting sequence of octets is then transformed into a
+>>>>>CM:GREEN
 String with each octet represented by an escape sequence of the form “%xx”.
 
+>>>>>CM:GREEN
 The encoding and escaping process is described by the abstract operation Encode taking two String
+>>>>>CM:GREEN
 arguments string and unescapedSet.
 
+>>>>>CM:GREEN
 1.  Let strLen be the number of characters in string.
+>>>>>CM:GREEN
 2.  Let R be the empty String.
+>>>>>CM:GREEN
 3.  Let k be 0.
+>>>>>CM:GREEN
 4.  Repeat
+>>>>>CM:GREEN
     1.  If k equals strLen, return R.
+>>>>>CM:GREEN
     2.  Let C be the character at position k within string.
+>>>>>CM:GREEN
     3.  If C is in unescapedSet, then
+>>>>>CM:GREEN
         1.  Let S be a String containing only the character C.
+>>>>>CM:GREEN
         2.  Let R be a new String value computed by concatenating the previous value of R and S.
 
+>>>>>CM:GREEN
     4.  Else, C is not in unescapedSet
+>>>>>CM:GREEN
         1.  If the code unit value of C is not less than 0xDC00 and not greater than 0xDFFF, throw a
+>>>>>CM:GREEN
             URIError exception.
+>>>>>CM:GREEN
         2.  If the code unit value of C is less than 0xD800 or greater than 0xDBFF, then
+>>>>>CM:GREEN
             1.  Let V be the code unit value of C.
 
+>>>>>CM:GREEN
         3.  Else,
+>>>>>CM:GREEN
             1.  Increase k by 1.
+>>>>>CM:GREEN
             2.  If k equals strLen, throw a URIError exception.
+>>>>>CM:GREEN
             3.  Let kChar be the code unit value of the character at position k within string.
+>>>>>CM:GREEN
             4.  If kChar is less than 0xDC00 or greater than 0xDFFF, throw a URIError exception.
+>>>>>CM:GREEN
             5.  Let V be (((the code unit value of C) – 0xD800) × 0x400 + (kChar – 0xDC00) +
+>>>>>CM:GREEN
                 0x10000).
 
+>>>>>CM:GREEN
         4.  Let Octets be the array of octets resulting by applying the UTF-8 transformation to V,
+>>>>>CM:GREEN
             and let L be the array size.
+>>>>>CM:GREEN
         5.  Let j be 0.
+>>>>>CM:GREEN
         6.  Repeat, while j < L
+>>>>>CM:GREEN
             1.  Let jOctet be the value at position j within Octets.
+>>>>>CM:GREEN
             2.  Let S be a String containing three characters “%XY” where XY are two uppercase
+>>>>>CM:GREEN
                 hexadecimal digits encoding the value of jOctet.
+>>>>>CM:GREEN
             3.  Let R be a new String value computed by concatenating the previous value of R and S.
+>>>>>CM:GREEN
             4.  Increase j by 1.
 
+>>>>>CM:GREEN
     5.  Increase k by 1.
 
+>>>>>CM:GREEN
 The unescaping and decoding process is described by the abstract operation Decode taking two String
+>>>>>CM:GREEN
 arguments string and reservedSet.
 
+>>>>>CM:GREEN
 1.  Let strLen be the number of characters in string.
+>>>>>CM:GREEN
 2.  Let R be the empty String.
+>>>>>CM:GREEN
 3.  Let k be 0.
+>>>>>CM:GREEN
 4.  Repeat
+>>>>>CM:GREEN
     1.  If k equals strLen, return R.
+>>>>>CM:GREEN
     2.  Let C be the character at position k within string.
+>>>>>CM:GREEN
     3.  If C is not ‘%’, then
+>>>>>CM:GREEN
         1.  Let S be the String containing only the character C.
 
+>>>>>CM:GREEN
     4.  Else, C is ‘%’
+>>>>>CM:GREEN
         1.  Let start be k.
+>>>>>CM:GREEN
         2.  If k + 2 is greater than or equal to strLen, throw a URIError exception.
+>>>>>CM:GREEN
         3.  If the characters at position (k+1) and (k + 2) within string do not represent
+>>>>>CM:GREEN
             hexadecimal digits, throw a URIError exception.
+>>>>>CM:GREEN
         4.  Let B be the 8-bit value represented by the two hexadecimal digits at position (k + 1)
+>>>>>CM:GREEN
             and (k + 2).
+>>>>>CM:GREEN
         5.  Increment k by 2.
+>>>>>CM:GREEN
         6.  If the most significant bit in B is 0, then
+>>>>>CM:GREEN
             1.  Let C be the character with code unit value B.
+>>>>>CM:GREEN
             2.  If C is not in reservedSet, then
+>>>>>CM:GREEN
                 1.  Let S be the String containing only the character C.
 
+>>>>>CM:GREEN
             3.  Else, C is in reservedSet
+>>>>>CM:GREEN
                 1.  Let S be the substring of string from position start to position k included.
 
+>>>>>CM:GREEN
         7.  Else, the most significant bit in B is 1
+>>>>>CM:GREEN
             1.  Let n be the smallest non-negative number such that (B << n) & 0x80 is equal to 0.
+>>>>>CM:GREEN
             2.  If n equals 1 or n is greater than 4, throw a URIError exception.
+>>>>>CM:GREEN
             3.  Let Octets be an array of 8-bit integers of size n.
+>>>>>CM:GREEN
             4.  Put B into Octets at position 0.
+>>>>>CM:GREEN
             5.  If k + (3 × (n – 1)) is greater than or equal to strLen, throw a URIError exception.
+>>>>>CM:GREEN
             6.  Let j be 1.
+>>>>>CM:GREEN
             7.  Repeat, while j < n
+>>>>>CM:GREEN
                 1.  Increment k by 1.
+>>>>>CM:GREEN
                 2.  If the character at position k is not ‘%’, throw a URIError exception.
+>>>>>CM:GREEN
                 3.  If the characters at position (k +1) and (k + 2) within string do not represent
+>>>>>CM:GREEN
                     hexadecimal digits, throw a URIError exception.
+>>>>>CM:GREEN
                 4.  Let B be the 8-bit value represented by the two hexadecimal digits at position
+>>>>>CM:GREEN
                     (k + 1) and (k + 2).
+>>>>>CM:GREEN
                 5.  If the two most significant bits in B are not 10, throw a URIError exception.
+>>>>>CM:GREEN
                 6.  Increment k by 2.
+>>>>>CM:GREEN
                 7.  Put B into Octets at position j.
+>>>>>CM:GREEN
                 8.  Increment j by 1.
 
+>>>>>CM:GREEN
             8.  Let V be the value obtained by applying the UTF-8 transformation to Octets, that is,
+>>>>>CM:GREEN
                 from an array of octets into a 21-bit value. If Octets does not contain a valid
+>>>>>CM:GREEN
                 UTF-8 encoding of a Unicode code point throw an URIError exception.
+>>>>>CM:GREEN
             9.  If V is less than 0x10000, then
+>>>>>CM:GREEN
                 1.  Let C be the character with code unit value V.
+>>>>>CM:GREEN
                 2.  If C is not in reservedSet, then
+>>>>>CM:GREEN
                     1.  Let S be the String containing only the character C.
 
+>>>>>CM:GREEN
                 3.  Else, C is in reservedSet
+>>>>>CM:GREEN
                     1.  Let S be the substring of string from position start to position k included.
 
+>>>>>CM:GREEN
             10. Else, V is ≥ 0x10000
+>>>>>CM:GREEN
                 1.  Let L be (((V – 0x10000) & 0x3FF) + 0xDC00).
+>>>>>CM:GREEN
                 2.  Let H be ((((V – 0x10000) >> 10) & 0x3FF) + 0xD800).
+>>>>>CM:GREEN
                 3.  Let S be the String containing the two characters with code unit values H and L.
 
+>>>>>CM:GREEN
     5.  Let R be a new String value computed by concatenating the previous value of R and S.
+>>>>>CM:GREEN
     6.  Increase k by 1.
 
+>>>>>CM:GREEN
 NOTE This syntax of Uniform Resource Identifiers is based upon RFC 2396 and does not reflect the
+>>>>>CM:GREEN
 more recent RFC 3986 which replaces RFC 2396. A formal description and implementation of UTF-8 is
+>>>>>CM:GREEN
 given in RFC 3629.
 
+>>>>>CM:GREEN
 In UTF-8, characters are encoded using sequences of 1 to 6 octets. The only octet of a “sequence” of
+>>>>>CM:GREEN
 one has the higher-order bit set to 0, the remaining 7 bits being used to encode the character
+>>>>>CM:GREEN
 value. In a sequence of n octets, n>1, the initial octet has the n higher-order bits set to 1,
+>>>>>CM:GREEN
 followed by a bit set to 0. The remaining bits of that octet contain bits from the value of the
+>>>>>CM:GREEN
 character to be encoded. The following octets all have the higher-order bit set to 1 and the
+>>>>>CM:GREEN
 following bit set to 0, leaving 6 bits in each to contain bits from the character to be encoded. The
+>>>>>CM:GREEN
 possible UTF-8 encodings of ECMAScript characters are specified in Table 21.
 
+>>>>>CM:GREEN
 Table 21 — UTF-8 Encodings
 
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | Code Unit Value  | Representation   | 1st Octet        | 2nd Octet        | 3rd Octet        | 4th Octet        |
+>>>>>CM:GREEN
 +==================+==================+==================+==================+==================+==================+
+>>>>>CM:GREEN
 | 0x0000 - 0x007F  | 00000000         | 0zzzzzzz         |                  |                  |                  |
+>>>>>CM:GREEN
 |                  | 0zzzzzzz         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0x0080 - 0x07FF  | 00000yyy         | 110yyyyy         | 10zzzzzz         |                  |                  |
+>>>>>CM:GREEN
 |                  | yyzzzzzz         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0x0800 - 0xD7FF  | xxxxyyyy         | 1110xxxx         | 10yyyyyy         | 10zzzzzz         |                  |
+>>>>>CM:GREEN
 |                  | yyzzzzzz         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0xD800 - 0xDBFF  | 110110vv         | 11110uuu         | 10uuwwww         | 10xxyyyy         | 10zzzzzz         |
+>>>>>CM:GREEN
 |                  | vvwwwwxx         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 | followed by      |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 |                  | followed by      |                  |                  |                  |                  |
+>>>>>CM:GREEN
 | 0xDC00 – 0xDFFF  |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 |                  | 110111yy         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 |                  | yyzzzzzz         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0xD800 - 0xDBFF  | causes URIError  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 |                  |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 | not followed by  |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 |                  |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 | 0xDC00 – 0xDFFF  |                  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0xDC00 – 0xDFFF  | causes URIError  |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
+>>>>>CM:GREEN
 | 0xE000 - 0xFFFF  | xxxxyyyy         | 1110xxxx         | 10yyyyyy         | 10zzzzzz         |                  |
+>>>>>CM:GREEN
 |                  | yyzzzzzz         |                  |                  |                  |                  |
+>>>>>CM:GREEN
 +------------------+------------------+------------------+------------------+------------------+------------------+
 
+>>>>>CM:GREEN
 Where
 
+>>>>>CM:GREEN
 uuuuu = vvvv + 1
 
+>>>>>CM:GREEN
 to account for the addition of 0x10000 as in Surrogates, section 3.7, of the Unicode Standard.
 
+>>>>>CM:GREEN
 The range of code unit values 0xD800-0xDFFF is used to encode surrogate pairs; the above
+>>>>>CM:GREEN
 transformation combines a UTF-16 surrogate pair into a UTF-32 representation and encodes the
+>>>>>CM:GREEN
 resulting 21-bit value in UTF-8. Decoding reconstructs the surrogate pair.
 
+>>>>>CM:GREEN
 RFC 3629 prohibits the decoding of invalid UTF-8 octet sequences. For example, the invalid sequence
+>>>>>CM:GREEN
 C0 80 must not decode into the character U+0000. Implementations of the Decode algorithm are
+>>>>>CM:GREEN
 required to throw a URIError when encountering such invalid sequences.
 
+>>>>>CM:GREEN
 15.1.3.1 decodeURI (encodedURI)
+>>>>>CM:GREEN
 ===============================
 
+>>>>>CM:GREEN
 The decodeURI function computes a new version of a URI in which each escape sequence and UTF-8
+>>>>>CM:GREEN
 encoding of the sort that might be introduced by the encodeURI function is replaced with the
+>>>>>CM:GREEN
 character that it represents. Escape sequences that could not have been introduced by encodeURI are
+>>>>>CM:GREEN
 not replaced.
 
+>>>>>CM:GREEN
 When the decodeURI function is called with one argument encodedURI, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let uriString be ToString(encodedURI).
+>>>>>CM:GREEN
 2.  Let reservedURISet be a String containing one instance of each character valid in uriReserved
+>>>>>CM:GREEN
     plus “#”.
+>>>>>CM:GREEN
 3.  Return the result of calling Decode(uriString, reservedURISet)
 
+>>>>>CM:GREEN
 NOTE The character “#” is not decoded from escape sequences even though it is not a reserved URI
+>>>>>CM:GREEN
 character.
 
+>>>>>CM:GREEN
 15.1.3.2 decodeURIComponent (encodedURIComponent)
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 The decodeURIComponent function computes a new version of a URI in which each escape sequence and
+>>>>>CM:GREEN
 UTF-8 encoding of the sort that might be introduced by the encodeURIComponent function is replaced
+>>>>>CM:GREEN
 with the character that it represents.
 
+>>>>>CM:GREEN
 When the decodeURIComponent function is called with one argument encodedURIComponent, the following
+>>>>>CM:GREEN
 steps are taken:
 
+>>>>>CM:GREEN
 1.  Let componentString be ToString(encodedURIComponent).
+>>>>>CM:GREEN
 2.  Let reservedURIComponentSet be the empty String.
+>>>>>CM:GREEN
 3.  Return the result of calling Decode(componentString, reservedURIComponentSet)
 
+>>>>>CM:GREEN
 15.1.3.3 encodeURI (uri)
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 The encodeURI function computes a new version of a URI in which each instance of certain characters
+>>>>>CM:GREEN
 is replaced by one, two, three, or four escape sequences representing the UTF-8 encoding of the
+>>>>>CM:GREEN
 character.
 
+>>>>>CM:GREEN
 When the encodeURI function is called with one argument uri, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let uriString be ToString(uri).
+>>>>>CM:GREEN
 2.  Let unescapedURISet be a String containing one instance of each character valid in uriReserved
+>>>>>CM:GREEN
     and uriUnescaped plus “#”.
+>>>>>CM:GREEN
 3.  Return the result of calling Encode(uriString, unescapedURISet)
 
+>>>>>CM:GREEN
 NOTE The character “#” is not encoded to an escape sequence even though it is not a reserved or
+>>>>>CM:GREEN
 unescaped URI character.
 
+>>>>>CM:GREEN
 15.1.3.4 encodeURIComponent (uriComponent)
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 The encodeURIComponent function computes a new version of a URI in which each instance of certain
+>>>>>CM:GREEN
 characters is replaced by one, two, three, or four escape sequences representing the UTF-8 encoding
+>>>>>CM:GREEN
 of the character.
 
+>>>>>CM:GREEN
 When the encodeURIComponent function is called with one argument uriComponent, the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  Let componentString be ToString(uriComponent).
+>>>>>CM:GREEN
 2.  Let unescapedURIComponentSet be a String containing one instance of each character valid in
+>>>>>CM:GREEN
     uriUnescaped.
+>>>>>CM:GREEN
 3.  Return the result of calling Encode(componentString, unescapedURIComponentSet)
 
 15.1.4 Constructor Properties of the Global Object

@@ -1,252 +1,424 @@
+>>>>>CM:GREEN
 15.11 Error Objects
+>>>>>CM:GREEN
 ===================
 
+>>>>>CM:GREEN
 Instances of Error objects are thrown as exceptions when runtime errors occur. The Error objects may
+>>>>>CM:GREEN
 also serve as base objects for user-defined exception classes.
 
+>>>>>CM:GREEN
 15.11.1 The Error Constructor Called as a Function
+>>>>>CM:GREEN
 ==================================================
 
+>>>>>CM:GREEN
 When Error is called as a function rather than as a constructor, it creates and initialises a new
+>>>>>CM:GREEN
 Error object. Thus the function call Error(…) is equivalent to the object creation expression new
+>>>>>CM:GREEN
 Error(…) with the same arguments.
 
+>>>>>CM:GREEN
 15.11.1.1 Error (message)
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the original Error
+>>>>>CM:GREEN
 prototype object, the one that is the initial value of Error.prototype (15.11.3.1).
 
+>>>>>CM:GREEN
 The [[Class]] internal property of the newly constructed object is set to "Error".
 
+>>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 If the argument message is not undefined, the message own property of the newly constructed object
+>>>>>CM:GREEN
 is set to ToString(message).
 
+>>>>>CM:GREEN
 15.11.2 The Error Constructor
+>>>>>CM:GREEN
 =============================
 
+>>>>>CM:GREEN
 When Error is called as part of a new expression, it is a constructor: it initialises the newly
+>>>>>CM:GREEN
 created object.
 
+>>>>>CM:GREEN
 15.11.2.1 new Error (message)
+>>>>>CM:GREEN
 =============================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the original Error
+>>>>>CM:GREEN
 prototype object, the one that is the initial value of Error.prototype (15.11.3.1).
 
+>>>>>CM:GREEN
 The [[Class]] internal property of the newly constructed Error object is set to "Error".
 
+>>>>>CM:GREEN
 The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 If the argument message is not undefined, the message own property of the newly constructed object
+>>>>>CM:GREEN
 is set to ToString(message).
 
+>>>>>CM:GREEN
 15.11.3 Properties of the Error Constructor
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Error constructor is the Function prototype
+>>>>>CM:GREEN
 object (15.3.4).
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), the Error constructor
+>>>>>CM:GREEN
 has the following property:
 
+>>>>>CM:GREEN
 15.11.3.1 Error.prototype
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 The initial value of Error.prototype is the Error prototype object (15.11.4).
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
+>>>>>CM:GREEN
 15.11.4 Properties of the Error Prototype Object
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 The Error prototype object is itself an Error object (its [[Class]] is "Error").
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Error prototype object is the standard
+>>>>>CM:GREEN
 built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 15.11.4.1 Error.prototype.constructor
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 The initial value of Error.prototype.constructor is the built-in Error constructor.
 
+>>>>>CM:GREEN
 15.11.4.2 Error.prototype.name
+>>>>>CM:GREEN
 ==============================
 
+>>>>>CM:GREEN
 The initial value of Error.prototype.name is "Error".
 
+>>>>>CM:GREEN
 15.11.4.3 Error.prototype.message
+>>>>>CM:GREEN
 =================================
 
+>>>>>CM:GREEN
 The initial value of Error.prototype.message is the empty String.
 
+>>>>>CM:GREEN
 15.11.4.4 Error.prototype.toString ( )
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let O be the this value.
+>>>>>CM:GREEN
 2.  If Type(O) is not Object, throw a TypeError exception.
+>>>>>CM:GREEN
 3.  Let name be the result of calling the [[Get]] internal method of O with argument "name".
+>>>>>CM:GREEN
 4.  If name is undefined, then let name be "Error"; else let name be ToString(name).
+>>>>>CM:GREEN
 5.  Let msg be the result of calling the [[Get]] internal method of O with argument "message".
+>>>>>CM:GREEN
 6.  If msg is undefined, then let msg be the empty String; else let msg be ToString(msg).
+>>>>>CM:GREEN
 7.  If msg is undefined, then let msg be the empty String; else let msg be ToString(msg).
+>>>>>CM:GREEN
 8.  If name is the empty String, return msg.
+>>>>>CM:GREEN
 9.  If msg is the empty String, return name.
+>>>>>CM:GREEN
 10. Return the result of concatenating name, ":", a single space character, and msg.
 
+>>>>>CM:GREEN
 15.11.5 Properties of Error Instances
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 Error instances inherit properties from the Error prototype object and their [[Class]] internal
+>>>>>CM:GREEN
 property value is "Error". Error instances have no special properties.
 
+>>>>>CM:GREEN
 15.11.6 Native Error Types Used in This Standard
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 One of the NativeError objects below is thrown when a runtime error is detected. All of these
+>>>>>CM:GREEN
 objects share the same structure, as described in 15.11.7.
 
+>>>>>CM:GREEN
 15.11.6.1 EvalError
+>>>>>CM:GREEN
 ===================
 
+>>>>>CM:GREEN
 This exception is not currently used within this specification. This object remains for
+>>>>>CM:GREEN
 compatibility with previous editions of this specification.
 
+>>>>>CM:GREEN
 15.11.6.2 RangeError
+>>>>>CM:GREEN
 ====================
 
+>>>>>CM:GREEN
 Indicates a numeric value has exceeded the allowable range. See 15.4.2.2, 15.4.5.1, 15.7.4.2,
+>>>>>CM:GREEN
 15.7.4.5, 15.7.4.6, 15.7.4.7, and 15.9.5.43.
 
+>>>>>CM:GREEN
 15.11.6.3 ReferenceError
+>>>>>CM:GREEN
 ========================
 
+>>>>>CM:GREEN
 Indicate that an invalid reference value has been detected. See 8.7.1, 8.7.2, 10.2.1, 10.2.1.1.4,
+>>>>>CM:GREEN
 10.2.1.2.4, and 11.13.1.
 
+>>>>>CM:GREEN
 15.11.6.4 SyntaxError
+>>>>>CM:GREEN
 =====================
 
+>>>>>CM:GREEN
 Indicates that a parsing error has occurred. See 11.1.5, 11.3.1, 11.3.2, 11.4.1, 11.4.4, 11.4.5,
+>>>>>CM:GREEN
 11.13.1, 11.13.2, 12.2.1, 12.10.1, 12.14.1, 13.1, 15.1.2.1, 15.3.2.1, 15.10.2.2, 15.10.2.5,
+>>>>>CM:GREEN
 15.10.2.9, 15.10.2.15, 15.10.2.19, 15.10.4.1, and 15.12.2.
 
+>>>>>CM:GREEN
 15.11.6.5 TypeError
+>>>>>CM:GREEN
 ===================
 
+>>>>>CM:GREEN
 Indicates the actual type of an operand is different than the expected type. See 8.6.2, 8.7.2,
+>>>>>CM:GREEN
 8.10.5, 8.12.5, 8.12.7, 8.12.8, 8.12.9, 9.9, 9.10, 10.2.1, 10.2.1.1.3, 10.6, 11.2.2, 11.2.3, 11.4.1,
+>>>>>CM:GREEN
 11.8.6, 11.8.7, 11.3.1, 13.2, 13.2.3, 15, 15.2.3.2, 15.2.3.3, 15.2.3.4, 15.2.3.5, 15.2.3.6,
+>>>>>CM:GREEN
 15.2.3.7, 15.2.3.8, 15.2.3.9, 15.2.3.10, 15.2.3.11, 15.2.3.12, 15.2.3.13, 15.2.3.14, 15.2.4.3,
+>>>>>CM:GREEN
 15.3.4.2, 15.3.4.3, 15.3.4.4, 15.3.4.5, 15.3.4.5.2, 15.3.4.5.3, 15.3.5, 15.3.5.3, 15.3.5.4,
+>>>>>CM:GREEN
 15.4.4.3, 15.4.4.11, 15.4.4.16, 15.4.4.17, 15.4.4.18, 15.4.4.19, 15.4.4.20, 15.4.4.21, 15.4.4.22,
+>>>>>CM:GREEN
 15.4.5.1, 15.5.4.2, 15.5.4.3, 15.6.4.2, 15.6.4.3, 15.7.4, 15.7.4.2, 15.7.4.4, 15.9.5, 15.9.5.44,
+>>>>>CM:GREEN
 15.10.4.1, 15.10.6, 15.11.4.4 and 15.12.3.
 
+>>>>>CM:GREEN
 15.11.6.6 URIError
+>>>>>CM:GREEN
 ==================
 
+>>>>>CM:GREEN
 Indicates that one of the global URI handling functions was used in a way that is incompatible with
+>>>>>CM:GREEN
 its definition. See 15.1.3.
 
+>>>>>CM:GREEN
 15.11.7 NativeError Object Structure
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 When an ECMAScript implementation detects a runtime error, it throws an instance of one of the
+>>>>>CM:GREEN
 NativeError objects defined in 15.11.6. Each of these objects has the structure described below,
+>>>>>CM:GREEN
 differing only in the name used as the constructor name instead of NativeError, in the name property
+>>>>>CM:GREEN
 of the prototype object, and in the implementation-defined message property of the prototype object.
 
+>>>>>CM:GREEN
 For each error object, references to NativeError in the definition should be replaced with the
+>>>>>CM:GREEN
 appropriate error object name from 15.11.6.
 
+>>>>>CM:GREEN
 15.11.7.1 NativeError Constructors Called as Functions
+>>>>>CM:GREEN
 ======================================================
 
+>>>>>CM:GREEN
 When a NativeError constructor is called as a function rather than as a constructor, it creates and
+>>>>>CM:GREEN
 initialises a new object. A call of the object as a function is equivalent to calling it as a
+>>>>>CM:GREEN
 constructor with the same arguments.
 
+>>>>>CM:GREEN
 15.11.7.2 NativeError (message)
+>>>>>CM:GREEN
 ===============================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the prototype object
+>>>>>CM:GREEN
 for this error constructor. The [[Class]] internal property of the newly constructed object is set
+>>>>>CM:GREEN
 to "Error". The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 If the argument message is not undefined, the message own property of the newly constructed object
+>>>>>CM:GREEN
 is set to ToString(message).
 
+>>>>>CM:GREEN
 15.11.7.3 The NativeError Constructors
+>>>>>CM:GREEN
 ======================================
 
+>>>>>CM:GREEN
 When a NativeError constructor is called as part of a new expression, it is a constructor: it
+>>>>>CM:GREEN
 initialises the newly created object.
 
+>>>>>CM:GREEN
 15.11.7.4 new NativeError (message)
+>>>>>CM:GREEN
 ===================================
 
+>>>>>CM:GREEN
 The [[Prototype]] internal property of the newly constructed object is set to the prototype object
+>>>>>CM:GREEN
 for this NativeError constructor. The [[Class]] internal property of the newly constructed object is
+>>>>>CM:GREEN
 set to "Error". The [[Extensible]] internal property of the newly constructed object is set to true.
 
+>>>>>CM:GREEN
 If the argument message is not undefined, the message own property of the newly constructed object
+>>>>>CM:GREEN
 is set to ToString(message).
 
+>>>>>CM:GREEN
 15.11.7.5 Properties of the NativeError Constructors
+>>>>>CM:GREEN
 ====================================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of a NativeError constructor is the Function
+>>>>>CM:GREEN
 prototype object (15.3.4).
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), each NativeError
+>>>>>CM:GREEN
 constructor has the following property:
 
+>>>>>CM:GREEN
 15.11.7.6 NativeError.prototype
+>>>>>CM:GREEN
 ===============================
 
+>>>>>CM:GREEN
 The initial value of NativeError.prototype is a NativeError prototype object (15.11.7.7). Each
+>>>>>CM:GREEN
 NativeError constructor has a separate prototype object.
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
+>>>>>CM:GREEN
 15.11.7.7 Properties of the NativeError Prototype Objects
+>>>>>CM:GREEN
 =========================================================
 
+>>>>>CM:GREEN
 Each NativeError prototype object is an Error object (its [[Class]] is "Error").
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of each NativeError prototype object is the
+>>>>>CM:GREEN
 standard built-in Error prototype object (15.11.4).
 
+>>>>>CM:GREEN
 15.11.7.8 NativeError.prototype.constructor
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The initial value of the constructor property of the prototype for a given NativeError constructor
+>>>>>CM:GREEN
 is the NativeError constructor function itself (15.11.7).
 
+>>>>>CM:GREEN
 15.11.7.9 NativeError.prototype.name
+>>>>>CM:GREEN
 ====================================
 
+>>>>>CM:GREEN
 The initial value of the name property of the prototype for a given NativeError constructor is the
+>>>>>CM:GREEN
 name of the constructor (the name used instead of NativeError).
 
+>>>>>CM:GREEN
 15.11.7.10 NativeError.prototype.message
+>>>>>CM:GREEN
 ========================================
 
+>>>>>CM:GREEN
 The initial value of the message property of the prototype for a given NativeError constructor is
+>>>>>CM:GREEN
 the empty String.
 
+>>>>>CM:GREEN
 NOTE The prototypes for the NativeError constructors do not themselves provide a toString function,
+>>>>>CM:GREEN
 but instances of errors will inherit it from the Error prototype object.
 
+>>>>>CM:GREEN
 15.11.7.11 Properties of NativeError Instances
+>>>>>CM:GREEN
 ==============================================
 
+>>>>>CM:GREEN
 NativeError instances inherit properties from their NativeError prototype object and their [[Class]]
+>>>>>CM:GREEN
 internal property value is "Error". NativeError instances have no special properties.

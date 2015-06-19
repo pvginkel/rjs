@@ -737,105 +737,180 @@ NOTE 2 The split function is intentionally generic; it does not require that its
 >>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.15 String.prototype.substring (start, end)
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 The substring method takes two arguments, start and end, and returns a substring of the result of
+>>>>>CM:GREEN
 converting this object to a String, starting from character position start and running to, but not
+>>>>>CM:GREEN
 including, character position end of the String (or through the end of the String is end is
+>>>>>CM:GREEN
 undefined). The result is a String value, not a String object.
 
+>>>>>CM:GREEN
 If either argument is NaN or negative, it is replaced with zero; if either argument is larger than
+>>>>>CM:GREEN
 the length of the String, it is replaced with the length of the String.
 
+>>>>>CM:GREEN
 If start is larger than end, they are swapped.
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let len be the number of characters in S.
+>>>>>CM:GREEN
 4.  Let intStart be ToInteger(start).
+>>>>>CM:GREEN
 5.  If end is undefined, let intEnd be len; else let intEnd be ToInteger(end).
+>>>>>CM:GREEN
 6.  Let finalStart be min(max(intStart, 0), len).
+>>>>>CM:GREEN
 7.  Let finalEnd be min(max(intEnd, 0), len).
+>>>>>CM:GREEN
 8.  Let from be min(finalStart, finalEnd).
+>>>>>CM:GREEN
 9.  Let to be max(finalStart, finalEnd).
+>>>>>CM:GREEN
 10. Return a String whose length is to - from, containing characters from S, namely the characters
+>>>>>CM:GREEN
     with indices from through to −1, in ascending order.
 
+>>>>>CM:GREEN
 The length property of the substring method is 2.
 
+>>>>>CM:GREEN
 NOTE The substring function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.16 String.prototype.toLowerCase ( )
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let L be a String where each character of L is either the Unicode lowercase equivalent of the
+>>>>>CM:GREEN
     corresponding character of S or the actual corresponding character of S if no Unicode lowercase
+>>>>>CM:GREEN
     equivalent exists.
+>>>>>CM:GREEN
 4.  Return L.
 
+>>>>>CM:GREEN
 For the purposes of this operation, the 16-bit code units of the Strings are treated as code points
+>>>>>CM:GREEN
 in the Unicode Basic Multilingual Plane. Surrogate code points are directly transferred from S to L
+>>>>>CM:GREEN
 without any mapping.
 
+>>>>>CM:GREEN
 The result must be derived according to the case mappings in the Unicode character database (this
+>>>>>CM:GREEN
 explicitly includes not only the UnicodeData.txt file, but also the SpecialCasings.txt file that
+>>>>>CM:GREEN
 accompanies it in Unicode 2.1.8 and later).
 
+>>>>>CM:GREEN
 NOTE 1 The case mapping of some characters may produce multiple characters. In this case the result
+>>>>>CM:GREEN
 String may not be the same length as the source String. Because both toUpperCase and toLowerCase
+>>>>>CM:GREEN
 have context-sensitive behaviour, the functions are not symmetrical. In other words,
+>>>>>CM:GREEN
 s.toUpperCase().toLowerCase() is not necessarily equal to s.toLowerCase().
 
+>>>>>CM:GREEN
 NOTE 2 The toLowerCase function is intentionally generic; it does not require that its this value be
+>>>>>CM:GREEN
 a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.17 String.prototype.toLocaleLowerCase ( )
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 This function works exactly the same as toLowerCase except that its result is intended to yield the
+>>>>>CM:GREEN
 correct result for the host environment’s current locale, rather than a locale-independent result.
+>>>>>CM:GREEN
 There will only be a difference in the few cases (such as Turkish) where the rules for that language
+>>>>>CM:GREEN
 conflict with the regular Unicode case mappings.
 
+>>>>>CM:GREEN
 NOTE 1 The first parameter to this function is likely to be used in a future version of this
+>>>>>CM:GREEN
 standard; it is recommended that implementations do not use this parameter position for anything
+>>>>>CM:GREEN
 else.
 
+>>>>>CM:GREEN
 NOTE 2 The toLocaleLowerCase function is intentionally generic; it does not require that its this
+>>>>>CM:GREEN
 value be a String object. Therefore, it can be transferred to other kinds of objects for use as a
+>>>>>CM:GREEN
 method.
 
+>>>>>CM:GREEN
 15.5.4.18 String.prototype.toUpperCase ( )
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 This function behaves in exactly the same way as String.prototype.toLowerCase, except that
+>>>>>CM:GREEN
 characters are mapped to their uppercase equivalents as specified in the Unicode Character Database.
 
+>>>>>CM:GREEN
 NOTE The toUpperCase function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.19 String.prototype.toLocaleUpperCase ( )
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 This function works exactly the same as toUpperCase except that its result is intended to yield the
+>>>>>CM:GREEN
 correct result for the host environment’s current locale, rather than a locale-independent result.
+>>>>>CM:GREEN
 There will only be a difference in the few cases (such as Turkish) where the rules for that language
+>>>>>CM:GREEN
 conflict with the regular Unicode case mappings.
 
+>>>>>CM:GREEN
 NOTE 1 The first parameter to this function is likely to be used in a future version of this
+>>>>>CM:GREEN
 standard; it is recommended that implementations do not use this parameter position for anything
+>>>>>CM:GREEN
 else.
 
+>>>>>CM:GREEN
 NOTE 2 The toLocaleUpperCase function is intentionally generic; it does not require that its this
+>>>>>CM:GREEN
 value be a String object. Therefore, it can be transferred to other kinds of objects for use as a
+>>>>>CM:GREEN
 method.
 
 15.5.4.20 String.prototype.trim ( )

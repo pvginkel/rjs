@@ -1,16 +1,29 @@
+>>>>>CM:GREEN
 9.10 CheckObjectCoercible
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 The abstract operation CheckObjectCoercible throws an error if its argument is a value that cannot
+>>>>>CM:GREEN
 be converted to an Object using ToObject. It is defined by Table 15:
 
+>>>>>CM:GREEN
 Table 15 — CheckObjectCoercible Results
 
+>>>>>CM:GREEN
   Argument Type   Result
+>>>>>CM:GREEN
   --------------- ------------------------------
+>>>>>CM:GREEN
   Undefined       Throw a TypeError exception.
+>>>>>CM:GREEN
   Null            Throw a TypeError exception.
+>>>>>CM:GREEN
   Boolean         Return
+>>>>>CM:GREEN
   Number          Return
+>>>>>CM:GREEN
   String          Return
+>>>>>CM:GREEN
   Object          Return
