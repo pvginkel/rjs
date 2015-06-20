@@ -318,12 +318,17 @@ When the isFrozen function is called with argument O, the following steps are ta
 3.  If the [[Extensible]] internal property of O is false, then return true.
 4.  Otherwise, return false.
 
+>>>>>CM:GREEN
 15.2.3.13 Object.isExtensible ( O )
+>>>>>CM:GREEN
 ===================================
 
+>>>>>CM:GREEN
 When the isExtensible function is called with argument O, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Return the Boolean value of the [[Extensible]] internal property of O.
 
 15.2.3.14 Object.keys ( O )

@@ -223,12 +223,17 @@ NOTE A reliable way for ECMAScript code to test if a value X is a NaN is an expr
 >>>>>CM:GREEN
 !== X. The result will be true if and only if X is a NaN.
 
+>>>>>CM:GREEN
 15.1.2.5 isFinite (number)
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 Returns false if the argument coerces to NaN, +∞, or −∞, and otherwise returns true.
 
+>>>>>CM:GREEN
 1.  If ToNumber(number) is NaN, +∞, or −∞, return false.
+>>>>>CM:GREEN
 2.  Otherwise, return true.
 
 >>>>>CM:GREEN
