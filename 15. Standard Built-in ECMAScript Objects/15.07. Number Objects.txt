@@ -149,30 +149,49 @@ This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [
 >>>>>CM:GREEN
 false }.
 
+>>>>>CM:GREEN
 15.7.4 Properties of the Number Prototype Object
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 The Number prototype object is itself a Number object (its [[Class]] is "Number") whose value is +0.
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Number prototype object is the standard
+>>>>>CM:GREEN
 built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 Unless explicitly stated otherwise, the methods of the Number prototype object defined below are not
+>>>>>CM:GREEN
 generic and the this value passed to them must be either a Number value or an Object for which the
+>>>>>CM:GREEN
 value of the [[Class]] internal property is "Number".
 
+>>>>>CM:GREEN
 In the following descriptions of functions that are properties of the Number prototype object, the
+>>>>>CM:GREEN
 phrase “this Number object” refers to either the object that is the this value for the invocation of
+>>>>>CM:GREEN
 the function or, if Type(this value) is Number, an object that is created as if by the expression
+>>>>>CM:GREEN
 new Number(this value) where Number is the standard built-in constructor with that name. Also, the
+>>>>>CM:GREEN
 phrase “this Number value” refers to either the Number value represented by this Number object, that
+>>>>>CM:GREEN
 is, the value of the [[PrimitiveValue]] internal property of this Number object or the this value if
+>>>>>CM:GREEN
 its type is Number. A TypeError exception is thrown if the this value is neither an object for which
+>>>>>CM:GREEN
 the value of the [[Class]] internal property is "Number" or a value whose type is Number.
 
+>>>>>CM:GREEN
 15.7.4.1 Number.prototype.constructor
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 The initial value of Number.prototype.constructor is the built-in Number constructor.
 
 >>>>>CM:GREEN
@@ -331,218 +350,277 @@ prints enough significant digits to distinguish the number from adjacent number 
 >>>>>CM:GREEN
 while (1000000000000000128).toFixed(0) returns "1000000000000000128".
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 15.7.4.6 Number.prototype.toExponential (fractionDigits)
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 ========================================================
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 Return a String containing this Number value represented in decimal exponential notation with one
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 digit before the significand’s decimal point and fractionDigits digits after the significand’s
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 decimal point. If fractionDigits is undefined, include as many significand digits as necessary to
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 uniquely specify the Number (just like in ToString except that in this case the Number is always
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 output in exponential notation). Specifically, perform the following steps:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Let x be this Number value.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 2.  Let f be ToInteger(fractionDigits).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 3.  If x is NaN, return the String "NaN".
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 4.  Let s be the empty String.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 5.  If x < 0, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Let s be "-".
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Let x = –x.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 6.  If x = +∞, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Return the concatenation of the Strings s and "Infinity".
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 7.  If fractionDigits is not undefined and (f < 0 or f > 20), throw a RangeError exception.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 8.  If x = 0, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Let f = 0.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Let m be the String consisting of f+1 occurrences of the character ‘0’.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     3.  Let e = 0.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 9.  Else, x ≠ 0
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  If fractionDigits is not undefined, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         1.  Let e and n be integers such that 10f ≤ n < 10f+1 and for which the exact mathematical
->>>>>CM:YELLOW
+>>>>>CM:GREEN
             value of n × 10e–f – x is as close to zero as possible. If there are two such sets of e
->>>>>CM:YELLOW
+>>>>>CM:GREEN
             and n, pick the e and n for which n × 10e–f is larger.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Else, fractionDigits is undefined
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         1.  Let e, n, and f be integers such that f ≥ 0, 10f ≤ n < 10f+1, the number value for n ×
->>>>>CM:YELLOW
+>>>>>CM:GREEN
             10e–f is x, and f is as small as possible. Note that the decimal representation of n has
->>>>>CM:YELLOW
+>>>>>CM:GREEN
             f+1 digits, n is not divisible by 10, and the least significant digit of n is not
->>>>>CM:YELLOW
+>>>>>CM:GREEN
             necessarily uniquely determined by these criteria.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     3.  Let m be the String consisting of the digits of the decimal representation of n (in order,
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         with no leading zeroes).
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 10. If f ≠ 0, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Let a be the first character of m, and let b be the remaining f characters of m.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Let m be the concatenation of the three Strings a, ".", and b.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 11. If e = 0, then
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  Let c = "+".
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Let d = "0".
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 12. Else
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     1.  If e > 0, then let c = "+".
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     2.  Else, e ≤ 0
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         1.  Let c = "-".
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         2.  Let e = –e.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     3.  Let d be the String consisting of the digits of the decimal representation of e (in order,
->>>>>CM:YELLOW
+>>>>>CM:GREEN
         with no leading zeroes).
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 13. Let m be the concatenation of the four Strings m, "e", c, and d.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 14. Return the concatenation of the Strings s and m.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The length property of the toExponential method is 1.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 If the toExponential method is called with more than one argument, then the behaviour is undefined
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 (see clause 15).
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 An implementation is permitted to extend the behaviour of toExponential for values of fractionDigits
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 less than 0 or greater than 20. In this case toExponential would not necessarily throw RangeError
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 for such values.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 NOTE For implementations that provide more accurate conversions than required by the rules above, it
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 is recommended that the following alternative version of step 9.b.i be used as a guideline:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Let e, n, and f be integers such that f ≥ 0, 10f ≤ n < 10f+1, the number value for n × 10e–f is
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     x, and f is as small as possible. If there are multiple possibilities for n, choose the value of
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     n for which n × 10e–f is closest in value to x. If there are two such possible values of n,
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     choose the one that is even.
 
+>>>>>CM:GREEN
 15.7.4.7 Number.prototype.toPrecision (precision)
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 Return a String containing this Number value represented either in decimal exponential notation with
+>>>>>CM:GREEN
 one digit before the significand’s decimal point and precision–1 digits after the significand’s
+>>>>>CM:GREEN
 decimal point or in decimal fixed notation with precision significant digits. If precision is
+>>>>>CM:GREEN
 undefined, call ToString (9.8.1) instead. Specifically, perform the following steps:
 
+>>>>>CM:GREEN
 1.  Let x be this Number value.
+>>>>>CM:GREEN
 2.  If precision is undefined, return ToString(x).
+>>>>>CM:GREEN
 3.  Let p be ToInteger(precision).
+>>>>>CM:GREEN
 4.  If x is NaN, return the String "NaN".
+>>>>>CM:GREEN
 5.  Let s be the empty String.
+>>>>>CM:GREEN
 6.  If x < 0, then
+>>>>>CM:GREEN
     1.  Let s be "-".
+>>>>>CM:GREEN
     2.  Let x = –x.
 
+>>>>>CM:GREEN
 7.  If x = +∞, then
+>>>>>CM:GREEN
     1.  Return the concatenation of the Strings s and "Infinity".
 
+>>>>>CM:GREEN
 8.  If p < 1 or p > 21, throw a RangeError exception.
+>>>>>CM:GREEN
 9.  If x = 0, then
+>>>>>CM:GREEN
     1.  Let m be the String consisting of p occurrences of the character ‘0’.
+>>>>>CM:GREEN
     2.  Let e = 0.
 
+>>>>>CM:GREEN
 10. Else x ≠ 0,
+>>>>>CM:GREEN
     1.  Let e and n be integers such that 10p–1 ≤ n < 10p and for which the exact mathematical value
+>>>>>CM:GREEN
         of n × 10e–p+1 – x is as close to zero as possible. If there are two such sets of e and n,
+>>>>>CM:GREEN
         pick the e and n for which n × 10e–p+1 is larger.
+>>>>>CM:GREEN
     2.  Let m be the String consisting of the digits of the decimal representation of n (in order,
+>>>>>CM:GREEN
         with no leading zeroes).
+>>>>>CM:GREEN
     3.  If e < –6 or e ≥ p, then
+>>>>>CM:GREEN
         1.  Let a be the first character of m, and let b be the remaining p–1 characters of m.
+>>>>>CM:GREEN
         2.  Let m be the concatenation of the three Strings a, ".", and b.
+>>>>>CM:GREEN
         3.  If e = 0, then
+>>>>>CM:GREEN
             1.  Let c = "+" and d = "0".
 
+>>>>>CM:GREEN
         4.  Else e ≠ 0,
+>>>>>CM:GREEN
             1.  If e > 0, then
+>>>>>CM:GREEN
                 1.  Let c = "+".
 
+>>>>>CM:GREEN
             2.  Else e < 0,
+>>>>>CM:GREEN
                 1.  Let c = "-".
+>>>>>CM:GREEN
                 2.  Let e = –e.
 
+>>>>>CM:GREEN
             3.  Let d be the String consisting of the digits of the decimal representation of e (in
+>>>>>CM:GREEN
                 order, with no leading zeroes).
 
+>>>>>CM:GREEN
         5.  Let m be the concatenation of the five Strings s, m, "e", c, and d.
 
+>>>>>CM:GREEN
 11. If e = p–1, then return the concatenation of the Strings s and m.
+>>>>>CM:GREEN
 12. If e ≥ 0, then
+>>>>>CM:GREEN
     1.  Let m be the concatenation of the first e+1 characters of m, the character ‘.’, and the
+>>>>>CM:GREEN
         remaining p– (e+1) characters of m.
 
+>>>>>CM:GREEN
 13. Else e < 0,
+>>>>>CM:GREEN
     1.  Let m be the concatenation of the String "0.", –(e+1) occurrences of the character ‘0’, and
+>>>>>CM:GREEN
         the String m.
 
+>>>>>CM:GREEN
 14. Return the concatenation of the Strings s and m.
 
+>>>>>CM:GREEN
 The length property of the toPrecision method is 1.
 
+>>>>>CM:GREEN
 If the toPrecision method is called with more than one argument, then the behaviour is undefined
+>>>>>CM:GREEN
 (see clause 15).
 
+>>>>>CM:GREEN
 An implementation is permitted to extend the behaviour of toPrecision for values of precision less
+>>>>>CM:GREEN
 than 1 or greater than 21. In this case toPrecision would not necessarily throw RangeError for such
+>>>>>CM:GREEN
 values.
 
+>>>>>CM:GREEN
 15.7.5 Properties of Number Instances
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 Number instances inherit properties from the Number prototype object and their [[Class]] internal
+>>>>>CM:GREEN
 property value is "Number". Number instances also have a [[PrimitiveValue]] internal property.
 
+>>>>>CM:GREEN
 The [[PrimitiveValue]] internal property is the Number value represented by this Number object.
