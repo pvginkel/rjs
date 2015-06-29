@@ -178,31 +178,52 @@ When the parseInt function is called, the following steps are taken:
 >>>>>CM:GREEN
 15. Return sign × number.
 
+>>>>>CM:GREEN
 NOTE parseInt may interpret only a leading portion of string as an integer value; it ignores any
+>>>>>CM:GREEN
 characters that cannot be interpreted as part of the notation of an integer, and no indication is
+>>>>>CM:GREEN
 given that any such characters were ignored.
 
+>>>>>CM:GREEN
 15.1.2.3 parseFloat (string)
+>>>>>CM:GREEN
 ============================
 
+>>>>>CM:GREEN
 The parseFloat function produces a Number value dictated by interpretation of the contents of the
+>>>>>CM:GREEN
 string argument as a decimal literal.
 
+>>>>>CM:GREEN
 When the parseFloat function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Let inputString be ToString(string).
+>>>>>CM:GREEN
 2.  Let trimmedString be a substring of inputString consisting of the leftmost character that is not
+>>>>>CM:GREEN
     a StrWhiteSpaceChar and all characters to the right of that character. (In other words, remove
+>>>>>CM:GREEN
     leading white space.) If inputString does not contain any such characters, let trimmedString be
+>>>>>CM:GREEN
     the empty string.
+>>>>>CM:GREEN
 3.  If neither trimmedString nor any prefix of trimmedString satisfies the syntax of a
+>>>>>CM:GREEN
     StrDecimalLiteral (see 9.3.1), return NaN.
+>>>>>CM:GREEN
 4.  Let numberString be the longest prefix of trimmedString, which might be trimmedString itself,
+>>>>>CM:GREEN
     that satisfies the syntax of a StrDecimalLiteral.
+>>>>>CM:GREEN
 5.  Return the Number value for the MV of numberString.
 
+>>>>>CM:GREEN
 NOTE parseFloat may interpret only a leading portion of string as a Number value; it ignores any
+>>>>>CM:GREEN
 characters that cannot be interpreted as part of the notation of an decimal literal, and no
+>>>>>CM:GREEN
 indication is given that any such characters were ignored.
 
 >>>>>CM:GREEN

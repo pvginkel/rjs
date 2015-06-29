@@ -1,4 +1,6 @@
+>>>>>CM:GREEN
 15.5 String Objects
+>>>>>CM:GREEN
 ===================
 
 >>>>>CM:GREEN
@@ -952,28 +954,49 @@ Once a String object is created, this property is unchanging. It has the attribu
 >>>>>CM:GREEN
 false, [[Enumerable]]: false, [[Configurable]]: false }.
 
+>>>>>CM:GREEN
 15.5.5.2 [[GetOwnProperty]] ( P )
+>>>>>CM:GREEN
 =================================
 
+>>>>>CM:GREEN
 String objects use a variation of the [[GetOwnProperty]] internal method used for other native
+>>>>>CM:GREEN
 ECMAScript objects (8.12.1). This special internal method provides access to named properties
+>>>>>CM:GREEN
 corresponding to the individual characters of String objects.
 
+>>>>>CM:GREEN
 Assume S is a String object and P is a String.
 
+>>>>>CM:GREEN
 When the [[GetOwnProperty]] internal method of S is called with property name P, the following steps
+>>>>>CM:GREEN
 are taken:
 
+>>>>>CM:GREEN
 1.  Let desc be the result of calling the default [[GetOwnProperty]] internal method (8.12.1) on S
+>>>>>CM:GREEN
     with argument P.
+>>>>>CM:GREEN
 2.  If desc is not undefined return desc.
+>>>>>CM:GREEN
 3.  If ToString(abs(ToInteger(P))) is not the same value as P, return undefined.
+>>>>>CM:GREEN
 4.  Let str be the String value of the [[PrimitiveValue]] internal property of S.
+>>>>>CM:GREEN
 5.  Let index be ToInteger(P).
+>>>>>CM:GREEN
 6.  Let len be the number of characters in str.
+>>>>>CM:GREEN
 7.  If len ≤ index, return undefined.
+>>>>>CM:GREEN
 8.  Let resultStr be a String of length 1, containing one character from str, specifically the
+>>>>>CM:GREEN
     character at position index, where the first (leftmost) character in str is considered to be at
+>>>>>CM:GREEN
     position 0, the next one at position 1, and so on.
+>>>>>CM:GREEN
 9.  Return a Property Descriptor { [[Value]]: resultStr, [[Enumerable]]: true, [[Writable]]: false,
+>>>>>CM:GREEN
     [[Configurable]]: false }

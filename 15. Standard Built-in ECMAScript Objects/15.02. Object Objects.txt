@@ -1,4 +1,6 @@
+>>>>>CM:GREEN
 15.2 Object Objects
+>>>>>CM:GREEN
 ===================
 
 >>>>>CM:GREEN
@@ -81,13 +83,19 @@ steps are taken:
 >>>>>CM:GREEN
 8.  Return obj.
 
+>>>>>CM:GREEN
 15.2.3 Properties of the Object Constructor
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Object constructor is the standard built-in
+>>>>>CM:GREEN
 Function prototype object.
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), the Object constructor
+>>>>>CM:GREEN
 has the following properties:
 
 >>>>>CM:GREEN
@@ -116,15 +124,23 @@ When the getPrototypeOf function is called with argument O, the following steps 
 >>>>>CM:GREEN
 2.  Return the value of the [[Prototype]] internal property of O.
 
+>>>>>CM:GREEN
 15.2.3.3 Object.getOwnPropertyDescriptor ( O, P )
+>>>>>CM:GREEN
 =================================================
 
+>>>>>CM:GREEN
 When the getOwnPropertyDescriptor function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let name be ToString(P).
+>>>>>CM:GREEN
 3.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with argument
+>>>>>CM:GREEN
     name.
+>>>>>CM:GREEN
 4.  Return the result of calling FromPropertyDescriptor(desc) (8.10.4).
 
 >>>>>CM:GREEN
@@ -166,19 +182,31 @@ properties defined in 15.5.5.2 that correspond to character positions within the
 >>>>>CM:GREEN
 [[PrimitiveValue]] String.
 
+>>>>>CM:GREEN
 15.2.3.5 Object.create ( O [, Properties] )
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The create function creates a new object with a specified prototype. When the create function is
+>>>>>CM:GREEN
 called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object or Null throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let obj be the result of creating a new object as if by the expression new Object() where Object
+>>>>>CM:GREEN
     is the standard built-in constructor with that name
+>>>>>CM:GREEN
 3.  Set the [[Prototype]] internal property of obj to O.
+>>>>>CM:GREEN
 4.  If the argument Properties is present and not undefined, add own properties to obj as if by
+>>>>>CM:GREEN
     calling the standard built-in function Object.defineProperties with arguments obj and
+>>>>>CM:GREEN
     Properties.
+>>>>>CM:GREEN
 5.  Return obj.
 
 >>>>>CM:GREEN
@@ -204,45 +232,76 @@ are taken:
 >>>>>CM:GREEN
 5.  Return O.
 
+>>>>>CM:GREEN
 15.2.3.7 Object.defineProperties ( O, Properties )
+>>>>>CM:GREEN
 ==================================================
 
+>>>>>CM:GREEN
 The defineProperties function is used to add own properties and/or update the attributes of existing
+>>>>>CM:GREEN
 own properties of an object. When the defineProperties function is called, the following steps are
+>>>>>CM:GREEN
 taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let props be ToObject(Properties).
+>>>>>CM:GREEN
 3.  Let names be an internal list containing the names of each enumerable own property of props.
+>>>>>CM:GREEN
 4.  Let descriptors be an empty internal List.
+>>>>>CM:GREEN
 5.  For each element P of names in list order,
+>>>>>CM:GREEN
     1.  Let descObj be the result of calling the [[Get]] internal method of props with P as the
+>>>>>CM:GREEN
         argument.
+>>>>>CM:GREEN
     2.  Let desc be the result of calling ToPropertyDescriptor with descObj as the argument.
+>>>>>CM:GREEN
     3.  Append the pair (a two element List) consisting of P and desc to the end of descriptors.
 
+>>>>>CM:GREEN
 6.  For each pair from descriptors in list order,
+>>>>>CM:GREEN
     1.  Let P be the first element of pair.
+>>>>>CM:GREEN
     2.  Let desc be the second element of pair.
+>>>>>CM:GREEN
     3.  Call the [[DefineOwnProperty]] internal method of O with arguments P, desc, and true.
 
+>>>>>CM:GREEN
 7.  Return O.
 
+>>>>>CM:GREEN
 If an implementation defines a specific order of enumeration for the for-in statement, that same
+>>>>>CM:GREEN
 enumeration order must be used to order the list elements in step 3 of this algorithm.
 
+>>>>>CM:GREEN
 15.2.3.8 Object.seal ( O )
+>>>>>CM:GREEN
 ==========================
 
+>>>>>CM:GREEN
 When the seal function is called, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  For each named own property name P of O,
+>>>>>CM:GREEN
     1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with P.
+>>>>>CM:GREEN
     2.  If desc.[[Configurable]] is true, set desc.[[Configurable]] to false.
+>>>>>CM:GREEN
     3.  Call the [[DefineOwnProperty]] internal method of O with P, desc, and true as arguments.
 
+>>>>>CM:GREEN
 3.  Set the [[Extensible]] internal property of O to false.
+>>>>>CM:GREEN
 4.  Return O.
 
 >>>>>CM:GREEN
@@ -289,33 +348,53 @@ When the preventExtensions function is called, the following steps are taken:
 >>>>>CM:GREEN
 3.  Return O.
 
+>>>>>CM:GREEN
 15.2.3.11 Object.isSealed ( O )
+>>>>>CM:GREEN
 ===============================
 
+>>>>>CM:GREEN
 When the isSealed function is called with argument O, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  For each named own property name P of O,
+>>>>>CM:GREEN
     1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with P.
+>>>>>CM:GREEN
     2.  If desc.[[Configurable]] is true, then return false.
 
+>>>>>CM:GREEN
 3.  If the [[Extensible]] internal property of O is false, then return true.
+>>>>>CM:GREEN
 4.  Otherwise, return false.
 
+>>>>>CM:GREEN
 15.2.3.12 Object.isFrozen ( O )
+>>>>>CM:GREEN
 ===============================
 
+>>>>>CM:GREEN
 When the isFrozen function is called with argument O, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If Type(O) is not Object throw a TypeError exception.
+>>>>>CM:GREEN
 2.  For each named own property name P of O,
+>>>>>CM:GREEN
     1.  Let desc be the result of calling the [[GetOwnProperty]] internal method of O with P.
+>>>>>CM:GREEN
     2.  If IsDataDescriptor(desc) is true then
+>>>>>CM:GREEN
         1.  If desc.[[Writable]] is true, return false.
 
+>>>>>CM:GREEN
     3.  If desc.[[Configurable]] is true, then return false.
 
+>>>>>CM:GREEN
 3.  If the [[Extensible]] internal property of O is false, then return true.
+>>>>>CM:GREEN
 4.  Otherwise, return false.
 
 >>>>>CM:GREEN
@@ -331,37 +410,61 @@ When the isExtensible function is called with argument O, the following steps ar
 >>>>>CM:GREEN
 2.  Return the Boolean value of the [[Extensible]] internal property of O.
 
+>>>>>CM:GREEN
 15.2.3.14 Object.keys ( O )
+>>>>>CM:GREEN
 ===========================
 
+>>>>>CM:GREEN
 When the keys function is called with argument O, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  If the Type(O) is not Object, throw a TypeError exception.
+>>>>>CM:GREEN
 2.  Let n be the number of own enumerable properties of O
+>>>>>CM:GREEN
 3.  Let array be the result of creating a new Object as if by the expression new Array(n) where
+>>>>>CM:GREEN
     Array is the standard built-in constructor with that name.
+>>>>>CM:GREEN
 4.  Let index be 0.
+>>>>>CM:GREEN
 5.  For each own enumerable property of O whose name String is P
+>>>>>CM:GREEN
     1.  Call the [[DefineOwnProperty]] internal method of array with arguments ToString(index), the
+>>>>>CM:GREEN
         PropertyDescriptor {[[Value]]: P, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
         [[Configurable]]: true}, and false.
+>>>>>CM:GREEN
     2.  Increment index by 1.
 
+>>>>>CM:GREEN
 6.  Return array.
 
+>>>>>CM:GREEN
 If an implementation defines a specific order of enumeration for the for-in statement, that same
+>>>>>CM:GREEN
 enumeration order must be used in step 5 of this algorithm.
 
+>>>>>CM:GREEN
 15.2.4 Properties of the Object Prototype Object
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the Object prototype object is null, the value
+>>>>>CM:GREEN
 of the [[Class]] internal property is "Object", and the initial value of the [[Extensible]] internal
+>>>>>CM:GREEN
 property is true.
 
+>>>>>CM:GREEN
 15.2.4.1 Object.prototype.constructor
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 The initial value of Object.prototype.constructor is the standard built-in Object constructor.
 
 >>>>>CM:GREEN
@@ -532,7 +635,10 @@ thrown by step 1 in previous editions of this specification will continue to be 
 >>>>>CM:GREEN
 this value is undefined or null.
 
+>>>>>CM:GREEN
 15.2.5 Properties of Object Instances
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 Object instances have no special properties beyond those inherited from the Object prototype object.
