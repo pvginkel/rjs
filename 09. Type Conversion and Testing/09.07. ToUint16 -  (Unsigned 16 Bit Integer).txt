@@ -1,34 +1,34 @@
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 9.7 ToUint16: (Unsigned 16 Bit Integer)
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 =======================================
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 The abstract operation ToUint16 converts its argument to one of 2^16 integer values in the range 0
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 through 2^16−1, inclusive. This abstract operation functions as follows:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 1.  Let number be the result of calling ToNumber on the input argument.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 2.  If number is NaN, +0, −0, +∞, or −∞, return +0.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 3.  Let posInt be sign(number) × floor(abs(number)).
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 4.  Let int16bit be posInt modulo 2^16; that is, a finite integer value k of Number type with
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     positive sign and less than 2^16 in magnitude such that the mathematical difference of posInt
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     and k is mathematically an integer multiple of 2^16.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 5.  Return int16bit.
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 NOTE Given the above definition of ToUint16:
 
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   The substitution of 2^16 for 2^32 in step 4 is the only difference between ToUint32 and
->>>>>CM:YELLOW
+>>>>>CM:GREEN
     ToUint16.
->>>>>CM:YELLOW
+>>>>>CM:GREEN
 -   ToUint16 maps −0 to +0.

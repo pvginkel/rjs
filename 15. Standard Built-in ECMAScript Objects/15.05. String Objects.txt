@@ -52,21 +52,32 @@ The [[PrimitiveValue]] internal property of the newly constructed object is set 
 >>>>>CM:GREEN
 or to the empty String if value is not supplied.
 
+>>>>>CM:GREEN
 15.5.3 Properties of the String Constructor
+>>>>>CM:GREEN
 ===========================================
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the String constructor is the standard built-in
+>>>>>CM:GREEN
 Function prototype object (15.3.4).
 
+>>>>>CM:GREEN
 Besides the internal properties and the length property (whose value is 1), the String constructor
+>>>>>CM:GREEN
 has the following properties:
 
+>>>>>CM:GREEN
 15.5.3.1 String.prototype
+>>>>>CM:GREEN
 =========================
 
+>>>>>CM:GREEN
 The initial value of String.prototype is the standard built-in String prototype object (15.5.4).
 
+>>>>>CM:GREEN
 This property has the attributes { [[Writable]]: false, [[Enumerable]]: false, [[Configurable]]:
+>>>>>CM:GREEN
 false }.
 
 >>>>>CM:GREEN
@@ -88,18 +99,27 @@ character. If no arguments are supplied, the result is the empty String.
 >>>>>CM:GREEN
 The length property of the fromCharCode function is 1.
 
+>>>>>CM:GREEN
 15.5.4 Properties of the String Prototype Object
+>>>>>CM:GREEN
 ================================================
 
+>>>>>CM:GREEN
 The String prototype object is itself a String object (its [[Class]] is "String") whose value is an
+>>>>>CM:GREEN
 empty String.
 
+>>>>>CM:GREEN
 The value of the [[Prototype]] internal property of the String prototype object is the standard
+>>>>>CM:GREEN
 built-in Object prototype object (15.2.4).
 
+>>>>>CM:GREEN
 15.5.4.1 String.prototype.constructor
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 The initial value of String.prototype.constructor is the built-in String constructor.
 
 >>>>>CM:GREEN
@@ -119,13 +139,19 @@ String or a String object. Therefore, it cannot be transferred to other kinds of
 >>>>>CM:GREEN
 a method.
 
+>>>>>CM:GREEN
 15.5.4.3 String.prototype.valueOf ( )
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 Returns this String value.
 
+>>>>>CM:GREEN
 The valueOf function is not generic; it throws a TypeError exception if its this value is not a
+>>>>>CM:GREEN
 String or String object. Therefore, it cannot be transferred to other kinds of objects for use as a
+>>>>>CM:GREEN
 method.
 
 >>>>>CM:GREEN
@@ -207,28 +233,46 @@ NOTE The charCodeAt function is intentionally generic; it does not require that 
 >>>>>CM:GREEN
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.6 String.prototype.concat ( [ string1 [ , string2 [ , … ] ] ] )
+>>>>>CM:GREEN
 ======================================================================
 
+>>>>>CM:GREEN
 When the concat method is called with zero or more arguments string1, string2, etc., it returns a
+>>>>>CM:GREEN
 String consisting of the characters of this object (converted to a String) followed by the
+>>>>>CM:GREEN
 characters of each of string1, string2, etc. (where each argument is converted to a String). The
+>>>>>CM:GREEN
 result is a String value, not a String object. The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let args be an internal list that is a copy of the argument list passed to this function.
+>>>>>CM:GREEN
 4.  Let R be S.
+>>>>>CM:GREEN
 5.  Repeat, while args is not empty
+>>>>>CM:GREEN
     1.  Remove the first element from args and let next be the value of that element.
+>>>>>CM:GREEN
     2.  Let R be the String value consisting of the characters in the previous value of R followed
+>>>>>CM:GREEN
         by the characters of ToString(next).
 
+>>>>>CM:GREEN
 6.  Return R.
 
+>>>>>CM:GREEN
 The length property of the concat method is 1.
 
+>>>>>CM:GREEN
 NOTE The concat function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
 >>>>>CM:GREEN
@@ -331,195 +375,349 @@ NOTE The lastIndexOf function is intentionally generic; it does not require that
 >>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.9 String.prototype.localeCompare (that)
+>>>>>CM:GREEN
 ==============================================
 
+>>>>>CM:GREEN
 When the localeCompare method is called with one argument that, it returns a Number other than NaN
+>>>>>CM:GREEN
 that represents the result of a locale-sensitive String comparison of the this value (converted to a
+>>>>>CM:GREEN
 String) with that (converted to a String). The two Strings are S and That. The two Strings are
+>>>>>CM:GREEN
 compared in an implementation-defined fashion. The result is intended to order String values in the
+>>>>>CM:GREEN
 sort order specified by the system default locale, and will be negative, zero, or positive,
+>>>>>CM:GREEN
 depending on whether S comes before That in the sort order, the Strings are equal, or S comes after
+>>>>>CM:GREEN
 That in the sort order, respectively.
 
+>>>>>CM:GREEN
 Before perform the comparisons the following steps are performed to prepare the Strings:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let That be ToString(that).
 
+>>>>>CM:GREEN
 The localeCompare method, if considered as a function of two arguments this and that, is a
+>>>>>CM:GREEN
 consistent comparison function (as defined in 15.4.4.11) on the set of all Strings.
 
+>>>>>CM:GREEN
 The actual return values are implementation-defined to permit implementers to encode additional
+>>>>>CM:GREEN
 information in the value, but the function is required to define a total ordering on all Strings and
+>>>>>CM:GREEN
 to return 0 when comparing Strings that are considered canonically equivalent by the Unicode
+>>>>>CM:GREEN
 standard.
 
+>>>>>CM:GREEN
 If no language-sensitive comparison at all is available from the host environment, this function may
+>>>>>CM:GREEN
 perform a bitwise comparison.
 
+>>>>>CM:GREEN
 NOTE 1 The localeCompare method itself is not directly suitable as an argument to
+>>>>>CM:GREEN
 Array.prototype.sort because the latter requires a function of two arguments.
 
+>>>>>CM:GREEN
 NOTE 2 This function is intended to rely on whatever language-sensitive comparison functionality is
+>>>>>CM:GREEN
 available to the ECMAScript environment from the host environment, and to compare according to the
+>>>>>CM:GREEN
 rules of the host environment’s current locale. It is strongly recommended that this function treat
+>>>>>CM:GREEN
 Strings that are canonically equivalent according to the Unicode standard as identical (in other
+>>>>>CM:GREEN
 words, compare the Strings as if they had both been converted to Normalised Form C or D first). It
+>>>>>CM:GREEN
 is also recommended that this function not honour Unicode compatibility equivalences or
+>>>>>CM:GREEN
 decompositions.
 
+>>>>>CM:GREEN
 NOTE 3 The second parameter to this function is likely to be used in a future version of this
+>>>>>CM:GREEN
 standard; it is recommended that implementations do not use this parameter position for anything
+>>>>>CM:GREEN
 else.
 
+>>>>>CM:GREEN
 NOTE 4 The localeCompare function is intentionally generic; it does not require that its this value
+>>>>>CM:GREEN
 be a String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.10 String.prototype.match (regexp)
+>>>>>CM:GREEN
 =========================================
 
+>>>>>CM:GREEN
 When the match method is called with argument regexp, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  If Type(regexp) is Object and the value of the [[Class]] internal property of regexp is
+>>>>>CM:GREEN
     "RegExp", then let rx be regexp;
+>>>>>CM:GREEN
 4.  Else, let rx be a new RegExp object created as if by the expression
+>>>>>CM:GREEN
     new               RegExp(regexp) where RegExp is the standard built-in constructor with that
+>>>>>CM:GREEN
     name.
+>>>>>CM:GREEN
 5.  Let global be the result of calling the [[Get]] internal method of rx with argument "global".
+>>>>>CM:GREEN
 6.  Let exec be the standard built-in function RegExp.prototype.exec (see 15.10.6.2)
+>>>>>CM:GREEN
 7.  If global is not true, then
+>>>>>CM:GREEN
     1.  Return the result of calling the [[Call]] internal method of exec with rx as the this value
+>>>>>CM:GREEN
         and argument list containing S.
 
+>>>>>CM:GREEN
 8.  Else, global is true
+>>>>>CM:GREEN
     1.  Call the [[Put]] internal method of rx with arguments "lastIndex" and 0.
+>>>>>CM:GREEN
     2.  Let A be a new array created as if by the expression new Array() where Array is the standard
+>>>>>CM:GREEN
         built-in constructor with that name.
+>>>>>CM:GREEN
     3.  Let previousLastIndex be 0.
+>>>>>CM:GREEN
     4.  Let n be 0.
+>>>>>CM:GREEN
     5.  Let lastMatch be true.
+>>>>>CM:GREEN
     6.  Repeat, while lastMatch is true
+>>>>>CM:GREEN
         1.  Let result be the result of calling the [[Call]] internal method of exec with rx as the
+>>>>>CM:GREEN
             this value and argument list containing S.
+>>>>>CM:GREEN
         2.  If result is null, then set lastMatch to false.
+>>>>>CM:GREEN
         3.  Else, result is not null
+>>>>>CM:GREEN
             1.  Let thisIndex be the result of calling the [[Get]] internal method of rx with
+>>>>>CM:GREEN
                 argument "lastIndex".
+>>>>>CM:GREEN
             2.  If thisIndex = previousLastIndex then
+>>>>>CM:GREEN
                 1.  Call the [[Put]] internal method of rx with arguments "lastIndex" and
+>>>>>CM:GREEN
                     thisIndex+1.
+>>>>>CM:GREEN
                 2.  Set previousLastIndex to thisIndex+1.
 
+>>>>>CM:GREEN
             3.  Else, set previousLastIndex to thisIndex.
+>>>>>CM:GREEN
             4.  Let matchStr be the result of calling the [[Get]] internal method of result with
+>>>>>CM:GREEN
                 argument "0".
+>>>>>CM:GREEN
             5.  Call the [[DefineOwnProperty]] internal method of A with arguments ToString(n), the
+>>>>>CM:GREEN
                 Property Descriptor {[[Value]]: matchStr, [[Writable]]: true, [[Enumerable]]: true,
+>>>>>CM:GREEN
                 [[configurable]]: true}, and false.
+>>>>>CM:GREEN
             6.  Increment n.
 
+>>>>>CM:GREEN
     7.  If n = 0, then return null.
+>>>>>CM:GREEN
     8.  Return A.
 
+>>>>>CM:GREEN
 NOTE The match function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.11 String.prototype.replace (searchValue, replaceValue)
+>>>>>CM:GREEN
 ==============================================================
 
+>>>>>CM:GREEN
 First set string according to the following steps:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let string be the result of calling ToString, giving it the this value as its argument.
 
+>>>>>CM:GREEN
 If searchValue is a regular expression (an object whose [[Class]] internal property is "RegExp"), do
+>>>>>CM:GREEN
 the following: If searchValue.global is false, then search string for the first match of the regular
+>>>>>CM:GREEN
 expression searchValue. If searchValue.global is true, then search string for all matches of the
+>>>>>CM:GREEN
 regular expression searchValue. Do the search in the same manner as in String.prototype.match,
+>>>>>CM:GREEN
 including the update of searchValue.lastIndex. Let m be the number of left capturing parentheses in
+>>>>>CM:GREEN
 searchValue (using NcapturingParens as specified in 15.10.2.1).
 
+>>>>>CM:GREEN
 If searchValue is not a regular expression, let searchString be ToString(searchValue) and search
+>>>>>CM:GREEN
 string for the first occurrence of searchString. Let m be 0.
 
+>>>>>CM:GREEN
 If replaceValue is a function, then for each matched substring, call the function with the following
+>>>>>CM:GREEN
 m + 3 arguments. Argument 1 is the substring that matched. If searchValue is a regular expression,
+>>>>>CM:GREEN
 the next m arguments are all of the captures in the MatchResult (see 15.10.2.1). Argument m + 2 is
+>>>>>CM:GREEN
 the offset within string where the match occurred, and argument m + 3 is string. The result is a
+>>>>>CM:GREEN
 String value derived from the original input by replacing each matched substring with the
+>>>>>CM:GREEN
 corresponding return value of the function call, converted to a String if need be.
 
+>>>>>CM:GREEN
 Otherwise, let newstring denote the result of converting replaceValue to a String. The result is a
+>>>>>CM:GREEN
 String value derived from the original input String by replacing each matched substring with a
+>>>>>CM:GREEN
 String derived from newstring by replacing characters in newstring by replacement text as specified
+>>>>>CM:GREEN
 in Table 22. These $ replacements are done left-to-right, and, once such a replacement is performed,
+>>>>>CM:GREEN
 the new replacement text is not subject to further replacements. For example,
+>>>>>CM:GREEN
 "$1,$2".replace(/(\$(\d))/g, "$$1-$1$2") returns "$1-$11,$1-$22". A $ in newstring that does not
+>>>>>CM:GREEN
 match any of the forms below is left as is.
 
+>>>>>CM:GREEN
 Table 22 — Replacement Text Symbol Substitutions
 
+>>>>>CM:GREEN
   Characters   Replacement text
+>>>>>CM:GREEN
   ------------ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>>>>CM:GREEN
   $$           $
+>>>>>CM:GREEN
   $&           The matched substring.
+>>>>>CM:GREEN
   $‘           The portion of string that precedes the matched substring.
+>>>>>CM:GREEN
   $’           The portion of string that follows the matched substring.
+>>>>>CM:GREEN
   $n           The nth capture, where n is a single digit in the range 1 to 9 and $n is not followed by a decimal digit. If n≤m and the nth capture is undefined, use the empty String instead. If n>m, the result is implementation-defined.
+>>>>>CM:GREEN
   $nn          The nnth capture, where nn is a two-digit decimal number in the range 01 to 99. If nn≤m and the nnth capture is undefined, use the empty String instead. If nn>m, the result is implementation-defined.
 
+>>>>>CM:GREEN
 NOTE The replace function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.12 String.prototype.search (regexp)
+>>>>>CM:GREEN
 ==========================================
 
+>>>>>CM:GREEN
 When the search method is called with argument regexp, the following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let string be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  If Type(regexp) is Object and the value of the [[Class]] internal property of regexp is
+>>>>>CM:GREEN
     "RegExp", then let rx be regexp;
+>>>>>CM:GREEN
 4.  Else, let rx be a new RegExp object created as if by the expression
+>>>>>CM:GREEN
     new               RegExp(regexp) where RegExp is the standard built-in constructor with that
+>>>>>CM:GREEN
     name.
+>>>>>CM:GREEN
 5.  Search the value string from its beginning for an occurrence of the regular expression pattern
+>>>>>CM:GREEN
     rx. Let result be a Number indicating the offset within string where the pattern matched, or –1
+>>>>>CM:GREEN
     if there was no match. The lastIndex and global properties of regexp are ignored when performing
+>>>>>CM:GREEN
     the search. The lastIndex property of regexp is left unchanged.
+>>>>>CM:GREEN
 6.  Return result.
 
+>>>>>CM:GREEN
 NOTE The search function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.4.13 String.prototype.slice (start, end)
+>>>>>CM:GREEN
 =============================================
 
+>>>>>CM:GREEN
 The slice method takes two arguments, start and end, and returns a substring of the result of
+>>>>>CM:GREEN
 converting this object to a String, starting from character position start and running to, but not
+>>>>>CM:GREEN
 including, character position end (or through the end of the String if end is undefined). If start
+>>>>>CM:GREEN
 is negative, it is treated as sourceLength+start where sourceLength is the length of the String. If
+>>>>>CM:GREEN
 end is negative, it is treated as sourceLength+end where sourceLength is the length of the String.
+>>>>>CM:GREEN
 The result is a String value, not a String object. The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let len be the number of characters in S.
+>>>>>CM:GREEN
 4.  Let intStart be ToInteger(start).
+>>>>>CM:GREEN
 5.  If end is undefined, let intEnd be len; else let intEnd be ToInteger(end).
+>>>>>CM:GREEN
 6.  If intStart is negative, let from be max(len + intStart,0); else let from be min(intStart, len).
+>>>>>CM:GREEN
 7.  If intEnd is negative, let to be max(len + intEnd,0); else let to be min(intEnd, len).
+>>>>>CM:GREEN
 8.  Let span be max(to – from,0).
+>>>>>CM:GREEN
 9.  Return a String containing span consecutive characters from S beginning with the character at
+>>>>>CM:GREEN
     position from.
 
+>>>>>CM:GREEN
 The length property of the slice method is 2.
 
+>>>>>CM:GREEN
 NOTE The slice function is intentionally generic; it does not require that its this value be a
+>>>>>CM:GREEN
 String object. Therefore it can be transferred to other kinds of objects for use as a method.
 
 >>>>>CM:GREEN
@@ -915,30 +1113,49 @@ value be a String object. Therefore, it can be transferred to other kinds of obj
 >>>>>CM:GREEN
 method.
 
+>>>>>CM:GREEN
 15.5.4.20 String.prototype.trim ( )
+>>>>>CM:GREEN
 ===================================
 
+>>>>>CM:GREEN
 The following steps are taken:
 
+>>>>>CM:GREEN
 1.  Call CheckObjectCoercible passing the this value as its argument.
+>>>>>CM:GREEN
 2.  Let S be the result of calling ToString, giving it the this value as its argument.
+>>>>>CM:GREEN
 3.  Let T be a String value that is a copy of S with both leading and trailing white space removed.
+>>>>>CM:GREEN
     The definition of white space is the union of WhiteSpace and LineTerminator.
+>>>>>CM:GREEN
 4.  Return T.
 
+>>>>>CM:GREEN
 NOTE The trim function is intentionally generic; it does not require that its this value be a String
+>>>>>CM:GREEN
 object. Therefore, it can be transferred to other kinds of objects for use as a method.
 
+>>>>>CM:GREEN
 15.5.5 Properties of String Instances
+>>>>>CM:GREEN
 =====================================
 
+>>>>>CM:GREEN
 String instances inherit properties from the String prototype object and their [[Class]] internal
+>>>>>CM:GREEN
 property value is "String". String instances also have a [[PrimitiveValue]] internal property, a
+>>>>>CM:GREEN
 length property, and a set of enumerable properties with array index names.
 
+>>>>>CM:GREEN
 The [[PrimitiveValue]] internal property is the String value represented by this String object. The
+>>>>>CM:GREEN
 array index named properties correspond to the individual characters of the String value. A special
+>>>>>CM:GREEN
 [[GetOwnProperty]] internal method is used to specify the number, values, and attributes of the
+>>>>>CM:GREEN
 array index named properties.
 
 >>>>>CM:GREEN
