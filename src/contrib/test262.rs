@@ -1,3 +1,24 @@
+//! This module provides the `Test262Runner` struct which implements a script
+//! to run the Official ECMAScript Conformance Test Suite.
+//!
+//! The `Test262Runner` implements logic to run the
+//! [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262)
+//! test suite.
+//!
+//! The following requirements need to be met for this runner:
+//!
+//! * A checkout of the https://github.com/tc39/test262 repository
+//!   must be placed in the `tests` sub directory in the working
+//!   directory.
+//! * The file `test262-ignore.json` file is used to specify exclusions
+//!   from the test suite.
+//!
+//! The test runner writes a file named `succeeded`. When a test succeeds or
+//! is skipped (because it's ignored), a line is written to the `succeeded` file.
+//! The reason for this is that this makes it easier to go through the complete
+//! test suite, fixing errors when they occur. The test runner will automatically
+//! continue with the last failed test, and the remaining tests.
+
 extern crate rustc_serialize;
 
 use rt::*;
@@ -10,9 +31,12 @@ use std::cmp::{Ordering, min};
 use std::ascii::AsciiExt;
 use self::rustc_serialize::json::Json;
 
+/// The `Test262Runner` struct implements a script to run the
+/// [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262).
 pub struct Test262Runner;
 
 impl Test262Runner {
+    /// Run the [Official ECMAScript Conformance Test Suite](https://github.com/tc39/test262).
     pub fn run() {
         walk_dir(&mut Runner::new(), "");
     }

@@ -1,3 +1,24 @@
+//! The `gc` crates implements the `rjs` garbage collector.
+//!
+//! The garbage collector implemented in this crate is implemented as a generic
+//! garbage collector. However, its functionality is very specifically targeted
+//! towards the `rjs` requirements.
+//!
+//! References to objects managed by the garbage collector need to be rooted.
+//! The reason they need to be rooted is because the garbage collector needs to
+//! be able to find out what objects are in use at any time.
+//!
+//! There are two ways in which an object can be rooted. The `Root<T>` struct
+//! allows for a persistent reference to an object on the GC heap. Instances of
+//! the `Root<T>` struct are valid for the full lifetime of the GC heap.
+//! The `Local<T>` struct allows for a transient reference to an object on the
+//! GC heap. Instances of the `Local<T>` struct are valid for the lifetime of
+//! a `LocalScope`. Once the `LocalScope` is dropped, all `Local<T>` references
+//! become invalid.
+//!
+//! Both `Root<T>` and `Local<T>` have an array variant, respectively
+//! `ArrayRoot<T>` and `ArrayLocal<T>`.
+
 // TODO #56: The handles field of Root currently is a Rc. This is not preferable
 // because of performance. However there is a problem. If the field is changed to
 // a *const and the Rc is changed to a Box, a segmentation fault will occur.
@@ -21,9 +42,15 @@ pub mod os;
 mod strategy;
 pub mod handles;
 
+/// Types references to memory managed by the garbage collector.
 #[allow(non_camel_case_types)] 
 pub type ptr_t = *const u8;
 
+/// Tracks `Local<T>` references for a specific scope.
+///
+/// Rooted references to GC objects tracked by `Local<T>` are tracked by an
+/// instance of the `LocalScope` struct. Instances of the `Local<T>` struct
+/// are valid for the lifetime of a `LocalScope` instance.
 pub struct LocalScope {
     heap: *const GcHeap,
     index: usize
@@ -68,14 +95,44 @@ impl LocalScopeData {
     }
 }
 
+/// Allows for configuration of a `GcHeap`.
+///
+/// The default values of the `GcOpts` struct can be retrieved through the
+/// `GcOpts::default()` method.
 pub struct GcOpts {
+    /// Specifies the initial size of the heap in bytes.
     pub initial_heap: usize,
+    
+    /// Specifies when the garbage collector should initiate a collection.
+    ///
+    /// The `init_gc` field specifies the maximum fill rate of the GC heap.
+    /// If the current fill rate goes beyond this percentage, a collection will
+    /// be initiated.
+    ///
+    /// This percentage is expressed as a value between `0.0` and `1.0`.
     pub init_gc: f64,
+    
+    /// Specifies the slow growth factor of the GC heap.
+    ///
+    /// The GC heaps tracks the percentage of the GC heap that was freed the
+    /// last time a collection ran. If this percentage is between 50% and 85%,
+    /// the heap will be grown by this factor.
+    ///
+    /// The slow growth factor must be greater than `1.0`.
     pub slow_growth_factor: f64,
+    
+    /// Specifies the fast growth factor of the GC heap.
+    ///
+    /// The GC heaps tracks the percentage of the GC heap that was freed the
+    /// last time a collection ran. If this percentage is over 85%,
+    /// the heap will be grown by this factor.
+    ///
+    /// The fast growth factor must be greater than `1.0`.
     pub fast_growth_factor: f64
 }
 
 impl GcOpts {
+    /// Creates an instance of the `GcOpts` struct with a default configuration.
     pub fn default() -> GcOpts {
         GcOpts {
             initial_heap: 16 * 1024 * 1024, // 16M
@@ -185,6 +242,11 @@ impl GcMemHeader {
     }
 }
 
+// TODO: #90: GcWalker should not be a box but a generic parameter.
+// However I'm not sure how to make this work. The problem is that an implementation
+// of this trait must be handed to the strategy, and I'm not sure how.
+
+/// Provides a garbage colleced heap.
 pub struct GcHeap {
     handles: Rc<RootHandles>,
     heap: RefCell<Copying>,
@@ -193,6 +255,7 @@ pub struct GcHeap {
 }
 
 impl GcHeap {
+    /// Creates a new instance of the `GcHeap` struct.
     pub fn new(walker: Box<GcWalker>, opts: GcOpts) -> GcHeap {
         if opts.fast_growth_factor <= 1.0 {
             panic!("fast_growth_factor must be more than 1");
@@ -230,6 +293,11 @@ impl GcHeap {
         }
     }
     
+    /// Allocate a raw memory block on the GC heap.
+    ///
+    /// Memory allocated using the `alloc<T>()` method is not tracked in any way.
+    /// To allocated tracked memory, call either `alloc_root<T>()` or
+    /// `alloc_local<T>()`.
     pub unsafe fn alloc<T>(&self, ty: u32) -> Ptr<T> {
         let size = (size_of::<T>() + size_of::<usize>() - 1) / size_of::<usize>() * size_of::<usize>();
         
@@ -243,10 +311,12 @@ impl GcHeap {
         Ptr::from_ptr(ptr)
     }
     
+    /// Allocate a block of memory on the GC heap tracked by a `Root<T>`.
     pub fn alloc_root<T>(&self, ty: u32) -> Root<T> {
         unsafe { Root::new(self, self.alloc::<T>(ty)) }
     }
     
+    /// Allocate a block of memory on the GC heap tracked by a `Local<T>`.
     pub fn alloc_local<T>(&self, ty: u32) -> Local<T> {
         self.alloc_local_from_ptr(unsafe { self.alloc::<T>(ty) })
     }
@@ -263,10 +333,12 @@ impl GcHeap {
         unsafe { Local::new(transmute(scopes[len - 1].add(ptr.as_ptr().ptr()))) }
     }
     
+    /// Allocate an array on the GC heap tracked by a `ArrayRoot<T>`.
     pub fn alloc_array_root<T>(&self, ty: u32, size: usize) -> ArrayRoot<T> {
         unsafe { ArrayRoot::new(self, self.alloc_array::<T>(ty, size)) }
     }
     
+    /// Allocate an array on the GC heap tracked by a `ArrayLocal<T>`.
     pub fn alloc_array_local<T>(&self, ty: u32, size: usize) -> ArrayLocal<T> {
         self.alloc_array_local_from_ptr(unsafe { self.alloc_array::<T>(ty, size) })
     }
@@ -281,6 +353,11 @@ impl GcHeap {
         unsafe { ArrayLocal::new(transmute(scopes[len - 1].add(ptr.as_ptr().ptr()))) }
     }
     
+    /// Allocate a raw array on the GC heap.
+    ///
+    /// Memory allocated using the `alloc_array<T>()` method is not tracked in any way.
+    /// To allocated tracked memory, call either `alloc_array_root<T>()` or
+    /// `alloc_array_local<T>()`.
     pub unsafe fn alloc_array<T>(&self, ty: u32, size: usize) -> Array<T> {
         let item_size = (size_of::<T>() + size_of::<usize>() - 1) / size_of::<usize>() * size_of::<usize>();
         
@@ -296,6 +373,7 @@ impl GcHeap {
         Array::from_ptr(ptr)
     }
     
+    /// Initiates a collection.
     pub fn gc(&self) {
         let mut walkers = self.walker.create_root_walkers();
         
@@ -327,14 +405,28 @@ impl GcHeap {
         self.heap.borrow_mut().gc(walkers, &*self.walker);
     }
     
+    /// Gets the size of the GC heap.
     pub fn mem_allocated(&self) -> usize {
         self.heap.borrow().mem_allocated()
     }
     
+    /// Gets how much memory is in use.
     pub fn mem_used(&self) -> usize {
         self.heap.borrow().mem_used()
     }
     
+    /// Creates a new `LocalScope` to track `Local<T>` instances.
+    ///
+    /// To root references to memory managed by the GC heap using a `Local<T>`
+    /// struct, a `LocalScope` needs to be present. A local scope is created using
+    /// the `new_local_scope()` method.
+    ///
+    /// `Local<T>` references are valid for the lifetime of the `LocalScope` in
+    /// which it is created. Once the `LocalScope` is dropped, all `Local<T>`
+    /// references become invalidated.
+    ///
+    /// Local scopes can be nested. New `Local<T>` instances are created in the
+    /// last created local scope.
     pub fn new_local_scope(&self) -> LocalScope {
         let mut scopes = self.scopes.borrow_mut();
         
@@ -360,7 +452,22 @@ impl GcHeap {
     }
 }
 
+/// The `GcRootWalker` trait allows the garbage collector to track roots.
+///
+/// GC roots are tracked through `Local<T>` and `Root<T>` references. However,
+/// it is also possible to track GC roots outside of the GC heap. An example
+/// of this is the stack.
+///
+/// If GC roots are being tracked outside of the GC heap, a `GcRootWalker`
+/// must be provided to the GC heap so that the GC heap can find these roots
+/// and update them when the GC heap is copied or compacted.
 pub trait GcRootWalker {
+    /// Gets the next root.
+    ///
+    /// The GC heap will repeatedly call the `next()` method until it returns
+    /// `ptr::null()`. The returned pointer is a pointer to a pointer to the GC
+    /// heap. The GC heap will rewrite this pointer if the referenced object is
+    /// relocated.
     unsafe fn next(&mut self) -> *mut ptr_t;
 }
 
@@ -442,25 +549,76 @@ impl GcRootWalker for LocalScopesWalker {
     }
 }
 
+/// The `GcWalker` trait provides integration with the GC heap.
 pub trait GcWalker {
+    /// Used to mark pointers while marking the GC heap.
+    ///
+    /// The `walk()` method is called for every word of every memory block
+    /// managed by the GC heap. `ty` is the type as provided to the allocation
+    /// methods. `ptr` is a pointer to the GC managed object. `index` is the
+    /// index of the word that needs to be checked.
+    ///
+    /// The return `GcWalk` value specifies what type of value the word
+    /// represents.
     fn walk(&self, ty: u32, ptr: ptr_t, index: u32) -> GcWalk;
     
+    /// Called when a memory block is freed.
+    ///
+    /// The `finalize()` method allows for finalization to be implemented. Every
+    /// time a memory block is freed, the `finalize()` method is called.
+    /// `ty` is the type as provided to the allocation methods. `ptr` is a
+    /// pointer to the GC managed object.
     fn finalize(&self, ty: u32, ptr: ptr_t) -> GcFinalize;
     
+    /// Allows custom root walkers to be provided to the GC heap.
+    ///
+    /// On every collection, the `create_root_walkers()` method is called to
+    /// allow extra `GcRootWalker`'s to be provided to the GC heap.
+    ///
+    /// These `GcRootWalker`'s can be used to provide extra array roots to the GC
+    /// heap.
     fn create_root_walkers(&self) -> Vec<Box<GcRootWalker>>;
 }
 
+/// Specifies the type of a word of a GC managed memory block.
 #[derive(Copy, Clone, PartialEq, Debug)]
 pub enum GcWalk {
+    /// Specifies that the type is a pointer and should be walked when tracing
+    /// the GC heap.
     Pointer,
+    
+    /// Specifies that the type is not a pointer.
     Skip,
+    
+    /// Specifies that there are no more pointers in the memory object.
+    ///
+    /// It is not required to return `End` after the last pointer.
+    /// However, returning `End` will allow collection to continue with the
+    /// next memory object immediately.
     End,
+    
+    /// Specifies that there are no more elements of an array of the current
+    /// memory type will contain a pointer.
+    ///
+    /// `EndArray` will usually be returned as the only result of memory types
+    /// that do not have pointers at all. This allows the GC heap to fully
+    /// ignore an array. This applies e.g. to strings.
     EndArray
 }
 
+/// Specifies how a memory object was finalized.
 #[derive(Copy, Clone, PartialEq, Debug)]
 pub enum GcFinalize {
+    /// Specifies that the memory object was finalized.
+    ///
+    /// Returning `Finalized` does not require any action to have been performed.
+    /// Returning `Finalized` specifies that when an array is being freed, the
+    /// next array element should be provided to the finalizer.
     Finalized,
+    
+    /// Specifies that the memory type is not finalizable.
+    ///
+    /// Returning `NotFinalizable` will stop processing of an array.
     NotFinalizable
 }
 

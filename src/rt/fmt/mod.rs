@@ -1,5 +1,6 @@
 // Translated from https://github.com/Alxandr/Jurassic.
 
+#[cfg(test)]
 extern crate test;
 
 use std::{i32, f64, char};
