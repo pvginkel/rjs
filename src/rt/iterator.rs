@@ -15,8 +15,8 @@ pub struct JsIterator {
 }
 
 impl JsIterator {
-    pub fn new_local(env: &JsEnv, target: Local<JsValue>) -> Local<JsIterator> {
-        let mut result = env.heap.alloc_local::<JsIterator>(GC_ITERATOR);
+    pub fn new_local<'s>(scope: &'s LocalScope, target: Local<'s, JsValue>) -> Local<'s, JsIterator> {
+        let mut result = scope.alloc_local::<JsIterator>(GC_ITERATOR);
         
         let target = match target.ty() {
             JsType::Object => target.unwrap_object(env).as_ptr(),
@@ -44,9 +44,9 @@ impl JsIterator {
     }
 }
 
-impl Local<JsIterator> {
-    pub fn as_value(&self, env: &JsEnv) -> Local<JsValue> {
-        env.new_iterator(*self)
+impl<'a> Local<'a, JsIterator> {
+    pub fn as_value(&self, env: &JsEnv, scope: &'s LocalScope) -> Local<'s, JsValue> {
+        env.new_iterator(*self, scope)
     }
     
     pub fn next(&mut self, env: &JsEnv) -> bool {

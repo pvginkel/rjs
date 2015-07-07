@@ -29,6 +29,16 @@ pub struct LocalScope {
     index: usize
 }
 
+impl LocalScope {
+    pub fn alloc_local<'s, T>(&'s self, ty: u32) -> Local<'s, T> {
+        unimplemented!();
+    }
+    
+    pub fn alloc_array_local<'s, T>(&'s self, ty: u32, size: usize) -> ArrayLocal<'s, T> {
+        unimplemented!();
+    }
+}
+
 impl Drop for LocalScope {
     fn drop(&mut self) {
         tracegc!("dropping scope {}", self.index);

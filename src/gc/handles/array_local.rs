@@ -1,12 +1,14 @@
 use gc::{Array, AsArray, ArrayRoot, GcAllocator};
 use std::ops::{Deref, DerefMut};
+use std::marker::PhantomData;
 
-pub struct ArrayLocal<T> {
-    handle: *const Array<T>
+pub struct ArrayLocal<'s, T> {
+    handle: *const Array<T>,
+    _type: PhantomData<&'s ()>
 }
 
-impl<T> ArrayLocal<T> {
-    pub unsafe fn new(handle: *const Array<T>) -> ArrayLocal<T> {
+impl<'s, T> ArrayLocal<'s, T> {
+    pub unsafe fn new(handle: *const Array<T>) -> ArrayLocal<'s, T> {
         ArrayLocal {
             handle: handle
         }
@@ -17,17 +19,17 @@ impl<T> ArrayLocal<T> {
     }
 }
 
-impl<T> Copy for ArrayLocal<T> { }
+impl<'s, T> Copy for ArrayLocal<'s, T> { }
 
-impl<T> Clone for ArrayLocal<T> {
-    fn clone(&self) -> ArrayLocal<T> {
+impl<'s, T> Clone for ArrayLocal<'s, T> {
+    fn clone(&'s self) -> ArrayLocal<'s, T> {
         ArrayLocal {
             handle: self.handle
         }
     }
 }
 
-impl<T> Deref for ArrayLocal<T> {
+impl<'s, T> Deref for ArrayLocal<'s, T> {
     type Target = [T];
     
     fn deref(&self) -> &[T] {
@@ -35,13 +37,13 @@ impl<T> Deref for ArrayLocal<T> {
     }
 }
 
-impl<T> DerefMut for ArrayLocal<T> {
+impl<'s, T> DerefMut for ArrayLocal<'s, T> {
     fn deref_mut(&mut self) -> &mut [T] {
         unsafe { &mut **(self.handle as *mut Array<T>) }
     }
 }
 
-impl<T> AsArray<T> for ArrayLocal<T> {
+impl<'s, T> AsArray<T> for ArrayLocal<'s, T> {
     fn as_ptr(&self) -> Array<T> {
         unsafe { *self.handle }
     }

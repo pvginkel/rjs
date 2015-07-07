@@ -10,23 +10,23 @@ pub struct JsString {
 }
 
 impl JsString {
-    pub fn new_local(env: &JsEnv, size: usize) -> Local<JsString> {
-        let mut result = env.heap.alloc_local::<JsString>(GC_STRING);
+    pub fn new_local<'s>(scope: &'s LocalScope, size: usize) -> Local<'s, JsString> {
+        let mut result = scope.alloc_local::<JsString>(GC_STRING);
         
         unsafe {
-            result.chars = env.heap.alloc_array(GC_U16, size);
+            result.chars = scope.alloc_array(GC_U16, size);
         }
         
         result
     }
     
-    pub fn from_str<'a>(env: &'a JsEnv, string: &str) -> Local<JsString> {
+    pub fn from_str<'s>(scope: &'s LocalScope, string: &str) -> Local<'s, JsString> {
         let chars = utf::utf32_to_utf16(
             &string.chars().map(|c| c as u32).collect::<Vec<_>>()[..],
             false
         );
         
-        let mut result = Self::new_local(env, chars.len());
+        let mut result = Self::new_local(scope, chars.len());
         
         {
             let result_chars = &mut *result.chars;
@@ -39,7 +39,7 @@ impl JsString {
         result
     }
     
-    pub fn from_u16(env: &JsEnv, chars: &[u16]) -> Local<JsString> {
+    pub fn from_u16<'s>(scope: &'s LocalScope, chars: &[u16]) -> Local<'s, JsString> {
         // TODO #84: Most of the calls to this function take the chars from the GC
         // heap. Because of this we create a copy of chars. However, this must
         // be changed so that this extra copy is unnecessary.
@@ -49,7 +49,7 @@ impl JsString {
             copy.push(chars[i]);
         }
         
-        let result = JsString::new_local(env, copy.len());
+        let result = JsString::new_local(scope, copy.len());
         
         let mut result_chars = result.chars;
         
@@ -64,13 +64,13 @@ impl JsString {
         &*self.chars
     }
     
-    pub fn concat<'a>(env: &'a JsEnv, strings: &[Local<JsString>]) -> Local<JsString> {
+    pub fn concat<'s>(scope: &'s LocalScope, strings: &[Local<'s, JsString>]) -> Local<'s, JsString> {
         let mut len = 0;
         for string in strings {
             len += string.chars().len();
         }
         
-        let mut result = Self::new_local(&env, len);
+        let mut result = Self::new_local(scope, len);
         
         {
             let chars = &mut *result.chars;
@@ -88,7 +88,7 @@ impl JsString {
         result
     }
     
-    pub fn equals(x: Local<JsString>, y: Local<JsString>) -> bool {
+    pub fn equals<'s>(x: Local<'s, JsString>, y: Local<'s, JsString>) -> bool {
         let x_chars = &*x.chars;
         let y_chars = &*y.chars;
         
@@ -110,9 +110,9 @@ impl JsString {
     }
 }
 
-impl JsItem for Local<JsString> {
-    fn as_value(&self, env: &JsEnv) -> Local<JsValue> {
-        env.new_string(*self)
+impl<'a> JsItem for Local<'a, JsString> {
+    fn as_value<'s>(&self, env: &JsEnv, scope: &'s LocalScope) -> Local<'s, JsValue> {
+        env.new_string(*self, scope)
     }
     
     fn has_prototype(&self, _: &JsEnv) -> bool {

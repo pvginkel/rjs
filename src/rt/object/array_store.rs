@@ -28,7 +28,7 @@ impl ArrayStore {
     }
 }
 
-impl Local<ArrayStore> {
+impl<'a> Local<'a, ArrayStore> {
     fn props<T: GcAllocator>(&self, allocator: &T) -> Local<HashStore> {
         self.props.as_local(allocator)
     }
@@ -38,7 +38,7 @@ impl Local<ArrayStore> {
     }
 }
 
-impl Store for Local<ArrayStore> {
+impl<'s> Store for Local<'s, ArrayStore> {
     fn add(&mut self, env: &JsEnv, name: Name, value: &JsDescriptor) {
         if let Some(index) = name.index() {
             let mut entry = env.heap.alloc_local(GC_ENTRY);

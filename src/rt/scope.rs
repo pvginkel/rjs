@@ -7,62 +7,62 @@ pub struct JsScope {
 }
 
 impl JsScope {
-    pub fn new_local_thin(env: &JsEnv, size: usize, parent: Option<Local<JsScope>>) -> Local<JsScope> {
-        let mut result = env.heap.alloc_local::<JsScope>(GC_SCOPE);
+    pub fn new_local_thin<'s>(scope: &'s LocalScope, size: usize, parent: Option<Local<'s, JsScope>>) -> Local<'s, JsScope> {
+        let mut result = scope.alloc_local::<JsScope>(GC_SCOPE);
         
         unsafe {
-            result.items = env.heap.alloc_array(GC_VALUE, size + 1);
+            result.items = scope.alloc_array(GC_VALUE, size + 1);
         }
         
         if let Some(parent) = parent {
-            result.raw_set(0, parent.as_value(env));
+            result.raw_set(0, parent.as_value(scope));
         }
         
         result
     }
     
-    pub fn new_local_thick(env: &JsEnv, scope_object: Local<JsObject>, parent: Option<Local<JsScope>>, arguments: bool) -> Local<JsScope> {
-        let mut result = env.heap.alloc_local::<JsScope>(GC_SCOPE);
+    pub fn new_local_thick<'s>(scope: &'s LocalScope, scope_object: Local<'s, JsObject>, parent: Option<Local<'s, JsScope>>, arguments: bool) -> Local<'s, JsScope> {
+        let mut result = scope.alloc_local::<JsScope>(GC_SCOPE);
         
         let size = 2 + if arguments { 1 } else { 0 };
         
         unsafe {
-            result.items = env.heap.alloc_array(GC_VALUE, size);
+            result.items = scope.alloc_array(GC_VALUE, size);
         }
         
         if let Some(parent) = parent {
-            result.raw_set(0, parent.as_value(env));
+            result.raw_set(0, parent.as_value(scope));
         }
-        result.raw_set(1, scope_object.as_value(env));
+        result.raw_set(1, scope_object.as_value(scope));
         
         result
     }
 }
 
-impl Local<JsScope> {
-    pub fn as_value(&self, env: &JsEnv) -> Local<JsValue> {
-        env.new_scope(*self)
+impl<'a> Local<'a, JsScope> {
+    pub fn as_value(&self, env: &JsEnv, scope: &'s LocalScope) -> Local<'s, JsValue> {
+        env.new_scope(scope, *self)
     }
     
-    pub fn parent(&self, env: &JsEnv) -> Option<Local<JsScope>> {
-        let parent = self.raw_get(env, 0);
+    pub fn parent<'s>(&self, scope: &'s LocalScope) -> Option<Local<'s, JsScope>> {
+        let parent = self.raw_get(scope, 0);
         
         if parent.is_undefined() { None } else { Some(parent.unwrap_scope(env)) }
     }
     
-    pub fn scope_object(&self, env: &JsEnv) -> Local<JsObject> {
-        self.raw_get(env, 1).unwrap_object(env)
+    pub fn scope_object<'s>(&self, scope: &'s LocalScope) -> Local<'s, JsObject> {
+        self.raw_get(scope, 1).unwrap_object(scope)
     }
     
-    pub fn arguments(&self, env: &JsEnv) -> Option<Local<JsValue>> {
+    pub fn arguments<'s>(&self, scope: &'s LocalScope) -> Option<Local<'s, JsValue>> {
         if self.items.len() == 2 {
             None
         } else {
-            Some(self.raw_get(env, 2))
+            Some(self.raw_get(scope, 2))
         }
     }
     
-    pub fn set_arguments(&mut self, arguments: Local<JsValue>) {
+    pub fn set_arguments<'s>(&mut self, arguments: Local<'s, JsValue>) {
         if self.items.len() == 2 {
             panic!("scope does not have a slot to store arguments");
         }
@@ -74,23 +74,23 @@ impl Local<JsScope> {
         self.items.len() - 1
     }
     
-    pub fn get(&self, env: &JsEnv, index: usize) -> Local<JsValue> {
-        self.raw_get(env, index + 1)
+    pub fn get<'s>(&self, scope: &'s LocalScope, index: usize) -> Local<'s, JsValue> {
+        self.raw_get(scope, index + 1)
     }
     
-    pub fn set(&mut self, index: usize, value: Local<JsValue>) {
+    pub fn set<'s>(&mut self, index: usize, value: Local<'s, JsValue>) {
         self.raw_set(index + 1, value)
     }
     
-    fn raw_get(&self, env: &JsEnv, index: usize) -> Local<JsValue> {
-        let mut local = env.new_value();
+    fn raw_get<'s>(&self, env: &JsEnv, scope: &'s LocalScope, index: usize) -> Local<'s, JsValue> {
+        let mut local = env.new_value(scope);
         
         *local = self.items[index];
         
         local
     }
     
-    fn raw_set(&mut self, index: usize, value: Local<JsValue>) {
+    fn raw_set<'s>(&mut self, index: usize, value: Local<'s, JsValue>) {
         self.items[index] = *value;
     }
 }

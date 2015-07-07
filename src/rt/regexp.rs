@@ -19,7 +19,7 @@ pub struct JsRegExp {
 }
 
 impl JsRegExp {
-    pub fn new_local(env: &mut JsEnv, pattern: Local<JsString>, flags: Local<JsString>, global: bool, ignore_case: bool, multiline: bool) -> JsResult<Local<JsRegExp>> {
+    pub fn new_local<'s>(env: &mut JsEnv, scope: &'s LocalScope, pattern: Local<'s, JsString>, flags: Local<'s, JsString>, global: bool, ignore_case: bool, multiline: bool) -> JsResult<Local<'s, JsRegExp>> {
         fn is_hex_char(c: char) -> bool {
             (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')
         }
@@ -165,8 +165,8 @@ impl JsRegExp {
     }
 }
 
-impl Local<JsRegExp> {
-    pub fn as_value(&self, env: &JsEnv) -> Local<JsValue> {
+impl<'a> Local<'a, JsRegExp> {
+    pub fn as_value<'s>(&self, env: &JsEnv, &'s LocalScope) -> Local<'s, JsValue> {
         env.new_regexp(*self)
     }
     
@@ -174,12 +174,12 @@ impl Local<JsRegExp> {
         &*self.regex
     }
     
-    pub fn pattern(&self, env: &JsEnv) -> Local<JsString> {
-        self.pattern.as_local(env)
+    pub fn pattern<'s>(&self, scope: &'s LocalScope) -> Local<'s, JsString> {
+        self.pattern.as_local(scope)
     }
     
-    pub fn flags(&self, env: &JsEnv) -> Local<JsString> {
-        self.flags.as_local(env)
+    pub fn flags<'s>(&self, scope: &'s LocalScope) -> Local<'s, JsString> {
+        self.flags.as_local(scope)
     }
     
     pub fn global(&self) -> bool {

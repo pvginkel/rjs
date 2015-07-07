@@ -1,12 +1,14 @@
 use gc::{Ptr, Root, AsPtr, GcAllocator};
 use std::ops::{Deref, DerefMut};
+use std::marker::PhantomData;
 
-pub struct Local<T> {
-    handle: *const Ptr<T>
+pub struct Local<'s, T> {
+    handle: *const Ptr<T>,
+    _type: PhantomData<&'s ()>
 }
 
-impl<T> Local<T> {
-    pub unsafe fn new(handle: *const Ptr<T>) -> Local<T> {
+impl<'s, T> Local<'s, T> {
+    pub unsafe fn new(handle: *const Ptr<T>) -> Local<'s, T> {
         Local {
             handle: handle
         }
@@ -17,17 +19,17 @@ impl<T> Local<T> {
     }
 }
 
-impl<T> Copy for Local<T> {}
+impl<'s, T> Copy for Local<'s, T> {}
 
-impl<T> Clone for Local<T> {
-    fn clone(&self) -> Local<T> {
+impl<'s, T> Clone for Local<'s, T> {
+    fn clone(&'s self) -> Local<'s, T> {
         Local {
             handle: self.handle
         }
     }
 }
 
-impl<T> Deref for Local<T> {
+impl<'s, T> Deref for Local<'s, T> {
     type Target = T;
     
     fn deref(&self) -> &T {
@@ -35,13 +37,13 @@ impl<T> Deref for Local<T> {
     }
 }
 
-impl<T> DerefMut for Local<T> {
+impl<'s, T> DerefMut for Local<'s, T> {
     fn deref_mut(&mut self) -> &mut T {
         unsafe { &mut **(self.handle as *mut Ptr<T>) }
     }
 }
 
-impl<T> AsPtr<T> for Local<T> {
+impl<'s, T> AsPtr<T> for Local<'s, T> {
     fn as_ptr(&self) -> Ptr<T> {
         unsafe { *self.handle }
     }

@@ -379,7 +379,7 @@ pub trait JsItem {
             hint
         };
         
-        fn try_call(env: &mut JsEnv, this: Local<JsValue>, method: Local<JsValue>) -> JsResult<Option<Local<JsValue>>> {
+        fn try_call<'s>(env: &mut JsEnv, scope: &'s LocalScope, this: Local<'s, JsValue>, method: Local<'s, JsValue>) -> JsResult<Option<Local<'s, JsValue>>> {
             if method.is_callable(env) {
                 let this = this.as_value(env);
                 let val = try!(method.call(env, this, Vec::new(), false));
@@ -500,10 +500,10 @@ pub trait JsItem {
 }
 
 #[derive(Copy, Clone)]
-pub struct JsDescriptor {
-    pub value: Option<Local<JsValue>>,
-    pub get: Option<Local<JsValue>>,
-    pub set: Option<Local<JsValue>>,
+pub struct JsDescriptor<'a> {
+    pub value: Option<Local<'a, JsValue>>,
+    pub get: Option<Local<'a, JsValue>>,
+    pub set: Option<Local<'a, JsValue>>,
     pub writable: Option<bool>,
     pub enumerable: Option<bool>,
     pub configurable: Option<bool>

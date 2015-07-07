@@ -26,7 +26,7 @@ impl HashStore {
     }
 }
 
-impl Local<HashStore> {
+impl<'a> Local<'a, HashStore> {
     fn find_entry(&self, name: Name) -> Option<usize> {
         let mut offset = self.hash(name) as usize;
         
@@ -91,7 +91,7 @@ impl Local<HashStore> {
     }
 }
 
-impl Store for Local<HashStore> {
+impl<'s> Store for Local<'s, HashStore> {
     fn add(&mut self, env: &JsEnv, name: Name, value: &JsDescriptor) {
         assert!(!self.find_entry(name).is_some());
         
