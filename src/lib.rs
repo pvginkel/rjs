@@ -16,3 +16,4 @@ pub mod gc;
 pub mod rt;
 mod errors;
 pub mod contrib;
+mod jit;

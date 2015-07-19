@@ -15,7 +15,7 @@ pub struct Stack {
 
 impl Stack {
     pub fn new() -> Stack {
-        let stack = Memory::alloc(STACK).unwrap();
+        let stack = Memory::alloc(STACK, false).unwrap();
         let (sp, end) = unsafe { (stack.ptr(), stack.ptr().offset(STACK as isize)) };
         
         Stack {

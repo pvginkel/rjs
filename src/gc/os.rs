@@ -8,14 +8,19 @@ use std::mem;
 use gc::ptr_t;
 
 #[cfg(target_os = "windows")]
-unsafe fn map(addr: ptr_t, size: usize) -> ptr_t {
+unsafe fn map(addr: ptr_t, size: usize, executable: bool) -> ptr_t {
     assert!(size != 0);
     
     /*
      * If VirtualAlloc can't allocate at the given address when one is
      * given, it fails and returns NULL.
      */
-    let ret = VirtualAlloc(ptr::null_mut(), size as size_t, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    let ret = VirtualAlloc(
+        ptr::null_mut(),
+        size as size_t,
+        MEM_COMMIT | MEM_RESERVE,
+        if executable { PAGE_EXECUTE_READWRITE } else { PAGE_READWRITE }
+    );
     
     assert!(
         ret == ptr::null_mut() ||
@@ -97,8 +102,8 @@ impl Memory {
         }
     }
     
-    pub fn alloc(size: usize) -> Option<Memory> {
-        let ptr = unsafe { map(ptr::null(), size) };
+    pub fn alloc(size: usize, executable: bool) -> Option<Memory> {
+        let ptr = unsafe { map(ptr::null(), size, executable) };
         if ptr.is_null() {
             None
         } else {

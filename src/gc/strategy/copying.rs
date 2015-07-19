@@ -70,7 +70,7 @@ pub struct Copying {
 
 impl Copying {
     pub fn new(opts: GcOpts) -> Copying {
-        let memory = Memory::alloc(opts.initial_heap).unwrap();
+        let memory = Memory::alloc(opts.initial_heap, false).unwrap();
         let high_mark = (opts.initial_heap * (opts.init_gc * 100.0) as usize) / 100;
         
         Copying {
@@ -133,7 +133,7 @@ impl Copying {
         if self.to.size() < target_size {
             // First set to empty to first release our allocated memory.
             self.to = Memory::empty();
-            self.to = Memory::alloc(target_size).unwrap();
+            self.to = Memory::alloc(target_size, false).unwrap();
         }
         
         let mut forwarder = Forwarder {
