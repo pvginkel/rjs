@@ -5,6 +5,7 @@ use syntax::ast::FunctionRef;
 use syntax::token::name;
 use std::f64;
 use std::cmp;
+use std::rc::Rc;
 
 trait SignedZero {
     #[inline(always)]
@@ -111,9 +112,24 @@ impl JsEnv {
     
     fn do_call(&mut self, mode: JsFnMode, args: JsArgs, function_obj: JsValue, function: &JsFunction) -> JsResult<()> {
         match *function {
-            JsFunction::Ir(function_ref) => {
+            JsFunction::Ref(function_ref) => {
+                // Start out with building the IR.
                 let block = try!(self.ir.get_function_ir(function_ref));
                 
+                // See whether we can get a jitted version.
+                let function = if let Some(jit) = try!(self.jit.compile(&block)) {
+                    JsFunction::Jit(function_ref, Rc::new(jit))
+                } else {
+                    JsFunction::Ir(function_ref, block)
+                };
+                
+                // Update the function object with the compiled version.
+                function_obj.unwrap_object().set_function(&function);
+                
+                // Recurse to actually execute the function.
+                self.do_call(mode, args, function_obj, &function)
+            }
+            JsFunction::Ir(function_ref, ref block) => {
                 let function = self.ir.get_function(function_ref);
                 let name = if let Some(name) = function.name {
                     self.ir.interner().get(name).to_string()
@@ -144,6 +160,9 @@ impl JsEnv {
                 debugln!("EXIT {}", location);
                 
                 Ok(())
+            }
+            JsFunction::Jit(function_ref, ref function) => {
+                unimplemented!();
             }
             JsFunction::Native(_, _, ref callback, _) => {
                 let frame = args.frame;
@@ -377,7 +396,7 @@ impl JsEnv {
     }
     
     pub fn new_function(&mut self, function_ref: FunctionRef, scope: Option<Local<JsScope>>, strict: bool) -> JsResult<JsValue> {
-        let mut result = JsObject::new_function(self, JsFunction::Ir(function_ref), strict).as_value();
+        let mut result = JsObject::new_function(self, &JsFunction::Ref(function_ref), strict).as_value();
         
         let function = self.ir.get_function(function_ref);
         if function.take_scope {

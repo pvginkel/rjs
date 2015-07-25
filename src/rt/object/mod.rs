@@ -13,6 +13,9 @@ use self::hash_store::HashStore;
 use self::array_store::ArrayStore;
 use std::str::FromStr;
 use std::mem::{zeroed, transmute, size_of};
+use std::rc::Rc;
+use ir::builder;
+use jit::JitFunction;
 
 mod hash_store;
 mod array_store;
@@ -61,17 +64,17 @@ impl JsObject {
         result
     }
     
-    pub fn new_function(env: &mut JsEnv, function: JsFunction, strict: bool) -> Local<JsObject> {
+    pub fn new_function(env: &mut JsEnv, function: &JsFunction, strict: bool) -> Local<JsObject> {
         let prototype = env.handle(JsHandle::Function);
         Self::new_function_with_prototype(env, function, prototype, strict)
     }
     
-    pub fn new_function_with_prototype(env: &mut JsEnv, function: JsFunction, prototype: Local<JsObject>, strict: bool) -> Local<JsObject> {
+    pub fn new_function_with_prototype(env: &mut JsEnv, function: &JsFunction, prototype: Local<JsObject>, strict: bool) -> Local<JsObject> {
         let mut result = Self::new_local(env, JsStoreType::Hash);
         
-        let (name, args, strict) = match function {
+        let (name, args, strict) = match *function {
             JsFunction::Native(name, args, _, _) => (name, args, strict),
-            JsFunction::Ir(function_ref) => {
+            JsFunction::Ref(function_ref) | JsFunction::Ir(function_ref, _) | JsFunction::Jit(function_ref, _) => {
                 let function = env.ir.get_function(function_ref);
                 (function.name, function.args, strict || function.strict)
             }
@@ -88,7 +91,7 @@ impl JsObject {
         // TODO #68: This does not seem to be conform the specs. Value should not be configurable.
         // Don't set the length on bound functions. The caller will take care of this.
         
-        match function {
+        match *function {
             JsFunction::Bound => {},
             _ => { result.define_own_property(env, name::LENGTH, JsDescriptor::new_value(value, false, false, true), false).ok(); }
         }
@@ -140,6 +143,10 @@ impl Local<JsObject> {
     
     pub fn function(&self) -> Option<JsFunction> {
         self.function.to_function()
+    }
+    
+    pub fn set_function(&mut self, function: &JsFunction) {
+        self.function = Function::new(function)
     }
     
     pub fn get_key(&self, env: &JsEnv, offset: usize) -> JsStoreKey {
@@ -478,7 +485,7 @@ impl JsItem for Local<JsObject> {
     
     fn can_construct(&self) -> bool {
         match self.function {
-            Function::Ir(..) => true,
+            Function::Ref(..) | Function::Ir(..) | Function::Jit(..) => true,
             Function::Native(ref native) => native.can_construct,
             Function::Bound => true,
             Function::None => false
@@ -583,16 +590,20 @@ impl JsItem for Local<JsObject> {
 }
 
 enum Function {
-    Ir(FunctionRef),
+    Ref(FunctionRef),
+    Ir(FunctionRef, Rc<builder::Block>),
+    Jit(FunctionRef, Rc<JitFunction>),
     Native(ManualBox<NativeFunction>),
     Bound,
     None
 }
 
 impl Function {
-    fn new(function: JsFunction) -> Function {
-        match function {
-            JsFunction::Ir(function_ref) => Function::Ir(function_ref),
+    fn new(function: &JsFunction) -> Function {
+        match *function {
+            JsFunction::Ref(function_ref) => Function::Ref(function_ref),
+            JsFunction::Ir(function_ref, ref block) => Function::Ir(function_ref, block.clone()),
+            JsFunction::Jit(function_ref, ref jit) => Function::Jit(function_ref, jit.clone()),
             JsFunction::Native(name, args, function, can_construct) => {
                 let native = ManualBox::new(NativeFunction {
                     name: name,
@@ -609,7 +620,9 @@ impl Function {
     
     fn to_function(&self) -> Option<JsFunction> {
         match *self {
-            Function::Ir(ref function_ref) => Some(JsFunction::Ir(*function_ref)),
+            Function::Ref(ref function_ref) => Some(JsFunction::Ref(*function_ref)),
+            Function::Ir(ref function_ref, ref block) => Some(JsFunction::Ir(*function_ref, block.clone())),
+            Function::Jit(ref function_ref, ref jit) => Some(JsFunction::Jit(*function_ref, jit.clone())),
             Function::Native(ref native) => Some(JsFunction::Native(
                 native.name,
                 native.args,
@@ -861,7 +874,7 @@ unsafe fn validate_walker_for_object(walker: &GcWalker) {
     
     validate_walker_for_embedded_value(walker, ptr, GC_OBJECT, value_offset, &mut object.value);
     
-    object.function = Function::Ir(FunctionRef(1));
+    object.function = Function::Ref(FunctionRef(1));
     validate_walker_field(walker, GC_OBJECT, ptr, false);
     *object = zeroed();
     

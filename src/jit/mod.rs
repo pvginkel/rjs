@@ -3,6 +3,9 @@
 
 use std::ptr;
 use gc::os::*;
+use ::JsResult;
+use std::rc::Rc;
+use ir::builder;
 
 const PAGE_SIZE : usize = 4 * 1024;
 
@@ -66,6 +69,10 @@ pub struct Jit;
 impl Jit {
     pub fn new() -> Jit {
         Jit
+    }
+    
+    pub fn compile(&mut self, block: &Rc<builder::Block>) -> JsResult<Option<JitFunction>> {
+        unimplemented!();
     }
 }
 

@@ -131,7 +131,7 @@ fn setup_global(env: &mut JsEnv) {
 fn setup_function(env: &mut JsEnv, mut global: JsValue, object_prototype: Local<JsObject>) -> Local<JsObject> {
     let mut prototype = JsObject::new_function_with_prototype(
         env,
-        JsFunction::Native(None, 0, Function_baseConstructor, false),
+        &JsFunction::Native(None, 0, Function_baseConstructor, false),
         object_prototype,
         false
     );
@@ -168,7 +168,7 @@ fn setup_object<'a>(env: &mut JsEnv, mut global: JsValue, prototype: &mut Local<
     function!(prototype, name::IS_PROTOTYPE_OF, Object_isPrototypeOf, 1, env);
     function!(prototype, name::PROPERTY_IS_ENUMERABLE, Object_propertyIsEnumerable, 1, env);
     
-    let class = JsObject::new_function(env, JsFunction::Native(Some(name::OBJECT_CLASS), 1, Object_constructor, true), false);
+    let class = JsObject::new_function(env, &JsFunction::Native(Some(name::OBJECT_CLASS), 1, Object_constructor, true), false);
     let mut class = class.as_value();
     
     property!(global, name::OBJECT_CLASS, class, true, false, true, env);
@@ -221,7 +221,7 @@ fn setup_array<'a>(env: &mut JsEnv, mut global: JsValue) {
     prototype.set_class(Some(name::ARRAY_CLASS));
     
     // Create the class as usual.
-    let mut class = JsObject::new_function(env, JsFunction::Native(Some(name::ARRAY_CLASS), 1, Array_constructor, true), false).as_value();
+    let mut class = JsObject::new_function(env, &JsFunction::Native(Some(name::ARRAY_CLASS), 1, Array_constructor, true), false).as_value();
 
     // But set the prototype to our array intance.
     class.define_own_property(env, name::PROTOTYPE, JsDescriptor::new_value(array_prototype, false, false, false), false).ok();
@@ -508,5 +508,5 @@ fn setup_error<'a>(env: &mut JsEnv, global: JsValue) {
 }
 
 fn new_naked_function<'a>(env: &mut JsEnv, name: Option<Name>, args: u32, function: JsFn, can_construct: bool) -> JsValue {
-    JsObject::new_function(env, JsFunction::Native(name, args, function, can_construct), false).as_value()
+    JsObject::new_function(env, &JsFunction::Native(name, args, function, can_construct), false).as_value()
 }

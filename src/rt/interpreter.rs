@@ -70,7 +70,7 @@ struct Frame<'a> {
 }
 
 impl JsEnv {
-    pub fn call_block(&mut self, block: Rc<Block>, args: JsArgs, function: &IrFunction, scope: Local<JsScope>) -> JsResult<()> {
+    pub fn call_block(&mut self, block: &Rc<Block>, args: JsArgs, function: &IrFunction, scope: Local<JsScope>) -> JsResult<()> {
         // Ensure that we have enough arguments on the stack. We will have the number
         // of arguments already on the stack that the caller pushed. However,
         // our load/store param calls will write directly into these locations.

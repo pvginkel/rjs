@@ -117,7 +117,7 @@ pub fn Function_toString(env: &mut JsEnv, _mode: JsFnMode, args: JsArgs) -> JsRe
         if let Some(function) = this_arg.unwrap_object().function() {
             fn get_function_details(env: &mut JsEnv, this: JsValue, function: &JsFunction) -> JsResult<(Option<Name>, Option<u32>)> {
                 match *function {
-                    JsFunction::Ir(function_ref) => {
+                    JsFunction::Ref(function_ref) | JsFunction::Ir(function_ref, _) | JsFunction::Jit(function_ref, _) => {
                         let description = env.ir.get_function(function_ref);
                         Ok((description.name, None))
                     }
@@ -190,7 +190,7 @@ pub fn Function_bind(env: &mut JsEnv, _mode: JsFnMode, args: JsArgs) -> JsResult
             }
         }
         
-        let mut result = JsObject::new_function(env, JsFunction::Bound, true);
+        let mut result = JsObject::new_function(env, &JsFunction::Bound, true);
         
         let length = if this_arg.class() == Some(name::FUNCTION_CLASS) {
             let length = try!(this_arg.get(env, name::LENGTH)).unwrap_number() as usize;

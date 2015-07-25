@@ -39,7 +39,8 @@ impl<'a> Replacer<'a> {
             // it can be re-used generically for callbacks.
             if !strict {
                 strict = match replace_value.unwrap_object().function().unwrap() {
-                    JsFunction::Ir(function_ref) => env.ir.get_function(function_ref).strict,
+                    JsFunction::Ref(function_ref) | JsFunction::Ir(function_ref, _) | JsFunction::Jit(function_ref, _)
+                        => env.ir.get_function(function_ref).strict,
                     _ => false
                 };
             }

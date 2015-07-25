@@ -1,7 +1,8 @@
 extern crate libc;
 
 use gc::*;
-use ir::IrContext;
+use ir::{IrContext, builder};
+use jit::{Jit, JitFunction};
 use syntax::Name;
 use syntax::token::name;
 use syntax::ast::FunctionRef;
@@ -83,6 +84,7 @@ pub struct JsEnv {
     handles: Vec<Root<JsObject>>,
     global_scope: Root<JsScope>,
     ir: IrContext,
+    jit: Jit,
     stack: Rc<stack::Stack>,
     privileged: bool
 }
@@ -102,6 +104,7 @@ impl JsEnv {
             heap: heap,
             global_scope: global_scope,
             ir: IrContext::new(),
+            jit: Jit::new(),
             stack: stack,
             privileged: true,
             handles: Vec::new()
@@ -212,7 +215,7 @@ impl JsEnv {
     }
     
     fn new_native_function<'a>(&mut self, name: Option<Name>, args: u32, function: JsFn) -> JsValue {
-        let mut result = JsObject::new_function(self, JsFunction::Native(name, args, function, true), false).as_value();
+        let mut result = JsObject::new_function(self, &JsFunction::Native(name, args, function, true), false).as_value();
         
         let mut proto = self.create_object();
         let value = proto.as_value();
@@ -842,7 +845,9 @@ impl JsArgs {
 pub type JsFn = fn(&mut JsEnv, JsFnMode, JsArgs) -> JsResult<JsValue>;
 
 pub enum JsFunction {
-    Ir(FunctionRef),
+    Ref(FunctionRef),
+    Ir(FunctionRef, Rc<builder::Block>),
+    Jit(FunctionRef, Rc<JitFunction>),
     Native(Option<Name>, u32, JsFn, bool),
     Bound
 }
