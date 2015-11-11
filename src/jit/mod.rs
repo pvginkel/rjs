@@ -71,7 +71,7 @@ impl Jit {
         Jit
     }
     
-    pub fn compile(&mut self, block: &Rc<builder::Block>) -> JsResult<Option<JitFunction>> {
+    pub fn compile(&mut self, block: &builder::Block) -> JsResult<Option<JitFunction>> {
         unimplemented!();
     }
 }

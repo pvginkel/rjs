@@ -34,7 +34,6 @@ struct ReturnTarget {
 pub struct IrContext {
     interner: StrInterner,
     ast: AstContext,
-    functions: Vec<Option<Rc<builder::Block>>>,
     // TODO #58: Remove
     last_printed: usize
 }
@@ -56,7 +55,6 @@ impl IrContext {
     pub fn new() -> IrContext {
         IrContext {
             interner: name::new_interner(),
-            functions: Vec::new(),
             ast: AstContext::new(),
             last_printed: 0
         }
@@ -66,7 +64,7 @@ impl IrContext {
         &self.interner
     }
     
-    pub fn parse_file(&mut self, file_name: &str, strict: bool, privileged: bool) -> JsResult<FunctionRef> {
+    pub fn parse_file(&mut self, file_name: &str, strict: bool, privileged: bool) -> JsResult<builder::Block> {
         let mut js = String::new();
         let mut file = match File::open(file_name) {
             Ok(ok) => ok,
@@ -79,17 +77,15 @@ impl IrContext {
         self.build_ir(&mut StringReader::new(file_name, &js), strict, ParseMode::Normal, privileged)
     }
     
-    pub fn parse_string(&mut self, js: &str, strict: bool, mode: ParseMode, privileged: bool) -> JsResult<FunctionRef> {
+    pub fn parse_string(&mut self, js: &str, strict: bool, mode: ParseMode, privileged: bool) -> JsResult<builder::Block> {
         self.build_ir(&mut StringReader::new("(global)", js), strict, mode, privileged)
     }
     
-    pub fn get_function_ir(&mut self, function_ref: FunctionRef) -> JsResult<Rc<builder::Block>> {
-        try!(self.build_function_ir(function_ref, ParseMode::Normal));
-        
-        Ok(self.functions[function_ref.usize()].as_ref().unwrap().clone())
+    pub fn get_function_ir(&mut self, function_ref: FunctionRef) -> JsResult<builder::Block> {
+        self.build_function_ir(function_ref, ParseMode::Normal)
     }
     
-    fn build_ir(&mut self, reader: &mut StringReader, strict: bool, mode: ParseMode, privileged: bool) -> JsResult<FunctionRef> {
+    fn build_ir(&mut self, reader: &mut StringReader, strict: bool, mode: ParseMode, privileged: bool) -> JsResult<builder::Block> {
         let offset = self.ast.functions.len();
         
         let program_ref = {
@@ -105,22 +101,10 @@ impl IrContext {
         // Strict eval programs need to build a thick scope to isolate
         // their environment.
         
-        // Append the new functions to our functions.
-        
-        for _ in offset..self.ast.functions.len() {
-            self.functions.push(None);
-        }
-        
-        try!(self.build_function_ir(program_ref, mode));
-        
-        Ok(program_ref)
+        self.build_function_ir(program_ref, mode)
     }
     
-    fn build_function_ir(&mut self, function_ref: FunctionRef, mode: ParseMode) -> JsResult<()> {
-        if self.functions[function_ref.usize()].is_some() {
-            return Ok(());
-        }
-
+    fn build_function_ir(&mut self, function_ref: FunctionRef, mode: ParseMode) -> JsResult<builder::Block> {
         let function = &self.ast.functions[function_ref.usize()];
         
         let block = {
@@ -198,9 +182,7 @@ impl IrContext {
             generator.ir.build()
         };
         
-        self.functions[function_ref.usize()] = Some(Rc::new(block));
-        
-        Ok(())
+        Ok(block)
     }
     
     pub fn get_function(&self, function_ref: FunctionRef) -> IrFunction {
@@ -219,6 +201,8 @@ impl IrContext {
     }
     
     pub fn print_ir(&mut self, ir: &mut String) -> JsResult<()> {
+        unimplemented!();
+        /*
         for i in self.last_printed..self.functions.len() {
             try!(self.build_function_ir(FunctionRef(i as u32), ParseMode::Normal));
             
@@ -266,6 +250,7 @@ impl IrContext {
         self.last_printed = self.functions.len();
         
         Ok(())
+        */
     }
     
     fn get_slot(&self, slot_ref: FunctionSlotRef) -> Slot {

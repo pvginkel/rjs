@@ -120,7 +120,7 @@ impl JsEnv {
                 let function = if let Some(jit) = try!(self.jit.compile(&block)) {
                     JsFunction::Jit(function_ref, Rc::new(jit))
                 } else {
-                    JsFunction::Ir(function_ref, block)
+                    JsFunction::Ir(function_ref, Rc::new(block))
                 };
                 
                 // Update the function object with the compiled version.
@@ -395,10 +395,10 @@ impl JsEnv {
         })
     }
     
-    pub fn new_function(&mut self, function_ref: FunctionRef, scope: Option<Local<JsScope>>, strict: bool) -> JsResult<JsValue> {
-        let mut result = JsObject::new_function(self, &JsFunction::Ref(function_ref), strict).as_value();
+    pub fn new_function(&mut self, function: &JsFunction, scope: Option<Local<JsScope>>, strict: bool) -> JsResult<JsValue> {
+        let mut result = JsObject::new_function(self, function, strict).as_value();
         
-        let function = self.ir.get_function(function_ref);
+        let function = self.ir.get_function(function.get_ref().unwrap());
         if function.take_scope {
             result.set_scope(scope);
         }

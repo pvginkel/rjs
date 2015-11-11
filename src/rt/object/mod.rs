@@ -146,6 +146,14 @@ impl Local<JsObject> {
     }
     
     pub fn set_function(&mut self, function: &JsFunction) {
+        // TODO: This is not ideal. This should be replaced with a mechanism to
+        // replace the function ref in place.
+        
+        match *function {
+            JsFunction::Ir(..) | JsFunction::Jit(..) => {},
+            _ => panic!("set_function can only be used to replace the function with a compiled variant")
+        }
+        
         self.function = Function::new(function)
     }
     

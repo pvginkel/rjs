@@ -852,6 +852,16 @@ pub enum JsFunction {
     Bound
 }
 
+impl JsFunction {
+    fn get_ref(&self) -> Option<FunctionRef> {
+        match *self {
+            JsFunction::Ref(function_ref) | JsFunction::Ir(function_ref, _) | JsFunction::Jit(function_ref, _)
+                => Some(function_ref),
+            _ => None
+        }
+    }
+}
+
 pub type JsResult<T> = Result<T, JsError>;
 
 pub enum JsError {
